@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/login.css">
+  <link rel="stylesheet" href="./css/form.css">
+  <title>智能社项目实战-豆瓣电台</title>
+</head>
+
+<body>
+  <div class="account-body login-wrap login-start ">
+    <div class="account-body-tabs">
+      <div class="account-tab-switch-icon">
+        <a class="quick icon-switch"></a>
+      </div>
+      <ul class="tab-start row">
+        <li class="account-tab-phone on flex-1">短信登录／注册</li>
+        <li class="account-tab-account flex-1">密码登录</li>
+      </ul>
+    </div>
+
+    <div class="account-tabcon-start">
+
+      <ul>
+        <!-- 手机号登陆/注册 -->
+        <li>
+          <div class="account-form">
+            <div class="account-form-tips">登录注册表示同意 <a target="_blank"
+                href="https://accounts.douban.com/passport/agreement">豆瓣使用协议、隐私政策</a>
+            </div>
+
+            <div class="account-form-error show-error"><span class="fatal-msg">请填写手机号</span></div>
+
+            <div class="account-form-raw">
+              <label class="account-form-label">手机号：</label>
+              <div class="account-form-field account-form-field-phone">
+                <input type="phone" name="phone" maxlength="13" class="account-form-input" placeholder="手机号"
+                  tabindex="1">
+                <div class="account-form-field-area-code">
+                  <div class="account-form-field-area-code-label js-choose-district">+86</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="account-form-raw">
+              <label class="account-form-label">验证码：</label>
+              <div class="account-form-field account-form-codes">
+                <input id="code" type="text" name="code" maxlength="6" class="account-form-input" placeholder="验证码"
+                  tabindex="2" autocomplete="off">
+                <div class="account-form-field-code">
+                  <a href="javascript:;">获取验证码</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="account-form-field-submit ">
+              <!-- .btn-active -->
+              <a href="javascript:;" class="btn btn-phone ">登录豆瓣</a>
+            </div>
+
+            <div class="row aic account-form-link">
+              <p class="flex-1">
+                <input name="remember" type="checkbox" id="account-form-remember" tabindex="4">
+                下次自动登录</p>
+              <p>
+                <a href="javascript:;">收不到验证码</a>
+              </p>
+            </div>
+        </li>
+
+        <!-- 密码登陆 -->
+        <li style="display: none">
+          <div class="account-form">
+
+            <div class="account-form-error show-error"><span class="fatal-msg">请填写手机号</span></div>
+
+            <div class="account-form-raw">
+              <label class="account-form-label">用户名：</label>
+              <div class="account-form-field">
+                <input id="username" name="username" type="text" class="account-form-input" placeholder="手机号 / 邮箱"
+                  tabindex="1">
+                <span class="icon clear-input hide"></span>
+              </div>
+            </div>
+
+            <div class="account-form-raw">
+              <label class="account-form-label">密 码：</label>
+              <div class="account-form-field">
+                <input id="password" type="password" name="password" class="account-form-input password"
+                  placeholder="密码" tabindex="3">
+                <span class="icon openpwd hide"></span>
+                <a target="_blank" href="https://accounts.douban.com/passport/get_password" class="fwd-link">找回密码</a>
+              </div>
+            </div>
+
+            <div class="account-form-field-submit ">
+              <!-- .btn-active -->
+              <a href="javascript:;" class="btn btn-phone ">登录豆瓣</a>
+            </div>
+
+            <div class="row aic account-form-link">
+              <p class="flex-1">
+                <input name="remember" type="checkbox" id="account-form-remember" tabindex="4">
+                下次自动登录</p>
+              <p>
+                <a href="javascript:;">海外手机号登陆</a>
+              </p>
+            </div>
+        </li>
+      </ul>
+
+
+      <div class="account-form-3rd ">
+        <div class="account-form-3rd-hd">第三方登录: </div>
+        <div class="account-form-3rd-bd">
+
+          <a href="https://www.douban.com/accounts/connect/wechat/?from=fm&amp;redir=https%3A//fm.douban.com"
+            class="link-3rd-wx link-3rd-wx-on" target="_top" title="用微信登录">wechat</a>
+          <a href="https://www.douban.com/accounts/connect/sina_weibo/?from=fm&amp;redir=https%3A//fm.douban.com&amp;fallback="
+            class="link-3rd-wb link-3rd-wb-on" target="_top" title="用微博登录">weibo</a>
+          <a target="_top" href="https://www.douban.com/accounts/connect/qq/?from=fm&amp;redir=https%3A//fm.douban.com"
+            class="link-3rd-qq link-3rd-qq-on" title="用QQ登录"></a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  </div>
+</body>
+
+</html>

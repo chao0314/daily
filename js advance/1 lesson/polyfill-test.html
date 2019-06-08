@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script src="polyfill.js"></script>
+
+<script>
+    var s = "    123    ";
+    console.log(s);
+    console.log(s.trim());
+    var arr = [1, 2, 3, 4];
+    console.log(arr.filter(function (v, i, a) {
+        return v % 2 === 0;
+    }));
+
+    console.log(arr.reduce(function (accumulator, v, i, a) {
+        return accumulator + v;
+    }));
+    console.log(arr.reduce(function (accumulator, v, i, a) {
+        return accumulator + v;
+    },100));
+
+
+    var arrLike = "123456";
+    var arrLike2 = {length:3,0:"a",1:"b","2":"c"};
+    console.log(Array.from(arrLike,function(v){
+        return v*2;
+    }));
+    console.log(Array.from(arrLike2));
+</script>
+</html>
