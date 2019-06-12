@@ -13,7 +13,7 @@ Array.prototype.filter = Array.prototype.filter || function (cb) {
     var result = [];
     var len = this.length;
     var index = 0;
-    while (len > 0 && len > index) {
+    while (len > index) {
         var value = this[index];
         if (cb(value, index++, this)) result.push(value);
     }
@@ -31,7 +31,7 @@ Array.prototype.reduce = Array.prototype.reduce || function (cb, init) {
     } else {
         accumulator = this[index++];
     }
-    while (len > 0 && len > index) {
+    while (len > index) {
         accumulator = cb(accumulator, this[index], index++, this);
     }
 
@@ -41,15 +41,27 @@ Array.prototype.reduce = Array.prototype.reduce || function (cb, init) {
 Array.from = Array.from || function (arrayLike, cb) {
     console.log("from polyfill");
     assert(arrayLike.length, "arrayLike need length property");
-    var len = Math.min(Math.pow(2, 53) - 1, arrayLike.length);
+    var len = Math.min(Number.MAX_SAFE_INTEGER, arrayLike.length);
     var index = 0;
     var result = [];
-    while (len > 0 && len > index) {
-        var item = arrayLike[index] || arrayLike[Number(index).toString()];
-        if (cb && cb instanceof Function)  item  = cb(item);
-        result.push(item);
-        index++;
+    // while (len > 0 && len > index) {
+    //     var item = arrayLike[index] || arrayLike[Number(index).toString()];
+    //     if (cb && cb instanceof Function) item = cb(item);
+    //     result.push(item);
+    //     index++;
+    // }
+    if (cb && cb instanceof Function) {
+        while (len > index) {
+            var item = arrayLike[index++] || arrayLike[Number(index++).toString()];
+            item = cb(item);
+            result.push(item);
+        }
+    } else {
+        while (len > index) {
+            result.push(arrayLike[index++] || arrayLike[Number(index++).toString()]);
+        }
     }
+
     return result;
 
 };

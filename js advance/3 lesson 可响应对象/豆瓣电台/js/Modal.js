@@ -1,40 +1,37 @@
-class Modal {
-    _data;
+class Modal extends ProxyClass {
     _root;
     _parent;
     _oLis;
 
-    constructor(parent, data) {
+    constructor(parent, dataFactory) {
         assert(parent instanceof HTMLElement);
+        assert(dataFactory instanceof Function);
+        let data = dataFactory();
+        assert(Array.isArray(data.list));
+        super();
         this._parent = parent;
-        if (data) this.setData(data);
+        this._root = this._create('div');
+        for (let prop in data) {
+            if (data.hasOwnProperty(prop)) {
+                this[prop] = data[prop];
+            }
+
+        }
+        this.show = false;
+
     }
-
-
-    setData(data) {
-        assert(data.list instanceof Array);
-        this._data = data;
-        this._render();
-        this.hidden();
-    }
-
-
-    show() {
-        this._root.style.display = "block";
-    };
-
-    hidden() {
-        this._root.style.display = "none";
-    };
 
     click(handler) {
-        this._oLis = this._oLis || this._root.querySelectorAll("ul.column li");
+        this._oLis = this._oLis || Array.from(this._root.querySelectorAll("ul.column li"));
+        console.log(this._oLis)
         this._oLis.forEach(li => {
+            console.log("--e")
             li.onclick = null;
-            li.addEventListener("click", function () {
-                oLis.forEach(li => {
-                    li.className = "row aic";
-                });
+            li.addEventListener("click", function() {
+                console.log("click")
+                // this._oLis.forEach(li => {
+                //     li.className = "row aic";
+                // });
                 li.className = "row aic active";
                 handler instanceof Function && handler(this.childNodes[1].nodeValue);
             })
@@ -43,16 +40,8 @@ class Modal {
 
     };
 
-    _render() {
-        if (!this._root) {
-            // this._root = this._create("div");
-            // this._root.className = "live-tab";
-            // this._root.setAttribute("tabindex", "-1");
-            // this._parent.appendChild(this._root);
-            this._root = this._create('div');
-        }
-
-        let lis = this._data.list.reduce((acc, v, i) => {
+    render() {
+        let lis = this.list.reduce((acc, v, i) => {
             let className = i === 0 ? "row aic active" : "row aic";
             let li = v.src ? ` <li class="${className}"><img class="img" src=${v.src} alt="">${v.title}</li>` :
                 `<li class="${className}"><i class="iconfont icon-heart-fill active-h"></i>${v.title}</li>`;
@@ -78,7 +67,7 @@ class Modal {
             <hr class="_24GcLdJnvrJ23aKnPCasbJ">
 
             <div class="row aic collect-link">
-                <p class="flex-1">${this._data.nav}</p>
+                <p class="flex-1">${this.nav}</p>
 
                 <svg class="icon icon-angle-right" width="18" height="18" viewBox="0 0 18 18" version="1.1"
                      xmlns="http://www.w3.org/2000/svg"
@@ -93,6 +82,11 @@ class Modal {
                 </svg>
             </div>
         </div></div>`;
+        if (this.show) {
+            this._root.style.display = "block";
+        } else {
+            this._root.style.display = "none";
+        }
 
 
     }
@@ -100,8 +94,7 @@ class Modal {
     _create(el) {
         let oDiv = document.createElement(el);
         oDiv.className = "live-tab";
-        // this._root.setAttribute("tabindex", "-1");
-        this._parent.appendChild(this._root);
+        this._parent.appendChild(oDiv);
         return oDiv;
     }
 
