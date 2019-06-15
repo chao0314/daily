@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="one">text node
+    <span>123</span>
+    <!--comment node-->
+    <span id="middle">231</span>
+    <span>321</span>
+</div>
+<button class="add">添加</button>
+<button class="remove">删除</button>
+<button class="replace">替换</button>
+<button class="insert">插入之前</button>
+</body>
+<script>
+    const $ = document.querySelectorAll.bind(document);
+    let oDiv = $("#one")[0];
+    let oM = $("#middle")[0];
+    // console.log(oDiv.parentElement);
+    // console.log(oDiv.parentNode);
+    // console.log(oDiv.childNodes);
+    // console.log(oDiv.children);
+    // console.log(oDiv.nodeType,oDiv.nodeType === document.ELEMENT_NODE);
+    // console.log(oDiv.childNodes[0].nodeType,oDiv.childNodes[0].nodeType ===document.TEXT_NODE);
+    // console.log(oDiv.childNodes[3].nodeType,oDiv.childNodes[3].nodeType === document.COMMENT_NODE);
+    // console.log(document.nodeType,document.nodeType === document.DOCUMENT_NODE);
+    // console.log(document.documentElement,document.documentElement.nodeType)
+
+    // console.log("previous element",oM.previousElementSibling);
+    // console.log("pre node",oM.previousSibling);
+    // console.log("next element",oM.nextElementSibling);
+    // console.log("next node",oM.nextSibling);
+    let add = $(".add")[0];
+    let remove = $('.remove')[0];
+    let replace = $('.replace')[0];
+    let insert = $('.insert')[0];
+
+
+    add.onclick = function () {
+        let oSpan = document.createElement("span");
+        let oText = document.createTextNode("this is text");
+        let oComment = document.createComment("this is comment");
+        oDiv.appendChild(oSpan);
+        oDiv.appendChild(oText);
+        oDiv.appendChild(oComment);
+    };
+    remove.onclick = function () {
+        oDiv.removeChild(oM);
+    };
+    replace.onclick = function () {
+        let span = document.createElement("span");
+        span.innerHTML = "replace";
+        oDiv.replaceChild(span, oM);
+    }
+    insert.onclick = function () {
+        let span = document.createElement("span");
+        span.innerHTML = "insert";
+        oDiv.insertBefore(span, oM);
+    }
+
+
+</script>
+</html>

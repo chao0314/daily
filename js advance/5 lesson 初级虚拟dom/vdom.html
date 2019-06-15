@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="root">
+    <p @click="click" v-on:mouseover="over" title="123">姓名</p>
+    {{name}}
+    <p v-show>年龄</p>
+    {{age}}
+    <input type="text" :value="message">
+    <input type="text" v-bind:value="message">
+</div>
+
+</body>
+<script src="common.js"></script>
+<script src="VNode.js"></script>
+<script src="VElement.js"></script>
+<script src="VText.js"></script>
+<script src="Component.js"></script>
+<script>
+    let comp = new Component({
+        el: "#root",
+        data() {
+            return {
+                name: "hello",
+                age: 18,
+                message: "hello Mr right"
+            }
+        },
+        methods: {
+            click() {
+                alert('click');
+            },
+            over(){
+                alert("mouseover")
+            }
+        }
+    })
+</script>
+</html>
