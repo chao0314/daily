@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="" />
+    <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -12,21 +15,30 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/components.html">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/详情页.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="35" column="34" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
+            <state relative-caret-position="-702">
+              <caret line="82" selection-start-line="82" selection-end-line="82" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="47" column="5" lean-forward="true" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/components.js">
+        <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/js/View.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="100" column="66" selection-start-line="100" selection-start-column="66" selection-end-line="100" selection-end-column="66" />
+            <state relative-caret-position="612">
+              <caret line="58" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
         </entry>
@@ -36,8 +48,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
+        <option value="CSS File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -59,6 +72,12 @@
         <option value="$PROJECT_DIR$/js advance/2 lesson 对象继承/fixed.html" />
         <option value="$PROJECT_DIR$/js advance/2 lesson 对象继承/components.js" />
         <option value="$PROJECT_DIR$/js advance/2 lesson 对象继承/components.html" />
+        <option value="$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/详情页.html" />
+        <option value="$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/main.css" />
+        <option value="$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/js/view.js" />
+        <option value="$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/js/test.js" />
+        <option value="$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/js/View.js" />
+        <option value="$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/index.html" />
       </list>
     </option>
   </component>
@@ -92,7 +111,19 @@
               <item name="daily" type="b2602c69:ProjectViewProjectNode" />
               <item name="daily" type="462c0819:PsiDirectoryNode" />
               <item name="js advance" type="462c0819:PsiDirectoryNode" />
-              <item name="2 lesson 对象继承" type="462c0819:PsiDirectoryNode" />
+              <item name="4 lesson dom编译" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="daily" type="b2602c69:ProjectViewProjectNode" />
+              <item name="daily" type="462c0819:PsiDirectoryNode" />
+              <item name="js advance" type="462c0819:PsiDirectoryNode" />
+              <item name="5 lesson 初级虚拟dom" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="daily" type="b2602c69:ProjectViewProjectNode" />
+              <item name="daily" type="462c0819:PsiDirectoryNode" />
+              <item name="js advance" type="462c0819:PsiDirectoryNode" />
+              <item name="6 lesson 事件基础" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -105,10 +136,21 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="D:/Program Files/Git/bin/git.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/imgs" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="D:/dev/nodejs/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\workspace\daily\js advance\6 lesson 事件基础\magnifier\homework\css" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\workspace\daily\js advance\6 lesson 事件基础\magnifier\homework\imgs" />
+      <recent name="F:\workspace\daily\js advance\6 lesson 事件基础\magnifier\imgs" />
+      <recent name="F:\workspace\daily\js advance\6 lesson 事件基础\magnifier" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -122,12 +164,16 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="class function.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="class function.js" working-dir="$PROJECT_DIR$/js advance/2 lesson 对象继承">
+  <component name="RunManager" selected="Node.js.test.js">
+    <configuration name="class function.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="class function.js" working-dir="$PROJECT_DIR$/js advanced/2 lesson 对象继承">
+      <method v="2" />
+    </configuration>
+    <configuration name="test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="test.js" working-dir="$PROJECT_DIR$/js advanced/6 lesson 事件基础/magnifier/homework/js">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.test.js" />
         <item itemvalue="Node.js.class function.js" />
       </list>
     </recent_temporary>
@@ -144,23 +190,23 @@
       <updated>1559972182491</updated>
       <workItem from="1559972184022" duration="414000" />
       <workItem from="1560134071978" duration="11842000" />
+      <workItem from="1560857565315" duration="6380000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12256000" />
+    <option name="totallyTimeSpent" value="18636000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.09247028" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14059196" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4993395" visible="true" weight="0.05382436" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4993395" visible="true" weight="0.05530474" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -201,22 +247,24 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/class function.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/fixed.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/class function.js" />
+    <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/fixed.html" />
     <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/assert.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
@@ -224,17 +272,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/components.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="100" column="66" selection-start-line="100" selection-start-column="66" selection-end-line="100" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/components.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="552">
           <caret line="35" column="34" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/2 lesson 对象继承/components.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="100" column="66" selection-start-line="100" selection-start-column="66" selection-end-line="100" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/css/reg.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/imgs/O1CN01jPlEEU2MyPzSQTxH5_!!0-item_pic.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/imgs/small.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/详情页.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-702">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/css/main.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/5 lesson 初级虚拟dom/Component.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/js/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" selection-start-column="24" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/4 lesson dom编译/View.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-486" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/js/View.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="58" selection-start-line="58" selection-end-line="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js advance/6 lesson 事件基础/magnifier/homework/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="47" column="5" lean-forward="true" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
         </state>
       </provider>
     </entry>
