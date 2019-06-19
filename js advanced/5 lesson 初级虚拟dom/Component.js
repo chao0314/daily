@@ -16,11 +16,15 @@ class Component extends VElement {
                 that.render();
                 return true;
             }
-        })
+        });
+        this.render();
     }
 
     render() {
-        console.log("component render");
+        console.log("component render",this);
+        this._children.forEach(child=>{
+            child.render();
+        })
 
     }
 }

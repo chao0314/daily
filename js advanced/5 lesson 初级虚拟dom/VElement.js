@@ -6,18 +6,16 @@ class VElement extends VNode {
     _context;
 
     constructor(dom, context) {
-        assert(context instanceof Component);
         super(dom);
         this._context = context || this;
-        this._children = getChildren(dom, this._context);
         this._attributes = getAttributes(dom, this._context);
-        this._directives = getAttributes(this._attributes);
-
-
+        this._directives = getDirectives(this._attributes);
+        this._listeners = getListeners(this._directives);
+        this._children = getChildren(dom, this._context);
     }
 
     render() {
-        console.log("v element render")
+        console.log("v element render",this)
     }
 
 }
@@ -36,6 +34,7 @@ function getChildren(dom, context) {
 }
 
 function getAttributes(dom) {
+    assert(dom instanceof HTMLElement);
     return Array.from(dom.attributes).reduce(function (acc, {name, value}) {
         acc[name] = value;
         return acc;
@@ -44,6 +43,7 @@ function getAttributes(dom) {
 
 //v-on:xxx = yyy @xxx = yyy v-bind:xxx =yyy :xxx = yyy
 function getDirectives(attrs) {
+    assert(attrs);
     let dirs = [];
     for (let prop in attrs) {
         if (attrs.hasOwnProperty(prop)) {
@@ -63,7 +63,7 @@ function getDirectives(attrs) {
                 })
 
             } else if (prop.startsWith(":")) {
-                attrs.push({
+                dirs.push({
                     name: "bind",
                     arg: prop.slice(1),
                     value: attrs[prop]
@@ -73,5 +73,18 @@ function getDirectives(attrs) {
         }
     }
     return dirs;
+
+}
+
+function getListeners(dirs) {
+    assert(Array.isArray(dirs));
+    return dirs.filter(v => /^on$/.test(v.name)).reduce((acc, v) => {
+        acc.push({
+            event: v.arg,
+            listener: v.value
+        });
+        return acc;
+    }, [])
+
 
 }

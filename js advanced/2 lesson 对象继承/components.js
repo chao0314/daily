@@ -1,6 +1,4 @@
 class Component {
-    name;
-
     constructor() {
         assert(new.target !== Component, "Component is abstract class");
         this.name = new.target.name;
@@ -28,15 +26,17 @@ class CompDiv extends Component {
 
 class CompDialog extends Component {
     render() {
-        let oDiv = this.getEl("div");
+        let oDiv = this.getEl("div")
+        //
         oDiv.innerHTML = "comp dialog";
-        oDiv.style.position = "fixed";
-        oDiv.style.width = "200px";
-        oDiv.style.height = "200px";
-        oDiv.style.background = "silver";
-        oDiv.style.left = "50%";
-        oDiv.style.top = "50%";
-        oDiv.style.transform = "translate(-50%,-50%)";
+        // oDiv.style.position = "fixed";
+        // oDiv.style.width = "200px";
+        // oDiv.style.height = "200px";
+        // oDiv.style.background = "silver";
+        // oDiv.style.left = "50%";
+        // oDiv.style.top = "50%";
+        // oDiv.style.transform = "translate(-50%,-50%)";
+        oDiv.style.cssText = "position:fixed; width:200px;height:200px;background:silver;left:50%;right:50%;transform:translate(-50%,-50%)";
         return oDiv;
     }
 }
@@ -45,7 +45,7 @@ class View {
     _root;
 
     constructor(options) {
-        let {root, components, methods} = options;
+        const {root, components, methods} = options;
         if (typeof root === "string") {
             this._root = document.querySelector(root);
             assert(this._root, "root selector invalid");
