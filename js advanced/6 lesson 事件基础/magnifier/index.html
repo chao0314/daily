@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+</head>
+<style>
+    .magnifier {
+        position: relative;
+    }
+
+    .magnifier div {
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .show {
+        position: absolute;
+        left: 450px;
+        top: 0;
+        display: none;
+    }
+
+    .normal img {
+        width: 400px;
+        height: 400px;
+    }
+
+    .show img {
+        width: 800px;
+        height: 800px;
+        position: absolute;
+
+    }
+
+    .cover {
+        /*background: red;*/
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 9;
+    }
+
+    div.mask {
+        display: none;
+        width: 150px;
+        height: 150px;
+        background: #0086b3;
+        opacity: 0.3;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .list {
+        height: 50px;
+        list-style: none;
+        padding: 0;
+    }
+
+    .list li {
+        float: left;
+        margin: 10px;
+        border: 1px solid silver;
+    }
+
+    .list li img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .list li.active {
+        border: 2px solid orange;
+    }
+
+</style>
+<body>
+<!--<div class="magnifier">-->
+<!--    <div class="normal">-->
+<!--        <img src="imgs/big.jpg" alt="">-->
+<!--        <div class="mask"></div>-->
+<!--        <div class="cover"></div>-->
+<!--    </div>-->
+<!--    <div class="show">-->
+<!--        <img src="imgs/big.jpg" alt="">-->
+<!--    </div>-->
+<!--</div>-->
+<!--<ul class="list">-->
+<!--    <li class="active"><img src="imgs/logo.png" alt=""></li>-->
+<!--    <li><img src="imgs/logo.png" alt=""></li>-->
+<!--    <li><img src="imgs/logo.png" alt=""></li>-->
+<!--    <li><img src="imgs/logo.png" alt=""></li>-->
+<!--    <li><img src="imgs/logo.png" alt=""></li>-->
+<!--    <li><img src="imgs/logo.png" alt=""></li>-->
+<!--</ul>-->
+<div id="root">
+    <Magnifier data="magnifier"></Magnifier>
+    <List data="list"></List>
+</div>
+
+
+</body>
+<script src="./js/View.js"></script>
+<script>
+    let v = new View({
+        el: "#root",
+        components: {
+            Magnifier,
+            List
+        },
+        data: {
+
+            magnifier: {
+                img: "imgs/big.jpg"
+            },
+            list: {
+                lis: [
+                    "imgs/logo.png",
+                    "imgs/small.jpg.webp",
+                    "imgs/logo.png",
+                    "imgs/small.jpg.webp",
+                    "imgs/logo.png",
+                    "imgs/small.jpg.webp"
+                ]
+            }
+        }
+
+    })
+</script>
+</html>

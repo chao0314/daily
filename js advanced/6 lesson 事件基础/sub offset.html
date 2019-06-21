@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            padding: 50px;
+            background: pink;
+            position: relative;
+        }
+
+        p {
+            margin: 10px;
+            background: silver;
+            position: relative;
+        }
+
+        button {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p>
+        <button>123</button>
+    </p>
+</div>
+
+</body>
+<script>
+    const $ = document.querySelectorAll.bind(document);
+    let button = $("div")[0];
+    button.onclick = function (ev) {
+        let disX = ev.offsetX;
+        let disY = ev.offsetY;
+        console.log(disX, disY);
+        let cur = ev.target;
+        while (cur !== this) {
+            console.log(cur)
+            disX += cur.offsetLeft;
+            disY += cur.offsetTop;
+            //offsetParent 如果父级没有定位 那么直接是body
+            // cur = cur.offsetParent
+            cur = cur.parentElement
+        }
+        console.log(disX, disY);
+
+    }
+</script>
+</html>
