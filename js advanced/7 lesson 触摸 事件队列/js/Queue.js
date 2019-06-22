@@ -17,7 +17,8 @@ class Queue {
 
     emit(event, ...args) {
         assert(typeof event === "string");
-        this[queue][event].forEach(handler => {
+
+        if (this[queue][event]) this[queue][event].forEach(handler => {
             handler(...args);
         })
     }
