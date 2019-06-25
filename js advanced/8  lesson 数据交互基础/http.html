@@ -26,6 +26,7 @@
 
             if (xhr.readyState === 3) {
                 console.log("header response");
+                console.log(xhr.status)
             }
             if (xhr.readyState === 4) {
                 let code = xhr.status;
@@ -39,10 +40,10 @@
 
     }
 
-    ajax("http://localhost:5000/data/data.json", {method: "get"});
+    //ajax("http://localhost:5000/data/data.json", {method: "get"});
 
     (async function () {
-        let data = await fetch("http://localhost:5000/data/data.json", {
+        let data = await ifetch("http://localhost:5000/data/data.json", {
             method: "GET",
             headers: {
                 "content-type": "application/json"
@@ -53,11 +54,93 @@
 
         let img = document.querySelector("img");
         let blob = await (await fetch("http://localhost:5000/data/picture.jpeg")).blob();
-        let url = URL.createObjectURL(blob);
-        img.src = url;
+        img.src = URL.createObjectURL(blob);
 
 
     })();
+
+    function ifetch(url, options) {
+        let {method, data} = options;
+        let xhr = new XMLHttpRequest();
+        xhr.open(method || "GET", url, true);
+        xhr.setRequestHeader("content-type", "application/json");
+        xhr.send(data);
+        return new Promise(function (resolve, reject) {
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 3) {
+                    let code = xhr.status;
+                    if ((code >= 200 && code < 300) || code === 304) {
+                        resolve(new Response(xhr));
+                    } else {
+                        reject(xhr);
+                    }
+
+                }
+            }
+        })
+
+    }
+
+    class Response {
+        constructor(xhr) {
+            this._xhr = xhr;
+            this.status = new Promise((resolve, reject) => {
+                this._xhr.onreadystatechange = () => {
+                    let code = xhr.status;
+                    if (this._xhr.readyState === 4) {
+                        if ((code >= 200 && code < 300) || code === 304) {
+                            this._data = xhr.responseText;
+                            resolve(true)
+                        } else {
+                            reject(false);
+                        }
+                    }
+
+
+                }
+            })
+
+        }
+
+        json() {
+            return new Promise((resolve, reject) => {
+
+                this.status.then(status => {
+                    if (status) {
+                        try {
+                            resolve(JSON.parse(this._data));
+                        } catch (e) {
+                            reject(e)
+                        }
+
+                        reject(this._xhr);
+                    }
+
+                })
+
+
+            })
+        }
+
+        text() {
+            return new Promise((resolve, reject) => {
+
+                this.status.then(status => {
+                    if (status) {
+                        try {
+                            resolve(this._data);
+                        } catch (e) {
+                            reject(e)
+                        }
+
+                        reject(this._xhr);
+                    }
+
+                })
+
+            })
+        }
+    }
 
 
 </script>

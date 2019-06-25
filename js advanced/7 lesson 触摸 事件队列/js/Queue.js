@@ -8,6 +8,7 @@ class Queue {
     on(event, handler) {
         assert(typeof event === "string");
         assert(handler instanceof Function);
+        handler = handler.bind(this);
         if (!this[queue][event]) {
             this[queue][event] = [handler];
         } else {
@@ -18,7 +19,7 @@ class Queue {
     emit(event, ...args) {
         assert(typeof event === "string");
 
-        if (this[queue][event]) this[queue][event].forEach(handler => {
+        if (this[queue][event]) this[queue][event].forEach(function (handler) {
             handler(...args);
         })
     }

@@ -13,10 +13,10 @@
         }
 
         .outer {
-            width: calc(100% - 22px);
+            width: calc(100% - 2px);
             height: 200px;
             border: 1px solid black;
-            padding: 10px;
+            padding: 1px;
             background: #4a4a4a;
             position: fixed;
             top: 50%;
@@ -31,11 +31,25 @@
             background: pink;
 
         }
+
+        .top {
+            background: orange;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            height: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
     </style>
 </head>
 <body>
 <div class="outer">
     <div class="inner"></div>
+    <div class="top">刷新</div>
 </div>
 
 </body>
@@ -43,6 +57,21 @@
 <script src="js/Queue.js"></script>
 <script src="js/Scroll.js"></script>
 <script>
+    let oTop = document.querySelector(".top");
     let s = new Scroll(".outer");
+    s.on("start", function () {
+        console.log("start");
+        oTop.style.transition = '';
+    });
+    s.on("move", function (position) {
+        //console.log("move", position);
+        let {x, y} = position;
+        oTop.style.height = y + "px";
+    });
+    s.on("end", function () {
+        let {animationTime: time, animationType: type} = this.options;
+        oTop.style.transition = `height ${time}s ${type}`;
+        oTop.style.height = 0;
+    })
 </script>
 </html>
