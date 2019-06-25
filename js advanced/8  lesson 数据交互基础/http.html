@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+</head>
+<body>
+<img src="" alt="" id="img">
+</body>
+<script>
+    function ajax(url, options) {
+
+        let {method, data, header} = options;
+
+        let xhr = new XMLHttpRequest();
+
+        xhr.open(method || "GET", url, true);
+
+        xhr.setRequestHeader("content-type", "application/json");
+
+        xhr.onreadystatechange = function () {
+
+            if (xhr.readyState === 3) {
+                console.log("header response");
+            }
+            if (xhr.readyState === 4) {
+                let code = xhr.status;
+                if ((code >= 200 && code < 300) || code === 304) {
+                    console.log(JSON.parse(xhr.responseText));
+                }
+            }
+        };
+
+        xhr.send(data);
+
+    }
+
+    ajax("http://localhost:5000/data/data.json", {method: "get"});
+
+    (async function () {
+        let data = await fetch("http://localhost:5000/data/data.json", {
+            method: "GET",
+            headers: {
+                "content-type": "application/json"
+            },
+
+        }).then(res => res.json());
+        console.log(data)
+
+        let img = document.querySelector("img");
+        let blob = await (await fetch("http://localhost:5000/data/picture.jpeg")).blob();
+        let url = URL.createObjectURL(blob);
+        img.src = url;
+
+
+    })();
+
+
+</script>
+</html>
