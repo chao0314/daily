@@ -38,9 +38,9 @@
             height: 15px;
         }
 
-        #mask {
+        #played {
             background: #41ac52;
-            width: 50%;
+            /*width: 50%;*/
             height: 100%;
             display: inline-block;
             position: absolute;
@@ -48,7 +48,7 @@
 
         #loaded {
             background: #9b9b9b;
-            width: 60%;
+            /*width: 60%;*/
             height: 100%;
             display: inline-block;
             position: absolute;
@@ -68,7 +68,7 @@
         </li>
         <li id="progress">
             <span id="loaded"></span>
-            <span id="mask"></span>
+            <span id="played"></span>
         </li>
         <li id="increase">
             <button>voice+</button>
@@ -100,7 +100,8 @@
             let pause = $("#pause");
             let stop = $("#stop");
             let progress = $('#progress');
-            let mask = $('#mask');
+            let played = $('#played');
+            let loaded = $('#loaded');
             let increase = $('#increase');
             let decrease = $('#decrease');
             let mute = $('#mute');
@@ -125,7 +126,7 @@
             stop.addEventListener("click", function (e) {
                 video.pause();
                 video.currentTime = 0;
-                refreshProgress(mask, 0);
+                refreshProgress(played, 0);
 
             });
             increase.addEventListener("click", function (e) {
@@ -150,46 +151,80 @@
                 }
             });
 
-            progress.addEventListener("click", function (e) {
-                refreshProgress(mask, e.offsetX, progress.offsetWidth);
-
-            });
 
             if (window.MediaSource && MediaSource.isTypeSupported(videoCode)) {
                 let ms = new MediaSource();
+                let buffer;
                 video.src = URL.createObjectURL(ms);
                 ms.addEventListener("sourceopen", function () {
-                    loadSource(url, ms)
+                    buffer = ms.addSourceBuffer(videoCode);
+                    loadSource(url, buffer)
                 });
-                video.addEventListener("timeupdate", function () {
-                    console.log(this.duration, this.currentTime)
-                })
+                video.addEventListener("timeupdate", async function () {
 
-            }
+                    // let scale = this.currentTime / this.buffered.end(0);
+                    // // console.log("update", scale, this.duration, this.currentTime, this.buffered.end(0));
+                    // refreshProgress(played, (video.videoIndex + scale) * video.videoBlock, video.videoLength);
+                    // if (scale > 0.8 && scale < 1) loadSource(url, buffer, video.videoIndex + 1);
+                    // //全屏 点进度条
+                    // if (scale >= 1) {
+                    //     alert(scale)
+                    //     while (this.currentTime >= this.buffered.end(0)) {
+                    //         await loadSource(url, buffer, video.videoIndex + 1);
+                    //     }
+                    //
+                    // }
 
-            function loadSource(url, ms, block = 0) {
-                assert(typeof url === "string");
-                const xhr = new XMLHttpRequest();
-                xhr.open("get", `${url}?block=${block}`, true);
-                xhr.responseType = "arraybuffer";
-                xhr.onreadystatechange = function () {
-                    if (this.readyState === 4) {
-                        let status = this.status;
-                        if ((status >= 200 && status < 300) || status === 304) {
-                            let buffer = ms.addSourceBuffer(videoCode);
-                            buffer.addEventListener("updateend", function () {
-                                if (video.pause) video.play();
-                            });
-                            buffer.appendBuffer(this.response);
-                            video.videoLength = this.getResponseHeader("Video-Length");
-                            video.videoBlock = this.getResponseHeader("Video-Block");
-                        } else {
-                            assert(false, "video request failed");
+                });
+
+                progress.addEventListener("click", async function (e) {
+                    console.log(e.offsetX, progress.offsetWidth);
+
+                    let scale = e.offsetX / progress.offsetWidth;
+                    let needBlock = Math.ceil(scale * video.videoLength / video.videoBlock) - (video.videoIndex + 1);
+                    if (needBlock > 0) {
+                        for (let i = 0; i < needBlock; i++) {
+                            await loadSource(url, buffer, video.videoIndex + 1);
                         }
                     }
-                };
-                xhr.send();
+                    console.log("need",needBlock)
+                    video.currentTime = scale * video.duration;
+                    refreshProgress(played, e.offsetX, progress.offsetWidth);
+
+
+                });
+                function loadSource(url, buffer, block = 0) {
+                    console.log("load----");
+                    return new Promise(function (resolve, reject) {
+                        assert(typeof url === "string");
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("get", `${url}?block=${block}`, true);
+                        xhr.responseType = "arraybuffer";
+                        xhr.onreadystatechange = function () {
+                            if (this.readyState === 4) {
+                                let status = this.status;
+                                if ((status >= 200 && status < 300) || status === 304) {
+                                    video.videoIndex = block;
+                                    video.videoLength = Number(this.getResponseHeader("Video-Length"));
+                                    video.videoBlock = Number(this.getResponseHeader("Video-Block"));
+                                    buffer.addEventListener("updateend", function () {
+                                        if (video.videoBlock * (block + 1) >= video.videoLength) ms.endOfStream();
+                                        if (video.pause && block !== 0) video.play();
+                                        refreshProgress(loaded, video.videoBlock * (block + 1), video.videoLength);
+                                        resolve()
+                                    });
+                                    buffer.appendBuffer(this.response);
+
+                                } else {
+                                    reject(new Error("video request failed"));
+                                }
+                            }
+                        };
+                        xhr.send();
+                    })
+                }
             }
+
 
 
         } else {

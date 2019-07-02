@@ -30,12 +30,10 @@ router.post("/upload", async ctx => {
 });
 
 router.get("/video/:name", async ctx => {
-
     const {name} = ctx.params;
     const {block = 0} = ctx.query;
     let handle;
     try {
-        console.log(path.resolve(__dirname, 'video', name));
         handle = await fsp.open(path.resolve(__dirname, 'video', name), "r");
         let {buffer, bytesRead} = await handle.read(Buffer.alloc(SIZE), 0, SIZE, SIZE * block);
         ctx.set({
