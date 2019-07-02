@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        input {
+            position: absolute;
+            background: red;
+            left: 0;
+            top: 0;
+            opacity: 0;
+
+        }
+    </style>
+</head>
+<body>
+<div>
+    <img src="" alt="">
+    <img src="" alt="">
+    <img src="" alt="">
+</div>
+<div style="position: relative">
+    <p>选择图片</p>
+    <input type="file" multiple>
+</div>
+<button>删除2</button>
+
+</body>
+<script>
+
+    let imgs = document.querySelectorAll("img");
+    let input = document.querySelector("input");
+    let button = document.querySelector("button");
+    let arr = [];
+    input.onchange = function (e) {
+        arr = Array.from(e.target.files);
+        preview(e.target.files);
+        console.log(e.target.files)
+
+    };
+    button.onclick = function () {
+        imgs.forEach(img => {
+            img.src = "";
+        });
+        arr.splice(1, 1);
+        preview(arr)
+        //console.log(arr)
+        // delete input.files[1]
+        // console.log(input.files)
+    };
+
+
+    function preview(files) {
+
+        Array.from(files).forEach(function (v, i) {
+            // let fr = new FileReader();
+            // fr.onload = function (e) {
+            //     imgs[i].src = e.target.result;
+            // };
+            // fr.readAsDataURL(v);
+
+            imgs[i].src = URL.createObjectURL(v);
+        })
+
+    }
+
+
+</script>
+</html>

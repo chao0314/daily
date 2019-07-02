@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        video, div, ul li, span, button {
+            padding: 0;
+            margin: 0;
+            outline: none;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        video {
+            width: 100%;
+            height: 500px;
+            border: 1px solid black;
+        }
+
+        ul li {
+            list-style: none;
+            float: left;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        #progress {
+            width: calc(100% - 500px);
+            position: relative;
+            background: gainsboro;
+            height: 15px;
+        }
+
+        #mask {
+            background: #41ac52;
+            width: 50%;
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+        }
+
+        #loaded {
+            background: #9b9b9b;
+            width: 60%;
+            height: 100%;
+            display: inline-block;
+            position: absolute;
+        }
+
+    </style>
+</head>
+<body>
+<video id="video" poster="./picture.jpeg"></video>
+<div id="control">
+    <ul>
+        <li id="pause">
+            <button>play/pause</button>
+        </li>
+        <li id="stop">
+            <button>stop</button>
+        </li>
+        <li id="progress">
+            <span id="loaded"></span>
+            <span id="mask"></span>
+        </li>
+        <li id="increase">
+            <button>voice+</button>
+        </li>
+        <li id="decrease">
+            <button>voice-</button>
+        </li>
+        <li id="mute">
+            <button>mute</button>
+        </li>
+        <li id="fullscreen">
+            <button>fullscreen</button>
+        </li>
+    </ul>
+
+</div>
+
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const $ = document.querySelector.bind(document);
+
+        function assert(exp, msg) {
+            if (!exp) throw  new Error(msg || 'assert error');
+        }
+
+        let video = $("#video");
+        if (video.canPlayType) {
+            let pause = $("#pause");
+            let stop = $("#stop");
+            let progress = $('#progress');
+            let mask = $('#mask');
+            let increase = $('#increase');
+            let decrease = $('#decrease');
+            let mute = $('#mute');
+            let fullscreen = $('#fullscreen');
+            const videoCode = `video/mp4; codecs="avc1.420020,mp4a.40.2";`;
+            const url = "http://localhost:3000/video/video.mp4";
+
+            function refreshProgress(ele, current, total) {
+                assert(typeof current === 'number');
+                assert(!total || (total && typeof total === 'number'));
+                let cssText;
+                if (current === 0 && !total) cssText = 0;
+                else if (current === 1 && !total) cssText = '100%';
+                else if (current && total) cssText = Math.round(100 * current / total) + "%";
+                ele.style.width = cssText;
+            }
+
+            pause.addEventListener("click", function (e) {
+                if (video.paused || video.ended) video.play();
+                else video.pause();
+            });
+            stop.addEventListener("click", function (e) {
+                video.pause();
+                video.currentTime = 0;
+                refreshProgress(mask, 0);
+
+            });
+            increase.addEventListener("click", function (e) {
+                if (video.volume <= 0.9) video.volume += 0.1;
+                else video.volume = 1;
+            });
+            decrease.addEventListener("click", function (e) {
+                if (video.volume >= 0.1) video.volume -= 0.1;
+                else video.volume = 0;
+            });
+            mute.addEventListener("click", function (e) {
+                video.muted = !video.muted;
+            });
+
+            fullscreen.addEventListener("click", function () {
+                if (!document.fullscreenElement && video.requestFullscreen) {
+                    video.requestFullscreen().catch(err => alert("video full screen disabled"));
+                } else {
+                    //todo about ie compatible...
+                    // alert("full screen failed");
+
+                }
+            });
+
+            progress.addEventListener("click", function (e) {
+                refreshProgress(mask, e.offsetX, progress.offsetWidth);
+
+            });
+
+            if (window.MediaSource && MediaSource.isTypeSupported(videoCode)) {
+                let ms = new MediaSource();
+                video.src = URL.createObjectURL(ms);
+                ms.addEventListener("sourceopen", function () {
+                    loadSource(url, ms)
+                });
+                video.addEventListener("timeupdate", function () {
+                    console.log(this.duration, this.currentTime)
+                })
+
+            }
+
+            function loadSource(url, ms, block = 0) {
+                assert(typeof url === "string");
+                const xhr = new XMLHttpRequest();
+                xhr.open("get", `${url}?block=${block}`, true);
+                xhr.responseType = "arraybuffer";
+                xhr.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        let status = this.status;
+                        if ((status >= 200 && status < 300) || status === 304) {
+                            let buffer = ms.addSourceBuffer(videoCode);
+                            buffer.addEventListener("updateend", function () {
+                                if (video.pause) video.play();
+                            });
+                            buffer.appendBuffer(this.response);
+                            video.videoLength = this.getResponseHeader("Video-Length");
+                            video.videoBlock = this.getResponseHeader("Video-Block");
+                        } else {
+                            assert(false, "video request failed");
+                        }
+                    }
+                };
+                xhr.send();
+            }
+
+
+        } else {
+            // todo use flash
+        }
+    })
+
+
+</script>
+</html>

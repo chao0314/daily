@@ -50,7 +50,7 @@
             },
 
         }).then(res => res.json());
-        console.log(data)
+        console.log(data);
 
         let img = document.querySelector("img");
         let blob = await (await fetch("http://localhost:5000/data/picture.jpeg")).blob();

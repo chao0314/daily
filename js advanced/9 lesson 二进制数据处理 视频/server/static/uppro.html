@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        .progress-bar {
+            height: 20px;
+            background: silver;
+        }
+
+        .index {
+            background: #41ac52;
+            height: 20px;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<div class="progress-bar">
+    <div class="index"></div>
+</div>
+<form name="form1" id="form1">
+    <input type="file" name="file1" multiple>
+</form>
+<button id="bt1">上传1</button>
+<br>
+<input type="file" multiple id="input">
+<button id="bt2">上传2</button>
+
+</body>
+<script>
+    const $ = document.querySelectorAll.bind(document);
+    const form1 = $("form1")[0];
+    const input = $("#input")[0];
+    let b1 = $("#bt1")[0];
+    let b2 = $("#bt2")[0];
+    const index = $(".index")[0];
+    b1.onclick = function () {
+        let fd = new FormData(form1);
+
+
+        fetch("http://localhost:3000/upload", {method: "post", body: fd,}).then(res => res.text()).then(data => {
+            console.log(data);
+        })
+    };
+    b2.onclick = function () {
+        let fd = new FormData();
+        Array.from(input.files).forEach(v => {
+            fd.append("file2", v);
+        });
+        const xhr = new XMLHttpRequest();
+        xhr.open("post", "http://localhost:3000/upload", true);
+        xhr.upload.onprogress = function (e) {
+            console.log("上传进度", e.total, e.loaded);
+            index.style.cssText = `transition:width 1s ease;width:${Math.round(e.loaded / e.total) * 100}%`;
+
+        };
+        xhr.onprogress = function (e) {
+            console.log("下载进度", e.total, e.loaded);
+
+        };
+        xhr.onreadystatechange = function (e) {
+            if (e.target.readyState === 4)
+                console.log(e.target.status, e.target.responseText);
+        };
+        xhr.send(fd)
+    }
+
+
+</script>
+</html>
