@@ -154,7 +154,6 @@
             if (window.MediaSource && MediaSource.isTypeSupported(videoCode)) {
                 let ms = new MediaSource();
                 let buffer;
-                let buffer2;
                 video.src = URL.createObjectURL(ms);
                 ms.addEventListener("sourceopen", async function () {
                     buffer = ms.addSourceBuffer(videoCode);
@@ -162,7 +161,7 @@
                     refreshProgress(loaded, video.videoBlock, video.videoLength);
                 });
                 video.addEventListener("timeupdate", async function () {
-                    console.log(this.buffered.start(0), this.buffered.end(0), this.currentTime);
+                    // console.log(this.buffered.start(0), this.buffered.end(0), this.currentTime);
                     let max = Math.ceil(video.videoLength / video.videoBlock);
                     if ((this.buffered.end(0) - this.currentTime) < 60 && max - 1 > video.videoIndex) {
                         loadSource(url, buffer, video.videoIndex + 1);
@@ -180,20 +179,27 @@
                 progress.addEventListener("click", async function (e) {
                     let scale = e.offsetX / progress.offsetWidth;
                     let time = video.duration * scale;
+                    let start, end, noRange = true;
+                    if (buffer.buffered.length !== 0) {
+                        start = buffer.buffered.start(0);
+                        end = buffer.buffered.end(0);
+                        noRange = false;
+                    }
+
                     video.currentTime = time;
                     //向前 点进度条
-                    if (time < video.buffered.start(0)) {
-                        ms.removeSourceBuffer(buffer);
-                        let buffer2 = ms.addSourceBuffer(videoCode);
+                    if (noRange || time < start) {
+                        buffer.remove(buffer.buffered.start(0), buffer.buffered.end(0));
                         let block = Math.floor(scale * Math.ceil(video.videoLength / video.videoBlock));
-                        await loadSource(url, buffer2, block);
+                        await loadSource(url, buffer, block);
 
+                    } else if (time > end) {
+                        //向后 点进度条
+                        while (time > video.buffered.end(0)) {
+                            await loadSource(url, buffer, video.videoIndex + 1);
+                        }
                     }
-                    //向后 点进度条
-                    while (time >= video.buffered.end(0)) {
-                        console.log("while---", video.buffered.end(0));
-                        await loadSource(url, buffer, video.videoIndex + 1);
-                    }
+
 
                 });
 
