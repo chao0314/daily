@@ -1,10 +1,14 @@
 {
   "name": "10_lessson",
   "version": "1.0.0",
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "start": "webpack-dev-server --env.dev",
-    "build": "webpack --env.pro"
+    "build": "webpack --env.prod"
+  },
+  "devDependencies": {
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
   }
 }
