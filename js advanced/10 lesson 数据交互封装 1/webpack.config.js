@@ -3,12 +3,12 @@ module.exports = function (env = {}) {
     const {dev} = env;
     return {
         mode: dev ? "development" : "production",
-        entry: path.resolve(__dirname, "src/index.js"),
+        entry: dev ? "./test" : path.resolve(__dirname, "src/index.js"),
         output: {
             path: path.resolve(__dirname, "dist"),
-            filename: dev ? "nox.js" : "nox.min.js",
+            filename: dev ? "test.js" : "axios.min.js",
             libraryTarget: "umd",
-            sourceMapFilename: dev ? "nox.map" : "nox.min.map"
+            sourceMapFilename: dev ? "test.map" : "axios.min.map"
         },
         devtool: "source-map",
         devServer: {
