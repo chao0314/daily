@@ -5,7 +5,7 @@ export function assert(exp, msg = "error of assert") {
 }
 
 export function isObj(obj) {
-    return obj instanceof Object && !Array.isArray(obj);
+    return typeof obj === "object" && !Array.isArray(obj);
 }
 
 export function merge(target, src, option) {
@@ -57,7 +57,6 @@ export function clone(src) {
                 target[p] = clone(src[p]);
             }
         }
-        return target;
 
     } else if (Array.isArray(src)) {
         target = [];
@@ -66,9 +65,9 @@ export function clone(src) {
         })
 
     } else {
-        return src;
+        target = src;
     }
-
+    return target;
 
 }
 
@@ -86,7 +85,6 @@ export function joinParams(params) {
 export function handleOptions(defaults, method, ...args) {
     assert(args.length !== 0);
     let config = {method, headers: {}};
-
     if (args.length === 1) {
         let arg = args[0];
         if (typeof arg === "string") {
@@ -125,17 +123,16 @@ export function handleOptions(defaults, method, ...args) {
         initConfigFromObj(third);
 
     }
+    return config;
 
     function initConfigFromObj(obj) {
         if (obj.params && isObj(obj.params)) config.url = `${config.url}?${joinParams(obj.params)}`;
-        if (isObj(obj.headers)) merge(config.headers, obj.headers);
-        config.transformRequest = obj.transformRequest || defaults.transformRequest;
-        config.transformResponse = obj.transformResponse || defaults.transformResponse;
         merge(config.headers, defaults.headers.common);
         merge(config.headers, defaults.headers[config.method]);
+        if (isObj(obj.headers)) merge(config.headers, obj.headers);
+        merge(config, defaults, {exclude: ["baseUrl", "method", "headers"]});
+        merge(config, obj, {exclude: ["baseUrl", "method", "headers"]})
     }
-
-    return config;
 
 
 }

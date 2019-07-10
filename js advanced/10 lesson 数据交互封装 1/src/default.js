@@ -9,6 +9,7 @@ export default {
         post: {},
         delete: {}
     },
+    responseType: "json",
     transformRequest(data) {
         return data;
     },

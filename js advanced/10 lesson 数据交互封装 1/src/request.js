@@ -1,22 +1,28 @@
-export default class {
+export default function (options) {
+    let {method, url, data, responseType, headers} = options;
+    let xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.responseType = responseType;
 
-    constructor(context) {
-
-        this.ctx = context;
+    for (let prop in headers) {
+        if (headers.hasOwnProperty(prop)) {
+            xhr.setRequestHeader(encodeURIComponent(prop), encodeURIComponent(headers[prop]));
+        }
     }
 
-
-    request() {
-
-    }
-
-    transformRequest(data) {
-        return data;
-    }
-
-    _request() {
-
-    }
-
+    xhr.send(data);
+    return new Promise(function (resolve, reject) {
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if ((this.status >= 200 && this.status < 300) || this.status === 304) {
+                    resolve(xhr);
+                } else {
+                    reject(xhr);
+                }
+            }
+        };
+    })
 
 }
+
+

@@ -1,12 +1,15 @@
 {
   "name": "10_lessson",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4"
+  },
   "scripts": {
     "start": "webpack-dev-server --env.dev",
     "build": "webpack --env.prod"
   },
   "devDependencies": {
+    "strip-loader": "^0.1.2",
     "webpack": "^4.35.2",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"

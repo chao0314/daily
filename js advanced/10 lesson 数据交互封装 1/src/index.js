@@ -1,6 +1,6 @@
 import {assert, merge, clone, handleOptions} from "./util";
-import Request from "./request";
-import Response from "./response";
+import request from "./request";
+import response from "./response";
 import defaults from "./default";
 import Interceptor from "./interceptor";
 
@@ -28,25 +28,45 @@ class Axios {
 
     get(...args) {
         let config = handleOptions(this.defaults, "get", ...args);
-        console.log("get", config);
+       // console.log("get", config);
+        return this._request(config);
 
     }
 
     post(...args) {
         let config = handleOptions(this.defaults, "post", ...args);
-        console.log("post", config);
+        //console.log("post", config);
+        return this._request(config);
 
     }
 
     delete(...args) {
         let config = handleOptions(this.defaults, "delete", ...args);
-        console.log("delete", config);
+        //console.log("delete", config);
+        return this._request(config);
 
     }
 
     all(...args) {
         let config = handleOptions(this.defaults, void 0, ...args);
-        console.log("all", config);
+       // console.log("all", config);
+        return this._request(config);
+    }
+
+    async _request(config) {
+        let res;
+        let {transformRequest, transformResponse, data} = config;
+        config.data = transformRequest(data);
+        config = await this.interceptos.request.iterator(config);
+        try {
+            res = response(await request(config));
+            res.data = transformResponse(res.data);
+            res = await this.interceptos.response.iterator(res);
+            return res;
+        } catch (e) {
+            return await this.interceptos.response.iterator(e, "error");
+        }
+
     }
 
 }
