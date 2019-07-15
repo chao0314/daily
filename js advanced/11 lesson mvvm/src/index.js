@@ -1,5 +1,6 @@
 import proxy from "./proxy";
 import {domParser} from "./parser"
+import {exp} from "./expression";
 
 let p = {
     a: 1,
@@ -16,3 +17,6 @@ window.ppp = proxy(p, function (prop) {
 let oDiv = document.getElementById("root");
 
 console.log(domParser(oDiv));
+let s = "'sss---'+a+arr[1]+b.c+ new Date()";
+
+console.log(exp(s, p));
