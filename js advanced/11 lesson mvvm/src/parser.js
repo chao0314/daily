@@ -24,7 +24,8 @@ export function domParser(dom) {
             isHtmlEle,
             children,
             el: dom,
-            type: "element"
+            type: "element",
+            _virtual: true
         }
 
 
@@ -33,7 +34,8 @@ export function domParser(dom) {
         if (value) return {
             value,
             el: dom,
-            type: "text"
+            type: "text",
+            _virtual: true
         }
     }
 
