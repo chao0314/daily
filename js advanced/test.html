@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <style>
+        #heart {
+            width: 100px;
+            height: 100px;
+            /*background: pink;*/
+            /*position: relative;*/
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+
+        }
+
+        #heart::before,
+        #heart::after {
+            position: absolute;
+            content: "";
+            background: red;
+            top: 5px;
+            width: 50px;
+            height: 80px;
+            border-radius: 50px 50px 0 0;
+            transform: rotate(45deg);
+            transform-origin: right bottom;
+
+        }
+
+        #heart::after {
+            left: 50px;
+            /*background: #0086b3;*/
+            transform: rotate(-45deg);
+            transform-origin: left bottom;
+        }
+
+        #heart:hover {
+            transform: scale(3);
+            transition: transform ease 1s;
+        }
+    </style>
+</head>
+<body>
+<div id="heart">
+
+</div>
+</body>
+<script>
+    let oHeart = document.querySelector("#heart");
+    oHeart.addEventListener("mouseleave", function () {
+        this.style.transition = "transform ease 1s";
+    })
+</script>
+</html>
