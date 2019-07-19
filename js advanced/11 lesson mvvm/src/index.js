@@ -25,6 +25,17 @@ import Vue from "./vue";
 window.vm = new Vue({
     el: "#root",
     data: {
-        title: "this is title"
+        title: "this is title",
+        msg: "hello world",
+        show: true,
+        has: false,
+        html: "<strong>hello world</strong>",
+        vtext:"vtext render"
+    },
+    methods: {
+        click(e) {
+            console.log(e);
+            alert("click");
+        }
     }
 });

@@ -8,6 +8,6 @@ export default class VComponent extends VElement {
     }
 
     render() {
-
+        super.render()
     }
 }

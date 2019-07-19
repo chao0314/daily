@@ -8,6 +8,7 @@ export function createVDomTree(option, context) {
     assert(option);
     let root;
     if (/^element$/.test(option.type)) {
+        //todo context always is vue
         if (option.isHtmlEle) {
             root = new VElement(option, context);
         } else {

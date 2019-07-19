@@ -48,3 +48,42 @@ function parser(str) {
 
 
 }
+
+export function textParser(str, data) {
+    assert(/string/.test(typeof str));
+    let start = str.indexOf("{{");
+    let end = start + 2;
+    let stack = [];
+    let result = [];
+    console.log("---start", start)
+    while (start !== -1 && end < str.length) {
+        console.log("---while")
+        let sFlag, dFlag;
+        stack = ['{', '{'];
+        end = start + 2;
+        for (end; end < str.length; end++) {
+            let char = str[end];
+            if (/\{/.test(char) && !sFlag && !dFlag) {
+                stack.push("{");
+            } else if (/\}/.test(char) && !sFlag && !dFlag) {
+                stack.pop();
+            } else if (/'/.test(char) && !dFlag) {
+                sFlag = !sFlag;
+            } else if (/"/.test(char) && !sFlag) {
+                dFlag = !dFlag;
+            }
+            console.log("---", stack)
+            if (stack.length === 0) {
+                result.push(str.slice(0, start));
+                result.push(exp(str.slice(start + 2, end - 1), data));
+                str = str.slice(end + 1);
+                start = str.indexOf("{{");
+                break;
+            }
+        }
+
+    }
+    assert(stack.length === 0, "invalid text expression");
+    result.push(str.slice(end + 1));
+    return result.join("");
+}

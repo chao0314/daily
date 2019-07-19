@@ -11,9 +11,13 @@ export default class Vue {
         let domInformation = domParser(this.$el);
         //根据真实dom树的信息构建虚拟dom
         this.$root = createVDomTree(domInformation, this);
-        this.$data = proxy(option.data, () => {
+        console.log(this.$root)
+        //todo temporary
+        this.$staic = {$event: null, ...option.methods};
+        this.$data = proxy(option.data, this.$staic, () => {
             this.render();
         });
+
         this.render()
     }
 

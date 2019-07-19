@@ -49,8 +49,8 @@ export function directiveParser(attrs) {
     for (let key in attrs) {
         if (attrs.hasOwnProperty(key)) {
             let dir;
+            let [name, arg] = key.split(":");
             if (/^v-/i.test(key)) {
-                let [name, arg] = key.split(":");
                 dir = {
                     name: name.slice(2),
                     arg
@@ -71,7 +71,18 @@ export function directiveParser(attrs) {
                 assert(dir.name !== "bind" || (dir.name === "bind" && dir.arg));
                 assert(dir.name !== "on" || (dir.name === "on" && dir.arg));
                 dir.value = attrs[key];
-                dirs.push(dir);
+                if (/mode/.test(dir.name)) {
+                    dirs.push({
+                        name: "bind",
+                        arg: "value",
+                        value: dir.value
+                    });
+                    dirs.push({
+                        name: "on",
+                        arg: "input",
+                        value: `${dir.value} = $event.target.value`
+                    })
+                } else dirs.push(dir);
             }
         }
     }
