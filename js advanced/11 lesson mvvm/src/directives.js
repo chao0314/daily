@@ -7,7 +7,7 @@ export default {
     bind: {
         update(velement, {arg, value}) {
             assert(velement instanceof VNode && arg);
-            let result = exp(value, velement.$root.$data);
+            let result = exp(value, velement.$context.$data);
             if (/value/.test(value)) velement.$el.value = result;
             else velement.$el.setAttribute(arg, result);
 
@@ -21,8 +21,8 @@ export default {
             }
             //todo remove listener
             velement.$el.addEventListener(arg, function (e) {
-                velement.$root.$staic.$event = e;
-                exp(value, velement.$root.$data);
+                velement.$context.$staic.$event = e;
+                exp(value, velement.$context.$data);
             }, false);
 
         }
@@ -35,9 +35,9 @@ export default {
         }
     },
     show: {
-        update({$el, $root}, {value}) {
-            assert($el && $root);
-            let result = exp(value, $root.$data);
+        update({$el, $context}, {value}) {
+            assert($el && $context);
+            let result = exp(value, $context.$data);
             if (result) $el.style.display = '';
             else $el.style.display = 'none';
         }
@@ -48,7 +48,7 @@ export default {
             velement._holder = document.createComment("if holder");
         },
         update(velement, {value}) {
-            let result = exp(value, velement.$root.$data);
+            let result = exp(value, velement.$context.$data);
             if (result && velement._holder.parentElement) {
                 velement._parent.replaceChild(velement.$el, velement._holder);
             } else if (!result && velement.$el.parentElement) {
@@ -63,13 +63,13 @@ export default {
     html: {
         update(velement, {value}) {
             assert(velement instanceof VNode);
-            velement.$el.innerHTML = exp(value, velement.$root.$data);
+            velement.$el.innerHTML = exp(value, velement.$context.$data);
         }
     },
     text: {
         update(velement, {value}) {
             assert(velement instanceof VNode);
-            let oText = document.createTextNode(exp(value, velement.$root.$data));
+            let oText = document.createTextNode(exp(value, velement.$context.$data));
             velement.$el.innerHTML = '';
             velement.$el.appendChild(oText);
 

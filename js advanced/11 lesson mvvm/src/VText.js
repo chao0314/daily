@@ -2,14 +2,12 @@ import VNode from "./VNode";
 import {textParser} from "./expression";
 
 export default class VText extends VNode {
-    constructor(option, root) {
-        super(option, root);
+    constructor(option, context) {
+        super(option, context);
         this.$value = option.value;
     }
 
     render() {
-        let inner = textParser(this.$value, this.$root.$data);
-        console.log(inner);
-        this.$el.nodeValue = inner;
+        this.$el.nodeValue = textParser(this.$value, this.$context.$data);
     }
 }

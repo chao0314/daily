@@ -5,6 +5,8 @@ export function domParser(dom) {
     if (dom.nodeType === document.ELEMENT_NODE) {
         let tag = dom.tagName.toLowerCase();
         //x-xxx 有中线的自定义组件，会被识别为 HTMLElement
+        //todo bug em strong and so on also  is  HTMLElement
+        //console.log(dom.constructor);
         let isHtmlEle = dom.constructor !== HTMLElement && dom.constructor !== HTMLUnknownElement;
         let attrs = {};
         let children = [];

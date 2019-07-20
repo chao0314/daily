@@ -15,7 +15,6 @@ export function exp(str, data) {
             }
         }
     );
-    console.log(arr);
     return eval(arr.join(""));
 
 }
@@ -52,27 +51,18 @@ function parser(str) {
 export function textParser(str, data) {
     assert(/string/.test(typeof str));
     let start = str.indexOf("{{");
-    let end = start + 2;
-    let stack = [];
-    let result = [];
-    console.log("---start", start)
+    let end = -1;
+    let stack = [], result = [];
     while (start !== -1 && end < str.length) {
-        console.log("---while")
-        let sFlag, dFlag;
         stack = ['{', '{'];
         end = start + 2;
         for (end; end < str.length; end++) {
             let char = str[end];
-            if (/\{/.test(char) && !sFlag && !dFlag) {
+            if (/\{/.test(char)) {
                 stack.push("{");
-            } else if (/\}/.test(char) && !sFlag && !dFlag) {
+            } else if (/\}/.test(char)) {
                 stack.pop();
-            } else if (/'/.test(char) && !dFlag) {
-                sFlag = !sFlag;
-            } else if (/"/.test(char) && !sFlag) {
-                dFlag = !dFlag;
             }
-            console.log("---", stack)
             if (stack.length === 0) {
                 result.push(str.slice(0, start));
                 result.push(exp(str.slice(start + 2, end - 1), data));

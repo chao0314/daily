@@ -1,10 +1,10 @@
 import {assert} from "./utils";
 
 export default class VNode {
-    constructor(option, root) {
+    constructor(option, context) {
         assert(option && option.el);
         this.$el = option.el;
-        this.$root = root || this;
+        this.$context = context
     }
 
     render() {
