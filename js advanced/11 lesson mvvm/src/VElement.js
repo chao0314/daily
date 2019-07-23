@@ -31,6 +31,6 @@ export default class VElement extends VNode {
     clone() {
         let el = this.$el.cloneNode(true);
         if (el.hasAttribute("v-for")) el.removeAttribute("v-for");
-        return createVDomTree(domParser(el));
+        return createVDomTree(domParser(el), this.$context);
     }
 }

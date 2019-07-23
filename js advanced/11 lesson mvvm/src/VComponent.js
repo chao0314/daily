@@ -13,13 +13,14 @@ export default class VComponent {
         this.$$directives = {...directives, ...option.directives ? option.directives : {}};
         //解析真实dom树的信息
         let domInformation = domParser(this.$el);
-        //根据真实dom树的信息构建虚拟dom
-        this.$root = createVDomTree(domInformation, this);
+
         //todo temporary
         this.$staic = {$event: null, ...option.methods};
         this.$data = proxy(option.data, this.$staic, () => {
             this.render();
         });
+        //根据真实dom树的信息构建虚拟dom
+        this.$root = createVDomTree(domInformation, option.context || this, this);
 
         this.render()
     }

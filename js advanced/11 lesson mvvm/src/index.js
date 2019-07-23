@@ -30,7 +30,8 @@ window.vm = new Vue({
         show: true,
         has: false,
         html: "<strong>hello world</strong>",
-        vtext:"vtext render"
+        vtext: "vtext render",
+        arr: ["a", "b", "c"]
     },
     methods: {
         click(e) {

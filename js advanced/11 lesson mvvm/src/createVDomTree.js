@@ -4,22 +4,21 @@ import VComponent from "./VComponent";
 import VText from "./VText";
 
 
-export function createVDomTree(option, context) {
+export function createVDomTree(option, context, parent) {
     assert(option);
-    let root;
     if (/^element$/.test(option.type)) {
         //todo context always is vue
         if (option.isHtmlEle) {
-            root = new VElement(option, context);
+            parent = new VElement(option, context);
         } else {
-            root = new VComponent(option, context);
+            parent = new VComponent(option, context);
         }
-        root.$children = option.children.map(child => createVDomTree(child, context));
+        parent.$children = option.children.map(child => createVDomTree(child, context, parent));
     } else if (/^text$/.test(option.type)) {
-        root = new VText(option, context);
+        parent = new VText(option, context, parent);
     } else {
         assert(false, "unknown type");
     }
-    return root;
+    return parent;
 
 }

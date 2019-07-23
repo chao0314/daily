@@ -1,5 +1,6 @@
 import {assert} from "./utils";
 import {exp} from "./expression";
+import {forParser} from "./parser";
 import VNode from "./VNode";
 
 // directive life hook function :init update destroy
@@ -76,19 +77,34 @@ export default {
     },
     "for": {
         init(velement, directive) {
-            directive.meta.parent = velement.$el.parent;
+            directive.meta.parent = velement.$el.parentElement;
             directive.meta.holder = document.createComment("for holder");
-            directive.meta.tplVel = velement.clone();
+            directive.meta.tplVelement = velement;
+            directive.meta.parent.replaceChild(directive.meta.holder, velement.$el);
             //todo
-            directive.meta.children = [];
+            directive.meta.realVelements = [];
             velement.render = function () {
-                let {parent, holder, tplVel, children} = directive.meta;
+                let {parent, holder, tplVelement, realVelements} = directive.meta;
                 //todo remove child
-                children.forEach(child=>{
-                    parent.removeChild(child);
-                })
-
-
+                realVelements.forEach(elm => {
+                    parent.removeChild(elm.$el);
+                });
+                realVelements.length = 0;
+                let {iterator, item, index} = forParser(directive.value);
+                iterator = exp(iterator, tplVelement.$data);
+                let fg = document.createDocumentFragment();
+                if (Array.isArray(iterator)) {
+                    for (let i = 0; i < iterator.length; i++) {
+                        let element = tplVelement.clone();
+                        element.$data[item] = iterator[i];
+                        element.$data[index] = i;
+                        // console.log(item,index)
+                        realVelements.push(element);
+                        fg.append(element.$el);
+                    }
+                }
+                parent.insertBefore(fg, holder);
+                realVelements.forEach(el => el.render());
             }
         },
 

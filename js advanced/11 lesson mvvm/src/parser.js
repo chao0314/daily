@@ -73,7 +73,7 @@ export function directiveParser(attrs) {
                 assert(dir.name !== "bind" || (dir.name === "bind" && dir.arg));
                 assert(dir.name !== "on" || (dir.name === "on" && dir.arg));
                 dir.value = attrs[key];
-                dir.meta = {};
+                if (/for/.test(dir.name)) dir.meta = {};
                 if (/mode/.test(dir.name)) {
                     dirs.push({
                         name: "bind",
@@ -95,4 +95,17 @@ export function directiveParser(attrs) {
 export function listenerParser(dirs) {
     assert(Array.isArray(dirs));
     return dirs.filter(dir => dir.name === "on");
+}
+
+//v-for = (item,index) in arr
+export function forParser(exp) {
+    assert(typeof exp === "string");
+    let [temp, iterator] = exp.split(" in ");
+    temp = temp.replace(/[()]/g, "");
+    let [item, index] = temp.split(",");
+    return {
+        iterator: iterator.trim(),
+        item: item.trim(),
+        index: index ? index.trim() : "index"
+    }
 }
