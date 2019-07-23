@@ -72,8 +72,26 @@ export default {
             let oText = document.createTextNode(exp(value, velement.$context.$data));
             velement.$el.innerHTML = '';
             velement.$el.appendChild(oText);
-
         }
+    },
+    "for": {
+        init(velement, directive) {
+            directive.meta.parent = velement.$el.parent;
+            directive.meta.holder = document.createComment("for holder");
+            directive.meta.tplVel = velement.clone();
+            //todo
+            directive.meta.children = [];
+            velement.render = function () {
+                let {parent, holder, tplVel, children} = directive.meta;
+                //todo remove child
+                children.forEach(child=>{
+                    parent.removeChild(child);
+                })
+
+
+            }
+        },
+
     }
 
 
