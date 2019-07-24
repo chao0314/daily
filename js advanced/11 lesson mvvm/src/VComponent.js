@@ -6,10 +6,15 @@ import {createVDomTree} from "./createVDomTree";
 import proxy from "./proxy";
 import directives from "./directives";
 
+const uuid = require("uuid/v4");
+
 export default class VComponent {
-    constructor(option) {
+    constructor(option, parent, root,) {
         assert(option);
         this.$el = getDom(option.el);
+        this.$parentCmp = parent;
+        this.$rootCmp = root;
+        this.$name = uuid();
         this.$$directives = {...directives, ...option.directives ? option.directives : {}};
         //解析真实dom树的信息
         let domInformation = domParser(this.$el);
@@ -20,13 +25,14 @@ export default class VComponent {
             this.render();
         });
         //根据真实dom树的信息构建虚拟dom
-        this.$root = createVDomTree(domInformation, option.context || this, this);
+        this.$domTree = createVDomTree(domInformation, this, this.$rootCmp || this);
 
         this.render()
     }
 
     render() {
-        this.$root.render();
+        this.$domTree.render();
+        console.log("render,vcomp",this.$name);
 
     }
 }

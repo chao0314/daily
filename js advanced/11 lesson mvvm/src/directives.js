@@ -77,6 +77,7 @@ export default {
     },
     "for": {
         init(velement, directive) {
+            //todo check now only v-for velement,can not handle vcomponent
             directive.meta.parent = velement.$el.parentElement;
             directive.meta.holder = document.createComment("for holder");
             directive.meta.tplVelement = velement;
@@ -91,14 +92,13 @@ export default {
                 });
                 realVelements.length = 0;
                 let {iterator, item, index} = forParser(directive.value);
-                iterator = exp(iterator, tplVelement.$data);
+                iterator = exp(iterator, tplVelement.$$data);
                 let fg = document.createDocumentFragment();
                 if (Array.isArray(iterator)) {
                     for (let i = 0; i < iterator.length; i++) {
                         let element = tplVelement.clone();
-                        element.$data[item] = iterator[i];
-                        element.$data[index] = i;
-                        // console.log(item,index)
+                        element.$$data[item] = iterator[i];
+                        element.$$data[index] = i;
                         realVelements.push(element);
                         fg.append(element.$el);
                     }
