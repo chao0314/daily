@@ -73,11 +73,12 @@ export function directiveParser(attrs) {
                 assert(dir.name !== "bind" || (dir.name === "bind" && dir.arg));
                 assert(dir.name !== "on" || (dir.name === "on" && dir.arg));
                 dir.value = attrs[key];
-                if (/for/.test(dir.name)) dir.meta = {};
+                if (/(for)|(bind)/.test(dir.name)) dir.meta = {};
                 if (/mode/.test(dir.name)) {
                     dirs.push({
                         name: "bind",
                         arg: "value",
+                        meta: {},
                         value: dir.value
                     });
                     dirs.push({

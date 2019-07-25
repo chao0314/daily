@@ -6,11 +6,16 @@ import VNode from "./VNode";
 // directive life hook function :init update destroy
 export default {
     bind: {
-        update(velement, {arg, value}) {
-            assert(velement instanceof VNode && arg);
+        update(velement, directive) {
+            assert(velement instanceof VNode && directive);
+            let {arg, value, meta} = directive;
             let result = exp(value, velement.$context.$data);
-            if (/value/.test(value)) velement.$el.value = result;
-            else velement.$el.setAttribute(arg, result);
+            if (meta._oldValue !== result) {
+                if (/value/.test(value)) velement.$el.value = result;
+                else velement.$el.setAttribute(arg, result);
+                directive.meta._oldValue = result;
+            }
+
 
         }
     },
@@ -92,13 +97,13 @@ export default {
                 });
                 realVelements.length = 0;
                 let {iterator, item, index} = forParser(directive.value);
-                iterator = exp(iterator, tplVelement.$$data);
+                iterator = exp(iterator, tplVelement.$data);
                 let fg = document.createDocumentFragment();
                 if (Array.isArray(iterator)) {
                     for (let i = 0; i < iterator.length; i++) {
                         let element = tplVelement.clone();
-                        element.$$data[item] = iterator[i];
-                        element.$$data[index] = i;
+                        element._set(item, iterator[i]);
+                        element._set(index, i);
                         realVelements.push(element);
                         fg.append(element.$el);
                     }

@@ -32,7 +32,7 @@ export default class VComponent {
 
     render() {
         this.$domTree.render();
-        console.log("render,vcomp",this.$name);
+        console.log("render******vcomp",this.$name);
 
     }
 }
