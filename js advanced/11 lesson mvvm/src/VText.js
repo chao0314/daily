@@ -12,6 +12,7 @@ export default class VText extends VNode {
         let newValue = textParser(this.$value, this.$parent.$data);
         if (newValue !== this._oldValue) {
             this.$el.nodeValue = newValue;
+            this._oldValue = newValue;
             console.log("render----vtext", this.$name);
         }
 

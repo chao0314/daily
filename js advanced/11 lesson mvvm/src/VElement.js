@@ -26,9 +26,8 @@ export default class VElement extends VNode {
 
 
         //todo init status
-        this.$directives.forEach(dir => {
-            this.$context.$$directives[dir.name].init && this.$context.$$directives[dir.name].init(this, dir);
-        })
+        this.init();
+
     }
 
     _get(name) {
@@ -56,5 +55,11 @@ export default class VElement extends VNode {
         let el = this.$el.cloneNode(true);
         if (el.hasAttribute("v-for")) el.removeAttribute("v-for");
         return createVDomTree(domParser(el), this.$parent, this.$context);
+    }
+
+    init() {
+        this.$directives.forEach(dir => {
+            this.$context.$$directives[dir.name].init && this.$context.$$directives[dir.name].init(this, dir);
+        })
     }
 }

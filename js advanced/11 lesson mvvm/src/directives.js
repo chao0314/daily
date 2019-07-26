@@ -9,7 +9,7 @@ export default {
         update(velement, directive) {
             assert(velement instanceof VNode && directive);
             let {arg, value, meta} = directive;
-            let result = exp(value, velement.$context.$data);
+            let result = exp(value, velement.$data);
             if (meta._oldValue !== result) {
                 if (/value/.test(value)) velement.$el.value = result;
                 else velement.$el.setAttribute(arg, result);
@@ -28,7 +28,7 @@ export default {
             //todo remove listener
             velement.$el.addEventListener(arg, function (e) {
                 velement.$context.$staic.$event = e;
-                exp(value, velement.$context.$data);
+                exp(value, velement.$data);
             }, false);
 
         }
@@ -90,24 +90,46 @@ export default {
             //todo
             directive.meta.realVelements = [];
             velement.render = function () {
-                let {parent, holder, tplVelement, realVelements} = directive.meta;
+                let {parent, holder, tplVelement, _lastVelements = [], _lastIterator = []} = directive.meta;
                 //todo remove child
-                realVelements.forEach(elm => {
+                _lastVelements.forEach(elm => {
                     parent.removeChild(elm.$el);
                 });
-                realVelements.length = 0;
                 let {iterator, item, index} = forParser(directive.value);
-                iterator = exp(iterator, tplVelement.$data);
                 let fg = document.createDocumentFragment();
+                iterator = exp(iterator, tplVelement.$data);
+                let realVelements = Array(iterator.length);
+                //todo only array at present
+                console.log("iterator", iterator);
+                console.log("_lastIterator", _lastIterator);
+                console.log("_lastVelements", _lastVelements);
                 if (Array.isArray(iterator)) {
                     for (let i = 0; i < iterator.length; i++) {
-                        let element = tplVelement.clone();
-                        element._set(item, iterator[i]);
-                        element._set(index, i);
-                        realVelements.push(element);
-                        fg.append(element.$el);
+                        let n = _lastIterator.findIndex(v => iterator[i] === v);
+                        if (n !== -1) {
+                            realVelements[i] = _lastVelements[n];
+                            _lastVelements.splice(n, 1);
+                            _lastIterator.splice(n, 1);
+                        } else
+                            realVelements[i] = null;
+
                     }
+                    realVelements = realVelements.map((v, i) => {
+                        if (!v) {
+                            if (_lastVelements.length > 0) v = _lastVelements.pop();
+                            else v = tplVelement.clone();
+                        }
+                        v._set(item, iterator[i]);
+                        v._set(index, i);
+                        fg.append(v.$el);
+                        return v;
+                    })
+
                 }
+                directive.meta._lastIterator = [...iterator];
+                directive.meta._lastVelements = [...realVelements];
+                console.log("ccc---lastIterator-", directive.meta._lastIterator);
+                console.log("ccc----", directive.meta._lastVelements);
                 parent.insertBefore(fg, holder);
                 realVelements.forEach(el => el.render());
             }
@@ -117,3 +139,4 @@ export default {
 
 
 }
+

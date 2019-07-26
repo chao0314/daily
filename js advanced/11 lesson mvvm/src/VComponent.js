@@ -15,6 +15,7 @@ export default class VComponent {
         this.$parentCmp = parent;
         this.$rootCmp = root;
         this.$name = uuid();
+        this.$timeId = null;
         this.$$directives = {...directives, ...option.directives ? option.directives : {}};
         //解析真实dom树的信息
         let domInformation = domParser(this.$el);
@@ -26,13 +27,15 @@ export default class VComponent {
         });
         //根据真实dom树的信息构建虚拟dom
         this.$domTree = createVDomTree(domInformation, this, this.$rootCmp || this);
-
-        this.render()
+        this.render();
     }
 
     render() {
-        this.$domTree.render();
-        console.log("render******vcomp",this.$name);
+        clearTimeout(this.$timeId);
+        this.$timeId = setTimeout(() => {
+            this.$domTree.render();
+            console.log("render******vcomp", this.$name);
+        }, 0);
 
     }
 }
