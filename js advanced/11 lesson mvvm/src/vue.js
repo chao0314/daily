@@ -21,6 +21,7 @@ export default class Vue extends VComponent {
         // });
         //
         // this.render()
+        return this.$data;
     }
 
     // render() {

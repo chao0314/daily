@@ -100,9 +100,6 @@ export default {
                 iterator = exp(iterator, tplVelement.$data);
                 let realVelements = Array(iterator.length);
                 //todo only array at present
-                console.log("iterator", iterator);
-                console.log("_lastIterator", _lastIterator);
-                console.log("_lastVelements", _lastVelements);
                 if (Array.isArray(iterator)) {
                     for (let i = 0; i < iterator.length; i++) {
                         let n = _lastIterator.findIndex(v => iterator[i] === v);
@@ -128,8 +125,6 @@ export default {
                 }
                 directive.meta._lastIterator = [...iterator];
                 directive.meta._lastVelements = [...realVelements];
-                console.log("ccc---lastIterator-", directive.meta._lastIterator);
-                console.log("ccc----", directive.meta._lastVelements);
                 parent.insertBefore(fg, holder);
                 realVelements.forEach(el => el.render());
             }
