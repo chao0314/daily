@@ -2,8 +2,9 @@ import {assert} from "./utils";
 
 const key = ["new", "class", "for", "if"];
 
-export function exp(str, data) {
-    let arr = parser(str).map(item => {
+export function exp(str, data, filters) {
+    let aStr = str.split("|");
+    let arr = parser(aStr.shift()).map(item => {
             if (typeof item === "string") return JSON.stringify(item);
             else {
                 return item.exp.replace(/(?<![\.\$\w])[\$_a-z][\$\w]*/ig, s => {
@@ -15,7 +16,11 @@ export function exp(str, data) {
             }
         }
     );
-    return eval(arr.join(""));
+    let result = eval(arr.join(""));
+    aStr.forEach(item => {
+        result = filters[item.trim()](result);
+    });
+    return result;
 
 }
 
@@ -48,7 +53,7 @@ function parser(str) {
 
 }
 
-export function textParser(str, data) {
+export function textParser(str, data, filters) {
     assert(/string/.test(typeof str));
     let start = str.indexOf("{{");
     let end = -1;
@@ -64,8 +69,7 @@ export function textParser(str, data) {
                 stack.pop();
             }
             if (stack.length === 0) {
-                result.push(str.slice(0, start));
-                result.push(exp(str.slice(start + 2, end - 1), data));
+                result.push(str.slice(0, start), exp(str.slice(start + 2, end - 1), data, filters));
                 str = str.slice(end + 1);
                 start = str.indexOf("{{");
                 break;

@@ -1,8 +1,31 @@
-import proxy from "./proxy";
-import {domParser} from "./parser"
-import {exp} from "./expression";
 import Vue from "./vue";
 
+let comp1 = {
+    template: `<div @click="click"> this is {{name}}</div>`,
+    props: ["parentMsg"],
+    data() {
+        return {
+            name: "cmp 1"
+        }
+    },
+    methods: {
+        click(e) {
+            alert(this.parentMsg);
+        }
+    }
+
+};
+
+let comp2 = {
+    template: `<div> this is {{name}}</div>`,
+    data() {
+        return {
+            name: "cmp 2"
+        }
+    }
+};
+
+Vue.component("comp2", comp2);
 
 window.vm = new Vue({
     el: "#root",
@@ -13,7 +36,8 @@ window.vm = new Vue({
         has: false,
         html: "<strong>hello world</strong>",
         vtext: "vtext render",
-        arr: ["a", "b", "c"]
+        arr: ["a", "b", "c"],
+        parentMsg: "this prop form parent"
     },
     methods: {
         click(e) {
@@ -31,5 +55,13 @@ window.vm = new Vue({
         sum() {
             return this.arr.join("");
         }
+    },
+    filters: {
+        format(value) {
+            return `through filters ${value}`;
+        }
+    },
+    components: {
+        comp1
     }
 });

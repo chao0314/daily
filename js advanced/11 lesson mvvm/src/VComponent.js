@@ -16,23 +16,40 @@ export default class VComponent {
         this.$rootCmp = root;
         this.$name = uuid();
         this.$timeId = null;
-        this.$watch = option.watch || {};
-        this.$computed = option.computed || {};
         this.$watchQueue = [];
+        this.created = option.created;
+        this.updated = option.updated;
+
+        this.$props = option.props || [];
+        this.$watch = option.watch || {};
+        this.$filters = option.filters || {};
+        this.$computed = option.computed || {};
+        this.$components = option.components || {};
         this.$$directives = {...directives, ...option.directives ? option.directives : {}};
-        //解析真实dom树的信息
-        let domInformation = domParser(this.$el);
+
 
         //todo temporary
         this.$staic = {$event: null, ...option.methods};
-        this.$data = proxy(option.data, this.$staic, (path, oldVelue, newValue) => {
+        //todo props may be object,only handle array situation
+        if (Array.isArray(this.$props)) {
+            this.$props.forEach(prop => {
+                this.$staic[prop] = this.$parentCmp.$data[prop];
+            })
+        }
+
+        this.$data = proxy(option.data(), this.$staic, (path, oldVelue, newValue) => {
             this.handleWatchs(path, oldVelue, newValue);
             this.render();
         });
+
+        //解析真实dom树的信息
+        let domInformation = domParser(this.$el);
         //根据真实dom树的信息构建虚拟dom
         this.$domTree = createVDomTree(domInformation, this, this.$rootCmp || this);
+
         this.handleComputed();
         this.render();
+        this.created && this.created();
         //todo check other prop in return
     }
 
@@ -46,6 +63,7 @@ export default class VComponent {
                 handler.call(this.$data, oldValue, newValue);
             });
             this.$watchQueue.length = 0;
+            this.updated && this.updated();
             console.log("render******vcomp", this.$name);
         }, 0);
 

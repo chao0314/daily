@@ -9,7 +9,7 @@ export default class VText extends VNode {
     }
 
     render() {
-        let newValue = textParser(this.$value, this.$parent.$data);
+        let newValue = textParser(this.$value, this.$parent.$data, this.$context.$filters);
         if (newValue !== this._oldValue) {
             this.$el.nodeValue = newValue;
             this._oldValue = newValue;
