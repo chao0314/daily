@@ -13,7 +13,7 @@ export default class VComponent {
         assert(option);
         this.$el = getDom(option.el);
         this.$parentCmp = parent;
-        this.$rootCmp = root;
+        this.$rootCmp = root || this;
         this.$name = uuid();
         this.$timeId = null;
         this.$watchQueue = [];
@@ -25,11 +25,13 @@ export default class VComponent {
         this.$filters = option.filters || {};
         this.$computed = option.computed || {};
         this.$components = option.components || {};
+        // todo global directives
         this.$$directives = {...directives, ...option.directives ? option.directives : {}};
+        if (root === void 0 && option.store) this.$store = option.store;
 
 
         //todo temporary
-        this.$staic = {$event: null, ...option.methods};
+        this.$staic = {$event: null, $store: this.$rootCmp.$store, ...option.methods};
         //todo props may be object,only handle array situation
         if (Array.isArray(this.$props)) {
             this.$props.forEach(prop => {
@@ -42,10 +44,14 @@ export default class VComponent {
             this.render();
         });
 
+
         //解析真实dom树的信息
         let domInformation = domParser(this.$el);
+
+
         //根据真实dom树的信息构建虚拟dom
         this.$domTree = createVDomTree(domInformation, this, this.$rootCmp || this);
+
 
         this.handleComputed();
         this.render();

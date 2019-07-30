@@ -11,6 +11,7 @@ export default class Vue extends VComponent {
             return data;
         };
         super(option);
+        this.$store.context = this;
         return this.$data;
     }
 

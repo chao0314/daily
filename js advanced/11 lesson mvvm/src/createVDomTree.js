@@ -31,9 +31,21 @@ export function createVDomTree(option, parent, context) {
             let el = oDiv.children[0];
             option.el.parentElement.replaceChild(el, option.el);
             componentInfo.el = el;
-            //todo need to pass other parameter of component to root element,for example:event bind and so on ...
+            //todo need to pass other parameter of component to root element,for example:event bind and so on
+
+            //todo handle slot first
+            let slots = Array.from(componentInfo.el.getElementsByTagName("slot"));
+            slots.forEach(slot => {
+                let fg = document.createDocumentFragment();
+                option.children && option.children.forEach(child => {
+                    fg.appendChild(child.el.cloneNode(true));
+                });
+                slot.parentElement.replaceChild(fg, slot);
+
+            });
 
             context = parent = new VComponent(componentInfo, context, vue);
+
         }
     } else if (/^text$/.test(option.type)) {
         parent = new VText(option, parent, context);

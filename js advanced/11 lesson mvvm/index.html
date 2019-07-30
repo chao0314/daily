@@ -19,8 +19,11 @@
     <div>computed:{{sum}}</div>
     <div v-for="(item,index) in arr" @click="alert(item)"><p>{{item}},{{index}}</p></div>
     <comp1></comp1>
-    <comp2></comp2>
+    <comp2><span style="color: orange">this is a slot...</span></comp2>
     <div>{{msg | format}}</div>
+    <div>{{$store.state.msg}}</div>
+    <div>data from getters {{$store.getters.prefixMsg}}</div>
+    <button type="button" @click="setData">改变 vuex 数据</button>
 
 </div>
 </body>
