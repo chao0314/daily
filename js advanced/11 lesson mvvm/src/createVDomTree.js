@@ -2,9 +2,10 @@ import {assert} from "./utils";
 import VElement from "./VElement";
 import VComponent from "./VComponent";
 import VText from "./VText";
-import Vue from "./vue"
+import Vue from "./Vue"
 
 let vue;
+let routerView;
 
 export function createVDomTree(option, parent, context) {
     assert(option);
@@ -24,27 +25,10 @@ export function createVDomTree(option, parent, context) {
             }
 
             let componentInfo = context.$components[name] || Vue.$components[name];
-            assert(componentInfo, "component no register");
-            let oDiv = document.createElement("div");
-            oDiv.innerHTML = componentInfo.template;
-            assert(oDiv.children.length === 1);
-            let el = oDiv.children[0];
-            option.el.parentElement.replaceChild(el, option.el);
-            componentInfo.el = el;
-            //todo need to pass other parameter of component to root element,for example:event bind and so on
-
-            //todo handle slot first
-            let slots = Array.from(componentInfo.el.getElementsByTagName("slot"));
-            slots.forEach(slot => {
-                let fg = document.createDocumentFragment();
-                option.children && option.children.forEach(child => {
-                    fg.appendChild(child.el.cloneNode(true));
-                });
-                slot.parentElement.replaceChild(fg, slot);
-
-            });
-
-            context = parent = new VComponent(componentInfo, context, vue);
+            assert(componentInfo, `${name} component no register`);
+            componentInfo.attrs = option.attrs;
+            componentInfo.tag = option.tag;
+            context = parent = createComponent(option, componentInfo, context, vue);
 
         }
     } else if (/^text$/.test(option.type)) {
@@ -54,4 +38,25 @@ export function createVDomTree(option, parent, context) {
     }
     return parent;
 
+}
+
+export function createComponent(domInfo, componentInfo, parent, root) {
+    let oDiv = document.createElement("div");
+    oDiv.innerHTML = componentInfo.template;
+    assert(oDiv.children.length === 1);
+    let el = oDiv.children[0];
+    domInfo.el.parentElement.replaceChild(el, domInfo.el);
+    componentInfo.el = el;
+    //todo need to pass other parameter of component to root element,for example:event bind and so on
+    //todo handle slot first
+    let slots = Array.from(componentInfo.el.getElementsByTagName("slot"));
+    slots.forEach(slot => {
+        let fg = document.createDocumentFragment();
+        domInfo.children && domInfo.children.forEach(child => {
+            fg.appendChild(child.el.cloneNode(true));
+        });
+        slot.parentElement.replaceChild(fg, slot);
+
+    });
+    return new VComponent(componentInfo, parent, root);
 }

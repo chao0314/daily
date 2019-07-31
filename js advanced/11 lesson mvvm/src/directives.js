@@ -27,7 +27,7 @@ export default {
             }
             //todo remove listener
             velement.$el.addEventListener(arg, function (e) {
-                velement.$context.$staic.$event = e;
+                velement.$context.$static.$event = e;
                 exp(value, velement.$data);
             }, false);
 

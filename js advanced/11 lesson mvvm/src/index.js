@@ -1,5 +1,6 @@
-import Vue from "./vue";
+import Vue from "./Vue";
 import {Vuex} from "./vuex";
+import Router from "./router";
 
 let comp1 = {
     template: `<div @click="click"> this is {{name}}</div>`,
@@ -19,14 +20,19 @@ let comp1 = {
 };
 
 let comp2 = {
-    template: `<div> this is {{name}} <br>
-                    <slot></slot>
-                </div>`,
+    template: `<div> this is {{name}} <br><slot></slot></div>`,
     data() {
         return {
             name: "cmp 2"
         }
     }
+};
+
+let comp3 = {
+    template: `<div>this is comp3</div>`
+};
+let comp4 = {
+    template: `<div>this is comp4</div>`
 };
 
 Vue.component("comp2", comp2);
@@ -58,10 +64,17 @@ let store = new Vuex({
 
 
 });
+let router = new Router({
+    routes: [
+        {path: "/comp3", component: comp3},
+        {path: "/comp4", component: comp4}
+    ]
+});
 
 window.vm = new Vue({
     el: "#root",
     store,
+    router,
     data: {
         title: "this is title",
         msg: "hello world",

@@ -7,14 +7,14 @@
 </head>
 <body>
 <div id="root">
-    <!--    <div :title="title">bind title test</div>-->
-    <!--    <input type="text" v-mode="msg">-->
-    <!--    <input type="text" :value="msg">-->
-    <!--    <div @click="click">click</div>-->
-    <!--    <div v-show="show">show</div>-->
-    <!--    <div v-if="has">has</div>-->
-    <!--    <div v-text="html"></div>-->
-    <!--    <div v-html="html"></div>-->
+        <div :title="title">bind title test</div>
+        <input type="text" v-mode="msg">
+        <input type="text" :value="msg">
+        <div @click="click">click</div>
+        <div v-show="show">show</div>
+        <div v-if="has">has</div>
+        <div v-text="html"></div>
+        <div v-html="html"></div>
     <div>{{vtext}}</div>
     <div>computed:{{sum}}</div>
     <div v-for="(item,index) in arr" @click="alert(item)"><p>{{item}},{{index}}</p></div>
@@ -24,6 +24,14 @@
     <div>{{$store.state.msg}}</div>
     <div>data from getters {{$store.getters.prefixMsg}}</div>
     <button type="button" @click="setData">改变 vuex 数据</button>
+    <hr>
+    <div>component :is test</div>
+    <component is="comp1"></component>
+    <hr>
+    <router-link to="/comp3">路由 组件 comp3</router-link>
+    <router-link to="/comp4">路由 组件 comp4</router-link>
+    <hr>
+    <router-view></router-view>
 
 </div>
 </body>

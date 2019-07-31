@@ -12,14 +12,13 @@ export default class VComponent {
     constructor(option, parent, root,) {
         assert(option);
         this.$el = getDom(option.el);
-        this.$parentCmp = parent;
+        this.$parentCmp = parent || {};
         this.$rootCmp = root || this;
         this.$name = uuid();
         this.$timeId = null;
         this.$watchQueue = [];
         this.created = option.created;
         this.updated = option.updated;
-
         this.$props = option.props || [];
         this.$watch = option.watch || {};
         this.$filters = option.filters || {};
@@ -28,34 +27,39 @@ export default class VComponent {
         // todo global directives
         this.$$directives = {...directives, ...option.directives ? option.directives : {}};
         if (root === void 0 && option.store) this.$store = option.store;
+        if (root === void 0 && option.router) this.$router = option.router;
 
+        this.$static = {
+            $event: null,
+            $store: this.$rootCmp.$store,
+            $router: this.$rootCmp.$router,
+            ...option.methods
+        };
+        if (option.tag === "router-link") this.$static.to = option.attrs.to;
+        if (this.$static.$router) this.$static.$route = this.$rootCmp.$router;
 
-        //todo temporary
-        this.$staic = {$event: null, $store: this.$rootCmp.$store, ...option.methods};
         //todo props may be object,only handle array situation
         if (Array.isArray(this.$props)) {
             this.$props.forEach(prop => {
-                this.$staic[prop] = this.$parentCmp.$data[prop];
+                this.$static[prop] = this.$parentCmp.$data[prop];
             })
         }
 
-        this.$data = proxy(option.data(), this.$staic, (path, oldVelue, newValue) => {
+        this.$data = proxy((option.data && option.data()) || {}, this.$static, (path, oldVelue, newValue) => {
             this.handleWatchs(path, oldVelue, newValue);
             this.render();
         });
 
+        this.created && this.created();
 
         //解析真实dom树的信息
         let domInformation = domParser(this.$el);
 
-
         //根据真实dom树的信息构建虚拟dom
-        this.$domTree = createVDomTree(domInformation, this, this.$rootCmp || this);
-
+        this.$vdomTree = createVDomTree(domInformation, this, this.$rootCmp || this);
 
         this.handleComputed();
         this.render();
-        this.created && this.created();
         //todo check other prop in return
     }
 
@@ -63,7 +67,7 @@ export default class VComponent {
         clearTimeout(this.$timeId);
         this.$timeId = setTimeout(() => {
             this.handleComputed();
-            this.$domTree.render();
+            this.$vdomTree.render();
             this.$watchQueue.forEach(watch => {
                 let {handler, oldValue, newValue} = watch;
                 handler.call(this.$data, oldValue, newValue);
@@ -102,7 +106,7 @@ export default class VComponent {
     handleComputed() {
         for (let prop in this.$computed) {
             if (this.$computed.hasOwnProperty(prop)) {
-                this.$staic[prop] = this.$computed[prop].call(this.$data);
+                this.$static[prop] = this.$computed[prop].call(this.$data);
             }
         }
 
