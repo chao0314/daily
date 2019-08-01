@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <script src="./digit.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600"></canvas>
+</body>
+<script>
+
+    class Circular {
+        constructor(canvas, options) {
+            this.ctx = document.querySelector(canvas).getContext('2d');
+            this._init(options);
+        }
+
+        _init(options) {
+            if (options) options = Object.assign({}, Circular.default, options);
+            else options = Circular.default;
+            for (let prop in options) {
+                if (options.hasOwnProperty(prop)) {
+                    this.ctx[prop] = options[prop];
+                }
+            }
+            this.ctx.beginPath();
+        }
+
+        draw(x, y, r, start, end, dir = false) {
+            this.ctx.arc(x, y, r, start, end, dir);
+            this.ctx.fill();
+            this.ctx.stroke();
+        }
+    }
+
+    Circular.default = {
+        fillStyle: 'pink',
+    };
+
+
+    let c = new Circular("#canvas");
+    c.draw(100, 100, 10, 0, 2 * Math.PI);
+</script>
+</html>
