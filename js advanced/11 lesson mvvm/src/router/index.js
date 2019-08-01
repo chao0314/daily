@@ -29,6 +29,7 @@ export default class Router {
 
     handleHash() {
         let route = location.hash.slice(1);
+        if (!route) return;
         let component = this.routes.find(item => item.path === route).component;
         assert(component);
         //todo parent is router-view normal

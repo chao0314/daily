@@ -72,6 +72,7 @@ export function textParser(str, data, filters) {
                 result.push(str.slice(0, start), exp(str.slice(start + 2, end - 1), data, filters));
                 str = str.slice(end + 1);
                 start = str.indexOf("{{");
+                end = -1;
                 break;
             }
         }

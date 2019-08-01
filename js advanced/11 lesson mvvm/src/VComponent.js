@@ -1,23 +1,25 @@
-import VNode from "./VNode";
-import VElement from "./VElement";
-import {assert, getDom} from "./utils";
-import {domParser} from "./parser";
-import {createVDomTree} from "./createVDomTree";
 import proxy from "./proxy";
-import directives from "./directives";
 
 const uuid = require("uuid/v4");
+import {domParser} from "./parser";
+import directives from "./directives";
+import EventQueue from "./EventQueue";
+import {assert, getDom} from "./utils";
+import {createVDomTree} from "./createVDomTree";
 
-export default class VComponent {
+export default class VComponent extends EventQueue {
     constructor(option, parent, root,) {
         assert(option);
-        this.$el = getDom(option.el);
-        this.$parentCmp = parent || {};
-        this.$rootCmp = root || this;
+        super();
+        this.$refs = {};
         this.$name = uuid();
         this.$timeId = null;
         this.$watchQueue = [];
+        this.$el = getDom(option.el);
+        this.$parentCmp = parent || {};
+        this.$rootCmp = root || this;
         this.created = option.created;
+        this.mounted = option.mounted;
         this.updated = option.updated;
         this.$props = option.props || [];
         this.$watch = option.watch || {};
@@ -31,6 +33,9 @@ export default class VComponent {
 
         this.$static = {
             $event: null,
+            $on: this.$on.bind(this),
+            $off: this.$off.bind(this),
+            $emit: this.$emit.bind(this),
             $store: this.$rootCmp.$store,
             $router: this.$rootCmp.$router,
             ...option.methods
@@ -50,7 +55,7 @@ export default class VComponent {
             this.render();
         });
 
-        this.created && this.created();
+        this.created && this.created.call(this.$data);
 
         //解析真实dom树的信息
         let domInformation = domParser(this.$el);
@@ -60,6 +65,7 @@ export default class VComponent {
 
         this.handleComputed();
         this.render();
+        this.mounted && this.mounted.call(this.$data);
         //todo check other prop in return
     }
 
@@ -73,7 +79,7 @@ export default class VComponent {
                 handler.call(this.$data, oldValue, newValue);
             });
             this.$watchQueue.length = 0;
-            this.updated && this.updated();
+            this.updated && this.updated.call(this.$data);
             console.log("render******vcomp", this.$name);
         }, 0);
 

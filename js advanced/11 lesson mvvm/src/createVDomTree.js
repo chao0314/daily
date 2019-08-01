@@ -31,11 +31,13 @@ export function createVDomTree(option, parent, context) {
             context = parent = createComponent(option, componentInfo, context, vue);
 
         }
+        if (option.attrs.ref) context.$refs[option.attrs.ref] = parent;
     } else if (/^text$/.test(option.type)) {
         parent = new VText(option, parent, context);
     } else {
         assert(false, "unknown type");
     }
+
     return parent;
 
 }

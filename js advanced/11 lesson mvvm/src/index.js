@@ -3,7 +3,7 @@ import {Vuex} from "./vuex";
 import Router from "./router";
 
 let comp1 = {
-    template: `<div @click="click"> this is {{name}}</div>`,
+    template: `<div @click="click"> this is {{name}} and test $emit $on </div>`,
     props: ["parentMsg"],
     data() {
         return {
@@ -14,6 +14,7 @@ let comp1 = {
         click(e) {
             alert(this.parentMsg);
             alert(this.$store.state.msg);
+            this.$emit("hello", `hello $emit event ${this.name}`);
         }
     }
 
@@ -85,6 +86,13 @@ window.vm = new Vue({
         arr: ["a", "b", "c"],
         parentMsg: "this prop form parent"
     },
+    mounted() {
+        console.log("mounted");
+        this.$on("hello", function(payload) {
+            console.log(`${this.title} this message come from $emit ${payload}`);
+        })
+    }
+    ,
     methods: {
         click(e) {
             console.log(e);
