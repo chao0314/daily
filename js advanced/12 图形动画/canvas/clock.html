@@ -8,42 +8,166 @@
     <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
     <title>Title</title>
     <script src="./digit.js"></script>
+    <style>
+
+    </style>
 </head>
 <body>
 <canvas id="canvas" width="800" height="600"></canvas>
 </body>
+<script src="digit.js"></script>
 <script>
 
-    class Circular {
+    function assert(exp, msg) {
+        if (!exp) throw new Error(msg || "error");
+    }
+
+    class Shape {
         constructor(canvas, options) {
-            this.ctx = document.querySelector(canvas).getContext('2d');
+            if (typeof canvas === "string") this.ctx = document.querySelector(canvas).getContext('2d');
+            else if (canvas.constructor === CanvasRenderingContext2D) this.ctx = canvas;
+            else assert(false);
+            this.x = options.x || 0;
+            this.y = options.y || 0;
+            this.width = options.width || 16;
+            this.height = options.height || 16;
+            this.colors = options.colors || ["#33B5E5", "#0099CC", "#AA66CC", "#9933CC", "#99CC00", "#669900", "#FFBB33", "#FF8800", "#FF4444", "#CC0000"];
             this._init(options);
         }
 
         _init(options) {
-            if (options) options = Object.assign({}, Circular.default, options);
-            else options = Circular.default;
+            if (options) options = Object.assign({}, Circular.default, options.ctx);
+            else options = Shape.default;
             for (let prop in options) {
                 if (options.hasOwnProperty(prop)) {
                     this.ctx[prop] = options[prop];
                 }
             }
-            this.ctx.beginPath();
+
         }
 
-        draw(x, y, r, start, end, dir = false) {
-            this.ctx.arc(x, y, r, start, end, dir);
-            this.ctx.fill();
-            this.ctx.stroke();
+        draw() {
+            throw  new Error("abstract function");
         }
     }
 
-    Circular.default = {
+    Shape.default = {
         fillStyle: 'pink',
+        strokeStyle: " transparent"
     };
 
+    class Circular extends Shape {
+        constructor(canvas, options = {}) {
+            super(canvas, options);
+            this.width = options.width || 16;
+            this.height = options.height || 16;
+            this.r = this.width / 2;
+        }
 
-    let c = new Circular("#canvas");
-    c.draw(100, 100, 10, 0, 2 * Math.PI);
+        draw(option = {}) {
+            let {x = this.x, y = this.y, r = this.r, start = 0, end = 2 * Math.PI, dir = false} = option;
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, r, start, end, dir);
+            this.ctx.fill();
+            this.ctx.stroke();
+            this.ctx.closePath();
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+
+    class Ball extends Circular {
+        constructor(canvas, options = {}) {
+            super(canvas, options);
+            this.g = 1.5 + Math.random();
+            this.vx = Math.pow(-1, Math.round(Math.random())) * 4;
+            this.vy = -5;
+            this.colors = this.colors[Math.round(Math.random() * this.colors.length)];
+            this.H = options.H || document.documentElement.clientHeight;
+            this.W = options.W || document.documentElement.clientWidth;
+        }
+
+        draw(option = {}) {
+            super.draw(option);
+        }
+
+        action() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += this.g;
+            if (this.vy + this.r > this.H) {
+                this.y = this.H - this.r;
+                this.vy = -this.vy * 0.75;
+            }
+            this.draw({x: this.x, y: this.y});
+        }
+    }
+
+
+    class Digit {
+        constructor(matrix, option = {}) {
+            assert(matrix instanceof Array);
+            this.matrix = matrix;
+            this.ctx = option.ctx;
+            this.initX = option.x || 0;
+            this.initY = option.y || 0;
+            this.disX = option.disX || 1;
+            this.disY = option.disY || 1;
+            this.shape = option.shape || new Circular(this.ctx);
+            this.ball = option.ball || new Ball(this.ctx);
+            this.width = 0;
+            this.height = 0;
+            this.balls = [];
+        }
+
+        draw(isBall) {
+            for (let i = 0; i < this.matrix.length; i++) {
+                for (let j = 0; j < this.matrix[i].length; j++) {
+                    if (this.matrix[i][j] === 1) {
+
+                        let x = this.initX + j * (this.shape.width + this.disX) + this.shape.width / 2;
+                        let y = this.initY + i * (this.shape.height + this.disY) + this.shape.height / 2;
+                        if (isBall) this.ball.draw({x, y});
+                        else this.shape.draw({x, y});
+
+
+                    }
+
+                }
+            }
+
+            this.width = this.matrix[0].length * (this.shape.width + this.disX);
+            this.height = this.matrix.length * (this.shape.height + this.disY);
+
+
+        }
+
+        createBalls() {
+            this.draw(true);
+            requestAnimationFrame(()=> {
+                this.ball.action();
+
+            })
+
+        }
+
+    }
+
+
+    let ctx = document.getElementById("canvas").getContext("2d");
+    let zero = new Digit(digit[0], {ctx});
+    zero.draw();
+    let one = new Digit(digit[1], {ctx, x: zero.width});
+    one.draw();
+
+    // setInterval(function () {
+    //     console.log(Math.round(Math.random() * 10));
+    // }, 100)
+
+
+    const H = document.documentElement.clientHeight;
+    const W = document.documentElement.clientWidth;
+    console.log(H, W);
 </script>
 </html>
