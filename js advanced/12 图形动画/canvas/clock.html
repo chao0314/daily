@@ -9,11 +9,19 @@
     <title>Title</title>
     <script src="./digit.js"></script>
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            height: 100%;
+        }
 
     </style>
 </head>
 <body>
-<canvas id="canvas" width="800" height="600"></canvas>
+<canvas id="canvas" width="1000" height="600"></canvas>
 </body>
 <script src="digit.js"></script>
 <script>
@@ -61,6 +69,7 @@
             super(canvas, options);
             this.width = options.width || 16;
             this.height = options.height || 16;
+            this.color = options.color || Shape.default.fillStyle;
             this.r = this.width / 2;
         }
 
@@ -68,6 +77,7 @@
             let {x = this.x, y = this.y, r = this.r, start = 0, end = 2 * Math.PI, dir = false} = option;
             this.ctx.beginPath();
             this.ctx.arc(x, y, r, start, end, dir);
+            this.ctx.fillStyle = this.color;
             this.ctx.fill();
             this.ctx.stroke();
             this.ctx.closePath();
@@ -81,22 +91,26 @@
         constructor(canvas, options = {}) {
             super(canvas, options);
             this.g = 1.5 + Math.random();
-            this.vx = Math.pow(-1, Math.round(Math.random())) * 4;
+            this.vx = Math.pow(-1, Math.round(Math.random())) * 8;
             this.vy = -5;
-            this.colors = this.colors[Math.round(Math.random() * this.colors.length)];
-            this.H = options.H || document.documentElement.clientHeight;
-            this.W = options.W || document.documentElement.clientWidth;
+            this.color = this.colors[Math.round(Math.random() * this.colors.length)];
+            this.H = options.H || this.ctx.canvas.clientHeight;
+            this.W = options.W || this.ctx.canvas.clientWidth;
+            this.ctx.fillStyle = this.color;
         }
 
         draw(option = {}) {
+            this.ctx.fillStyle = this.color;
             super.draw(option);
+
         }
 
         action() {
+            console.log("ball,action");
             this.x += this.vx;
             this.y += this.vy;
             this.vy += this.g;
-            if (this.vy + this.r > this.H) {
+            if (this.y + this.r > this.H) {
                 this.y = this.H - this.r;
                 this.vy = -this.vy * 0.75;
             }
@@ -110,27 +124,27 @@
             assert(matrix instanceof Array);
             this.matrix = matrix;
             this.ctx = option.ctx;
-            this.initX = option.x || 0;
-            this.initY = option.y || 0;
+            this.x = option.x || 0;
+            this.y = option.y || 0;
             this.disX = option.disX || 1;
             this.disY = option.disY || 1;
             this.shape = option.shape || new Circular(this.ctx);
-            this.ball = option.ball || new Ball(this.ctx);
             this.width = 0;
             this.height = 0;
             this.balls = [];
         }
 
-        draw(isBall) {
+        draw(isBall, options = {}) {
+            this.x = options.x || this.x;
+            this.y = options.y || this.y;
             for (let i = 0; i < this.matrix.length; i++) {
                 for (let j = 0; j < this.matrix[i].length; j++) {
                     if (this.matrix[i][j] === 1) {
 
-                        let x = this.initX + j * (this.shape.width + this.disX) + this.shape.width / 2;
-                        let y = this.initY + i * (this.shape.height + this.disY) + this.shape.height / 2;
-                        if (isBall) this.ball.draw({x, y});
+                        let x = this.x + j * (this.shape.width + this.disX) + this.shape.width / 2;
+                        let y = this.y + i * (this.shape.height + this.disY) + this.shape.height / 2;
+                        if (isBall) this.balls.push(new Ball(this.ctx, {x, y}));
                         else this.shape.draw({x, y});
-
 
                     }
 
@@ -145,29 +159,109 @@
 
         createBalls() {
             this.draw(true);
-            requestAnimationFrame(()=> {
-                this.ball.action();
+            return this.balls;
+        }
 
+        clearBalls() {
+            this.balls = this.balls.filter(ball => {
+                return ball.x > ball.r && ball.x < ball.W - ball.r;
             })
+        }
 
+        // initDigit(options) {
+        //     this.draw(false, options);
+        //     this.createBalls();
+        // }
+
+        animation() {
+            // this.draw();
+            this.balls.forEach(ball => ball.action());
+            this.clearBalls();
+            // console.log("balls",this.balls.length);
         }
 
     }
 
 
-    let ctx = document.getElementById("canvas").getContext("2d");
-    let zero = new Digit(digit[0], {ctx});
-    zero.draw();
-    let one = new Digit(digit[1], {ctx, x: zero.width});
-    one.draw();
+    // let zero = new Digit(digit[0], {ctx});
+    // zero.initDigit();
+    // let one = new Digit(digit[1], {ctx, x: zero.width});
+    // one.initDigit();
 
     // setInterval(function () {
     //     console.log(Math.round(Math.random() * 10));
     // }, 100)
 
+    //setTimeout(zero.createBalls.bind(zero), 1000);
 
-    const H = document.documentElement.clientHeight;
-    const W = document.documentElement.clientWidth;
-    console.log(H, W);
+
+    // setInterval(function () {
+    //     ctx.clearRect(0, 0, 800, 600);
+    //     zero.animation();
+    //     one.animation();
+    // }, 50);
+
+
+    (function clock() {
+        const ctx = document.getElementById("canvas").getContext("2d");
+
+        let aDigit = [];
+        let aAnimation = [];
+        let lastTime = getCurrentTime();
+
+        setInterval(() => {
+            ctx.clearRect(0, 0, 1000, 600);
+            lastTime = createClock(lastTime);
+            aDigit.forEach(digit => digit.draw());
+            aAnimation.forEach(digit => digit.animation());
+            console.log("animation--", aAnimation.length)
+        }, 100);
+
+
+        function getCurrentTime() {
+            let oDate = new Date();
+            let hour = oDate.getHours();
+            let minute = oDate.getMinutes();
+            let second = oDate.getSeconds();
+            hour = hour > 10 ? `${hour}` : `0${hour}`;
+            minute = minute > 10 ? `${minute}` : `0${minute}`;
+            second = second > 10 ? `${second}` : `0${second}`;
+            return `${hour}:${minute}:${second}`;
+        }
+
+        function createClock(lastTime) {
+            let currentTime = getCurrentTime();
+            if (currentTime !== lastTime) {
+                let x = 30;
+                let y = 100;
+                aDigit.length = 0;
+                aAnimation = aAnimation.filter(digit => digit.balls.length);
+                for (let i = 0; i < currentTime.length; i++) {
+                    let curChar = currentTime[i];
+                    let lastChar = lastTime[i];
+                    let temp;
+                    if (curChar !== lastChar) {
+                        temp = new Digit(digit[Number(curChar)], {ctx, x, y});
+                        temp.createBalls();
+                        aAnimation.push(temp);
+                    } else {
+                        let index = Number(curChar);
+                        if (Number.isNaN(index)) index = 10;
+                        temp = new Digit(digit[index], {ctx, x, y});
+                    }
+                    aDigit.push(temp);
+                    temp.draw();//width
+                    x += temp.width;
+                }
+                lastTime = currentTime;
+            }
+
+            return lastTime;
+
+        }
+
+    })()
+
+
 </script>
 </html>
