@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>star</title>
+</head>
+<body>
+<canvas width="800" height="800"></canvas>
+
+</body>
+<script>
+    let ctx = document.querySelector("canvas").getContext('2d');
+    ctx.strokeStyle = "pink";
+
+    function drawStar(ctx, x, y, r, R, rot=0) {
+        ctx.beginPath();
+        for (let i = 0; i < 5; i++) {
+            let arcR = (18 - rot + i * 72) / 180 * Math.PI;
+            let arcr = (54 - rot + i * 72) / 180 * Math.PI;
+            ctx.lineTo(x + R * Math.cos(arcR), y - R * Math.sin(arcR));
+            ctx.lineTo(x + r * Math.cos(arcr), y - r * Math.sin(arcr));
+
+        }
+        ctx.closePath();
+        ctx.stroke();
+    }
+
+    drawStar(ctx, 400, 400, 150, 300);
+</script>
+</html>

@@ -8,14 +8,14 @@
     <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
     <title>sky</title>
     <style>
-        canvas{
+        canvas {
             display: block;
             margin: auto;
         }
     </style>
 </head>
 <body>
-<canvas width="800" height="600"></canvas>
+<canvas width="800" height="800"></canvas>
 </body>
 <script>
     const ctx = document.querySelector("canvas").getContext("2d");
@@ -23,7 +23,7 @@
     skyBackground.addColorStop(0, 'black');
     skyBackground.addColorStop(1, '#035');
     ctx.fillStyle = skyBackground;
-    ctx.fillRect(0, 0, 800, 600);
+    ctx.fillRect(0, 0, 800, 800);
 
     function drawSky() {
         let stars = [];
@@ -46,11 +46,45 @@
         }
 
 
+        drawMoon(ctx, 500, -100, 80, 700, -100, 30);
+        drawLand(ctx);
+
         function checkPosition({x: x1, y: y1, r: r1}) {
             return stars.every(({x, y, r}) => Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2)) > r1 + r)
         }
     }
 
+    function drawLand(ctx) {
+        let landBackground = ctx.createLinearGradient(0, 800, 0, 0);
+        landBackground.addColorStop(0, '#030');
+        landBackground.addColorStop(1, '#580');
+        ctx.save();
+        ctx.fillStyle = landBackground;
+        ctx.beginPath();
+        ctx.moveTo(0, 600);
+        ctx.bezierCurveTo(540, 400, 600, 800, 800, 600);
+        ctx.lineTo(800, 800);
+        ctx.lineTo(0, 800);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+    }
+
+    function drawMoon(ctx, x, y, R, controlX, controlY, rot = 0, color = "yellow") {
+        let arcR = R * Math.sqrt(Math.pow(R, 2) + Math.pow(controlX - x, 2)) / (controlX - x);
+        ctx.save();
+        ctx.beginPath();
+        ctx.rotate(rot / 180 * Math.PI);
+        ctx.arc(x, y, R, 1.5 * Math.PI, 0.5 * Math.PI);
+        ctx.arcTo(controlX, controlY, x, y - R, arcR);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+    }
 
     function draw(ctx, shape, options) {
 

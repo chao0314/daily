@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>moon</title>
+</head>
+<body>
+<canvas width="800" height="800"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector("canvas").getContext('2d');
+
+    // drawMoon(ctx, 400, 400, 300, 1200, 400);
+    drawMoon2(ctx, 400, 400, 300, 700, 400);
+
+    function drawMoon(ctx, x, y, R, controlX, controlY, color = "yellow") {
+        let arcR = R * Math.sqrt(Math.pow(R, 2) + Math.pow(controlX - x, 2)) / (controlX - x);
+        ctx.beginPath();
+        // ctx.translate(400, 400);
+        ctx.arc(x, y, R, 1.5 * Math.PI, 0.5 * Math.PI);
+        ctx.arcTo(controlX, controlY, x, y - R, arcR);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+    }
+
+    function drawMoon2(ctx, x, y, R, controlX, controlY, color = "yellow") {
+        let arcR = R * Math.sqrt(Math.pow(R, 2) + Math.pow(controlX - x, 2)) / (controlX - x);
+        ctx.beginPath();
+        // ctx.translate(400, 400);
+        ctx.arc(x, y, R, 1.5 * Math.PI, 0.5 * Math.PI);
+        // ctx.arcTo(controlX, controlY, x, y - R, arcR);
+        ctx.quadraticCurveTo(controlX, controlY, x, y - R);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+
+    }
+
+
+</script>
+</html>
