@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>roundreact</title>
+</head>
+<body>
+<canvas width="800" height="800"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector('canvas').getContext('2d');
+
+    roundReact(ctx, 150, 150, 500, 500, 10, '#bbada0');
+
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            roundReact(ctx, 170 + 120 * j, 170 + 120 * i, 100, 100, 6);
+        }
+    }
+
+    function roundReact(ctx, x, y, w, h, r, color = 'pink') {
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(x, y);
+        ctx.arc(w - r, h - r, r, 0, 0.5 * Math.PI);
+        ctx.lineTo(r, h);
+        ctx.arc(r, h - r, r, 0.5 * Math.PI, Math.PI);
+        ctx.lineTo(0, r);
+        ctx.arc(r, r, r, Math.PI, 1.5 * Math.PI);
+        ctx.lineTo(w - r, 0);
+        ctx.arc(w - r, r, r, 1.5 * Math.PI, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    // roundReact(ctx, 400, 400, 100, 100, 10);
+
+
+</script>
+</html>

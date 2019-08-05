@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>sky</title>
+    <style>
+        canvas{
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="600"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector("canvas").getContext("2d");
+    const skyBackground = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+    skyBackground.addColorStop(0, 'black');
+    skyBackground.addColorStop(1, '#035');
+    ctx.fillStyle = skyBackground;
+    ctx.fillRect(0, 0, 800, 600);
+
+    function drawSky() {
+        let stars = [];
+        const W = ctx.canvas.width;
+        const H = ctx.canvas.height * 0.65;
+        for (let i = 0; i < 200; i++) {
+            let x = Math.random() * W;
+            let y = Math.random() * H;
+            let r = Math.random() * 20;
+            let rot = Math.random() * 360;
+            if (checkPosition({x, y, r, rot})) {
+                stars.push({x, y, r, rot});
+            }
+        }
+
+        console.log(stars.length, stars);
+
+        for (let j = 0; j < stars.length; j++) {
+            draw(ctx, star, stars[j]);
+        }
+
+
+        function checkPosition({x: x1, y: y1, r: r1}) {
+            return stars.every(({x, y, r}) => Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2)) > r1 + r)
+        }
+    }
+
+
+    function draw(ctx, shape, options) {
+
+        let {x = 0, y = 0, r = 20, rot = 0} = options;
+        ctx.save();
+        shape(ctx, x, y, r, rot);
+        ctx.restore();
+
+    }
+
+    function star(ctx, x = 0, y = 0, r = 20, rot = 0, color = "#fb3") {
+        ctx.beginPath();
+        ctx.strokeStyle = "transparent";
+        ctx.fillStyle = color;
+        ctx.translate(x, y);
+        ctx.rotate(rot / 180 * Math.PI);
+
+        for (let i = 0; i < 5; i++) {
+            let arcR = (18 + 72 * i) / 180 * Math.PI;
+            let arcr = (54 + 72 * i) / 180 * Math.PI;
+            ctx.lineTo(Math.cos(arcR) * r, -Math.sin(arcR) * r);
+            ctx.lineTo(Math.cos(arcr) * 0.5 * r, -Math.sin(arcr) * 0.5 * r);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+
+    }
+
+    drawSky();
+
+
+</script>
+</html>
