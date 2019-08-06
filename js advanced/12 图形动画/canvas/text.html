@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>text</title>
+</head>
+<body>
+<canvas width="800" height="600"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector('canvas').getContext('2d');
+    const linear = ctx.createLinearGradient(0, 0, 800, 0);
+    linear.addColorStop(0, 'blue');
+    linear.addColorStop(0.5, 'yellow');
+    linear.addColorStop(1, 'pink');
+    ctx.fillStyle = linear;
+    ctx.font = '40px bold arial';
+    // ctx.fillText("hello canvas", 100, 100);
+    // ctx.strokeText("hello canvas", 200, 200);
+    // ctx.font = 'italic small-caps 40px normal arial';
+    // ctx.fillText("hello canvas", 300, 300,100);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(400, 0);
+    ctx.lineTo(400, 600);
+    ctx.moveTo(0, 300);
+    ctx.lineTo(800, 300);
+    ctx.stroke();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("hello canvas", 400, 300);
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillText("hello canvas", 400, 400);
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.fillText("hello canvas", 400, 400);
+    ctx.textAlign = "right";
+    ctx.textBaseline = "top";
+    ctx.fillText("hello canvas", 400, 300);
+    ctx.textAlign = "left";
+    ctx.textBaseline = "bottom";
+    ctx.fillText("hello canvas", 400, 300);
+
+    console.log(ctx.measureText("hello world").width)
+
+</script>
+</html>
