@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>path</title>
+</head>
+<body>
+<canvas width="800" height="600"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector('canvas').getContext('2d');
+    const W = 800;
+    const H = 600;
+    const R = 30;
+    let balls = [];
+    let ex, ey;
+    for (let i = 0; i < 20; i++) {
+        balls.push({
+            x: W * Math.random(),
+            y: H * Math.random(),
+            r: R * Math.random()
+        })
+    }
+
+    function draw() {
+
+        ctx.clearRect(0, 0, 800, 600);
+        ctx.fillStyle = 'pink';
+        for (let i = 0; i < balls.length; i++) {
+            let {x, y, r} = balls[i];
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, 2 * Math.PI, true);
+            if (ex && ey) {
+                if (ctx.isPointInPath(ex, ey)) ctx.fillStyle = 'blue';
+            }
+            ctx.fill();
+            ctx.restore();
+
+        }
+
+    }
+
+    draw();
+
+    ctx.canvas.addEventListener("click", function (e) {
+
+        ex = e.clientX - ctx.canvas.getBoundingClientRect().left;
+        ey = e.clientY - ctx.canvas.getBoundingClientRect().top;
+        draw();
+        ex = ey = void 0;
+    })
+</script>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>magnifier</title>
+    <style>
+        canvas {
+            display: block;
+            margin: auto;
+            border: 1px solid pink;
+        }
+    </style>
+</head>
+<body>
+<canvas width="1152" height="768"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector('canvas').getContext('2d');
+    const W = 1152;
+    const H = 768;
+    const magnifier = document.createElement('canvas');
+    const mc = magnifier.getContext('2d');
+    const r = 100;
+    let scale;
+    const oImg = new Image();
+    oImg.src = './img/img-lg.jpg';
+    oImg.onload = function () {
+        magnifier.width = this.width;
+        magnifier.height = this.height;
+        ctx.drawImage(oImg, 0, 0, W, H);
+        mc.drawImage(oImg, 0, 0);
+        scale = this.width / W;
+
+    };
+
+    function drawMagnifier(position) {
+        let {x, y} = position;
+        ctx.clearRect(0, 0, 1200, 800);
+        ctx.drawImage(oImg, 0, 0, W, H);
+        ctx.save();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'blue';
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.clip();
+        ctx.drawImage(mc.canvas, x * scale - r, y * scale - r, 2 * r, 2 * r, x - r, y - r, 2 * r, 2 * r);
+        ctx.restore();
+    }
+
+    function convertPosition(x, y) {
+        let box = ctx.canvas.getBoundingClientRect();
+        return {
+            x: x - box.left,
+            y: y - box.top
+        }
+    }
+
+
+    ctx.canvas.onmousedown = function (e) {
+
+        let position = convertPosition(e.clientX, e.clientY);
+        console.log("down", position);
+        drawMagnifier(position);
+    }
+
+</script>
+</html>

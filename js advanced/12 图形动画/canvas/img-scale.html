@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>scale</title>
+    <style>
+        canvas {
+            display: block;
+            margin: auto;
+            border: 1px solid pink;
+        }
+
+        input {
+            display: block;
+            width: 1200px;
+            margin: auto;
+        }
+
+
+    </style>
+</head>
+<body>
+<canvas width="1200" height="800"></canvas>
+<input type="range" min="0.1" max="3.0" value="0.3" step="0.1">
+</body>
+<script>
+    const ctx = document.querySelector('canvas').getContext('2d');
+    const silder = document.querySelector('input');
+    const W = 1200;
+    const H = 800;
+    let imgW, imgH;
+    silder.onmousemove = function () {
+        draw(this.value);
+    };
+    const oImg = new Image();
+    oImg.src = './img/img-lg.jpg';
+    oImg.onload = function () {
+        imgW = this.width;
+        imgH = this.height;
+        draw(0.3)
+    };
+
+    function draw(scale) {
+        let dx = W / 2 - imgW * scale / 2;
+        let dy = H / 2 - imgH * scale / 2;
+        ctx.clearRect(0, 0, 1200, 800);
+        ctx.drawImage(oImg, dx, dy, imgW * scale, imgH * scale);
+    }
+
+
+</script>
+</html>

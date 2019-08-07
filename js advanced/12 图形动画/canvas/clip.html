@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>clip</title>
+</head>
+<body>
+<canvas width="800" height="800"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector('canvas').getContext('2d');
+    let x = y = 400;
+    let vx = 5 + 5 * Math.random();
+    let vy = 5 + 5 * Math.random();
+    const W = 800;
+    const H = 800;
+    const r = 100;
+
+    setInterval(draw,50);
+    // draw();
+
+    function draw() {
+        ctx.save();
+        ctx.clearRect(0, 0, 800, 800);
+        ctx.beginPath();
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, 800, 800);
+        x += vx;
+        y += vy;
+        if (x > W - r) {
+            x = W - r;
+            vx = -vx;
+        }
+
+        if (x < r) {
+            x = r;
+            vx = -vx;
+        }
+
+        if (y > H - r) {
+            y = H-r;
+            vy = -vy;
+        }
+        if (y < r) {
+            y = r;
+            vy = -vy;
+        }
+        ctx.arc(x, y, r, 0, 2 * Math.PI);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.clip();
+        ctx.fillStyle = 'pink';
+        ctx.font = '80px bold';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText('hello canvas', W / 2, H / 4);
+        ctx.fillText('hello canvas', W / 2, H / 2);
+        ctx.fillText('hello canvas', W / 2, 3 * H / 4);
+        ctx.restore();
+
+    }
+</script>
+</html>
