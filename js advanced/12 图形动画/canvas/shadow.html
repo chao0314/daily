@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <style>
+        canvas {
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas width="600" height="600"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector('canvas').getContext('2d');
+    const W = 600;
+    const H = 600;
+    /*
+    ctx.shadowColor = 'pink';
+    ctx.shadowOffsetX = 10;
+    ctx.shadowOffsetY = 10;
+    // ctx.shadowBlur = 5;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = '40px bold';
+    ctx.fillText('hello canvas', 400, 400);
+    * */
+    ctx.globalAlpha = 0.8;
+    ctx.globalCompositeOperation="lighter";
+    let balls = [];
+    for (let i = 0; i < 100; i++) {
+        balls.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (5 + Math.random() * 5) * Math.pow(-1, Math.round(Math.random())),
+            vy: (5 + Math.random() * 5) * Math.pow(-1, Math.round(Math.random())),
+            r: Math.random() * 60,
+            color: `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`
+        })
+    }
+
+
+    function draw(option) {
+        let {x, y, vx, vy, r, color} = option;
+        x += vx;
+        y += vy;
+        if (x > W-r) {
+            x = W-r;
+            vx = -vx;
+        }
+        if (x < r) {
+            x = r;
+            vx = -vx;
+        }
+        if (y > H-r) {
+            y = H-r;
+            vy = -vy;
+        }
+        if (y < r) {
+            y = r;
+            vy = -vy;
+        }
+        option.x = x;
+        option.y = y;
+        option.vx = vx;
+        option.vy = vy;
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(option.x, option.y, r, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+
+    setInterval(function () {
+        ctx.clearRect(0,0,600,600);
+        balls.forEach(ball => draw(ball));
+    }, 100);
+
+</script>
+</html>
