@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>filter</title>
+    <style>
+        canvas {
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="560" id="left"></canvas>
+<canvas width="800" height="560" id="right"></canvas>
+</body>
+<script>
+    const ctxl = document.querySelector('#left').getContext('2d');
+    const ctxr = document.querySelector('#right').getContext('2d');
+    const oImg = new Image();
+    const R = 3;
+    const sum = Math.pow((2 * R + 1), 2);
+    let imgData;
+    let W, H;
+    oImg.src = './img/autumn.jpg';
+    oImg.onload = function () {
+        W = this.width;
+        H = this.height;
+        ctxl.drawImage(oImg, 0, 0, W, H);
+        imgData = ctxl.getImageData(0, 0, W, H);
+        blurHandle(imgData);
+    };
+
+    function blurHandle(imgData) {
+        let tempData = [...imgData.data];
+        for (let i = R; i <H - R; i++) {
+            for (let j = R; j < W - R; j++) {
+                //calculate  R  pixel
+                let r = 0, g = 0, b = 0;
+
+                for (let x = -R; x <= R; x++) {
+                    for (let y = -R; y <= R; y++) {
+
+                        let offY = i + x;
+                        let offX = j + y;
+
+                        r += tempData[4 * (offY * W + offX)];
+                        g += tempData[4 * (offY * W + offX) + 1];
+                        b += tempData[4 * (offY * W + offX) + 2];
+                        //r+=tempData[4 * (offX * W + offY)+3]
+
+                    }
+                }
+                imgData.data[4 * (i * W + j)] = r / sum;
+                imgData.data[4 * (i * W + j) + 1] = g / sum;
+                imgData.data[4 * (i * W + j) + 2] = b / sum;
+
+
+            }
+        }
+
+        ctxr.putImageData(imgData, 0, 0);
+
+    }
+
+
+</script>
+</html>

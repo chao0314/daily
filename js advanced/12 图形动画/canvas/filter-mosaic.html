@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>mosaic</title>
+    <style>
+        canvas {
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="580" id="top"></canvas>
+<canvas width='800' height="580" id="bottom"></canvas>
+</body>
+<script>
+    const ctx = document.querySelector('#top').getContext('2d');
+    const ctxb = document.querySelector('#bottom').getContext('2d');
+    const oImg = new Image();
+    const size = 16;
+    const sum = Math.pow(size, 2);
+    let W, H, w, h;
+    oImg.src = './img/autumn.jpg';
+    oImg.onload = function () {
+        ctx.drawImage(oImg, 0, 0);
+        let imgData = ctx.getImageData(0, 0, this.width, this.height);
+        W = this.width;
+        H = this.height;
+        handle(imgData);
+    };
+
+    function handle(imgData) {
+
+        const temp = imgData.data;
+        // let t = ctx.createImageData(W, H);
+        console.log(temp);
+        for (let i = 0; i < H; i += size) {
+            for (let j = 0; j < W; j += size) {
+                let r = 0, g = 0, b = 0;
+                let x, y;
+
+                for (x = 0; x < size; x++) {
+                    for (y = 0; y < size; y++) {
+                        let offx = j + x;
+                        let offy = i + y;
+
+                        r += temp[4 * (offx + offy * W)];
+                        g += temp[4 * (offx + offy * W) + 1];
+                        b += temp[4 * (offx + offy * W) + 2];
+                        //r
+
+
+                    }
+                }
+
+                r = r / sum;
+                g = g / sum;
+                b = b / sum;
+
+                for (x = 0; x < size; x++) {
+                    for (y = 0; y < size; y++) {
+
+                        let offx = j + x;
+                        let offy = i + y;
+
+                        imgData.data[4 * (offx + offy * W)] = r;
+                        imgData.data[4 * (offx + offy * W) + 1] = g;
+                        imgData.data[4 * (offx + offy * W) + 2] = b;
+                        // imgData.data[4 * (offx + offy * W) + 3] = 255;
+                    }
+                }
+
+            }
+        }
+        console.log(imgData.data);
+
+        ctxb.putImageData(imgData, 0, 0, 0, 0, W, H);
+
+    }
+
+</script>
+</html>
