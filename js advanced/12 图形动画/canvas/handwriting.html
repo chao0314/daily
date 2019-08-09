@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            display: block;
+            margin: auto;
+        }
+
+        ul {
+            width: 50%;
+            height: 20px;
+            margin: 10px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+        }
+
+        li {
+            width: 18%;
+            height: 100%;
+        }
+
+        li:first-child {
+            background: blue;
+        }
+
+        li:nth-child(2) {
+            background: #8f8e94;
+        }
+
+        li:nth-child(3) {
+            background: #41ac52;
+        }
+
+        li:nth-child(4) {
+            background: #9a6e3a;
+        }
+
+        button {
+            width: 40px;
+            background: orange;
+            text-align: center;
+            border: 1px solid black;
+            display: block;
+            margin: auto;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <button>清除</button>
+</div>
+</body>
+<script>
+    const $ = document.querySelectorAll.bind(document);
+    const ctx = $("canvas")[0].getContext('2d');
+    let W = document.documentElement.clientWidth;
+    let H = document.documentElement.clientHeight;
+    W = H = Math.min(W, H);
+    let lineWidth = 6;
+    let wordWidth = 30;
+    let strokeColor = 'red';
+    let wordColor = 'black';
+    ctx.canvas.width = W;
+    ctx.canvas.height = H;
+    let lastTime, lastWidth, lastPosition;
+    console.log(navigator.userAgent);
+    const isMobile = /(iphone)|(android)/ig.test(navigator.userAgent);
+    console.log(isMobile);
+
+    drawOutLine(ctx);
+    drawInline(ctx);
+    write(ctx);
+
+    $("li").forEach(li => {
+        li.onclick = function (e) {
+            $("li").forEach(li => li.style.border = "none");
+            wordColor = window.getComputedStyle(this, null).getPropertyValue("background-color");
+            this.style.border = "2px solid red";
+        }
+    });
+
+    $("button")[0].onclick = function () {
+        ctx.clearRect(0, 0, W, H);
+        drawOutLine(ctx);
+        drawInline(ctx);
+    };
+
+
+    function drawOutLine(ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = lineWidth;
+        ctx.strokeStyle = strokeColor;
+        ctx.moveTo(lineWidth / 2, lineWidth / 2);
+        ctx.lineTo(W - lineWidth / 2, lineWidth / 2);
+        ctx.lineTo(W - lineWidth / 2, H - lineWidth / 2);
+        ctx.lineTo(lineWidth / 2, H - lineWidth / 2);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function drawInline(ctx) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'red';
+        ctx.moveTo(0, 0);
+        ctx.lineTo(W, H);
+        ctx.moveTo(W, 0);
+        ctx.lineTo(0, H);
+        ctx.moveTo(W / 2, 0);
+        ctx.lineTo(W / 2, H);
+        ctx.moveTo(0, H / 2);
+        ctx.lineTo(W, H / 2);
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function convertPosition(target, e) {
+        let box = target.getBoundingClientRect();
+        return {
+            x: e.clientX - box.left,
+            y: e.clientY - box.top
+        }
+    }
+
+    function write(ctx) {
+        if (isMobile) {
+            ctx.canvas.ontouchstart = function (e) {
+
+                let {x, y} = convertPosition(ctx.canvas, e.touches[0]);
+                lastPosition = {x, y};
+                lastTime = (new Date()).getTime();
+                lastWidth = wordWidth;
+                ctx.save();
+                ctx.beginPath();
+                ctx.lineWidth = wordWidth;
+                ctx.strokeStyle = wordColor;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.moveTo(x, y);
+                this.ontouchmove = function (e) {
+                    let time = (new Date()).getTime();
+                    let {x, y} = convertPosition(this, e.touches[0]);
+                    ctx.beginPath();
+                    ctx.moveTo(lastPosition.x, lastPosition.y);
+                    ctx.lineWidth = calculateWidth(time, {x, y});
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+
+                };
+
+                this.ontouchend = function (e) {
+                    this.onmousemove = null;
+                    this.onmouseout = null;
+                    this.onmouseup = null;
+                }
+            }
+
+        } else {
+            ctx.canvas.onmousedown = function (e) {
+                let {x, y} = convertPosition(ctx.canvas, e);
+                lastPosition = {x, y};
+                lastTime = (new Date()).getTime();
+                lastWidth = wordWidth;
+                ctx.save();
+                ctx.beginPath();
+                ctx.lineWidth = wordWidth;
+                ctx.strokeStyle = wordColor;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.moveTo(x, y);
+                this.onmousemove = function (e) {
+                    let time = (new Date()).getTime();
+                    let {x, y} = convertPosition(this, e);
+                    ctx.beginPath();
+                    ctx.moveTo(lastPosition.x, lastPosition.y);
+                    ctx.lineWidth = calculateWidth(time, {x, y});
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+
+                };
+
+                this.onmouseup = this.onmouseout = function (e) {
+                    this.onmousemove = null;
+                    this.onmouseout = null;
+                    this.onmouseup = null;
+                }
+            }
+        }
+
+
+    }
+
+
+    function calculateWidth(time, {x, y}) {
+        let {x: x0, y: y0} = lastPosition;
+        let distance = Math.sqrt(Math.pow(x - x0, 2) + Math.pow(y - y0, 2));
+        let v = distance / (time - lastTime);
+        let width;
+        if (v >= 10) width = 1;
+        else if (v <= 0.1) width = wordWidth;
+        else width = wordWidth - v / (10 - 0.1) * wordWidth;
+        let cur = lastWidth * 3 / 4 + width / 4;
+        lastTime = time;
+        lastWidth = cur;
+        lastPosition = {x, y};
+        return cur;
+    }
+
+
+</script>
+</html>
