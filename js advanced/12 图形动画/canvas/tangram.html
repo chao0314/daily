@@ -34,7 +34,7 @@
 
     let ctx = document.getElementById("canvas").getContext("2d");
     ctx.strokeStyle = "silver";
-    ctx.strokeWidth = 2;
+    ctx.lineWidth = 2;
     tangram.forEach(item => {
         ctx.beginPath();
         item.position.forEach(({x, y}, index) => {

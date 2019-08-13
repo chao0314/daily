@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>cube</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+
+        div {
+
+            perspective: 800px;
+            perspective-origin: center center;
+            transition: transoform 1s ease;
+
+
+        }
+
+        ul {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 200px auto;
+            transform-style: preserve-3d;
+        }
+
+
+        li {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: pink;
+            opacity: 0.5;
+            list-style: none;
+
+            text-align: center;
+            line-height: 200px;
+            font-size: 36px;
+        }
+
+        li:nth-child(2) {
+            transform-origin: right;
+            transform: rotateY(90deg);
+            background: red;
+        }
+
+        li:nth-child(3) {
+            transform-origin: left;
+            transform: rotateY(-90deg);
+            background: forestgreen;
+        }
+
+        li:nth-child(4) {
+            transform-origin: top;
+            transform: rotateX(90deg);
+            background: blue;
+        }
+
+        li:nth-child(5) {
+            transform-origin: bottom;
+            transform: rotateX(-90deg);
+            background: gold;
+        }
+
+        li:nth-child(6) {
+            transform: translateZ(200px);
+            background: salmon;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+</div>
+</body>
+<script>
+    let oUl = document.querySelector('ul');
+    setInterval(function () {
+        oUl.style.transform = `rotateX(${Math.random() * 360}deg) rotateY(${Math.random() * 360}deg) rotateZ(${Math.random() * 360}deg)`
+    }, 1100)
+
+</script>
+</html>

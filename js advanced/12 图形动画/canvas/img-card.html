@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>show</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        img, canvas {
+            display: block;
+            margin: auto;
+        }
+
+        canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src='' alt="">
+    <canvas></canvas>
+</div>
+</body>
+<script>
+    const $ = document.querySelector.bind(document);
+    const ctx = $('canvas').getContext('2d');
+    const oImg = $('img');
+    const R = 10;
+    const sum = Math.pow((2 * R + 1), 2);
+    let H, W;
+    let width, height;
+    let x, y;
+    oImg.src = "./img/img-lg.jpg";
+    oImg.onload = function () {
+        H = this.height;
+        W = this.width;
+        width = Math.min(this.width, innerWidth);
+        height = Math.min(this.height, innerHeight);
+        oImg.style.width = innerWidth + 'px';
+        oImg.style.height = innerHeight + 'px';
+        ctx.canvas.width = width;
+        ctx.canvas.height = height;
+        ctx.save();
+        ctx.beginPath();
+        // ctx.fillStyle = 'rgba(255,255,255,0.9)';
+        // ctx.fillRect(0, 0, width, height);
+        // ctx.closePath();
+
+        ctx.drawImage(oImg, 0, 0, width, height);
+        let imgData = ctx.getImageData(0, 0, W, H);
+        blurHandle(imgData);
+        ctx.restore();
+    };
+
+    ctx.canvas.onmousemove = function (e) {
+        console.log("----");
+        let {x, y} = convertPosition(this, {x: e.clientX, y: e.clientY});
+        ctx.save();
+        ctx.lineWidth = 10;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    };
+
+    function convertPosition(dom, {x, y}) {
+        let box = dom.getBoundingClientRect();
+        return {
+            x: x - box.left,
+            y: y - box.top
+        }
+    }
+
+    function blurHandle(imgData) {
+        let tempData = [...imgData.data];
+        for (let i = R; i < H - R; i++) {
+            for (let j = R; j < W - R; j++) {
+                //calculate  R  pixel
+                let r = 0, g = 0, b = 0;
+
+                for (let x = -R; x <= R; x++) {
+                    for (let y = -R; y <= R; y++) {
+
+                        let offY = i + x;
+                        let offX = j + y;
+
+                        r += tempData[4 * (offY * W + offX)];
+                        g += tempData[4 * (offY * W + offX) + 1];
+                        b += tempData[4 * (offY * W + offX) + 2];
+                        //r+=tempData[4 * (offX * W + offY)+3]
+
+                    }
+                }
+                imgData.data[4 * (i * W + j)] = r / sum;
+                imgData.data[4 * (i * W + j) + 1] = g / sum;
+                imgData.data[4 * (i * W + j) + 2] = b / sum;
+
+
+            }
+        }
+
+        ctx.putImageData(imgData, 0, 0, 0, 0, width, height);
+
+    }
+
+
+</script>
+</html>
