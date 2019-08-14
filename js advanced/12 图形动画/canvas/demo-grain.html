@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>grain</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .container {
+            position: relative;
+            height: 100%;
+            background: linear-gradient(to bottom, black, #5788fe);
+        }
+
+        .mix {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fe5757;
+            left: 0;
+            top: 0;
+            animation: mix-color 20s ease infinite;
+            mix-blend-mode: overlay;
+
+        }
+
+        img {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @keyframes mix-color {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.9;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="mix"></div>
+    <canvas></canvas>
+    <img src="./img/land.png" alt="">
+</div>
+
+</body>
+</html>
