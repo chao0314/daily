@@ -33,6 +33,7 @@
             top: 0;
             animation: mix-color 20s ease infinite;
             mix-blend-mode: overlay;
+            /*z-index: -99;*/
 
         }
 
@@ -60,6 +61,197 @@
     <canvas></canvas>
     <img src="./img/land.png" alt="">
 </div>
-
 </body>
+<script>
+    const $ = document.querySelector.bind(document);
+    const oCanvas = $('canvas');
+    const ctx = oCanvas.getContext('2d');
+    const starCount = 50;
+    const oMix = $('.mix');
+
+    class Star {
+        constructor(ctx) {
+            this.ctx = ctx;
+            this.r = Math.random() * 2 + 1;
+            this.vy = Math.random() + 0.1;
+            this.x = (this.ctx.canvas.width - 10 * this.r) * Math.random() + this.r * 5;
+            this.y = (this.ctx.canvas.height - 10 * this.r) * Math.random() + this.r * 5;
+            this.color = `rgba(255,255,255,${Math.floor(Math.random() * 10 + 1) / 10 / 2})`;
+            //this.draw();
+        }
+
+        draw() {
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.fillStyle = this.color;
+            this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
+            this.ctx.fill();
+            this.ctx.restore();
+        }
+
+        move() {
+            this.y -= this.vy;
+            if (this.y < 0) this.y = this.ctx.canvas.height - this.r * 5;
+            this.draw();
+        }
+
+    }
+
+    Star.stars = [];
+
+    class Circular {
+        constructor(id, position, ctx) {
+            this.id = id;
+            this.ctx = ctx;
+            this.x = position.x;
+            this.y = position.y;
+            this.r = Math.random() * 5 + 2;
+            this.vx = Math.pow(-1, Math.round(Math.random())) * Math.random() * 0.5;
+            this.vy = Math.random() * 0.5;
+            this.va = -0.005;
+            this.a = 0.5;
+            this.lineWidth = 1;
+            //this.draw();
+        }
+
+        draw() {
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.fillStyle = `rgba(255,255,255,${this.a})`;
+            this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, true);
+            this.ctx.fill();
+            this.ctx.restore();
+        }
+
+        line() {
+            if (Circular.circulars.length < 2) return;
+
+            let firstSibling = Circular.circulars[this.id - 1];
+            let secondSibling = Circular.circulars[this.id - 2];
+            let thirdSibling = Circular.circulars[this.id - 3];
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.lineWidth = this.lineWidth;
+            this.ctx.strokeStyle = `rgba(255,255,255,${this.a / 4})`;
+            if (firstSibling) {
+                let {x, y} = firstSibling;
+                this.ctx.moveTo(this.x, this.y);
+                this.ctx.lineTo(x, y);
+            }
+
+            if (secondSibling) {
+                let {x, y} = secondSibling;
+                this.ctx.moveTo(this.x, this.y);
+                this.ctx.lineTo(x, y);
+            }
+            if (thirdSibling) {
+                let {x, y} = thirdSibling;
+                this.ctx.moveTo(this.x, this.y);
+                this.ctx.lineTo(x, y);
+            }
+            this.ctx.stroke();
+            this.ctx.restore();
+
+        }
+
+        move() {
+            this.a += this.va;
+            if (this.a <= 0) return;
+            this.x += this.vx;
+            this.y += this.vy;
+            this.draw();
+            this.line();
+        }
+
+    }
+
+    Circular.circulars = [];
+
+    class Meteor {
+        constructor(ctx) {
+            this.ctx = ctx;
+            this.x = Math.random() * (this.ctx.canvas.width - 20) + 10;
+            this.y = Math.random() * this.ctx.canvas.height * 0.2;
+            this.vx = -Math.random();
+            this.vy = Math.random() * 3;
+            this.r = Math.random() + 1;
+            this.count = 20 * Math.random() + 20;
+            this.diff = this.r / this.count;
+            this.color = this.color = `rgba(255, 255, 255, 0.5)`;
+
+            this.draw();
+        }
+
+        draw() {
+            let x = this.x, y = this.y;
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.x, this.y);
+            this.ctx.fillStyle = this.color;
+            this.ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2, true);
+            for (let i = 1; i < this.count; i++) {
+                x += 2;
+                y -= 2;
+                let r = Math.sqrt(2) + this.diff * (this.count - i);
+                this.ctx.arc(x, y, r, 0, Math.PI * 2, true);
+            }
+            this.ctx.fill();
+            this.ctx.restore();
+        }
+    }
+
+    function init() {
+        let timer;
+        oCanvas.width = document.documentElement.clientWidth;
+        oCanvas.height = document.documentElement.clientHeight;
+        for (let i = 0; i < starCount; i++) {
+            Star.stars.push(new Star(ctx));
+        }
+
+        oMix.onmousemove = function (e) {
+            clearTimeout(timer);
+            let {x, y} = convertPosition(oCanvas, {x: e.clientX, y: e.clientY});
+            if (Circular.circulars.length === 0) Circular.circulars.push(new Circular(0, {x, y}, ctx));
+            else {
+                let length = Circular.circulars.length;
+                let prev = Circular.circulars[length - 1];
+                let dis = Math.sqrt(Math.pow(x - prev.x, 2) + Math.pow(y - prev.y, 2));
+                if (dis > 5) {
+                    x += Math.random() * 40;
+                    y += Math.random() * 40;
+                    Circular.circulars.push(new Circular(length, {x, y}, ctx))
+                }
+                timer = setTimeout(function () {
+                    Circular.circulars = Circular.circulars.filter(item => item.a > 0).map((v, i) => {
+                        v.id = i;
+                        return v;
+                    });
+                }, 3000)
+            }
+        };
+
+        animate();
+    }
+
+    init();
+
+    function convertPosition(dom, position) {
+        let oBox = dom.getBoundingClientRect();
+        return {
+            x: position.x - oBox.left,
+            y: position.y - oBox.top
+        }
+    }
+
+    function animate() {
+        //ctx.clearRect(0, 0, oCanvas.width, oCanvas.height);
+        // Star.stars.forEach(star => star.move());
+        // Circular.circulars.forEach(circular => {
+        //     if (circular) circular.move();
+        // });
+        new Meteor(ctx);
+
+        //requestAnimationFrame(animate);
+    }
+</script>
 </html>
