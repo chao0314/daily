@@ -1,7 +1,6 @@
 const clickOut = {
     inserted(el, binding) {
         el._listener = function (e) {
-            console.log("---")
             if (!el.contains(e.target)) binding.value();
 
         };

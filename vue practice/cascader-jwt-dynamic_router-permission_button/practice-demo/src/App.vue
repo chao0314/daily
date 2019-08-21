@@ -6,8 +6,11 @@
             <router-link to="/about">About</router-link>
         </div>
         <router-view/>
-        <input type="text" :value="value" @click="shouldShow = true">
-        <com-cascade v-if=shouldShow :items="items" @select="select" :load="load" @click="close"></com-cascade>
+        <div v-click-out="close">
+            <input type="text" :value="value" @click="shouldShow = !shouldShow">
+            <com-cascade v-if=shouldShow :items="items" @select="select" :load="load"></com-cascade>
+        </div>
+
     </div>
 </template>
 <script>

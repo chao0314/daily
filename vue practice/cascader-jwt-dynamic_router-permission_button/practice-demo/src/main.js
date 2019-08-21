@@ -8,7 +8,6 @@ Vue.config.productionTip = false;
 
 for (let prop in directives) {
     if (directives.hasOwnProperty(prop)) {
-      console.log(prop,directives[prop])
         Vue.directive(prop,directives[prop])
     }
 }
