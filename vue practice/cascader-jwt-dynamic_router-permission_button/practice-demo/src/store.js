@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import data from '../static/data';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
+    state: {},
+    mutations: {},
+    actions: {
+        async getDataById({commit}, id) {
 
-  },
-  mutations: {
+            return data.filter(value => Number(value.pid) === Number(id));
+        }
 
-  },
-  actions: {
-
-  }
+    }
 })
