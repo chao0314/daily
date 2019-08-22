@@ -1,6 +1,9 @@
 <template>
-    <div>
+    <div class="cart">
         <b>this is cart</b>
+        <div>
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
@@ -11,5 +14,8 @@
 </script>
 
 <style scoped>
-
+    .cart{
+        background: #62c462;
+        height: 400px;
+    }
 </style>

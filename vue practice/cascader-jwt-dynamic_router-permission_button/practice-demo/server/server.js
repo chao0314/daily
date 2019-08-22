@@ -8,32 +8,32 @@ app.all('*', (req, res, next) => {
     res.header('Content-Type', 'application/json;charset=utf-8');
     next();
 });
-app.get('/roleAuth', (req, res) => {
+app.get('/roles-route', (req, res) => {
     res.json({
-        menuList: [
+       routes: [
             {
                 pid: -1,
                 name: '购物车',
                 id: 1,
-                auth: 'cart',
+                path: 'cart',
             },
             {
                 pid: 1,
                 name: '购物车列表',
                 id: 2,
-                auth: 'cart-list',
+                path: 'list',
             },
             {
                 pid: 2,
                 name: '彩票',
                 id: 3,
-                auth: 'lottery',
+                path: 'lottery',
             },
             {
                 pid: 2,
                 name: '商品',
                 id: 4,
-                auth: 'product',
+                path: 'product',
             },
         ],
     });
