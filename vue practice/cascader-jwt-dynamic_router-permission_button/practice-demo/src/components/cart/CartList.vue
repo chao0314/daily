@@ -1,5 +1,7 @@
 <template>
-    <div class="list"><b>this is cart list</b></div>
+    <div class="list"><b>this is cart list</b>
+    <router-view></router-view>
+    </div>
 </template>
 
 <script>

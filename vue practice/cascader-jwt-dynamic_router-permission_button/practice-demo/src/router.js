@@ -21,7 +21,7 @@ const BLACKLIST = ['/cart', '/cart/list', '/cart/list/lottery', '/cart/list/prod
 const dynamicRoutes = [
     {
         path: '/cart',
-        name: "cart",
+        name: "/cart",
         meta: "needLogin",
         component: Cart,
         children: [
@@ -50,7 +50,7 @@ const dynamicRoutes = [
 ];
 const router = new Router({
     mode: 'history',
-    base: process.env.BASE_URL,
+    base: '',
     routes: [
         {
             path: '/',
@@ -67,7 +67,7 @@ const router = new Router({
 router.beforeEach((to, form, next) => {
     let hasDynamicRoute = Store.state.hasDynamicRoute;
     if (hasDynamicRoute === 1) next();
-    else if (isDynamicRoute(BLACKLIST, to.matched)) {
+    else if (isDynamicRoute(BLACKLIST, to.matched.length === 0 ? [{path: to.path}] : to.matched)) {
         if (hasDynamicRoute === 0) next(Object.assign({}, to, {replace: true}));
         else {
             getDynamicRoute(() => next(Object.assign({}, to, {replace: true})));
@@ -80,7 +80,6 @@ router.beforeEach((to, form, next) => {
 
 function isDynamicRoute(bl, routes) {
     routes = routes.map(route => route.path);
-    console.log(routes);
     let temp = bl.concat(routes);
     let set = new Set(temp);
     console.log(temp.length !== set.size);

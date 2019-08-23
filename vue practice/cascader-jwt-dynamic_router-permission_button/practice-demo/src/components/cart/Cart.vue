@@ -1,6 +1,7 @@
 <template>
     <div class="cart">
         <b>this is cart</b>
+        <cart-item :items="items"></cart-item>
         <div>
             <router-view></router-view>
         </div>
@@ -8,8 +9,19 @@
 </template>
 
 <script>
+    import CartItem from "./CartItem";
     export default {
-        name: "Cart"
+        name: "Cart",
+        computed:{
+            items(){
+                return this.$store.state.dynamicRoute[this.$route.path];
+            }
+        },
+        components:{
+            CartItem
+        }
+
+
     }
 </script>
 
