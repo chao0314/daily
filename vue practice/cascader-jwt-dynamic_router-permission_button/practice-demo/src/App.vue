@@ -12,6 +12,11 @@
             <input type="text" :value="value" @click="shouldShow = !shouldShow">
             <com-cascade v-if=shouldShow :items="items" @select="select" :load="load"></com-cascade>
         </div>
+        <div>
+            <button @click="login">login</button>
+            <button @click="verify">verify</button>
+            <button @click="before">before verify</button>
+        </div>
 
     </div>
 </template>
@@ -42,6 +47,15 @@
             },
             close() {
                 this.shouldShow = false;
+            },
+            login() {
+                this.$store.dispatch('login', {name: "admin", password: "123456"})
+            },
+            verify() {
+                this.$store.dispatch("verify");
+            },
+            before() {
+                this.$store.dispatch("before");
             }
 
         }

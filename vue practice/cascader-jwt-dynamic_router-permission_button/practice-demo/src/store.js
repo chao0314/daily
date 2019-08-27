@@ -16,6 +16,10 @@ axios.interceptors.response.use(response => {
 }, error => {
     return Promise.reject(error);
 });
+axios.interceptors.request.use(function (config) {
+    config.headers.authorization = localStorage.getItem('token');
+    return config;
+});
 
 Vue.use(Vuex);
 
@@ -23,7 +27,7 @@ export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
     state: {
         hasDynamicRoute: -1,
-        dynamicRoute:{}
+        dynamicRoute: {}
     },
     mutations: {
         setDynamicRouteCode(state, code) {
@@ -52,7 +56,22 @@ export default new Vuex.Store({
             });
             commit('setDynamicRoutes', root);
             return paths;
+        },
+        async login({commit}, payload) {
+            let {name, password} = payload;
+            let {token} = await axios.post("login", {name, password});
+            console.log("client token", token);
+            localStorage.setItem("token", token);
+        },
+        async verify({state,commit}, payload) {
+            state.before = localStorage.getItem('token');
+            let {token} = await axios.post("verify");
+            console.log("verify", token);
+            localStorage.setItem('token', token);
+        },
+        async before({state}){
+            localStorage.setItem('token',state.before);
+            let {token} = await axios.post("verify");
         }
-
     }
 })
