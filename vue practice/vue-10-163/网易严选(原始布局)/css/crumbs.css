@@ -1,0 +1,14 @@
+.crumbs {
+  padding:24px 0;font-size:12px;
+}
+
+.crumbs a {
+  color:#333;
+}
+.crumbs a.cur {
+  color:#999;
+}
+
+.crumbs .spliter {
+  margin:0 7px;
+}
