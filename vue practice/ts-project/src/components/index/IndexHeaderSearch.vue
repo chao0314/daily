@@ -47,7 +47,7 @@
                     </div>
                 </div>
 
-                <a href="#" class="search-btn fl">搜索</a>
+                <a href="#" class="search-btn fl" @click="goSearch">搜索</a>
             </div>
         </div>
         <div class="search-suggest">
@@ -114,8 +114,8 @@
 
         @Watch("activeKind")
         private switchKind(val: string) {
-            console.log("----",this.activeKind);
-            if(this.search.keyword){
+            console.log("----", this.activeKind);
+            if (this.search.keyword) {
                 clearTimeout(this.timer);
                 this.searchData(this.search.keyword);
             }
@@ -139,7 +139,7 @@
             }, 300);
         }
 
-        searchData(val:string){
+        searchData(val: string) {
             this.getSuggest({kw: val, type: this.kinds[this.activeKind].type}).then((data: SuggestData) => {
                 let {result, magic} = data;
                 if (result && result.length > 0) {
@@ -162,6 +162,10 @@
                 }
             }).catch((e: Error) => console.log(e));
 
+        }
+
+        goSearch() {
+            this.$router.push({path: '/search'})
         }
 
 
