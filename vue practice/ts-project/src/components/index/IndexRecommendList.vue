@@ -46,7 +46,7 @@
 
 <script lang="ts">
     import {Component, Vue,Prop} from 'vue-property-decorator';
-    import {HotItem, HotKeyword} from "@/type/search";
+    import {HotItem, HotKeyword} from "@/type";
 
     @Component({
         components: {}

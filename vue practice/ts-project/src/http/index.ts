@@ -7,7 +7,7 @@ export const taobao = Axios.create({
     }
 });
 taobao.interceptors.response.use((response: any) => {
-    let {data:{err, msg, data}} = response;
+       let {data:{err, msg, data}} = response;
     if (err) throw Error(msg);
     return response;
 }, (e: Error) => {

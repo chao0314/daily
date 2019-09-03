@@ -71,7 +71,7 @@
     import IndexNavCatalog from "@/components/index/IndexNavCatalog.vue";
     import IndexBanner from "@/components/index/IndexBanner.vue";
     import {Actions} from "@/decorator/Store";
-    import {BannerItem, AdItem} from "@/type/search";
+    import {BannerItem, AdItem} from "@/type";
 
     @Component({
         components: {

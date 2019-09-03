@@ -72,7 +72,7 @@
     import RegisterForm from "@/components/register/RegisterForm.vue";
     import RegisterFormItem from "@/components/register/RegisterFormItem.vue";
     import RegisterPasswordCheck from "@/components/register/RegisterPasswordCheck.vue";
-    import {register} from "@/type/user";
+    import {register} from "@/type/register";
     import {Actions} from "@/decorator/Store";
 
 

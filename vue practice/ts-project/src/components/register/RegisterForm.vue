@@ -6,7 +6,7 @@
 
 <script lang="ts">
     import {Component, Vue, Prop} from 'vue-property-decorator';
-    import {error, rule} from "@/type/user";
+    import {error, rule} from "@/type/register";
     import RegisterItem from "@/components/register/RegisterFormItem.vue";
 
     @Component({

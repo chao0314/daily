@@ -3,7 +3,8 @@ import Vuex from 'vuex';
 import {taobao} from "@/http";
 
 Vue.use(Vuex);
-import {SuggestData, CatalogData, CatalogDetail, BannerItem, AdItem, HotItem} from "@/type/search";
+import {SuggestData, CatalogData, CatalogDetail, BannerItem, AdItem, HotItem} from "@/type";
+import {c2cData, shopData,filter} from '@/type/search';
 
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
@@ -57,7 +58,6 @@ export default new Vuex.Store({
             });
             data.name = payload.name;
             commit("saveUserInfo", data);
-            console.log(data)
             return data;
         },
         async register({commit}, payload): Promise<{ userID: number }> {
@@ -68,18 +68,22 @@ export default new Vuex.Store({
         async getUserInfo({state}) {
             let {token, token_expires} = state.userInfo;
             if (token && token_expires > Date.now()) {
-
+                let {data: {data}} = await taobao.get('/user/getinfo', {params: {token: state.userInfo.token}});
+                return data;
             }
 
-            let {data: {data}} = await (taobao.get('/user/getinfo', {params: {token: state.userInfo.token}}));
-            return data;
-        },
-        async initUserInfo({state}) {
-            state.userInfo = JSON.parse(localStorage.getItem('userInfo') || "{}");
-            state.userInfo.token_expires = Number(state.userInfo.token_expires);
-            return true;
-        }
 
+        },
+        async initUserInfo({commit}) {
+            let userInfo = JSON.parse(localStorage.getItem('userInfo') || "{}");
+            let date = Number(userInfo.token_expires);
+            if (date > Date.now()) userInfo.token_expires = date;
+            commit('saveUserInfo', userInfo);
+            return true;
+        },
+        async search({commit}, payload:filter): Promise<c2cData | shopData[]> {
+            return (await taobao.get('/search', {params: payload})).data.data;
+        }
 
     },
     modules: {}

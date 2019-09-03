@@ -20,7 +20,7 @@
 
 <script lang="ts">
     import {Component, Vue, Prop} from 'vue-property-decorator';
-    import {BannerItem} from "@/type/search";
+    import {BannerItem} from "@/type";
 
     @Component({
         components: {}

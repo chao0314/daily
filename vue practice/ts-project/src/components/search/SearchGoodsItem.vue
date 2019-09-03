@@ -1,7 +1,7 @@
 <template lang="html">
-  <div class="goods-item fl">
+  <div class="goods-item fl" @click="showDetail">
     <div class="line-1">
-      <img src="https://g-search1.alicdn.com/img/bao/uploaded/i4/imgextra/i4/49386376/TB2Gw5BcOLaK1RjSZFxXXamPFXa_!!0-saturn_solar.jpg_250x250.jpg_.webp" alt="">
+      <img :src="goods.img|imgPath" alt="">
     </div>
     <div class="line-2 clearfix">
       <span class="price fl">￥62.00</span>
@@ -22,9 +22,14 @@
 
 <script lang="ts">
 import {Component, Vue, Prop} from 'vue-property-decorator';
+import {goodsData} from "@/type/search";
 
 @Component
 export default class SearchGoodsItem extends Vue {
+  @Prop({type:Object}) goods!:goodsData
+  showDetail(){
+    this.$router.push({path:'/detail'});
+  }
 }
 </script>
 

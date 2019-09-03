@@ -1,16 +1,22 @@
 <template>
   <div id="app">
     <router-view></router-view>
-
   </div>
 </template>
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+  import { Component, Vue} from 'vue-property-decorator';
+  import {Actions} from "@/decorator/Store";
+
   @Component({
     components:{
     }
   })
   export default class App extends Vue {
+    @Actions  private initUserInfo!:Function;
+    created(){
+      this.initUserInfo();
+    }
+
 
   }
 </script>

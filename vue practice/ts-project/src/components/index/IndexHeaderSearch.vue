@@ -10,6 +10,9 @@
                     <input type="text" class="search-kw" v-model="search.keyword"
                            @focus="search.focus=true"
                            @blur="inputBlur"
+                           @keydown.up="previousSuggest"
+                           @keydown.down="nextSuggest"
+                           @keydown.enter="enterSearch"
                     >
                     <span class="search-mask clearfix" v-show="!search.keyword &&!search.focus">
                   <i class="search-mask-icon fl"></i>
@@ -18,24 +21,10 @@
                     <a href="#" class="search-img">以图搜图</a>
                 </div>
                 <div class="search-sug" v-show="search.keyword && search.focus">
-                    <!-- 普通模式 -->
-                    <!--                    <ul class="search-kw-list">-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                        <li>阿迪达斯</li>-->
-                    <!--                    </ul>-->
-
                     <!-- magic模式 -->
                     <ul class="search-kw-list " :class="{'search-kw-list-left':curSuggest.magic.length >0}">
                         <li v-for="(item,index) in search.suggests" @mouseover="search.active = index"
-                            @click=handleSuggest(index)>{{item.title}}
+                            @click=handleSuggest(index) :class="{active:search.active === index}">{{item.title}}
                         </li>
 
                     </ul>
@@ -47,7 +36,7 @@
                     </div>
                 </div>
 
-                <a href="#" class="search-btn fl" @click="goSearch">搜索</a>
+                <a href="#" class="search-btn fl" @click="doSearch">搜索</a>
             </div>
         </div>
         <div class="search-suggest">
@@ -71,7 +60,7 @@
 <script lang="ts">
     import {Component, Vue, Watch} from 'vue-property-decorator';
     import {Actions} from "@/decorator/Store";
-    import {Suggest, Suggests, SuggestData, MagicItem} from "@/type/search";
+    import {Suggest, Suggests, SuggestData, MagicItem} from "@/type";
 
     @Component({
         components: {}
@@ -86,27 +75,6 @@
         private handleKeyword(val: string) {
             console.log("kw", val);
             if (val) {
-                // this.getSuggest({kw: val, type: this.kinds[this.activeKind].type}).then((data: SuggestData) => {
-                //     let {result, magic} = data;
-                //     if (result && result.length > 0) {
-                //         this.search.suggests = result.reduce((pre: Suggest[], cur: string[], i: number) => {
-                //             let temp: Suggest = {title: cur[0], magic: []};
-                //             if (magic) {
-                //                 let magicItem = magic.find(({index}: MagicItem) => {
-                //                     return Number(index) === i;
-                //                 });
-                //                 if (magicItem) {
-                //                     temp.magic = magicItem.data.flat();
-                //                 }
-                //             }
-                //             pre.push(temp);
-                //             return pre;
-                //         }, []);
-                //         //console.log("result", this.search.suggests);
-                //     } else {
-                //         alert("error");
-                //     }
-                // }).catch((e: Error) => console.log(e));
                 this.searchData(val);
 
             }
@@ -164,8 +132,24 @@
 
         }
 
-        goSearch() {
-            this.$router.push({path: '/search'})
+        doSearch() {
+            this.$router.push({
+                path: '/search', query: {
+                    q: this.search.keyword
+                }
+            })
+        }
+        enterSearch(){
+            this.handleSuggest(this.search.active);
+            this.doSearch();
+        }
+
+        previousSuggest() {
+            if (this.search.active > 0) this.search.active--;
+        }
+
+        nextSuggest() {
+            if (this.search.active < this.search.suggests.length - 1) this.search.active++;
         }
 
 
@@ -310,7 +294,7 @@
     }
 
     .search-kw-list li.active {
-        background: #EEE;
+        background: lightgray;
     }
 
     .search-mask {

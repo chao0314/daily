@@ -18,7 +18,7 @@
     import IndexNav from "@/components/index/IndexNav.vue";
     import IndexRecommendList from "@/components/index/IndexRecommendList.vue";
     import {Actions} from "@/decorator/Store";
-    import {HotItem, HotKeyword} from "@/type/search";
+    import {HotItem, HotKeyword} from "@/type";
 
 
     @Component({

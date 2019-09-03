@@ -41,7 +41,7 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator';
     import {Actions} from "@/decorator/Store";
-    import {CatalogData, CatalogDetail, CatalogPanel, CatalogRmd} from "@/type/search";
+    import {CatalogData, CatalogDetail, CatalogPanel, CatalogRmd} from "@/type";
 
 
     @Component

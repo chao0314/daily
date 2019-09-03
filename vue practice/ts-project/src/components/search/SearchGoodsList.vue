@@ -1,11 +1,12 @@
 <template lang="html">
   <div class="goods-list fl">
-    <search-goods-item></search-goods-item>
+    <search-goods-item v-for="goods in list"  :goods = goods></search-goods-item>
   </div>
 </template>
 
 <script lang="ts">
 import {Component, Vue, Prop} from 'vue-property-decorator';
+import {goodsData} from '@/type/search';
 import SearchGoodsItem from "@/components/search/SearchGoodsItem.vue";
 
 @Component({
@@ -14,6 +15,7 @@ import SearchGoodsItem from "@/components/search/SearchGoodsItem.vue";
   }
 })
 export default class SearchGoodsList extends Vue {
+  @Prop({type:Array,default:()=>[]}) list!:goodsData[];
 }
 </script>
 
