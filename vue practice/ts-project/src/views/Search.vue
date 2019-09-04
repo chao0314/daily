@@ -4,7 +4,7 @@
         <div class="page">
             <search-header :init-filter="filter" :page-count="data.pagecount" @change="changeFilter"></search-header>
             <search-goods-list :list="data.rows"></search-goods-list>
-            <search-ad-list></search-ad-list>
+            <search-ad-list :ads="ads"></search-ad-list>
 
         </div>
     </div>
@@ -17,7 +17,7 @@
     import SearchHeader from "@/components/search/SearchHeader.vue";
     import SearchGoodsList from "@/components/search/SearchGoodsList.vue";
     import SearchAdList from "@/components/search/SearchAdList.vue";
-    import {c2cData, filter} from "@/type/search";
+    import {c2cData, filter, goodsAdsItem} from "@/type/search";
 
     @Component({
         components: {
@@ -29,8 +29,10 @@
     })
     export default class Search extends Vue {
         @Actions search!:Function;
+        @Actions getGoodsAds!:Function;
         private filter: filter = {q: '',page:1};
         private data: c2cData = {rows: [], pagecount: 0};
+        private ads:goodsAdsItem[] = [];
 
 
         created() {
@@ -40,7 +42,7 @@
             this.search(this.filter).then((res:c2cData) =>{
                 this.data = res;
             }).catch(()=>alert('失败'));
-
+            this.getGoodsAds().then((res:goodsAdsItem[])=>this.ads = res).catch(()=>alert('ad failed'));
         }
 
         changeFilter(filter:filter){

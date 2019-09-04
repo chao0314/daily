@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="detail-imgs">
-    <img src="https://img.alicdn.com/imgextra/i2/753939896/TB2sNean9FjpuFjSszhXXaBuVXa_!!753939896.jpg" alt="">
+    <img  v-for="img in imgs" :src="img|imgPath" alt="">
   </div>
 </template>
 
@@ -9,6 +9,7 @@ import {Component, Vue, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Index extends Vue {
+  @Prop({type:Array,default:()=>[]}) imgs!:string[];
 }
 </script>
 

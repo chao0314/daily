@@ -4,7 +4,8 @@ import {taobao} from "@/http";
 
 Vue.use(Vuex);
 import {SuggestData, CatalogData, CatalogDetail, BannerItem, AdItem, HotItem} from "@/type";
-import {c2cData, shopData,filter} from '@/type/search';
+import {c2cData, shopData, filter, goodsAdsItem} from '@/type/search';
+import {detailItem} from "@/type/detail";
 
 export default new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
@@ -41,6 +42,7 @@ export default new Vuex.Store({
             return (await taobao.get("/banner")).data.data;
         },
         async getAds({commit}): Promise<{ [index: string]: AdItem }> {
+
             return (await taobao.get("/ad", {params: {type: 'banner'}})).data.data;
         },
         async getHotKeyword(): Promise<BannerItem[]> {
@@ -81,10 +83,17 @@ export default new Vuex.Store({
             commit('saveUserInfo', userInfo);
             return true;
         },
-        async search({commit}, payload:filter): Promise<c2cData | shopData[]> {
+        async search({commit}, payload: filter): Promise<c2cData | shopData[]> {
             return (await taobao.get('/search', {params: payload})).data.data;
+        },
+        async getGoodsAds(): Promise<goodsAdsItem> {
+            return (await taobao.get('/ad', {params: {type: 'search'}})).data.data;
+        },
+        async getItem(store,payload):Promise<detailItem>{
+            //todo
+            console.log(payload)
+             return (await taobao.get('/item')).data.data;
         }
-
     },
     modules: {}
 });
