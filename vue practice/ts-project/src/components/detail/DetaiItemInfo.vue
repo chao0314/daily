@@ -5,27 +5,27 @@
         <!-- <div class="magnifier magnifier-show fl"> -->
        <detail-magnifier></detail-magnifier>
         <div class="item-info fr">
-          <h2>时柳 男女长短袖衬衫定制工作服衬衣定制 文化衫印字 衬衫绣LOGO</h2>
+          <h2>{{goods.title}}</h2>
           <div class="info-container">
             <div class="info-item price">
               <i class="info-label">价格</i>
-              <span class="info-text">¥399.00</span>
+              <span class="info-text">¥{{goods.price}}</span>
             </div>
             <div class="info-item tbprice">
               <i class="info-label">淘宝价</i>
-              <span class="info-text">¥47.00</span>
+              <span class="info-text">¥{{goods.true_price}}</span>
             </div>
             <div class="info-item offer">
               <i class="info-label">优惠</i>
-              <span class="info-text">淘金币可抵<strong>0.94</strong>元</span>
+              <span class="info-text">淘金币可抵<strong>{{goods.offer}}</strong>元</span>
             </div>
             <div class="info-item sizes">
               <i class="info-label">尺码</i>
-              <comp-size-selector>`</comp-size-selector>
+              <comp-size-selector :sizes="goods.sizes"></comp-size-selector>
             </div>
             <div class="info-item colors">
               <i class="info-label">颜色</i>
-              <comp-color-selector></comp-color-selector>
+              <comp-color-selector :colors="goods.colors"></comp-color-selector>
             </div>
             <div class="info-item count">
               <i class="info-label">数量</i>
@@ -61,11 +61,13 @@ import DetailMagnifier from './DetailMagnifier.vue';
 import CompColorSelector from "@/components/common/CompColorSelector.vue";
 import CompNumberInput from "@/components/common/CompNumberInput.vue";
 import CompSizeSelector from "@/components/common/CompSizeSelector.vue";
+import {goods} from "@/type/detail";
 
 @Component({
   components: {DetailMagnifier, CompSizeSelector, CompColorSelector, CompNumberInput}
 })
 export default class Info extends Vue {
+  @Prop({type:Object,required:true,default:()=>{}}) goods!:goods;
 
 }
 </script>

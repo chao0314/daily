@@ -5,19 +5,16 @@
                 <h1 class="logo fl">淘宝网</h1>
             </div>
         </header>
-        <div class="banner" style="background:#006428;">
+        <div class="banner" :style="{background:shop.banner.color}">
             <div class="page banner-container">
-                <img src="../../assets/imgs/TB2ZIyjdFXXXXcaXXXXXXXXXXXX-753939896.jpg" alt="">
+                <img :src="shop.banner.img|imgPath" alt="">
             </div>
         </div>
-        <div class="menu" style="background:;">
+        <div class="menu">
             <div class="container-950">
                 <ul>
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">模板</a></li>
-                    <li><a href="#">裤/裙</a></li>
-                    <li><a href="#">短袖衬衫</a></li>
-                    <li><a href="#">长袖衬衫</a></li>
+                    <li v-for="menu in shop.menus"><a :href="menu.href">{{menu.title}}</a></li>
+
                 </ul>
             </div>
         </div>
@@ -25,10 +22,15 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue, Prop} from 'vue-property-decorator';
+    import {shop} from "@/type/detail";
 
     @Component
     export default class Header extends Vue {
+        @Prop({
+            type: Object, default: () => {
+            }, required: true
+        }) shop!: shop;
 
     }
 </script>

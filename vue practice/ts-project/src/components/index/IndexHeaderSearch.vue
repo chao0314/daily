@@ -97,7 +97,7 @@
         }
 
         handleSuggest(index: number) {
-            this.search.keyword = this.search.suggests[index].title;
+            if(this.search.suggests[index]) this.search.keyword = this.search.suggests[index].title;
             this.search.focus = false;
         }
 

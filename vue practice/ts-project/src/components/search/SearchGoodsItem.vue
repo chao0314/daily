@@ -4,15 +4,15 @@
       <img :src="goods.img|imgPath" alt="">
     </div>
     <div class="line-2 clearfix">
-      <span class="price fl">￥62.00</span>
-      <span class="sales fr">2人付款</span>
+      <span class="price fl">￥{{goods.price}}</span>
+      <span class="sales fr">{{goods.sales}}人付款</span>
     </div>
     <div class="line-3">
-      <a href="https://item.taobao.com/item.htm?id=555364140099&ali_refid=a3_430585_1006:1107190000:N:gfmk%2FV9QA1bezFzsNyOSoA%3D%3D:9e2d744ff6fb5055fbfaecb8eae42231&ali_trackid=1_9e2d744ff6fb5055fbfaecb8eae42231&spm=a230r.1.14.13#detail">秋冬工作服套装男修理厂上衣工厂工地劳动服汽修电焊工作厂服定制</a>
+      <a :href="goods.href">{{goods.title}}</a>
     </div>
     <div class="line-4 clearfix">
-      <a href="https://shop107383074.taobao.com/?ali_refid=a3_430585_1006:1107190000:N:gfmk%2FV9QA1bezFzsNyOSoA%3D%3D:46946b147c9257a0c46ecda9161a4c83&ali_trackid=1_46946b147c9257a0c46ecda9161a4c83&spm=a230r.1.14.14" class="shop fl">京航职业装</a>
-      <span class="location fr">湖北 武汉</span>
+      <a :href="goods.shophref" class="shop fl">{{goods.shopname}}</a>
+      <span class="location fr">江浙沪</span>
     </div>
     <div class="line-5">
       <a class="ww" href="https://amos.alicdn.com/getcid.aw?spm=a230r.1.14.23.3cb833a3sAEzZI&v=3&groupid=0&s=1&charset=utf-8&uid=%E5%AE%89%E6%9D%B0%E5%BA%93%E6%9C%8D%E9%A5%B0%E6%97%97%E8%88%B0%E5%BA%97&site=cntaobao&fromid=cntaobaobBTTzmyevGWGiqYdBOfi5uI8aO7trBRfC1Pzw4_GbICPOQ5OziSfWZ94l8YpC3GVa6cpk3Pa9vibBR8L1y4EQ">旺旺</a>
@@ -26,7 +26,7 @@ import {goodsData} from "@/type/search";
 
 @Component
 export default class SearchGoodsItem extends Vue {
-  @Prop({type:Object}) goods!:goodsData
+  @Prop({type:Object}) goods!:goodsData;
   showDetail(){
     this.$router.push({path:'/detail'});
   }
