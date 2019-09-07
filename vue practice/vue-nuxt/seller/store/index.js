@@ -1,5 +1,5 @@
 export const state = () => ({
-  user: {
+  userInfo: {
     name: '',
     token: '',
     token_expires: ''
@@ -7,9 +7,9 @@ export const state = () => ({
 });
 
 export const mutations = {
-  setUserinfo(state, payload) {
+  setUserInfo(state, payload) {
     let {name, token, token_expires} = payload;
-    state.user = payload;
+    state.userInfo = payload;
     localStorage.setItem('name', name);
     localStorage.setItem('token', token);
     localStorage.setItem('token_expires', token_expires);
@@ -19,10 +19,26 @@ export const mutations = {
 
 export const actions = {
 
+  async loadUserInfo({commit}) {
+    let name = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
+    let token_expires = localStorage.getItem('token_expires');
+    if (Number(token_expires) < Date.now()) {
+      token = '';
+      token_expires = '';
+    }
+    let userInfo = {
+      name,
+      token,
+      token_expires
+    };
+    commit('setUserInfo', userInfo);
+    return  userInfo;
+  },
+
   async login({commit}, payload) {
     let data = (await this.$axios.post('/user/login', payload)).data.data;
-    console.log(data)
-    commit('setUserinfo', {name: payload.name, ...data})
+    commit('setUserInfo', {name: payload.name, ...data})
 
   }
 };
