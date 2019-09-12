@@ -19,22 +19,27 @@ export const mutations = {
 
 export const actions = {
 
-  async loadUserInfo({commit}) {
-    let name = localStorage.getItem('token');
-    let token = localStorage.getItem('token');
-    let token_expires = localStorage.getItem('token_expires');
-    if (Number(token_expires) < Date.now()) {
-      token = '';
-      token_expires = '';
-    }
-    let userInfo = {
-      name,
-      token,
-      token_expires
-    };
-    commit('setUserInfo', userInfo);
-    return  userInfo;
-  },
+  // async loadUserInfo({commit, dispatch}) {
+  //
+  //   // let name =  localStorage.getItem('token');
+  //   // let token = localStorage.getItem('token');
+  //   // let token_expires = localStorage.getItem('token_expires');
+  //
+  //   let name =  '';
+  //   let token = '';
+  //   let token_expires = '';
+  //
+  //   if (!token_expires || Number(token_expires) < Date.now()) {
+  //     this.$router.push("login");
+  //   }
+  //   let userInfo = {
+  //     name,
+  //     token,
+  //     token_expires
+  //   };
+  //   commit('setUserInfo', userInfo);
+  //   return userInfo;
+  // },
 
   async login({commit}, payload) {
     let data = (await this.$axios.post('/user/login', payload)).data.data;

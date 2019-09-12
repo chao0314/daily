@@ -49,6 +49,9 @@ module.exports = {
   axios: {
     baseURL: "http://api.zhinengshe.com/10003-taobao-simple"
   },
+  router:{
+    middleware:"token"
+  },
   /*
   ** Build configuration
   */
