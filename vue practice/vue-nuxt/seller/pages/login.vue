@@ -35,7 +35,7 @@
         methods: {
             ...mapActions({login: 'login'}),
             localLogin() {
-                this.login(this.user).then(()=>this.$router.push({name:'index'}));
+                this.login(this.user).then(()=>this.$router.push({name:'shop'}));
             }
         },
         computed:{

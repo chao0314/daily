@@ -28,15 +28,30 @@
         },
         data() {
             return {
-                action: uploadUrl
+                files: []
             }
         },
-        methods:{
-            success(res,file,files){
+        methods: {
+            success(res, file, files) {
+                console.log("success", res, file, files);
+                this.files.push(res.data[0]);
+                file.tempID = res.data[0];
 
             },
-            remove(file,files){
-
+            remove(file, files) {
+                console.log("remove", file, files);
+                this.files = this.files.filter(item => item !== file.tempID);
+            }
+        },
+        computed: {
+            action() {
+                return uploadUrl + "&token=" + this.$store.state.userInfo.token;
+            }
+        },
+        watch: {
+            files() {
+                if (this.limit === 1) this.$emit("input", this.files[0]);
+                else this.$emit('input', this.files);
             }
         }
     }

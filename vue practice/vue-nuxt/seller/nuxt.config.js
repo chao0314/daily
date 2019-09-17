@@ -47,10 +47,10 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: "http://api.zhinengshe.com/10003-taobao-simple"
+    baseURL: 'http://api.zhinengshe.com/10004-taobao'
   },
-  router:{
-    middleware:"token"
+  router: {
+    middleware: "token"
   },
   /*
   ** Build configuration
