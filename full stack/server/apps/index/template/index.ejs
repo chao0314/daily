@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style media="screen">
+        #hrefs {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="<%= STATIC %>/css/base.css">
+    <link rel="stylesheet" href="<%= STATIC %>/css/public.css">
+    <link rel="stylesheet" href="<%= STATIC %>/css/header.css">
+</head>
+<body>
+<script>
+    const catalog = <%- JSON.stringify(catalog) %>
+
+</script>
+<%- include('./common/header',{STATIC:STATIC}) %>
+
+<!-- 分类框 -->
+<div class="page index">
+    <div class="container">
+        <div class="banner-container clearfix">
+
+            <div id="hrefs">
+                <% catalog.forEach(({children: aSub})=>{ %>
+                <% aSub.forEach(({children: aItem})=>{ %>
+                <% aItem.forEach(({item_title, item_href})=>{ %>
+                    <a href="http://<%= item_href.replace('{city}', city) %>"> <%= item_title %></a>
+                <% }) %>
+                <% }) %>
+                <% }) %>
+            </div>
+
+            <div class="left-banner">
+                <div class="category-nav-container">
+                    <div class="category-nav-title-wrapper">
+                        <span class="category-nav-title">全部分类</span>
+                    </div>
+                    <div class="category-nav-content-wrapper">
+                        <ul class="col">
+                            <% catalog.forEach(({titles})=>{ %>
+                                <li class="nav-li line-center">
+                                    <p class="nav-text-icon">
+                                        <img src="<%= STATIC %>/images/food.png" class="image" alt="">
+                                    </p>
+                                    <div class="nav-text-wrapper">
+                                        <% titles.forEach(({title, href}, index)=>{ %>
+                                            <span>
+                                    <a href="http://<%= href.replace('{city}', city) %>" target="_blank"
+                                       class="link nav-text"><%= title %></a>
+                                                <% if(index < titles.length - 1){ %>
+                                                    /
+                                                <% } %>
+                                            </span>
+                                        <% }) %>
+                                    </div>
+                                    <div class="nav-right-icon">
+                                        <img src="<%= STATIC %>/images/right_jt.png" class="image" alt="">
+                                    </div>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                    <div class="category-nav-detail-wrapper" style="display: block">
+                        <div class="category-nav-detail active">
+                            <div class="detail-area">
+                                <div class="detail-title-wrapper clearfix">
+                                    <a href="" class="detail-title">
+                                        <h2>热映电影</h2>
+                                    </a>
+                                    <a href="" class="link detail-more">
+                                        更多
+                                        <i class="detail-right-arrow"></i>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="detail-content">
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                </div>
+                            </div>
+                            <div class="detail-area">
+                                <div class="detail-title-wrapper clearfix">
+                                    <a href="" class="detail-title">
+                                        <h2>热映电影</h2>
+                                    </a>
+                                    <a href="" class="link detail-more">
+                                        更多
+                                        <i class="detail-right-arrow"></i>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="detail-content">
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                    <a href="" class="detail-text">健身中心</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-banner">
+                <div class="home-header-links">
+                    <a href="">美团外卖</a>
+                    <a href="">猫眼电影</a>
+                    <a href="">美团酒店</a>
+                    <a href="">民宿/公寓</a>
+                    <a href="">商家入驻</a>
+                    <a href="">美团公益</a>
+                </div>
+                <div class="banner-row">
+                    <div class="item banner-slider shadow">
+                        <div class="slider">
+                            <div class="slider-content" style="width: 1100px;">
+                                <div class="slider-item">
+                                    <div class="slider-img-div"
+                                         style="background-image:url(http://p0.meituan.net/codeman/daa73310c9e57454dc97f0146640fd9f69772.jpg)"></div>
+                                </div>
+                                <div class="slider-item" style="left: 550px">
+                                    <div class="slider-img-div"
+                                         style="background-image:url(http://p0.meituan.net/codeman/daa73310c9e57454dc97f0146640fd9f69772.jpg)"></div>
+                                </div>
+                            </div>
+                            <div class="slider-pagination">
+                                <div class="pagination" style="background: rgb(255, 255, 255);opacity: 0.9;"></div>
+                                <div class="pagination" style="background: rgb(255, 255, 255);opacity: 0.2;"></div>
+                            </div>
+                            <div class="btn btn-next" style="display:block"><i class="iconfont icon-arrow-right-"></i>
+                            </div>
+                            <div class="btn btn-pre" style="display:block"><i class="iconfont icon-arrow-left-"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item shadow pic-1"
+                         style="background-image:url(http://p0.meituan.net/codeman/e473bb428f070321269b23370ff02ba956209.jpg)"></div>
+                    <div class="item banner-logincard">
+                        <div class="login-container">
+                            <!-- 未登录 -->
+                            <div class="default" style="display: none">
+                                <div class="head-img-row">
+                                    <img src="http://s0.meituan.net/bs/fe-web-meituan/e350c4a/img/avatar.jpg" alt="">
+                                </div>
+                                <p class="user-name">Hi！你好</p>
+                                <a href="" class="btn-login">注册</a>
+                                <a href="" class="btn-login">立即登录</a>
+                            </div>
+                            <!-- 登录后 -->
+                            <div class="default">
+                                <div class="setting">
+                                    <div class="icon"><i class="iconfont icon-icon_setting"></i></div>
+                                </div>
+                                <div class="head-img-row">
+                                    <img src="http://s0.meituan.net/bs/fe-web-meituan/e350c4a/img/avatar.jpg" alt="">
+                                </div>
+                                <div class="nickname-row">
+                                    <p class="user-name">你好</p>
+                                </div>
+                                <div class="fn-row clearfix">
+                                    <div class="fn-item">
+                                        <div class="icon">
+                                            <i class="iconfont icon-fenshiduanxiaoshou"></i>
+                                        </div>
+                                        <div class="fn-name">
+                                            我的订单
+                                        </div>
+                                    </div>
+                                    <div class="fn-item">
+                                        <div class="icon">
+                                            <i class="iconfont icon-weixintongzhi"></i>
+                                        </div>
+                                        <div class="fn-name">
+                                            我的收藏
+                                        </div>
+                                    </div>
+                                    <div class="fn-item">
+                                        <div class="icon">
+                                            <i class="iconfont icon-qunfariji"></i>
+                                        </div>
+                                        <div class="fn-name">
+                                            抵用券
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fn-row clearfix">
+                                    <div class="fn-item">
+                                        <div class="icon">
+                                            <i class="iconfont icon-caiwuxiangqing"></i>
+                                        </div>
+                                        <div class="fn-name">
+                                            余额
+                                        </div>
+                                    </div>
+                                    <div class="fn-item">
+                                        <div class="icon">
+                                            <i class="iconfont icon-gengduo"></i>
+                                        </div>
+                                        <div class="fn-name">
+                                            更多
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-row">
+                    <div class="item pic-2 shadow"
+                         style="background-image:url(http://p1.meituan.net/codeman/8cce56c467a17e04f3094d1e455462a0132772.png)"></div>
+                    <div class="item pic-3 shadow"
+                         style="background-image:url(http://p1.meituan.net/codeman/16442c19da1f1c4544f794e29d99c92051716.jpg)"></div>
+                    <div class="item pic-4 shadow"
+                         style="background-image:url(http://p1.meituan.net/codeman/5b21cddb4bb1cbc3a9c3bce0f726c75940469.jpg)"></div>
+                    <div class="item download-app">
+                        <div class="qrcode-box">
+                            <img src="http://s1.meituan.net/bs/fe-web-meituan/60ac9a0/img/download-qr.png" alt="下载APP">
+                        </div>
+                        <div class="app-name">美团APP手机版</div>
+                        <div class="sl">
+                            <span class="red">1元起</span>
+                            <span class="gary">吃喝玩乐</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- 猜你喜欢 -->
+        <div class="recommend-container">
+            <div class="index-nav-container"
+                 style="background: linear-gradient(to right, rgb(18, 210, 198) 2%, rgb(14, 190, 212) 97%) rgb(18, 210, 198);">
+                <ul>
+                    <li class="title nav-item mf-shang-hei-regular">
+                        猜你喜欢
+                    </li>
+                    <div class="nav-item active">
+                        为你甄选最适合的
+                    </div>
+                </ul>
+            </div>
+            <div class="recommend-list">
+                <a class="recommend-item">
+                    <div class="card-container">
+                        <div class="recommend-card-wrapper">
+                            <div class="img-box">
+                                <img src="http://p0.meituan.net/msmerchant/8e9d07bac32473da09c402203cc5288c138748.jpg@428w_240h_1e_1c"
+                                     class="image">
+                            </div>
+                            <div class="info-box">
+                                <div class="title aligned"> 旺顺阁鱼头泡饼（长阳半岛店）</div>
+                                <div class="score-line aligned">
+                                    <div class="score">
+                                        <div class="rate-stars">
+                                            <ul class="rate-stars-ul rate-stars-dark">
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                            </ul>
+                                            <ul class="rate-stars-ul rate-stars-light">
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bottom-line aligned">
+                                    <div class="price-box">
+                                          <span>
+                                              <span class="yuan">￥</span>
+                                              <span class="price-number numfont">28.5</span>
+                                              <span class="price-desc">起</span>
+                                          </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a class="recommend-item">
+                    <div class="card-container">
+                        <div class="recommend-card-wrapper">
+                            <div class="img-box">
+                                <img src="http://p0.meituan.net/msmerchant/8e9d07bac32473da09c402203cc5288c138748.jpg@428w_240h_1e_1c"
+                                     class="image">
+                            </div>
+                            <div class="info-box">
+                                <div class="title aligned"> 旺顺阁鱼头泡饼（长阳半岛店）</div>
+                                <div class="score-line aligned">
+                                    <div class="score">
+                                        <div class="rate-stars">
+                                            <ul class="rate-stars-ul rate-stars-dark">
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                            </ul>
+                                            <ul class="rate-stars-ul rate-stars-light">
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                                <li><i class="iconfont icon-xingxing"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="comment-number">20个评价</div>
+                                </div>
+                                <div class="bottom-line aligned">
+                                    <div class="price-box">
+                                          <span>
+                                              <span class="yuan">￥</span>
+                                              <span class="price-number numfont">28.5</span>
+                                              <span class="price-desc">起</span>
+                                          </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 美团导航 -->
+        <div class="botton-nav">
+            <div class="title">美团导航</div>
+            <div class="b-n-content">
+                <div class="b-n-classification">
+                    <dt class="b-n-subtitle">热门城市</dt>
+                    <div class="b-n-sublist">
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+
+                    </div>
+                </div>
+                <div class="b-n-classification">
+                    <dt class="b-n-subtitle">热门分类</dt>
+                    <div class="b-n-sublist">
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州<span
+                                        class="nav-promotion">HOT</span></a></dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛" target="_blank">青岛</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://gz.meituan.com" title="广州" target="_blank">广州</a>
+                        </dd>
+                        <dd class="b-n-list-item"><a href="https://qd.meituan.com" title="青岛"
+                                                     target="_blank">门头沟区摄影写真</a></dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<%- include('./common/footer') %>
+</body>
+</html>
