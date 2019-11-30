@@ -1,0 +1,120 @@
+.order {
+    box-sizing: border-box;
+    width: 980px;
+    margin: 10px auto;
+    padding: 25px 25px 65px;
+    border: 1px solid #eee;
+}
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+.order h2 {
+    padding: 0 0 10px;
+    margin: 0 0 10px;
+    font-size: 28px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+}
+
+.order h2 a {
+    float: right;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 400;
+}
+.order .status a, .order h2 a {
+    color: #2bb8aa;
+    text-decoration: none;
+}
+.order .status {
+    padding: 8px 16px;
+    margin: 0 0 10px;
+    font-size: 12px;
+    border: 1px solid #f5d8a7;
+    background-color: #fff6db;
+}
+.order .status span {
+    float: left;
+}
+.order .status .refund-tip {
+    float: right;
+}
+.order .status ul {
+    margin-left: 84px;
+}
+.order .status ul li {
+    font-weight: 700;
+    color: #d00;
+}
+
+.order .status .opts {
+    margin-top: 5px;
+}
+
+
+.order .coupon {
+    border: 1px solid #e5e5e5;
+    font-size: 12px;
+}
+
+.order .coupon dt {
+    padding: 5px 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    background-color: #eee;
+}
+.order .coupon dd {
+    padding: 5px 8px 10px;
+    margin: 0;
+}
+.order .coupon dd .outline {
+    padding: 5px 0 1px 10px;
+    border: 1px solid #eee;
+    background-color: #eee;
+    color: #999;
+}
+
+.order .coupon dd .outline li {
+    margin-bottom: 5px;
+}
+.order .coupon dd .order-info {
+    overflow: hidden;
+}
+.order .coupon dd .order-info li {
+    float: left;
+    width: 220px;
+    text-align: left;
+}
+
+.order .coupon dd table {
+    width: 100%;
+}
+.order .coupon dd table th {
+    font-weight: 700;
+    text-align: center;
+}
+.order .coupon dd table th:first-child {
+    text-align: left;
+}
+.order .coupon dd table td {
+    text-align: center;
+}
+.order .coupon dd table td:first-child {
+    text-align: left;
+}
+.order .coupon dd table a {
+    color: #2bb8aa;
+    text-decoration: none;
+}
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}

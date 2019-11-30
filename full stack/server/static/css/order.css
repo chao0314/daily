@@ -1,0 +1,194 @@
+.bd {
+    width: 980px;
+    margin: 10px auto 0;
+    padding: 10px 0 65px;
+}
+
+.bd table {
+    width: 100%;
+    text-align: center;
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.bd table tr .desc {
+    width: 500px;
+    text-align: left;
+}
+
+.bd table tr th {
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #F7F7F7;
+}
+
+.bd table tr .unit-price {
+    width: 100px;
+}
+
+.bd table tr .num {
+    width: 180px;
+}
+
+.bd table tr .total-price {
+    text-align: right;
+}
+.bd table tr td:first-child {
+    text-align: left;
+}
+.bd table tr td:last-child {
+    color: #f76120;
+    text-align: right;
+}
+.input-number {
+    display: inline-block;
+    border: 1px solid #E5E5E5;
+    border-radius: 2px;
+}
+
+.input-number button {
+    position: relative;
+    box-sizing: content-box;
+    font-size: 0;
+    outline: 0;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+}
+.input-number input {
+    color: #222;
+    border: 1px solid #E5E5E5;
+    border-top: none;
+    border-bottom: none;
+    vertical-align: top;
+}
+
+.bd .tip, .input-number input {
+    font-size: 14px;
+    text-align: center;
+}
+.input-number button, .input-number input {
+    padding: 0;
+    width: 34px;
+    height: 34px;
+    border: none;
+    outline: 0;
+}
+.input-number button:disabled:before {
+    background-color: #E2E2E2;
+}
+
+.input-number .minus-btn:before, .input-number .plus-btn:before {
+    top: 16px;
+    left: 10px;
+    width: 28px;
+    height: 3px;
+    transform: scale(.5);
+    transform-origin: left top;
+    transition: background .6s ease;
+}
+.input-number .minus-btn:before, .input-number .plus-btn:after, .input-number .plus-btn:before {
+    content: "";
+    position: absolute;
+    background-color: #666;
+    display: inline-block;
+}
+.input-number .minus-btn:before, .input-number .plus-btn:before {
+    top: 16px;
+    left: 10px;
+    width: 28px;
+    height: 3px;
+    transform: scale(.5);
+    transform-origin: left top;
+    transition: background .6s ease;
+}
+.input-number .minus-btn:after {
+    top: 10px;
+    left: 16px;
+    width: 3px;
+    height: 28px;
+    transform: scale(.5);
+    transform-origin: left top;
+}
+.input-number .plus-btn:after {
+    top: 10px;
+    left: 16px;
+    width: 3px;
+    height: 28px;
+    transform: scale(.5);
+    transform-origin: left top;
+}
+
+.bd table tr td {
+    padding: 12px 16px;
+    color: #666;
+}
+.bd table tr td a {
+    text-decoration: none;
+    color: #666;
+    cursor: pointer;
+}
+
+.bd ._row {
+    padding: 12px;
+    border-top: 1px solid #E5E5E5;
+    text-align: right;
+}
+.bd ._row.discount {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #666;
+}
+.bd ._row .total-price {
+    font-size: 12px;
+    font-weight: bolder;
+    color: #666;
+    line-height: 30px;
+}
+.bd ._row .total-price span {
+    font-size: 20px;
+    color: #f76120;
+}
+.bd ._row .total-price i {
+    font-style: normal;
+    font-weight: 400;
+}
+.bd ._row .total-price span {
+    font-size: 20px;
+    color: #f76120;
+}
+.bd ._row.mobile-info {
+    text-align: left;
+    font-size: 12px;
+}
+.bd ._row.mobile-info a {
+    color: #2bb8aa;
+    text-decoration: none;
+}
+.bd ._row.mobile-info {
+    text-align: left;
+    font-size: 12px;
+}
+.bd .form-submit {
+    text-align: right;
+}
+.bd .form-submit .btn {
+    display: inline-block;
+    padding: 5px 20px 4px;
+    font-size: 20px;
+    font-weight: 400;
+    color: #fff;
+    background-color: #2db3a6;
+    background-image: linear-gradient(to bottom,#2ec3b4,#2db3a6);
+    border-width: 0 0 1px;
+    border-color: #008177;
+    border-radius: 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    letter-spacing: 2px;
+}

@@ -6,23 +6,32 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node index.js --env=dev",
-    "build": "node index.js --env=prod"
+    "build": "node index.js --env=prod",
+    "web": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
     "bluebird": "^3.7.1",
     "html-minifier": "^4.0.0",
     "koa": "^2.8.2",
     "koa-ejs": "^4.2.0",
     "koa-router": "^7.4.0",
     "koa-session": "^5.12.3",
+    "koa-static": "^5.0.0",
     "minimist": "^1.2.0",
     "module-alias": "^2.2.2",
     "promise-fs": "^2.1.1",
     "promise-mysql": "^4.1.1",
-    "redis": "^2.8.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "redis": "^2.8.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   },
   "_moduleAliases": {
     "@/config": "./config",
@@ -32,6 +41,7 @@
     "@/models": "./models",
     "@/modules": "./modules",
     "@/utils": "./utils",
-    "@/keys": "./keys"
+    "@/keys": "./keys",
+    "@/web": "./web_server_dist"
   }
 }

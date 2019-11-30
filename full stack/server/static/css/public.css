@@ -1,0 +1,42 @@
+@import "http://at.alicdn.com/t/font_1337493_nt290735e7n.css";
+.container {
+    width: 1190px;
+    margin: 0px auto;
+}
+.clear-float {
+    overflow: hidden;
+}
+/* theme */
+.row {
+    display: flex;
+    flex-direction: row;
+}
+.col {
+    display: flex;
+    flex-direction: column;
+}
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.space-between {
+    justify-content: space-between;
+}
+.line-center {
+    display: flex;
+    align-items: center;
+}
+.image {
+    width: 100%;
+    object-fit: cover;
+}
+.clearfix {
+    clear: both;
+}
+.clearfix:before, .clearfix:after {
+    content: " ";
+    visibility: hidden;
+    display: block;
+    height: 0;
+}

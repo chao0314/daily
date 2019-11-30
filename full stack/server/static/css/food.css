@@ -1,0 +1,410 @@
+
+.breadcrumbs {
+    font-size: 12px;
+    color: #222;
+    line-height: 17px;
+    padding: 19px 0;
+}
+.poiList-wrap .left {
+    float: left;
+    width: 950px;
+}
+.poiList-wrap .left .filter {
+    position: relative;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 14px;
+}
+.poiList-wrap .left .filter .hasSelect {
+    cursor: pointer;
+    height: 20px;
+    height: 40px;
+    padding: 10px 0 10px 20px;
+    line-height: 20px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 12px;
+}
+.poiList-wrap .left .filter .hasSelect .nor {
+    font-size: 14px;
+    color: #333;
+    margin-right: 18px;
+}
+.poiList-wrap .left .filter .hasSelect span {
+    display: inline-block;
+}
+.poiList-wrap .left .filter .hasSelect .sel {
+    border: 1px solid #13D1BE;
+    color: #13D1BE;
+    height: 20px;
+    margin-right: 10px;
+    padding: 0 7px;
+    border-radius: 10px;
+}
+.poiList-wrap .left .filter .hasSelect .sel:after {
+    margin-left: 5px;
+    content: "\00d7";
+}
+.poiList-wrap .left .filter .hasSelect .clearAll {
+    color: #999;
+}
+.poiList-wrap a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #222;
+}
+.poiList-wrap .left .filter .condition {
+    padding-left: 20px;
+}
+.poiList-wrap .left .filter .condition .cont {
+    padding: 10px 0 0;
+    line-height: 20px;
+    overflow: hidden;
+}
+.poiList-wrap .left .filter .condition .cont .classification {
+    width: 65px;
+    color: #333;
+    font-size: 14px;
+    float: left;
+}
+.poiList-wrap .left .filter .condition .cont .all {
+    width: 53px;
+    text-align: center;
+    margin: 0 13px 0 9px;
+    color: #666;
+    float: left;
+    font-size: 14px;
+    cursor: pointer;
+}
+.poiList-wrap .left .filter .condition .on {
+    background: #13D1BE;
+    color: #fff!important;
+    border-radius: 100px;
+}
+
+.poiList-wrap .left .filter .condition .cont .more {
+    color: #666;
+    float: left;
+    border-bottom: 1px solid #e5e5e5;
+    width: 788px;
+}
+.poiList-wrap .left .filter .condition .cont .more li {
+    float: left;
+    height: 28px;
+    font-size: 14px;
+    cursor: pointer;
+    min-width: 125px;
+}
+.poiList-wrap .left .filter .condition .cont .more li a b,
+.poiList-wrap .left .filter .condition .cont .more li span b {
+    display: inline-block;
+}
+.poiList-wrap .left .filter .condition .cont .more li a,
+.poiList-wrap .left .filter .condition .cont .more li span {
+    color: #666;
+    padding: 0 10px;
+    display: inline-block;
+}
+.poiList-wrap .left .filter .condition .cont .more .hasSub:after {
+    content: '';
+    margin-left: 4px;
+    vertical-align: -2px;
+    border: 4px solid transparent;
+    border-top-color: #666;
+    display: inline-block;
+}
+.poiList-wrap .left b {
+    font-weight: 400;
+}
+
+.poiList-wrap .left .filter .condition .popover {
+    /* display: none; */
+    width: 512px;
+    position: absolute;
+    top: 0;
+    left: 0px;
+    z-index: 1000;
+    cursor: auto;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    white-space: normal;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+    text-align: left;
+    background: #FFF;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,.1);
+    border: 1px solid #E5E5E5;
+    border-radius: 4px;
+}
+.poiList-wrap .left .filter .condition .popover .arrow {
+    border-width: 5px;
+    left: 26px;
+    top: -10px;
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent transparent #E5E5E5;
+    border-style: solid;
+}
+.poiList-wrap .left .filter .condition .popover .p-content {
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 4px;
+}
+.poiList-wrap .left .filter .condition .popover .p-content .popover-content {
+    padding: 19px 15px 9px;
+}
+.poiList-wrap .left .filter .condition .popover .p-content .popover-content span {
+    color: #ccc;
+    font-size: 16px;
+    margin-bottom: 11px;
+    cursor: default;
+    display: block;
+}
+.poiList-wrap .left .filter .condition .popover .p-content .popover-content ul li {
+    font-weight: 400;
+    min-width: 120px;
+    margin-bottom: 5px;
+    float: left;
+    line-height: 20px;
+}
+.poiList-wrap .left .filter .condition .popover .p-content .popover-content ul li a {
+    padding: 0 10px;
+    display: inline-block;
+    color: #666;
+    margin-left: -10px;
+}
+.poiList-wrap .left .list {
+    padding: 15px 20px 21px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    color: #666;
+}
+
+.poiList-wrap .left .list .tags {
+    padding-bottom: 13px;
+    font-size: 14px;
+    line-height: 20px;
+}
+.poiList-wrap .left .list .tags .on {
+    color: #31BCAD;
+}
+.poiList-wrap .left .list .tags span {
+    display: inline-block;
+    min-width: 96px;
+}
+.poiList-wrap .left .list .tags span a {
+    padding: 0 10px;
+}
+
+.poiList-wrap .line {
+    height: 1px;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e5e5;
+}
+.poiList-wrap .left .list .list-ul .btm {
+    position: relative;
+    border-bottom: 1px solid #e5e5e5!important;
+    padding-bottom: 18px;
+}
+
+.poiList-wrap .left .list .list-ul li {
+    margin-top: 20px;
+}
+.poiList-wrap .left .list .list-ul li .img {
+    width: 220px;
+    height: 125px;
+    float: left;
+    border-radius: 4px;
+    position: relative;
+}
+.poiList-wrap .left .list .list-ul li .img a {
+    display: block;
+}
+.poiList-wrap .left .list .list-ul li .img .fl-count {
+    background: #FB6433;
+    border-radius: 2px;
+    position: absolute;
+    line-height: 13px;
+    width: 20px;
+    margin-left: -3px;
+    margin-top: 3px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    z-index: 200;
+}
+.imgbox {
+    display: block;
+    width: auto;
+    height: auto;
+    background: url(<%=STATIC%>/img/bee61f5f04046d07.png) center center no-repeat #e0e0e0;
+    background-size: 60% auto;
+}
+.poiList-wrap img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
+.poiList-wrap .left .list .list-ul li .info a {
+    display: block;
+}
+
+.poiList-wrap .left .list .list-ul li .info h4 {
+    font-size: 16px;
+    line-height: 22px;
+    color: #222;
+}
+.poiList-wrap .left .list .list-ul li .info .source {
+    padding: 6px 0 0;
+    height: 23px;
+    line-height: 13px;
+}
+
+.star-cont {
+    display: inline-block;
+    /* width: 84px; */
+    height: 24px;
+    position: relative;
+}
+.star-cont .stars-light, .star-cont .stars-ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin: 3px 0;
+    white-space: nowrap;
+    color: #c3c3c3;
+}
+.star-cont .stars-light li, .star-cont .stars-ul li {
+    margin: 0!important;
+    border: 0!important;
+    padding: 0 2px;
+    display: inline-block;
+}
+.iconfont, .star-cont .stars-light li .iconfont, .star-cont .stars-ul li .iconfont {
+    font-size: 12px;
+}
+.star-cont .stars-light {
+    color: #F90;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+}
+.poiList-wrap .left .list .list-ul li .info .source p {
+    display: inline-block;
+    padding-left: 6px;
+}
+.poiList-wrap .left .list .list-ul li .info .source p span {
+    margin-left: 10px;
+    color: #f60;
+}
+.poiList-wrap .left .list .list-ul li .info .desc {
+    line-height: 17px;
+    color: #666;
+    padding-top: 7px;
+    margin-bottom: 11px;
+}
+.poiList-wrap .left .list .list-ul li .info .desc span {
+    display: block;
+    margin-top: 8px;
+}
+.poiList-wrap .mt-pagination {
+    text-align: center;
+    margin-top: 40px;
+}
+.pagination {
+    text-align: center;
+    display: inline-block;
+}
+.pagination li {
+    width: 40px;
+    float: left;
+    margin: 0 10px;
+    text-align: center;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    list-style: none;
+    transition: background-color .5s;
+}
+.pagination li .active {
+    color: #fff;
+    background-color: #13d1be;
+    border-color: #13d1be;
+}
+.pagination li, .pagination li span {
+    cursor: pointer;
+    line-height: 40px;
+    color: #999;
+    height: 40px;
+}
+.pagination li span {
+    border: 1px solid #E5E5E5;
+    display: block;
+    width: 100%;
+    border-radius: 50%;
+    text-decoration: none;
+}
+.icon-btn_left:before {
+    content: "\e608";
+}
+.pagination li .ellipsis {
+    border: 0;
+    border-radius: 0;
+    font-size: 16px;
+}
+
+.poiList-wrap .right {
+    width: 230px;
+    float: right;
+}
+.guess-you-like {
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 16px 20px 0;
+}
+.guess-you-like h4 {
+    font-size: 16px;
+    line-height: 22px;
+    margin: 0 0 12px;
+    color: #333;
+}
+.guess-you-like ul li {
+    margin-bottom: 20px;
+}
+.guess-you-like ul a {
+    display: block;
+    text-decoration: none;
+}
+.guess-you-like ul li .pic {
+    height: 106px;
+    border-radius: 4px;
+}
+.guess-you-like ul li .name {
+    font-size: 14px;
+    line-height: 20px;
+    color: #222;
+    margin: 10px 0 4px;
+}
+.guess-you-like ul li .desc {
+    font-size: 12px;
+    line-height: 17px;
+    color: #999;
+}
+.guess-you-like ul li .price {
+    font-size: 22px;
+    color: #f60;
+    line-height: 27px;
+}
+.guess-you-like ul li .price b {
+    font-weight: 400;
+    font-size: 14px;
+}

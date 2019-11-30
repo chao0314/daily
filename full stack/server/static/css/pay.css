@@ -1,0 +1,377 @@
+* {
+    box-sizing: content-box;
+}
+
+.clear-fix:after, .clear-fix:before {
+    display: table;
+    content: " ";
+}
+.clear-fix:after {
+    clear: both;
+}
+#body {
+    padding: 20px 0 40px;
+}
+.container {
+    width: 1180px;
+    margin: 0 auto;
+}
+.cd {
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 3px 5px 0 rgba(0,0,0,.1);
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+}
+.icon-sand {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background-position: 0 -63px;
+}
+.icon, .icon-sand {
+    display: inline-block;
+}
+.icon {
+    font-size: 0;
+    background-image: url(<%=STATIC%>/img/icon-common.png);
+    background-size: 168px;
+}
+
+.cd-text, .cd-time {
+    display: inline-block;
+}
+
+.cd-text {
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.cd-time {
+    color: #f60;
+    font-size: 18px;
+}
+.right {
+    float: right;
+    width: 950px;
+}
+.right-widen {
+    width: 1180px;
+}
+.common-tip {
+    margin-bottom: 10px;
+    text-align: center;
+    position: relative;
+    padding: 10px 30px;
+    border-radius: 2px;
+    background: #fff6db;
+    border: 1px solid #f5d8a7;
+}
+.pay-tip {
+    display: none;
+    text-align: left;
+}
+.pay-tip h3 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.pay-tip-list h5 {
+    color: #333;
+}
+.pay-tip-list p {
+    margin-bottom: 5px;
+}
+.pay-tip-list {
+    list-style: disc;
+    padding-left: 20px;
+}
+.order {
+    line-height: 24px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.order .block-left {
+    width: 75%;
+    position: relative;
+}
+.order .block-right {
+    width: 25%;
+}
+.block-left, .block-right {
+    width: 50%;
+    float: left;
+}
+.block-right {
+    text-align: right;
+}
+.order-name {
+    font-size: 20px;
+    color: #222;
+    width: 600px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 15px;
+}
+.amount {
+    text-align: right;
+    font-size: 14px;
+    color: #f60;
+}
+.amount-price {
+    font-size: 30px;
+    font-family: arial,sans-serif;
+}
+.payment-container {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 0 20px 50px;
+}
+.payment {
+    margin-top: 30px;
+}
+.payment-type {
+    position: relative;
+}
+.payment-submit-area {
+    margin-top: 50px;
+}
+.payment-menu {
+    height: 39px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.payment-tab {
+    float: left;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 20px;
+    padding: 9px 15px;
+    border: 1px solid transparent;
+    _border-color: tomato;
+    _-webkit-filter: chroma(color=tomato);
+    _filter: chroma(color=tomato);
+}
+.payment-0 .payment-tab-0, .payment-1 .payment-tab-1, .payment-2 .payment-tab-2 {
+    color: #000;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #fff;
+    border-radius: 2px;
+}
+.payment-tips {
+    top: 11px;
+    right: 0;
+    font-size: 12px;
+    position: absolute;
+}
+.payment-tips li {
+    float: right;
+    line-height: 22px;
+    margin-left: 15px;
+}
+.payment-tips-feedback {
+    color: #666;
+}
+.payment-dropdown {
+    cursor: pointer;
+    position: relative;
+    padding-right: 15px;
+    display: inline-block;
+}
+.payment-tips-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 10px;
+    right: 5px;
+    border: 3px solid transparent;
+    _border-color: tomato;
+    _-webkit-filter: chroma(color=tomato);
+    _filter: chroma(color=tomato);
+    border-top-color: inherit;
+}
+.payment-dropdown-menu {
+    display: none;
+    z-index: 2;
+    top: 22px;
+    right: -58px;
+    width: 260px;
+    padding: 15px;
+    font-size: 12px;
+    background: #fff;
+    line-height: 1.5;
+    position: absolute;
+    border: 1px solid #ccc;
+}
+.payment-collapse h4 {
+    zoom: 1;
+    color: #333;
+    cursor: pointer;
+    font-size: 12px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+    position: relative;
+    font-weight: 400;
+}
+.payment-collapse-open .payment-collapse-arrow {
+    top: 3px;
+    border-top-color: transparent;
+    _border-top-color: tomato;
+    _-webkit-filter: chroma(color=tomato);
+    _filter: chroma(color=tomato);
+    border-bottom-color: #666;
+}
+
+.payment-collapse p {
+    display: none;
+    color: #666;
+}
+.payment-collapse-open p {
+    display: block;
+}
+.payment-collapse-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 7px;
+    left: 0;
+    font-size: 0;
+    border: 4px solid transparent;
+    _border-color: tomato;
+    _-webkit-filter: chroma(color=tomato);
+    _filter: chroma(color=tomato);
+    border-top-color: #666;
+}
+.payment-collapse-open .payment-collapse-arrow {
+    top: 3px;
+    border-top-color: transparent;
+    _border-top-color: tomato;
+    _-webkit-filter: chroma(color=tomato);
+    _filter: chroma(color=tomato);
+    border-bottom-color: #666;
+}
+.payment-collapse-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 7px;
+    left: 0;
+    font-size: 0;
+    border: 4px solid transparent;
+    _border-color: tomato;
+    _-webkit-filter: chroma(color=tomato);
+    _filter: chroma(color=tomato);
+    border-top-color: #666;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.payment-dropdown-more {
+    margin-left: 15px;
+}
+a {
+    color: inherit;
+    cursor: pointer;
+    text-decoration: none;
+}
+.payment-list {
+    margin-top: 30px;
+}
+.payment-list li {
+    float: left;
+    width: 214px;
+    cursor: pointer;
+    margin: 0 0 10px;
+}
+
+.payment-list input {
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+input[type=radio] {
+    cursor: pointer;
+}
+button, input, select, textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+.payment-list input[type=radio]:checked+label, .payment-list input[type=radio]:checked+label:before, .payment-list li:hover .payment-icon {
+    border-color: #00c9b3;
+}
+
+.payment-icon img {
+    width: 145px;
+    height: 32px;
+}
+.payment-icon {
+    position: relative;
+    cursor: pointer;
+    margin-left: 10px;
+    display: inline-block;
+    border: 1px solid #e5e5e5;
+    border-radius: 2px;
+    padding-right: 4px;
+}
+
+.payment-submit-area {
+    margin-top: 50px;
+}
+
+.payment-back, .payment-submit {
+    float: right;
+    margin-top: 14px;
+}
+
+.payment-submit .btn {
+    font-size: 14px;
+    padding: 10px 36px;
+    border-radius: 30px;
+    border: none;
+}
+.btn {
+    background-color: #f90;
+    border-radius: 100px;
+    background-image: linear-gradient(180deg,#ffa114,#f59300);
+}
+.btn, .btn-primary {
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 2px;
+    letter-spacing: 2px;
+    padding: 5px 12px 4px;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+}
+.payment-back {
+    line-height: 40px;
+    margin-right: 20px;
+}
+.payment-back a {
+    font-size: 12px;
+    color: #666;
+}

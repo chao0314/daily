@@ -28,11 +28,11 @@
 
             <div id="hrefs">
                 <% catalog.forEach(({children: aSub})=>{ %>
-                <% aSub.forEach(({children: aItem})=>{ %>
-                <% aItem.forEach(({item_title, item_href})=>{ %>
-                    <a href="http://<%= item_href.replace('{city}', city) %>"> <%= item_title %></a>
-                <% }) %>
-                <% }) %>
+                    <% aSub.forEach(({children: aItem})=>{ %>
+                        <% aItem.forEach(({item_title, item_href})=>{ %>
+                            <a href="http://<%= item_href.replace('{city}', city) %>"> <%= item_title %></a>
+                        <% }) %>
+                    <% }) %>
                 <% }) %>
             </div>
 
@@ -405,5 +405,18 @@
 </div>
 
 <%- include('./common/footer') %>
+
+
+<script src="/js/react.js"></script>
+<script src="/js/react-dom.js"></script>
+<script src="/index.js"></script>
+<div id="app">
+    <%- ssrString %>
+</div>
+<script>
+    let app = document.getElementById('app');
+</script>
+
+
 </body>
 </html>

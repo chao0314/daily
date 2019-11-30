@@ -1,0 +1,318 @@
+
+.header--mini {
+    border-bottom: 2px solid #D8D8D8;
+    min-width: 980px;
+    height: 60px;
+    color: #666;
+}
+.header--mini .wrapper {
+    margin: 0 auto;
+    padding: 10px 0;
+    width: 980px;
+}
+.cf {
+    zoom: 1;
+}
+.cf:after {
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+.header--mini .site-logo {
+    text-indent: -1000px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    width: 54px;
+    height: 36px;
+    background-position: -669px -748px;
+}
+.theme--www .header--mini .site-logo {
+    width: 128px;
+    background: url(https://s0.meituan.net/bs/file/?f=fe-sso-fs:build/assets/logo.6a89007.png) no-repeat;
+    background-size: contain;
+}
+.header--mini .site-logo, .header--mini .site-name {
+    float: left;
+}
+.header--mini .login-block {
+    float: right;
+    line-height: 36px;
+}
+.header--mini .login-block .tip {
+    margin-right: 10px;
+    vertical-align: sub;
+}
+.header--mini .login-block .login {
+    padding: 3px 10px;
+}
+.pg-unitive-signup .content {
+    margin: 0 auto 30px;
+    padding-top: 30px;
+    width: 980px;
+    min-height: 300px;
+}
+.term {
+    position: relative;
+    padding: 3px 10px 3px 110px;
+    margin: 0 auto 8px;
+    zoom: 1;
+}
+.form-field {
+    position: relative;
+    padding: 8px 0 8px 110px;
+    zoom: 1;
+}
+.form-field label {
+    position: absolute;
+    left: 0;
+    width: 100px;
+    padding-top: 6px;
+    font-size: 14px;
+    text-align: right;
+    color: #333;
+}
+
+.form-field .unitive-tip {
+    display: inline-block;
+    margin-left: 4px;
+    line-height: 24px;
+    font-size: 12px;
+    color: rgb(153, 153, 153);
+    vertical-align: top;
+    zoom: 1;
+    padding: 6px 0px;
+}
+
+.form-field img {
+    border: 1px solid #CCC;
+    cursor: pointer;
+}
+.form-field .inline-link {
+    margin: 0 0 0 4px;
+    font-size: 12px;
+    line-height: 36px;
+    vertical-align: top;
+    zoom: 1;
+}
+.form-field--pwd {
+    padding-bottom: 27px;
+}
+.form-field .pw-strength {
+    position: absolute;
+    width: 261px;
+    top: 50px;
+    left: 110px;
+    background: rgb(238, 238, 238);
+}
+
+.form-field .pw-strength .pw-strength__bar {
+    background: #d3ebee;
+    height: 20px;
+    width: 0;
+    overflow: hidden;
+    transition: all .4s linear;
+    -webkit-transition: all .4s linear;
+    -moz-transition: all .4s linear;
+    -o-transition: all .4s linear;
+}
+.form-field .pw-strength .pw-strength__letter {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.form-field .pw-strength .pw-strength__letter .pw-strength__label {
+    display: block;
+    float: left;
+    text-align: center;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    width: 85px;
+    border-right: 2px solid #fff;
+    color: #fff;
+}
+.form-field--vbtn .captcha-wrapper .f-text, .form-field--vcode .f-text {
+    width: 120px;
+}
+.form-field--error .f-textarea, .form-field--error .f-textarea:hover, .form-field--error input.f-text, .form-field--error input.f-text:hover, .form-field--error textarea, .form-field--error textarea:hover {
+    border-color: #f76120;
+}
+
+.form-field--error .inline-tip, .form-field--ok .inline-tip, .form-field--type .inline-tip {
+    color: #666;
+}
+.form-field--error .inline-tip, .form-field--ok .inline-tip, .form-field--type .inline-tip {
+    color: rgb(102, 102, 102);
+}
+.form-field .inline-tip {
+    display: inline-block;
+    margin-left: 4px;
+    line-height: 24px;
+    font-size: 12px;
+    color: rgb(153, 153, 153);
+    vertical-align: top;
+    zoom: 1;
+    padding: 6px 0px;
+}
+.form-field .f-text {
+    width: 248px;
+    height: 24px;
+    *margin: -1px auto;
+    padding: 5px;
+    border: 1px solid #aaa;
+    line-height: 24px;
+    vertical-align: top;
+}
+.f-text {
+    border-color: #FE8C00;
+}
+.f-input, .f-text, .f-textarea {
+    padding: 3px 4px;
+    font-size: 14px;
+    border-style: solid;
+    border-width: 1px;
+}
+.form-field .unitive-tip {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 6px 0;
+    line-height: 24px;
+    font-size: 12px;
+    color: #999;
+    vertical-align: top;
+    zoom: 1;
+}
+.form-field--vbtn {
+    padding: 0 0 0 110px;
+}
+
+.form-field--vbtn label {
+    display: none;
+}
+.form-field .inline-tip {
+    display: inline-block;
+    *display: inline;
+    margin-left: 4px;
+    padding: 6px 0;
+    line-height: 24px;
+    font-size: 12px;
+    color: #999;
+    vertical-align: top;
+    zoom: 1;
+}
+
+.footer--mini {
+    padding-top: 20px;
+    text-align: center;
+    border-top: 1px solid rgb(238, 238, 238);
+}
+.footer--mini .copyright {
+    font-size: 12px;
+    font-family: initial;
+}
+.footer--mini .copyright a, .footer--mini .copyright span {
+    color: rgb(153, 153, 153);
+}
+.tip-status--opinfo {
+    background-position: 0 -296px;
+}
+.tip-status {
+    display: inline-block;
+    *display: inline;
+    width: 17px;
+    height: 17px;
+    margin-right: 5px;
+    overflow: hidden;
+    background-position: 0 -191px;
+    vertical-align: -3px;
+    *vertical-align: middle;
+    *zoom: 1;
+}
+
+.icon-status-sprite, .tip-status, .tip-status--error, .tip-status--large, .tip-status--large--error, .tip-status--large--opinfo, .tip-status--large--success, .tip-status--middle, .tip-status--middle--error, .tip-status--middle--opinfo, .tip-status--middle--success, .tip-status--opinfo, .tip-status--success {
+    background-image: url(<%=STATIC%>/img/icon.png);
+    background-repeat: no-repeat;
+}
+
+
+.btn-disabled, .btn-normal {
+    padding-top: 6px;
+}
+.btn, .btn.active, .btn.hover, .btn:active, .btn:focus, .btn:hover {
+    color: #222;
+    background-image: linear-gradient(135deg,#FFD000 0,#FFBD00 100%);
+    border-width: 0;
+    box-shadow: 0 2px 1px rgba(191,105,0,.15);
+    background-size: 100%;
+    *zoom: 1;
+}
+.btn, .btn-hot, .btn-normal {
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    *zoom: 1;
+    *display: inline;
+    padding: 7px 20px 6px;
+    *padding: 4px 20px 2px;
+    *overflow: visible;
+    font-size: 14px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    letter-spacing: .1em;
+    text-align: center;
+    text-decoration: none;
+    border-width: 0 0 1px;
+    border-style: solid;
+    background-repeat: repeat-x;
+    border-radius: 2px;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+.btn-normal {
+    color: #333;
+    background-color: #dedede;
+    border: 1px solid #e3e3e3;
+    border-bottom: 1px solid #aaa;
+    *zoom: 1;
+    filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FFF7F7F7', endColorstr='#FFDEDEDE');
+    background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiP…dpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==);
+    background-size: 100%;
+    background-image: linear-gradient(to bottom,#f7f7f7,#dedede);
+}
+
+
+.btn-small {
+    padding: 3px 20px;
+    *padding: 3px 20px 1px;
+    font-size: 12px;
+    border-color: rgba(191,105,0,.15);
+}
+.btn-mini {
+    padding: 1px 8px 0;
+    font-size: 12px;
+}
+.btn-mini, .btn-small {
+    font-weight: 400;
+    -webkit-font-smoothing: initial;
+}
+
+.f1, .f1-b {
+    font-size: 13px;
+}
+
+a {
+    color: #FE8C00;
+    text-decoration: none;
+}
+input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    *font-size: 100%;
+    font-weight: inherit;
+}

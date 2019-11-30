@@ -1,5 +1,5 @@
 const path = require('path');
-const mode = process._argv.env;
+const mode = process._argv ? process._argv.env : "dev";
 module.exports = {
     apps: {
         index: {
@@ -37,9 +37,13 @@ module.exports = {
             password: void 0
         }
     },
+    webSrc: {
+        index: path.resolve(__dirname, "./web/index")
+    },
     staticServer: [
-        's0.mt.com',
-        's1.mt.com',
-        's2.mt.com'
+        // 's0.mt.com',
+        // 's1.mt.com',
+        // 's2.mt.com'
+        'localhost:8080'
     ]
 };

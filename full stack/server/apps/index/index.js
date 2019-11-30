@@ -7,8 +7,12 @@ router.use('*', initRequest);
 
 router.get('/', async ctx => {
 
+    let {render: webRender} = require('@/web/index');
+    let ssrString = webRender();
+    console.log("--------------", ssrString);
+
     let catalog = await getCatalog();
-    await ctx.render('index', {catalog});
+    await ctx.render('index', {catalog, ssrString});
 });
 
 
