@@ -58,7 +58,8 @@ module.exports = [
             alias: {
                 '@': path.resolve(__dirname, './web')
             }
-        }
+        },
+        devtool: 'source-map'
     }
 
 ];

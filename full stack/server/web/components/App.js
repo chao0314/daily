@@ -9,7 +9,6 @@ export default class App extends Component {
     }
 
     render() {
-        console.log("---props--", this.props)
         return (
             <div>
                 <IndexCatalog {...this.props}></IndexCatalog>
