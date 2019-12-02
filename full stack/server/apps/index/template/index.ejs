@@ -16,9 +16,14 @@
 </head>
 <body>
 <script>
-    const catalog = <%- JSON.stringify(catalog) %>
+    const appData = <%- JSON.stringify(appData) %>
+    const {STATIC, city, catalog} = appData;
 
 </script>
+<script src="/js/react.js"></script>
+<script src="/js/react-dom.js"></script>
+<script src="/index.js"></script>
+
 <%- include('./common/header',{STATIC:STATIC}) %>
 
 <!-- 分类框 -->
@@ -36,86 +41,11 @@
                 <% }) %>
             </div>
 
-            <div class="left-banner">
-                <div class="category-nav-container">
-                    <div class="category-nav-title-wrapper">
-                        <span class="category-nav-title">全部分类</span>
-                    </div>
-                    <div class="category-nav-content-wrapper">
-                        <ul class="col">
-                            <% catalog.forEach(({titles})=>{ %>
-                                <li class="nav-li line-center">
-                                    <p class="nav-text-icon">
-                                        <img src="<%= STATIC %>/images/food.png" class="image" alt="">
-                                    </p>
-                                    <div class="nav-text-wrapper">
-                                        <% titles.forEach(({title, href}, index)=>{ %>
-                                            <span>
-                                    <a href="http://<%= href.replace('{city}', city) %>" target="_blank"
-                                       class="link nav-text"><%= title %></a>
-                                                <% if(index < titles.length - 1){ %>
-                                                    /
-                                                <% } %>
-                                            </span>
-                                        <% }) %>
-                                    </div>
-                                    <div class="nav-right-icon">
-                                        <img src="<%= STATIC %>/images/right_jt.png" class="image" alt="">
-                                    </div>
-                                </li>
-                            <% }) %>
-                        </ul>
-                    </div>
-                    <div class="category-nav-detail-wrapper" style="display: block">
-                        <div class="category-nav-detail active">
-                            <div class="detail-area">
-                                <div class="detail-title-wrapper clearfix">
-                                    <a href="" class="detail-title">
-                                        <h2>热映电影</h2>
-                                    </a>
-                                    <a href="" class="link detail-more">
-                                        更多
-                                        <i class="detail-right-arrow"></i>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="detail-content">
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                </div>
-                            </div>
-                            <div class="detail-area">
-                                <div class="detail-title-wrapper clearfix">
-                                    <a href="" class="detail-title">
-                                        <h2>热映电影</h2>
-                                    </a>
-                                    <a href="" class="link detail-more">
-                                        更多
-                                        <i class="detail-right-arrow"></i>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="detail-content">
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                    <a href="" class="detail-text">健身中心</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="app">
+                <%- ssrString %>
             </div>
+
+
             <div class="right-banner">
                 <div class="home-header-links">
                     <a href="">美团外卖</a>
@@ -239,6 +169,8 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="clearfix"></div>
         </div>
 
@@ -406,15 +338,11 @@
 
 <%- include('./common/footer') %>
 
-
-<script src="/js/react.js"></script>
-<script src="/js/react-dom.js"></script>
-<script src="/index.js"></script>
-<div id="app">
-    <%- ssrString %>
-</div>
 <script>
     let app = document.getElementById('app');
+
+    (React.hydrate || React.render)(React.createElement(<App/>, appData), app);
+
 </script>
 
 

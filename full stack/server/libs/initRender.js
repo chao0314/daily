@@ -4,7 +4,7 @@ const pfs = require('promise-fs');
 const path = require('path');
 
 module.exports = async function (app) {
-   await render(app, {
+    await render(app, {
         root: app.context.appConfig.templateDir,
         layout: false,
         viewExt: 'ejs',
@@ -37,6 +37,10 @@ module.exports = async function (app) {
         if (this.defaultRenderOptions === void 0) this.defaultRenderOptions = {};
         this.defaultRenderOptions[name] = value;
 
+    };
+    app.context.getDefaultRenderOptions = function (name) {
+
+        return this.defaultRenderOptions ? this.defaultRenderOptions[name] : void 0;
     }
 
 

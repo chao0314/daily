@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import IndexCatalog from "./index/IndexCatalog";
+import IndexBanner from "./index/IndexBanner";
 
 export default class App extends Component {
 
@@ -7,9 +9,11 @@ export default class App extends Component {
     }
 
     render() {
+        console.log("---props--", this.props)
         return (
-            <div style={{height: '200px', background: 'pink', fontSize: "30px"}}>
-                hello server side render
+            <div>
+                <IndexCatalog {...this.props}></IndexCatalog>
+                <IndexBanner {...this.props}></IndexBanner>
             </div>
         );
     }

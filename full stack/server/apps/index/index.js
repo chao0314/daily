@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const initRequest = require('@/libs/initRequest');
 const {getCatalog} = require('@/models/Catalog');
+const {getBanner} = require('@/models/Banner');
 
 const router = new Router();
 router.use('*', initRequest);
@@ -8,11 +9,19 @@ router.use('*', initRequest);
 router.get('/', async ctx => {
 
     let {render: webRender} = require('@/web/index');
-    let ssrString = webRender();
-    console.log("--------------", ssrString);
 
-    let catalog = await getCatalog();
-    await ctx.render('index', {catalog, ssrString});
+    let [catalog, banner] = await Promise.all([getCatalog(), getBanner()]);
+
+
+    let appData = {
+        STATIC: ctx.getDefaultRenderOptions('STATIC'),
+        city: ctx.getDefaultRenderOptions('city'),
+        catalog,
+        banner
+    };
+    let ssrString = webRender(appData);
+
+    await ctx.render('index', {appData, ssrString});
 });
 
 
