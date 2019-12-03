@@ -646,7 +646,7 @@
 .slider .slider-content {
     position: relative;
     height: 100%;
-    transition: all 0.5s ease;
+
     width: 10000000px;
 }
 
@@ -654,6 +654,12 @@
     position: absolute;
     height: 100%;
     width: 550px;
+    opacity: 0.2;
+    transition: opacity 0.5s ease;
+}
+
+.slider .slider-content .slider-item.active {
+    opacity: 0.9;
 }
 
 .slider-img-div {
@@ -677,10 +683,13 @@
     width: 10px;
     height: 2px;
     margin-right: 10px;
+    background: white;
+    opacity: 0.5;
 }
 
 .slider .slider-pagination .pagination.cur {
     opacity: 0.9;
+    background: pink;
 }
 
 .slider .btn {

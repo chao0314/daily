@@ -7242,7 +7242,6 @@ class IndexCatalog extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     const {
       detail
     } = this.state;
-    console.log("appdata", this.props);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "left-banner",
       onMouseLeave: () => this.setDetail([])
@@ -7342,16 +7341,39 @@ class IndexSlider extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   constructor(props) {
     super(props);
     this.state = {
-      cur: 0
+      cur: -1
     };
+    this.ref = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+  }
+
+  componentDidMount() {
+    this.next();
   }
 
   next() {
     console.log('next');
+    let {
+      cur
+    } = this.state;
+    let {
+      sliders
+    } = this.props;
+    this.setState({
+      cur: (cur + 1) % sliders.length
+    });
   }
 
   prev() {
     console.log('prev');
+    let {
+      cur
+    } = this.state;
+    let {
+      sliders
+    } = this.props;
+    this.setState({
+      cur: (cur + sliders.length - 1) % sliders.length
+    });
   }
 
   render() {
@@ -7366,13 +7388,14 @@ class IndexSlider extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "slider"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      ref: this.ref,
       className: "slider-content",
       style: {
         width: `${contentWidth}px`,
-        transform: `translateX(${this.cur * width}px)`
+        transform: `translateX(-${this.state.cur * width}px)`
       }
     }, sliders.map((v, i) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "slider-item",
+      className: "slider-item" + (i === this.state.cur ? " active" : ""),
       style: {
         left: `${width * i}px`
       },
@@ -7384,21 +7407,17 @@ class IndexSlider extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
       }
     })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "slider-pagination"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pagination cur"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pagination"
-    }), sliders.map((v, i) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      className: "pagination" + i === this.cur ? " cur" : "",
+    }, sliders.map((v, i) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "pagination" + (i === this.state.cur ? " cur" : ""),
       key: i
     }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "btn btn-next",
-      onClick: () => next()
+      onClick: () => this.next()
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "iconfont icon-arrow-right-"
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "btn btn-pre",
-      onClick: () => prev()
+      onClick: () => this.prev()
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
       className: "iconfont icon-arrow-left-"
     }))));
