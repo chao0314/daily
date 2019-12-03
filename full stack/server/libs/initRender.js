@@ -4,6 +4,7 @@ const pfs = require('promise-fs');
 const path = require('path');
 
 module.exports = async function (app) {
+    if (!app.context.appConfig.templateDir) return;
     await render(app, {
         root: app.context.appConfig.templateDir,
         layout: false,

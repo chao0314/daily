@@ -7351,7 +7351,6 @@ class IndexSlider extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
   next() {
-    console.log('next');
     let {
       cur
     } = this.state;
@@ -7364,7 +7363,6 @@ class IndexSlider extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
   }
 
   prev() {
-    console.log('prev');
     let {
       cur
     } = this.state;

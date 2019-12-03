@@ -1,5 +1,5 @@
 const path = require('path');
-const {webSrc} = require('./config');
+const {webSrc, webUtils} = require('./config');
 module.exports = [
     {
         mode: 'development',
@@ -60,6 +60,32 @@ module.exports = [
             }
         },
         devtool: 'source-map'
+    },
+    {
+        mode: 'development',
+        entry: webUtils,
+        output: {
+            path: path.resolve(__dirname, 'static/js'),
+            filename: "[name].js"
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    exclude: /node_modules/,
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    }
+                }
+            ]
+        },
+        devtool: 'source-map',
+        resolve: {
+            extensions: ['.js']
+        }
     }
 
 ];

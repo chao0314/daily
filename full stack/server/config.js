@@ -19,6 +19,12 @@ module.exports = {
             templateDir: path.resolve(__dirname, 'apps/food/template'),
             minifyHtml: false,
             cacheDir: mode === 'dev' ? path.resolve(__dirname, 'cache') : '/usr/share/nginx/html/'
+        },
+        data: {
+            version: '1.0.0',
+            enabled: true,
+            entry: path.resolve(__dirname, 'apps/data'),
+            port: 8082
         }
     },
     databases: {
@@ -39,6 +45,9 @@ module.exports = {
     },
     webSrc: {
         index: path.resolve(__dirname, "./web/index")
+    },
+    webUtils: {
+        burying: path.resolve(__dirname, './web_utils/burying')
     },
     staticServer: [
         // 's0.mt.com',
