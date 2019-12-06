@@ -6,7 +6,10 @@ const main = getPool('main');
 
 module.exports = async function (ctx, next) {
 
-    if (await main.getAsync(`_black_list_${ctx.ip}`)) ctx.body = "访问异常，请等待15分钟";
+    if (await main.getAsync(`_black_list_${ctx.ip}`)) {
+        ctx.body = "访问异常，请等待15分钟";
+        return;
+    }
     let st = ctx.cookies.get('st');
     let uid = ctx.cookies.get('uid');
     if (staticServer.includes(st)) ctx.setDefaultRenderOptions('STATIC', st);
@@ -25,12 +28,13 @@ module.exports = async function (ctx, next) {
         })
     }
     // user behaviour record
-
-    await pfs.appendFile(`${ctx.appConfig.logDir}/access.log`, `${JSON.stringify({
+    let log = JSON.stringify({
         url: ctx.url,
         ip: ctx.ip,
         time: Date.now()
-    })}\n`);
+    });
+    console.log(log);
+    await pfs.appendFile(`${ctx.appConfig.logDir}/access.log`, `${log}\n`);
 
 
     ctx.setDefaultRenderOptions('STATIC', `http://${st}`);

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
-const threshold = 30;
+const threshold = 10;
 (async () => {
     const main = await redis.createClient({
         host: 'localhost',
@@ -16,8 +16,7 @@ const threshold = 30;
     setInterval(async () => {
         try {
             let oRes = {};
-            let aLog = fs.readFileSync(filepath).toString().split('\n').map(v => {
-                console.log(v);
+            let aLog = fs.readFileSync(filepath).toString().trim().split('\n').map(v => {
                 try {
                     return JSON.parse(v);
                 } catch (e) {
@@ -43,10 +42,12 @@ const threshold = 30;
             for (let ip in oRes) {
                 if (oRes.hasOwnProperty(ip)) {
                     let {count, min_t, max_t} = oRes[ip];
+                    console.log(count*1000, max_t - min_t);
                     if (min_t === max_t) continue;
-                    if (count * 1000 / (max_t - min_t) >= threshold) {
+                    console.log(count * 1000 / (max_t - min_t));
+                    if ((count * 1000 / (max_t - min_t)) >= threshold) {
                         console.log("异常访问 ip :", ip);
-                        await main.psetextAsync(`_black_list_${ip}`, 15 * 60 * 1000, ip);
+                        await main.psetexAsync(`_black_list_${ip}`, 15 * 60 * 1000, ip);
                     }
 
                 }
@@ -58,5 +59,5 @@ const threshold = 30;
         }
 
 
-    }, 30000);
+    }, 10000);
 })();
