@@ -31,7 +31,8 @@ export default class IndexCatalog extends Component {
                     <div className="category-nav-content-wrapper">
                         <ul className="col">
                             {catalog.map(({titles, children}, index) => (
-                                <li className="nav-li line-center" key={index} onMouseEnter={() => this.setDetail(children)}>
+                                <li className="nav-li line-center" key={index}
+                                    onMouseEnter={() => this.setDetail(children)}>
                                     <p className="nav-text-icon">
                                         <img src={`${STATIC}/images/美食.png`} className="image" alt=""/>
                                     </p>
@@ -54,7 +55,7 @@ export default class IndexCatalog extends Component {
                     {detail.length ? (
                         <div className="category-nav-detail-wrapper">
                             <div className="category-nav-detail active">
-                                {detail.map(({sub_title:title, sub_href:href, children}, index) => (
+                                {detail.map(({sub_title: title, sub_href: href, children}, index) => (
                                     <div className="detail-area" key={index}>
                                         <div className="detail-title-wrapper clearfix">
                                             <a href={`http://${href.replace('{city}', city)}`} className="detail-title">
@@ -68,10 +69,12 @@ export default class IndexCatalog extends Component {
                                             <div className="clearfix"/>
                                         </div>
                                         <div className="detail-content">
-                                            {children.map(({item_title:title, item_href:href}, index) => (
+                                            {children.map(({item_id: id, item_title: title, item_href: href}, index) => (
                                                 <a href={`http://${href.replace('{city}', city)}`}
                                                    className="detail-text"
-                                                   key={index}>{title}</a>
+                                                   key={index}
+                                                   data-bid={1}
+                                                   data-bdata={JSON.stringify({catalog_item_id:id})}>{title}</a>
                                             ))}
                                         </div>
                                     </div>

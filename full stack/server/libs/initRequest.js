@@ -1,7 +1,12 @@
 const uuid = require('uuid/v4');
 const {staticServer} = require('@/config');
+const pfs = require('promise-fs');
+const {getPool} = require('@/modules/redisPools');
+const main = getPool('main');
 
 module.exports = async function (ctx, next) {
+
+    if (await main.getAsync(`_black_list_${ctx.ip}`)) ctx.body = "访问异常，请等待15分钟";
     let st = ctx.cookies.get('st');
     let uid = ctx.cookies.get('uid');
     if (staticServer.includes(st)) ctx.setDefaultRenderOptions('STATIC', st);
@@ -11,7 +16,7 @@ module.exports = async function (ctx, next) {
         ctx.cookies.set('st', st);
 
     }
-//todo switch user id ?
+    //todo switch user id ?
     if (!uid) {
         ctx.cookies.set('uid', uuid().replace(/\-/g, ''), {
             maxAge: 90 * 86400 * 1000,
@@ -19,6 +24,13 @@ module.exports = async function (ctx, next) {
             signed: false
         })
     }
+    // user behaviour record
+
+    await pfs.appendFile(`${ctx.appConfig.logDir}/access.log`, `${JSON.stringify({
+        url: ctx.url,
+        ip: ctx.ip,
+        time: Date.now()
+    })}\n`);
 
 
     ctx.setDefaultRenderOptions('STATIC', `http://${st}`);

@@ -1,3 +1,4 @@
+import {Base64} from 'js-base64';
 document.addEventListener('click', function (e) {
     let bUrl = 'http://localhost:8082';
     let element = e.target || e.srcElement;
@@ -9,7 +10,7 @@ document.addEventListener('click', function (e) {
                 {
                     bid,
                     bdata,
-                    uid: document.cookie.match(/uid=(\w{32})/g)[0]
+                    uid: document.cookie.match(/uid=(\w{32})/i)[1]
                 }
             )
 
@@ -19,9 +20,8 @@ document.addEventListener('click', function (e) {
     }
     if (aData.length > 0) {
         let oImg = new Image();
-        oImg.src = `${bUrl}/da?d=${JSON.stringify(aData)}`;
+        oImg.src = `${bUrl}/da?d=${Base64.encode(JSON.stringify(aData))}&rm=${Math.random()}`;
     }
 
-    console.log(aData);
 
 }, false);

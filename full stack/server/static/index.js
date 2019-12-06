@@ -7311,12 +7311,17 @@ class IndexCatalog extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "detail-content"
     }, children.map(({
+      item_id: id,
       item_title: title,
       item_href: href
     }, index) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
       href: `http://${href.replace('{city}', city)}`,
       className: "detail-text",
-      key: index
+      key: index,
+      "data-bid": 1,
+      "data-bdata": JSON.stringify({
+        catalog_item_id: id
+      })
     }, title))))))) : ''));
   }
 

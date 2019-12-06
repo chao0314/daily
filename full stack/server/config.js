@@ -9,7 +9,8 @@ module.exports = {
             port: 8080,
             templateDir: path.resolve(__dirname, 'apps/index/template'),
             minifyHtml: false,
-            cacheDir: mode === 'dev' ? path.resolve(__dirname, 'cache') : '/usr/share/nginx/html/'
+            cacheDir: mode === 'dev' ? path.resolve(__dirname, 'cache') : '/usr/share/nginx/html/',
+            logDir: path.resolve(__dirname, 'logs/index')
         },
         food: {
             version: '1.0.0',

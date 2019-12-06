@@ -4,7 +4,7 @@ const main = getPool('main');
 
 async function getCatalog() {
     let result = [];
-    let aQuery = [main.query(`SELECT 
+    let aQuery = [main.query(`SELECT item.ID AS item_id,
     item.title AS item_title, item.href AS item_href,
     sub.position,sub.title AS sub_title, sub.href AS sub_href,sub.\`order\` AS sub_order
 FROM
@@ -28,14 +28,14 @@ ORDER bY position ASC, 'order' ASC;`)
 
     });
 
-    subCatalogAndItems.forEach(({position, sub_order, sub_title, sub_href, item_title, item_href}) => {
+    subCatalogAndItems.forEach(({position, sub_order, sub_title, sub_href, item_id,item_title, item_href}) => {
         if (result[position].children[sub_order])
-            result[position].children[sub_order].children.push({item_title, item_href});
+            result[position].children[sub_order].children.push({item_id,item_title, item_href});
         else
             result[position].children[sub_order] = {
                 sub_title,
                 sub_href,
-                children: [{item_title, item_href}]
+                children: [{item_id,item_title, item_href}]
             }
 
     });
