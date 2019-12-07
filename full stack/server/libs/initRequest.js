@@ -33,8 +33,8 @@ module.exports = async function (ctx, next) {
         ip: ctx.ip,
         time: Date.now()
     });
-    console.log(log);
-    await pfs.appendFile(`${ctx.appConfig.logDir}/access.log`, `${log}\n`);
+    // console.log(log);
+    // await pfs.appendFile(`${ctx.appConfig.logDir}/access.log`, `${log}\n`);
 
 
     ctx.setDefaultRenderOptions('STATIC', `http://${st}`);

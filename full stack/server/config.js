@@ -14,7 +14,7 @@ module.exports = {
         },
         food: {
             version: '1.0.0',
-            enabled: true,
+            enabled: false,
             entry: path.resolve(__dirname, 'apps/food'),
             port: 8081,
             templateDir: path.resolve(__dirname, 'apps/food/template'),
@@ -23,9 +23,15 @@ module.exports = {
         },
         data: {
             version: '1.0.0',
-            enabled: true,
+            enabled: false,
             entry: path.resolve(__dirname, 'apps/data'),
             port: 8082
+        },
+        api: {
+            version: '1.0.0',
+            enabled: true,
+            entry: path.resolve(__dirname, 'apps/api'),
+            port: 8083
         }
     },
     databases: {
