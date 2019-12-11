@@ -18,5 +18,10 @@ router.get('/complete/:kw', async ctx => {
 
 });
 
+router.get('/search/:kw', async ctx => {
+    let {kw} = ctx.params;
+    console.log('search', kw);
+});
+
 
 module.exports = router.routes();

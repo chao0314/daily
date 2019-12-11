@@ -11,16 +11,35 @@ fs.readFileSync(path.resolve(__dirname, './pinyin.txt')).toString().split(/\r\n|
             aMatch[1].trim().replace(/\d/g, '').split(' ').forEach(v => set.add(v));
             pinyinMap.set(line[0], Array.from(set));
         } else {
-            console.log("---not----", line, "----", aMatch);
+            console.log("--pinyin--not--match--", line);
         }
     }
 
 });
 
 // console.log(pinyinMap.entries());
+console.log("pinyin init");
 
 function word2pinyin(word) {
     let aResult = [];
-    if
+    word = word.trim();
+    if (word) {
+        let aPinyin = pinyinMap.get(word[0]);
+        let aPinyin2 = word2pinyin(word.slice(1));
+        if (!aPinyin) aPinyin = [word[0]];
+        if (aPinyin2.length > 0) {
+            aPinyin.forEach(pinyin => {
+                aPinyin2.forEach(pinyin2 => {
+                    aResult.push(`${pinyin}${pinyin2}`);
+                })
+            });
+        } else {
+            aResult = aPinyin;
+        }
 
+    }
+    return aResult;
 }
+
+
+module.exports = word2pinyin;

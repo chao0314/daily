@@ -50,16 +50,23 @@ module.exports = {
             password: void 0
         }
     },
-    webSrc: {
+    webSSR: {
         index: path.resolve(__dirname, "./web/index")
     },
+    webSrc: {
+        index: path.resolve(__dirname, "./web/index"),
+        list: path.resolve(__dirname, './web/list')
+    }
+    ,
     webUtils: {
         burying: path.resolve(__dirname, './web_utils/burying')
-    },
+    }
+    ,
     staticServer: [
         // 's0.mt.com',
         // 's1.mt.com',
         // 's2.mt.com'
         'localhost:8080'
     ]
-};
+}
+;

@@ -4,15 +4,15 @@
         <div class="container">
             <div class="header-bar-position row line-center">
                 <div class="header-location-icon center">
-                    <img src="<%=STATIC%>/images/position.png" class="image" alt="">
+                    <img src="/images/position.png" class="image" alt="">
                 </div>
                 <div class="current-city">北京</div>
                 <div class="change-city"><a href="">切换城市</a></div>
                 <div class="near-citys">
                     [
-                        <a href="" class="city-guess">门头沟区</a>
-                        <a href="" class="city-guess">大厂回族自治县</a>
-                        <a href="" class="city-guess">廊坊</a>
+                    <a href="" class="city-guess">门头沟区</a>
+                    <a href="" class="city-guess">大厂回族自治县</a>
+                    <a href="" class="city-guess">廊坊</a>
                     ]
                 </div>
                 <div class="user-entry">
@@ -124,22 +124,30 @@
                                 <dt>手机应用</dt>
                                 <dd>
                                     <a href="">
-                                        <img class="appicon" src="http://s0.meituan.net/bs/fe-web-meituan/2d53095/img/appicons/meituan.png" title="美团app" alt="美团app">
+                                        <img class="appicon"
+                                             src="http://s0.meituan.net/bs/fe-web-meituan/2d53095/img/appicons/meituan.png"
+                                             title="美团app" alt="美团app">
                                     </a>
                                 </dd>
                                 <dd>
                                     <a href="">
-                                        <img class="appicon" src="http://s1.meituan.net/bs/fe-web-meituan/404d350/img/appicons/waimai.png" title="外卖app" alt="外卖app">
+                                        <img class="appicon"
+                                             src="http://s1.meituan.net/bs/fe-web-meituan/404d350/img/appicons/waimai.png"
+                                             title="外卖app" alt="外卖app">
                                     </a>
                                 </dd>
                                 <dd>
                                     <a href="">
-                                        <img class="appicon" src="http://s0.meituan.net/bs/fe-web-meituan/2d53095/img/appicons/meituan.png" title="美团app" alt="美团app">
+                                        <img class="appicon"
+                                             src="http://s0.meituan.net/bs/fe-web-meituan/2d53095/img/appicons/meituan.png"
+                                             title="美团app" alt="美团app">
                                     </a>
                                 </dd>
                                 <dd>
                                     <a href="">
-                                        <img class="appicon" src="http://s1.meituan.net/bs/fe-web-meituan/404d350/img/appicons/waimai.png" title="外卖app" alt="外卖app">
+                                        <img class="appicon"
+                                             src="http://s1.meituan.net/bs/fe-web-meituan/404d350/img/appicons/waimai.png"
+                                             title="外卖app" alt="外卖app">
                                     </a>
                                 </dd>
                             </dl>
@@ -155,41 +163,12 @@
                 <img src="http://s0.meituan.net/bs/fe-web-meituan/fa5f0f0/img/logo.png" alt="美团">
             </div>
         </div>
-        <div class="header-search-module">
-            <div class="header-search-block">
-                <input class="header-search-input" type="text" placeholder="搜索商家或地点">
-                <button class="header-search-btn">
-                    <span class="header-icon icon-search-new center">
-                        <img src="<%=STATIC%>/images/search.png" alt="">
-                    </span>
-                </button>
-            </div>
-            <div class="header-search-suggest" style="display: none">
-                <div class="header-search-noinput">
-                    <div class="header-search-history">
-                        <h6>最近搜索</h6>
-                        <div class="header-search-clean">删除搜索历史</div>
-                        <ul>
-                            <li><a href="">亦庄</a></li>
-                        </ul>
-                    </div>
-                    <h6>热门搜索</h6>
-                    <div class="header-search-hotword">
-                        <a href="">欢乐水魔方水上乐园</a>
-                        <a href="">古北水镇</a>
-                        <a href="">北京欢乐谷</a>
-                        <a href="">北京失恋博物展</a>
-                        <a href="">八达岭长城</a>
-                    </div>
-                </div>
-            </div>
-            <div class="header-search-hotword">
-                <a href="">欢乐水魔方水上乐园</a>
-                <a href="">古北水镇</a>
-                <a href="">北京欢乐谷</a>
-                <a href="">北京失恋博物展</a>
-                <a href="">八达岭长城</a>
-            </div>
-        </div>
+        <div id="header_search"></div>
+        <script>
+            ReactDOM.render(
+                React.createElement(HeaderSearch),
+                document.getElementById('header_search')
+            );
+        </script>
     </div>
 </div>

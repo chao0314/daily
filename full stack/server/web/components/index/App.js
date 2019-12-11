@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import IndexCatalog from "./index/IndexCatalog";
-import IndexBanner from "./index/IndexBanner";
+import IndexCatalog from "./IndexCatalog";
+import IndexBanner from "./IndexBanner";
 
 export default class App extends Component {
 

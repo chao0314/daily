@@ -9,7 +9,7 @@ router.use('*', initRequest);
 
 router.get('/', async ctx => {
 
-    let {render: webRender} = require('@/web/index');
+    let {render: ssr} = require('@/ssr/index');
 
     let [catalog, banner] = await Promise.all([getCatalog(), getBanner()]);
 
@@ -20,9 +20,14 @@ router.get('/', async ctx => {
         catalog,
         banner
     };
-    let ssrString = webRender(appData);
+    let ssrString = ssr(appData);
 
     await ctx.render('index', {appData, ssrString});
+});
+
+router.get('/list', async ctx => {
+
+    await ctx.render('list');
 });
 
 

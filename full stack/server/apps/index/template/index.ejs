@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('./common/comHeader') %>
-    <title>Document</title>
+    <%- include('./common/com') %>
+    <title>index</title>
     <style media="screen">
         #hrefs {
             display: none;
@@ -11,18 +11,14 @@
     <link rel="stylesheet" href="<%= STATIC %>/css/base.css">
     <link rel="stylesheet" href="<%= STATIC %>/css/public.css">
     <link rel="stylesheet" href="<%= STATIC %>/css/header.css">
+    <script>
+        const appData = <%- JSON.stringify(appData) %>
+
+    </script>
+    <script src="/index.js"></script>
 </head>
 <body>
-<script>
-    const appData = <%- JSON.stringify(appData) %>
-
-</script>
-<script src="/js/react.js"></script>
-<script src="/js/react-dom.js"></script>
-<script src="/index.js"></script>
-
 <%- include('./common/header',{STATIC:STATIC}) %>
-
 <!-- 分类框 -->
 <div class="page index">
     <div class="container">

@@ -19,19 +19,7 @@ async function autoComplete(kw) {
     let result = [];
     if (kw) {
         const aQuery = [
-            [`SELECT 
-    title
-FROM
-    meituan.catalog_item_table
-WHERE
-    title LIKE ? 
-UNION SELECT 
-    title
-FROM
-    meituan.sub_catalog_table
-WHERE
-    title LIKE ?
-LIMIT ? ;`, [`${kw}%`, `${kw}%`, SIZE]],
+            [`CALL key_word(?,?)`, [`${kw}%`, SIZE]],
 
             [`SELECT 
     title
@@ -63,7 +51,9 @@ LIMIT ? ;`, [`${kw}%`, SIZE]]
             if (cache) result = JSON.parse(cache);
             else {
                 for (let i = 0; i < aQuery.length; i++) {
-                    result = merge(result, await db.query(...aQuery[i]));
+                    let rows = await db.query(...aQuery[i]);
+                    if (Array.isArray(rows[0])) rows = rows[0];
+                    result = merge(result, rows);
                     if (result.length >= SIZE) break;
                 }
 
