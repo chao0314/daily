@@ -26,8 +26,10 @@ router.get('/', async ctx => {
 });
 
 router.get('/list', async ctx => {
+    let {kw} = ctx.query;
+    kw = kw.trim() || '';
 
-    await ctx.render('list');
+    await ctx.render('list', {kw});
 });
 
 

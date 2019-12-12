@@ -243,7 +243,7 @@
     display: block;
     width: auto;
     height: auto;
-    background: url(<%=STATIC%>/img/bee61f5f04046d07.png) center center no-repeat #e0e0e0;
+    background: url(/images/bee61f5f04046d07.png) center center no-repeat #e0e0e0;
     background-size: 60% auto;
 }
 .poiList-wrap img {

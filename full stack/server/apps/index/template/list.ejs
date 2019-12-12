@@ -10,6 +10,7 @@
     <script src="/list.js"></script>
 </head>
 <body>
+<%- include('./common/header',{STATIC:STATIC}) %>
 <div id="list-root">
 
 </div>
@@ -17,8 +18,9 @@
 <%- include('./common/footer.ejs') %>
 </body>
 <script>
+    let kw = '<%= kw %>';
     ReactDOM.render(
-        React.createElement(App),
+        React.createElement(App, {kw}),
         document.getElementById('list-root')
     )
     ;

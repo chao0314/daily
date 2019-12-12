@@ -4,7 +4,11 @@ import ListLike from "./ListLike";
 import ListShop from "./ListShop";
 
 export default class App extends Component {
+    constructor(props) {
+        super(props);
+    }
     render() {
+        let {kw} = this.props;
         return (
             <div className="container poiList-wrap">
                 <div className="breadcrumbs">
@@ -17,7 +21,7 @@ export default class App extends Component {
                 <div className="left">
                     <ListFilter></ListFilter>
                     <div>
-                        <ListShop></ListShop>
+                        <ListShop kw={kw}></ListShop>
                     </div>
                 </div>
                 <div className="right">

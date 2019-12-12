@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const router = new Router();
 const {autoComplete} = require('@/models/KeyWord');
+const {getShopByKeyword} = require('@/models/Shop');
 
 
 router.use('*', async (ctx, next) => {
@@ -14,13 +15,15 @@ router.use('*', async (ctx, next) => {
 
 router.get('/complete/:kw', async ctx => {
     let {kw} = ctx.params;
-    ctx.body = await autoComplete(kw);
-
+    kw = kw.trim();
+    if (kw) ctx.body = await autoComplete(kw);
 });
 
 router.get('/search/:kw', async ctx => {
     let {kw} = ctx.params;
-    console.log('search', kw);
+    let {page} = ctx.query||1;
+    kw = kw.trim();
+    if (kw) ctx.body = await getShopByKeyword(kw,page);
 });
 
 
