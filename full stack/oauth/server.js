@@ -37,46 +37,54 @@ router.use('*', async (ctx, next) => {
 });
 
 router.get('/checklogin', async ctx => {
-    let {token, expire} = JSON.parse(ctx.cookies.get('token'));
     let {from} = ctx.query;
-    console.log(token, expire);
-    if (token && expire) {
-        const query = [`SELECT * FROM meituan.user_token_table WHERE  token = ? AND  token_expire < ?`, [token, expire]];
-        let rows = db.query(...query);
-        if (rows.length > 0) {
-            ctx.redirect(`${from}?checked=true&token=${token}`);
-            return;
+    try {
+        let {token, expire} = JSON.parse(ctx.cookies.get('token'));
+        console.log(token, expire);
+        const now = Math.floor(Date.now() / 1000);
+        if (token && now < expire) {
+            const query = [`SELECT * FROM meituan.user_token_table WHERE  token = ?`, [`${token}`]];
+            let rows = await db.query(...query);
+            if (rows.length > 0) {
+                console.log(rows.length);
+                ctx.redirect(`${from}?res=${encodeURIComponent(JSON.stringify({checked: true, token}))}`);
+                return;
+            }
         }
+    } catch (e) {
+        console.log(e);
+
     }
 
-    ctx.redirect(`${from}?checked=false`);
+
+    ctx.redirect(`${from}?res=${encodeURIComponent(JSON.stringify({checked: false}))}`);
 
 });
 
-router.post('/login', async ctx => {
-
-    let {name, password, from} = ctx.request.fields;
+router.get('/login', async ctx => {
+    let {name, password, from} = ctx.query;
     //todo
     //1 如果没有这个用户 那么创建一个
     //2 如果有，检验密码，密码不正确，拒绝；密码正确，创建token
 
     if (name && password) {
-        // const query = [`SELECT * FROM meituan.user_table WHERE name = ? AND password = ?`, [name, password]];
+        // const query = [`SELECT * FROM meituan.user_table fromWHERE name = ? AND password = ?`, [name, password]];
         // let rows = db.query(...query);
         // if(rows.length >0){
         //   // todo
         // }
-        const token = uuid();
+        const token = uuid().replace(/\-/g, '');
         const expire = Math.floor(Date.now() / 1000) + 30 * 86400;
+        console.log(token, expire, from);
 
         const query = [`INSERT INTO user_token_table (name,token,token_expire) VALUES (?,?,?)`, [name, token, expire]];
         const res = await db.query(...query);
         console.log(res);
         ctx.cookies.set('token', JSON.stringify({token, expire}));
-        ctx.redirect(`${from}?login=true&token=${token}`);
+        ctx.redirect(`${from}?res=${encodeURIComponent(JSON.stringify({login: true, token}))}`);
 
     } else {
-        ctx.redirect(`${from}?login=false`)
+        ctx.redirect(`${from}?res=${JSON.stringify({login: false})}`);
     }
 
 

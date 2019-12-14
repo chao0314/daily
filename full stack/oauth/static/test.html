@@ -11,28 +11,53 @@
     <script>
 
         function check() {
-            console.log('check')
-            window.location = 'http://localhost:8080/checklogin';
+            console.log('check');
+            window.location.href = `http://localhost:8080/checklogin?from=${encodeURIComponent(location.href)}`;
+        }
+
+        function submit() {
+            let name = document.getElementById('name').value;
+            let password = document.getElementById('password').value;
+            window.location.href = `http://localhost:8080/login?from=${encodeURIComponent(location.href)}&name=${name}&password=${password}`;
         }
     </script>
 </head>
 <body>
-<form action="http://localhost:8080" method="post">
 
-    <input type="text" name="name">
-    <input type="password" name="password">
-    <input type="submit">
+<input type="text" name="name" id="name">
+<input type="password" name="password" id="password">
+<input type="submit" onclick="submit()">
 
-</form>
 <div>
     <button onclick="check()" type="button">check</button>
 </div>
 </body>
 
 <script>
-
     console.log(location);
+    let search = location.search;
+    if (search) {
+        let oSearch = JSON.parse(decodeURIComponent(search.slice(5)));
+        console.log(oSearch);
 
+        if (oSearch.login !== void 0) {
+            if (oSearch.login) {
+                alert("登录成功,token is" + oSearch.token)
+            } else {
+                alert('登录失败')
+            }
+
+        }
+        if (oSearch.checked !== void 0) {
+            if (oSearch.checked) {
+                alert("验证成功,token is" + oSearch.token)
+            } else {
+                alert('验证失败')
+            }
+        }
+
+        location.href = location.origin + location.pathname;
+    }
 
 </script>
 
