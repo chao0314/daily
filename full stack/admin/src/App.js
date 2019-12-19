@@ -8,7 +8,6 @@ export default (props) => {
   let {history} = props;
     let {state: {token, tokenExpires}} = useContext(Context);
     useEffect(() => {
-        console.log(token)
         if (!token) history.push('/login');
     }, []);
 
