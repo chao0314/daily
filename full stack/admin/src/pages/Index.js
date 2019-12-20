@@ -15,7 +15,7 @@ const menus = [
 
 
 export default (props) => {
-    let {history} = props;
+    let {history,location} = props;
 
     return (
         <Layout style={{minHeight: '100vh'}}>
@@ -23,7 +23,7 @@ export default (props) => {
                 <Menu
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={[props.location.pathname]}
+                    defaultSelectedKeys={[location.pathname]}
                     onClick={ev => history.push(ev.key)}
                 >
                     {menus.map(menu => (
