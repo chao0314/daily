@@ -1,10 +1,19 @@
-import axios from 'axios';
+import Axios from 'axios';
+
+const main = Axios.create({
+    baseURL: 'http://localhost:8083'
+});
 
 export default {
 
-    async getNetworkContent(dispatch, payload) {
-        let data = await test();
-        dispatch({type: "setNetworkContent", payload: data});
+    async register(dispatch, payload) {
+        let {data} = await main.post('/admin/register', payload);
+        return data;
+    },
+
+    async login(dispatch, payload) {
+
+        let {data} = await main.post('/admin/login', payload);
         return data;
     },
 

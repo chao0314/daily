@@ -3,13 +3,12 @@ import initState from "./state";
 import actions from "./actions";
 import reducers from "./reducers";
 
-export const Context = React.createContext({});
+export const ctx = React.createContext({});
 
 function reducerWraper(state, action) {
     let {type, payload} = action;
     return reducers[type](state, payload);
 }
-
 
 export default (props) => {
 
@@ -32,9 +31,9 @@ export default (props) => {
     // }
 
     return (
-        <Context.Provider value={{state, useMapAction, useMapReducer}}>
+        <ctx.Provider value={{state, useMapAction, useMapReducer}}>
             {props.children}
-        </Context.Provider>
+        </ctx.Provider>
     )
 
 }

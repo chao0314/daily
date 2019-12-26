@@ -1,0 +1,93 @@
+
+# sql 特殊敏感字段需要用上单引号``括起来 ，普通的可以省略
+ 一.用户
+ 
+创建：
+
+CREATE USER '用户名'@'主机' [ IDENTIFIED ] BY [ PASSWORD ] 
+
+删除：
+
+DROP USER '用户名'@'主机'
+
+
+二.权限
+
+1.野路子直接改mysql.user
+
+2.正规操作
+
+	授予：
+	
+	GRANT 权限 ON 库/表/列 TO '用户名'@'主机' IDENTIFIED BY '密码' [WITH GRANT OPTION];
+	
+	权限：ALL、SELECT、SELECT,UPDATE
+  库.表：库.*、*.*
+  主机：ip、域名、'%'（任意）
+  WITH GRANT OPTION：用户可以继续分发权限（仅限他有的）
+  
+  回收：
+  
+   REVOKE 权限 ON 库/表/列 FROM '用户名'@'主机'
+   
+   检查权限
+   
+    show grants for '用户名'@'主机;
+   
+
+
+三.备份
+
+1. mysqldump 命令
+
+ >mysqldump 库/表 -u 用户 -p 备份 某个数据库/表
+ 
+ >mysqldump --all-databases -u root -p  备份所有数据库
+
+ >gzip 文件 将文件 gzip 压缩
+
+2.定时执行操作
+  # watch ls -l 监听文件变化
+  
+ > crontab xxx #xxx为写的crontab 执行文件 txt就可以
+  
+ > cronttab -l #所有的定时执行任务
+  
+ > crontab -e 编辑定时执行任务
+
+  crontab格式：
+  
+  > * * * * *  脚本地址      分钟、小时、日、月、星期
+
+  30 * * * *  /root/a.sh    每个小时的30分执行——00:30, 01:30, ... 23:30
+  */2 * * * *             每隔两分钟执行一次
+  * * 1 * *               每个月的1号
+  
+----------------------------------------------------------------
+  备份脚本
+  
+1.获取时间 
+
+#date 命令 查看时间 根据后续参数 按格式输出
+
+d=`date +"%Y%m%d%H%M"`
+
+2.导出数据库
+
+mysqldump -u root xxx > /mysql_bak/xxx$d.sql
+
+3.压缩
+
+gzip /mysql_bak/xxx$d.sql
+
+4.传输到其他服务器
+
+scp /mysql_bak/xxx$d.sql.gz root@192.168.183.131:/root/
+
+-------------------------------------------------------------------------
+
+4.恢复
+
+CREATE DATABASE IF NOT EXISTS test_db_char DEFAULT CHARACTER SET utf8
+
+mysql -u root [库名] < xxx.sql #导入

@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const router = new Router();
+const admin = require('./admin');
 const {autoComplete} = require('@/models/KeyWord');
 const {getShopByKeyword} = require('@/models/Shop');
 const {getUserByMobile, register, login} = require('@/models/User');
@@ -13,11 +14,14 @@ const max_error_number = 5;
 
 
 router.use('*', async (ctx, next) => {
+    ctx.set('Access-Control-Allow-Origin', '*');
+    ctx.set('Access-Control-Allow-Headers', '*');
+    ctx.set('Access-Control-Allow-Methods', '*');
     if (ctx.method.toLowerCase() === 'options') {
         ctx.body = 'ok';
         return;
     }
-    ctx.set('Access-Control-Allow-Origin', '*');
+
     ctx.assert = function (value, message = 'invalid argument', status = 401) {
         if (!value) {
             let error = new Error(message);
@@ -83,7 +87,7 @@ router.post('/register', async ctx => {
     ctx.assert(code, '验证码为空');
     let sendCode = await rd.getAsync(`${in_sms_valid_time_}${mobile}`);
     ctx.assert(sendCode, '验证码已过期');
-    console.log(sendCode,code);
+    console.log(sendCode, code);
     ctx.assert(Number(code) === Number(sendCode), '验证码错误');
     let user = await getUserByMobile(mobile);
     ctx.assert(user.length === 0, '手机号已经注册');
@@ -96,7 +100,7 @@ router.post('/register', async ctx => {
 
 router.post('/login', async ctx => {
     let {mobile, password} = ctx.request.fields;
-    console.log(mobile,password);
+    console.log(mobile, password);
     ctx.assert(mobile, '账号为空');
     ctx.assert(password, '密码为空');
     let isLimitLogin = await rd.getAsync(`${limit_login_}${mobile}`);
@@ -120,5 +124,6 @@ router.post('/login', async ctx => {
 
 });
 
+router.use('/admin', admin);
 
 module.exports = router.routes();
