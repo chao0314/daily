@@ -8,9 +8,9 @@ import IndexTeam from "../components/Index/IndexTeam";
 const {Sider,Content,Footer} = Layout;
 
 const menus = [
-    {title: '首页', icon: 'home', path: '/home', exact: true, component: IndexHome},
-    {title: '团队管理', icon: 'team', path: '/team', component: IndexTeam},
-    {title: '商品管理', icon: 'shopping', path: '/goods', component: IndexGoods},
+    {title: '首页', icon: 'index', path: '/index', exact: true, component: IndexHome},
+    {title: '团队管理', icon: 'team', path: '/index/team', component: IndexTeam},
+    {title: '商品管理', icon: 'shopping', path: '/index/goods',component: IndexGoods},
 ];
 
 

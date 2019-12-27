@@ -5,6 +5,7 @@ import rules from '../rules'
 
 
 const Login = (props) => {
+    let {history} = props;
     let {getFieldDecorator, validateFields} = props.form;
     let {username, password} = rules;
     let {useMapAction} = useContext(ctx);
@@ -26,7 +27,10 @@ const Login = (props) => {
 
     function log() {
         validateFields((error, values) => {
-            login(values).then(({err, res}) => alert(res));
+            login(values).then(({err, res}) => {
+                if (!err) history.push('/index');
+                else alert(res);
+            });
         })
 
     }

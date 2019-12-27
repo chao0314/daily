@@ -13,7 +13,7 @@ export default (props) => {
 
     return (
         <Switch>
-            <Route key={'index'} path={'/'} exact={true} component={Index}>
+            <Route key={'index'} path={'/index'}  component={Index}>
             </Route>
             <Route key={'login'} path={'/login'} component={Login}>
             </Route>

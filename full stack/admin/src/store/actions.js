@@ -14,6 +14,10 @@ export default {
     async login(dispatch, payload) {
 
         let {data} = await main.post('/admin/login', payload);
+        let {token, token_expires} = data;
+        localStorage.setItem('token', token);
+        localStorage.setItem('token_expires', token_expires);
+        dispatch({type: "setToken", payload: {token, token_expires}});
         return data;
     },
 

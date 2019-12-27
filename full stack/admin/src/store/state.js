@@ -1,4 +1,4 @@
 export default {
     token: localStorage.getItem('token'),
-    tokenExpires: localStorage.getItem('tokenExpires')
+    token_expires: localStorage.getItem('token_xpires')
 }
