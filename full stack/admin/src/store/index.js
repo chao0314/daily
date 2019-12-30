@@ -16,7 +16,7 @@ export default (props) => {
 
     function useMapAction(name) {
         const action = actions[name];
-        return (payload) => action(dispatch, payload);
+        return (payload) => action({state, dispatch}, payload);
 
     }
 

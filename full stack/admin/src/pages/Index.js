@@ -1,21 +1,23 @@
-import React, {} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Switch, Route} from "react-router-dom";
 import {Layout, Menu, Icon} from "antd";
 import IndexHome from "../components/Index/IndexHome";
 import IndexGoods from "../components/Index/IndexGoods";
 import IndexTeam from "../components/Index/IndexTeam";
+import {ctx} from '../../src/store';
 
-const {Sider,Content,Footer} = Layout;
-
-const menus = [
-    {title: '首页', icon: 'index', path: '/index', exact: true, component: IndexHome},
-    {title: '团队管理', icon: 'team', path: '/index/team', component: IndexTeam},
-    {title: '商品管理', icon: 'shopping', path: '/index/goods',component: IndexGoods},
-];
+const {Sider, Content, Footer} = Layout;
 
 
 export default (props) => {
-    let {history,location} = props;
+    let {history, location} = props;
+    const {state: {authority}, useMapAction} = useContext(ctx);
+    const getMenus = useMapAction('getMenus');
+    const [menus, setMenus] = useState([]);
+    useEffect(() => {
+        getMenus().then(menus => setMenus(menus));
+    }, []);
+
 
     return (
         <Layout style={{minHeight: '100vh'}}>
