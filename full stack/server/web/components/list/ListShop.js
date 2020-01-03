@@ -17,6 +17,7 @@ export default class ListShop extends Component {
         let {kw, page} = this.props;
         main.get(`/search/${kw}?page=${page}`).then(({data: {shops, total}}) => {
             this.setState({shops, total})
+            console.log(shops);
         }).catch(e => {
             console.log(e);
             alert('网络错误');
@@ -57,7 +58,7 @@ export default class ListShop extends Component {
                     {shops.map(shop => (
                         <li className="btm clear-float" key={shop.ID}>
                             <div className="img">
-                                <a href="//www.meituan.com/meishi/42465387/">
+                                <a href={`/shop/${shop.ID}`}>
                                     <div className="fl-count">1</div>
                                     <div className="imgbox" style={{height: 125, width: 220}}>
                                         <img

@@ -16,7 +16,7 @@ export default class HeaderSearch extends Component {
         if (kw) {
             main.get(`/complete/${kw}`).then(({data}) => {
                 this.setState({
-                    suggest:data
+                    suggest: data
                 })
             }).catch(e => {
                 console.log(e);
@@ -54,7 +54,7 @@ export default class HeaderSearch extends Component {
                             <h6>热门搜索</h6>
                             <div className="header-search-hotword">
                                 {suggest.map(({title}, index) => (
-                                    <a href="#" key={index}>{title}</a>
+                                    <a href={`/list?kw=${title}`} target='_blank' key={index}>{title}</a>
                                 ))}
                             </div>
                         </div>
