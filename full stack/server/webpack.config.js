@@ -1,13 +1,13 @@
 const path = require('path');
-const {webSrc, webSSR,webUtils} = require('./config');
+const {webSrc, webSsr,webUtils} = require('./config');
 module.exports = [
     {
         mode: 'development',
-        entry: webSSR,
+        entry: webSsr,
         target: 'node',
         output: {
             libraryTarget: 'commonjs2',
-            path: path.resolve(__dirname, 'web_ssr'),
+            path: path.resolve(__dirname, 'web_ssr_dist'),
             filename: '[name].js'
         },
         module: {

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="<%= STATIC %>/css/base.css">
+    <link rel="stylesheet" href="<%= STATIC %>/css/public.css">
+    <link rel="stylesheet" href="<%= STATIC %>/css/orderdetail.css">
+    <%- include('./common/com') %>
+</head>
+<body>
+<!--<div id="root"></div>-->
+<div class="order">
+    <h2>订单详情<a href="/orders">返回我的订单</a></h2>
+    <div class="status">
+        <span>当前订单状态：</span>
+        <span class="refund-tip" >如需退款，请登录美团app通过订单详情页完成退款操作</span>
+        <ul><li>已使用</li></ul>
+        <div class="opts"></div>
+    </div>
+    <div class="coupon">
+        <div>
+            <dt>美团券</dt>
+            <dd>
+                <div class="outline">
+                    <ul>
+                        <li>小提示：记下或拍下美团券密码向商家出示即可消费，无需等待短信</li>
+                        <li>美团券密码：148320892898<span>已消费</span></li>
+                        <li>美团券密码：053982692955<span data-reactid="27">已消费</span></li>
+                    </ul>
+                </div>
+            </dd>
+        </div>
+        <dt>订单信息</dt>
+        <dd>
+            <ul class="order-info">
+                <li>订单编号：4356458810</li>
+                <li>下单时间：2018-04-29 01:13</li>
+                <li>付款方式：</li>
+                <li>付款时间：2018-04-29 01:14</li>
+            </ul>
+        </dd>
+        <div>
+            <dt>团购信息</dt>
+            <dd>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th width="100">团购项目</th>
+                        <th width="50">单价</th>
+                        <th width="10"></th>
+                        <th width="50">数量</th>
+                        <th width="10"></th>
+                        <th width="50">优惠</th>
+                        <th width="10"></th>
+                        <th width="54">支付金额</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="/meishi/d25222892.html">单人午餐/单人晚餐2选1</a>
+                        </td>
+                        <td>65</td>
+                        <td>x</td>
+                        <td>2</td>
+                        <td>-</td>
+                        <td>0</td>
+                        <td>=</td>
+                        <td>¥112</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </dd>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    // ReactDOM.render(
+    //     React.createElement(App, {}),
+    //     document.getElementById('root')
+    // )
+</script>
+
+</html>

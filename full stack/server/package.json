@@ -49,7 +49,7 @@
     "@/modules": "./modules",
     "@/utils": "./utils",
     "@/keys": "./keys",
-    "@/ssr": "./web_ssr",
+    "@/ssr": "./web_ssr_dist",
     "@/web": "./web"
   }
 }

@@ -1,11 +1,13 @@
+
 const Router = require('koa-router');
 const router = new Router();
 const Schema = require('async-validate');
 const rules = require('../../../rules');
 const md5 = require('@/utils/md5');
 const uuid = require('@/utils/uuid');
-const {getAdminUserByName, insertAdminUser} = require('../../../models/AdminUser');
-const {getTokenByName, setToken} = require('../../../models/AdminUserToken');
+const shop = require('./shop');
+const {getAdminUserByName, insertAdminUser, getAuthorityByID} = require('../../../models/AdminUser');
+const {checkToken, setToken,} = require('../../../models/AdminUserToken');
 Schema.plugin([
     require('async-validate/plugin/object'),
     require('async-validate/plugin/string'),
@@ -52,7 +54,9 @@ router.post('/login', async ctx => {
         let token = uuid();
         let token_expires = Math.floor(Date.now() / 1000 + 86400 * 14);
         await setToken(username, token, token_expires);
-        ctx.body = {res: 'login success'};
+        let authority = await getAuthorityByID(users[0].ID);
+
+        ctx.body = {token, token_expires, authority, res: 'login success'};
 
     } else {
         ctx.body = {err: true, res: 'name or password error'};
@@ -62,10 +66,21 @@ router.post('/login', async ctx => {
 });
 
 router.all('*', async (ctx, next) => {
-
-    console.log(" * token");
-    await next();
+    const token = ctx.get('token');
+    if (!token) {
+        ctx.status = 401;
+        ctx.body = {err: true, res: 'no token'};
+        return;
+    }
+    let username = await checkToken(token);
+    if (!username) {
+        ctx.status = 401;
+        ctx.body = {err: true, res: 'invalid token'};
+    } else {
+        ctx.adminUser = (await getAdminUserByName(username))[0];
+        await next();
+    }
 });
-
+router.use('/shop', shop);
 
 module.exports = router.routes();

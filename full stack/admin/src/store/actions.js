@@ -4,7 +4,10 @@ import IndexTeam from "../components/Index/IndexTeam";
 import IndexGoods from "../components/Index/IndexGoods";
 
 const main = Axios.create({
-    baseURL: 'http://localhost:8083'
+    baseURL: 'http://localhost:8083',
+    headers: {
+        token: localStorage.getItem('token')
+    }
 });
 
 export default {
@@ -25,7 +28,7 @@ export default {
         dispatch({type: "setToken", payload: {token, token_expires, authority}});
         return data;
     },
-
+    /* eslint-disable */
     async getMenus({state: {authority}, dispatch}, payload) {
         //todo  get from service
         const menus = [
@@ -39,6 +42,12 @@ export default {
         }).filter(menu => menu);
 
 
+    },
+    /* eslint-enable */
+
+    async createShop(state,shop) {
+        let {data} = await main.post('/admin/shop', shop);
+        return data;
     }
 
 

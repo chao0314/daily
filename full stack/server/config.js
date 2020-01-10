@@ -50,12 +50,15 @@ module.exports = {
             password: void 0
         }
     },
-    webSSR: {
+    webSsr: {
+        //首页采用ssr渲染树html骨架，前端页面hydrate配合，再接管绑定事件等，打包到此文件夹。
         index: path.resolve(__dirname, "./web/index")
     },
     webSrc: {
+        //首页因为要在浏览器内hydrate接管ssr生成的页面html骨架，所以也要打包一份浏览器版本的react代码。
         index: path.resolve(__dirname, "./web/index"),
-        list: path.resolve(__dirname, './web/list')
+        list: path.resolve(__dirname, './web/list'),
+        cart: path.resolve(__dirname, './web/cart')
     }
     ,
     webUtils: {
@@ -63,6 +66,7 @@ module.exports = {
     }
     ,
     staticServer: [
+        //静态文件负载均衡，分发到不同的服务器 nginx
         // 's0.mt.com',
         // 's1.mt.com',
         // 's2.mt.com'

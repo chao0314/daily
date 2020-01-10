@@ -98,27 +98,29 @@
 
     }
 
-    let  r ='123';
-    let  reg = new RegExp(r);
+    let r = '123';
+    let reg = new RegExp(r);
     console.log(reg.test('12345'));
 
-    var x=1;
-    function foo(x,y=function(){
-        x=2;
-    }){
+    var x = 1;
+
+    function foo(x, y = function () {
+        x = 2;
+    }) {
         console.log(x);
-        x=3;
-        console.log('--',x);
+        x = 3;
+        console.log('--', x);
         y();
         console.log(x);
     }
+
     foo();
 
     console.log(`x=${x}`);
 
 
-    function test(a,b){
-        a=12;
+    function test(a, b) {
+        a = 12;
         console.log(a)
     }
 
@@ -126,8 +128,8 @@
     console.log(a);
 
 
-
-
+    let a = [1, 2, 3];
+    console.log(a.map(item => item));
 
 
 </script>

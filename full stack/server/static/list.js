@@ -33943,7 +33943,8 @@ class HeaderSearch extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     }, suggest.map(({
       title
     }, index) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "#",
+      href: `/list?kw=${title}`,
+      target: "_blank",
       key: index
     }, title))))) : '', react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "header-search-hotword"
@@ -34240,15 +34241,17 @@ class ListShop extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     super(props);
     this.state = {
       shops: [],
-      total: 0
+      total: 0,
+      page: 1
     };
   }
 
   componentDidMount() {
     let {
-      kw
+      kw,
+      page
     } = this.props;
-    _network__WEBPACK_IMPORTED_MODULE_1__["main"].get(`/search/${kw}`).then(({
+    _network__WEBPACK_IMPORTED_MODULE_1__["main"].get(`/search/${kw}?page=${page}`).then(({
       data: {
         shops,
         total
@@ -34258,6 +34261,7 @@ class ListShop extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
         shops,
         total
       });
+      console.log(shops);
     }).catch(e => {
       console.log(e);
       alert('网络错误');
@@ -34291,7 +34295,7 @@ class ListShop extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "img"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "//www.meituan.com/meishi/42465387/"
+      href: `/shop/${shop.ID}`
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "fl-count"
     }, "1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {

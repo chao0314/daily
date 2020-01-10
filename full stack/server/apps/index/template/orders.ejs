@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="<%= STATIC %>/css/base.css">
+    <link rel="stylesheet" href="<%= STATIC %>/css/public.css">
+    <link rel="stylesheet" href="<%= STATIC %>/css/ordermanagement.css">
+    <%- include('./common/com') %>
+</head>
+<body>
+<!--<div id="root"></div>-->
+<div class="orders-container">
+    <div style="float:left">
+        <div class="orders-link-box">
+            <div class="link-group">
+                <p class="title">
+                    <a href="https://www.meituan.com/account/userinfo/">我的美团</a>
+                </p>
+                <p class="title">
+                    <a href="/orders/#status=0">我的订单</a>
+                </p>
+                <ul class="link-ul">
+                    <li>
+                        <a href="/orders/#status=0">全部订单</a>
+                        <i class="icon-right"></i>
+                    </li>
+                    <li>
+                        <a href="/orders/#status=1">待付款</a>
+                        <i class="icon-right"></i>
+                    </li>
+                    <li>
+                        <a href="/orders/#status=2">待使用</a>
+                        <i class="icon-right"></i>
+                    </li>
+                    <li>
+                        <a href="/orders/#status=3">待评价</a>
+                        <span class="num">11</span>
+                        <i class="icon-right"></i>
+                    </li>
+                    <li>
+                        <a href="/orders/#status=4">退款/售后</a>
+                        <i class="icon-right"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="link-group">
+                <p class="title">
+                    <a href="https://www.meituan.com/collections/">我的收藏</a>
+                </p>
+                <ul class="link-ul">
+                    <li>
+                        <a href="https://www.meituan.com/collections/#tab=poi">收藏的商家</a>
+                        <span class="num"></span>
+                        <i class="icon-right"></i>
+                    </li>
+                    <li>
+                        <a href="https://www.meituan.com/collections/#tab=deal">收藏的团购</a>
+                        <span class="num"></span>
+                        <i class="icon-right"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="link-group">
+                <p class="title">
+                    <a href="https://www.meituan.com/vouchers/">抵用券</a>
+                </p>
+                <ul class="link-ul">
+                    <li>
+                        <a href="https://www.meituan.com/vouchers/#tab=available">可用券</a>
+                        <span class="num"></span>
+                        <i class="icon-right"></i>
+                    </li>
+                    <li>
+                        <a href="https://www.meituan.com/vouchers/#tab=unAvailable">失效券</a>
+                        <span class="num"></span>
+                        <i class="icon-right"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="link-group">
+                <p class="title">
+                    <a href="https://www.meituan.com/account/settings">个人信息</a>
+                </p>
+                <ul class="link-ul">
+                    <li>
+                        <a href="https://www.meituan.com/account/settings">账户设置</a>
+                        <span class="num"></span>
+                        <i class="icon-right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="download-app">
+            <div class="qrcode-box">
+                <img src="https://s1.meituan.net/bs/fe-web-meituan/60ac9a0/img/download-qr.png" alt="下载APP">
+                <p class="app-name">美团APP手机版</p>
+                <p class="sl">
+                    <span class="red">1元起</span>
+                    <span class="gary">吃喝玩乐</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="orders-box">
+        <div class="orders">
+            <div class="orders-head">
+                <ul class="orders-ul clearfix">
+                    <li class="active">全部订单</li>
+                    <li class="">待付款</li>
+                    <li class="">待使用</li>
+                    <li class="">待评价<span class="num">11</span></li>
+                    <li class="">退款/售后</li>
+                </ul>
+            </div>
+            <div class="orders-body">
+                <div>
+                    <div class="order-item clearfix">
+                        <div class="order-img">
+                            <a href="http://maoyan.com/order/detail/20973714444/" class="link" target="_blank">
+                                <div>
+                                    <img src="https://p0.meituan.net/moviemachine/f7d2ad70eb79d6d9b8a197713db9b8c41711752.jpg@180w_180h_1e_1c" class="image">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="order-info">
+                            <div class="info-box">
+                                <a href="http://maoyan.com/order/detail/20973714444/" class="link" target="_blank">
+                                    <p class="order-title">复仇者联盟4：终局之战</p>
+                                </a>
+                                <p class="info">影院：新世纪影城(美莲加盟店)</p>
+                                <p class="info">场次：2019-04-28 18:35</p>
+                                <p class="info">数量：2张</p>
+                            </div>
+                        </div>
+                        <div class="order-price">总价：¥116</div>
+                        <div class="order-status">已完成</div>
+                        <div class="order-btn"></div>
+                    </div>
+                </div>
+                <div><p class="no-order-text">对不起，没有需要付款的订单</p></div>
+            </div>
+            <div class="btn-box">
+                <a class="left-arrow iconfont icon-btn_left "><</a>
+                <a class="right-arrow iconfont icon-btn_right ">></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    // ReactDOM.render(
+    //     React.createElement(App, {}),
+    //     document.getElementById('root')
+    // )
+</script>
+
+</html>

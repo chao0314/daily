@@ -50,9 +50,10 @@ router.get('/complete/:kw', async ctx => {
 });
 
 router.get('/search/:kw', async ctx => {
-    let {kw} = ctx.params;
-    let {page} = ctx.query || 1;
+    let {kw = ''} = ctx.params;
+    let {page} = ctx.query;
     kw = kw.trim();
+    page = Number(page) || 1;
     if (kw) ctx.body = await getShopByKeyword(kw, page);
 });
 

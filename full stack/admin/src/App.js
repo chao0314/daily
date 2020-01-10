@@ -1,22 +1,23 @@
-import React, {useEffect, useContext, useState} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {Switch, Route} from "react-router-dom";
 import {ctx} from './store';
 import Login from './pages/Login';
 import Index from "./pages/Index";
 
 export default (props) => {
-  let {history} = props;
-    let {state: {token, tokenExpires}} = useContext(ctx);
+    console.log('app')
+    let {history} = props;
+    let {state: {token}} = useContext(ctx);
+    /* eslint-disable */
     useEffect(() => {
         if (!token) history.push('/login');
     }, []);
-
+    /* eslint-enable */
     return (
+
         <Switch>
-            <Route key={'index'} path={'/index'}  component={Index}>
-            </Route>
-            <Route key={'login'} path={'/login'} component={Login}>
-            </Route>
+            <Route key={'index'} path={'/index'} component={Index}/>
+            <Route key={'login'} path={'/login'} component={Login}/>
         </Switch>
 
 

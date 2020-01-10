@@ -73,7 +73,7 @@
     color: #666;
 }
 .orders-link-box .link-group .link-ul .icon-right {
-    background-image: url(<%=STATIC%>/img/icon-right.png);
+    background-image: url(/images/icon-right.png);
     width: 8px;
     height: 18px;
     display: block;
@@ -126,7 +126,7 @@
 .order-item .order-img div {
     width: 90px;
     height: 90px;
-    background-image: url(<%=STATIC%>/img/214b8411190e874781fe91dd3096236211567.png);
+    background-image: url(/images/214b8411190e874781fe91dd3096236211567.png);
     background-position: 50%;
     background-size: cover;
     background-repeat: no-repeat;
