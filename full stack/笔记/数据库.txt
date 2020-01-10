@@ -40,7 +40,7 @@ DROP USER '用户名'@'主机'
 
 1. mysqldump 命令
 
- >mysqldump 库/表 -u 用户 -p 备份 某个数据库/表
+ >mysqldump 库/表 -u用户 -p 备份 某个数据库/表
  
  >mysqldump --all-databases -u root -p  备份所有数据库
 
@@ -74,7 +74,7 @@ d=`date +"%Y%m%d%H%M"`
 
 2.导出数据库
 
-mysqldump -u root xxx > /mysql_bak/xxx$d.sql
+mysqldump -u root -p xxx > /mysql_bak/xxx$d.sql
 
 3.压缩
 
