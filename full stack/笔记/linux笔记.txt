@@ -8,7 +8,15 @@ yum install 安装
 yum erase 卸载
 yum search 搜索
 yum clean all 清理源缓存
+---------------------------------------------------------------------------------
+#https://www.rarlab.com/  linux 下 rar 文件
+wget https://www.rarlab.com/rar/rarlinux-x64-5.8.0.tar.gz
+tar vxzf rarlinux-x64-5.8.0.tar.gz
+cd rar
+make && make install
 
+rar a url.rar url.txt  压缩
+unrar x url.rar        解压
 -------------------------------------------------------------
 ps -ef | grep xxx  搜索与 xxx 有关的进程
 
@@ -61,6 +69,7 @@ mysql    客户端 命令
 
 
 --------------------------------------------------------------------------------
+//https://developer.aliyun.com/mirror 阿里开元镜像
 minimual 版
 
 一、调整网卡
@@ -124,7 +133,7 @@ TYPE=Ethernet
 BOOTPROTO=static // 启动协议 static固定ip
 IPADDR=192.168.183.130 //ip
 NETMASK=255.255.255.0 //子网掩码
-GATEWAY=192.168.183.2 //网关 不能乱配 需要在vm 查看 ： 编辑->虚拟网络编辑器->NAT设置 / 或 > netstat -rn
+GATEWAY=192.168.183.2 //网关 不能乱配 需要在vm 查看 ： 编辑->虚 拟网络编辑器->NAT设置 / 或 > netstat -rn
 NAME=ens33 //网卡名称
 UUID=7b41febe-a6a8-4f52-929b-d5121981c23d
 DEVICE=ens33
@@ -346,6 +355,7 @@ log-basename=mysqld #log文件名称 在 /var/lib/mysql/ 下
    # mysql  ip:port -uroot -p  输入远程ip和端口 登录远程mysql
 
   *7.导入数据库
+  # 数据库 命令 要跟 分号 ; 结尾！！！
 
 	sql命令：以分号 ；结尾
        > show databases ； 显示数据库
@@ -354,7 +364,7 @@ log-basename=mysqld #log文件名称 在 /var/lib/mysql/ 下
 	
 	> show tables  ；显示表
 	
-	>create database if not exists meituan default character set = 'utf8' ;#创建数据库 并制定字符集
+	>create database if not exists meituan default character set = 'utf8' ;   #创建数据库 并制定字符集
 	
 	
 	
@@ -364,7 +374,7 @@ log-basename=mysqld #log文件名称 在 /var/lib/mysql/ 下
     scp 传输协议  winscp
 
 
-  mysql xxx -uroot -p < /root/xxx.sql  #以root身份登录 将xxx路径下的 sql文件 导入xxx数据库
+  mysql xxx -uroot -p < /root/yyy.sql  #以root身份登录 将yyy sql文件 导入xxx数据库
 
 
 
@@ -407,7 +417,9 @@ nodejs怎么安装
 
   https://github.com/nvm-sh/nvm/blob/master/README.md
 
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+  #curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
    
   # 其实是给 /root/.bashrc 添加脚本
 
