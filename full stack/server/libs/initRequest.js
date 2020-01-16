@@ -6,6 +6,7 @@ const main = getPool('main');
 
 module.exports = async function (ctx, next) {
 
+    console.log("request ip", ctx.ip);
     if (await main.getAsync(`_black_list_${ctx.ip}`)) {
         ctx.body = "访问异常，请等待15分钟";
         return;
@@ -15,7 +16,7 @@ module.exports = async function (ctx, next) {
     if (staticServer.includes(st)) ctx.setDefaultRenderOptions('STATIC', st);
     else {
         st = staticServer[Math.floor(Math.random() * staticServer.length)];
-        console.log(st);
+        console.log("static address", st);
         ctx.cookies.set('st', st);
 
     }
