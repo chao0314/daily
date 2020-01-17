@@ -5,12 +5,13 @@ import Login from './pages/Login';
 import Index from "./pages/Index";
 
 export default (props) => {
-    console.log('app')
+    console.log('app');
     let {history} = props;
     let {state: {token}} = useContext(ctx);
     /* eslint-disable */
     useEffect(() => {
         if (!token) history.push('/login');
+        else history.push('/index');
     }, []);
     /* eslint-enable */
     return (

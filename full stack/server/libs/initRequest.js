@@ -6,7 +6,7 @@ const main = getPool('main');
 
 module.exports = async function (ctx, next) {
 
-    console.log("request ip", ctx.ip);
+    console.log("request ip", ctx.ip, ctx.ips);
     if (await main.getAsync(`_black_list_${ctx.ip}`)) {
         ctx.body = "访问异常，请等待15分钟";
         return;

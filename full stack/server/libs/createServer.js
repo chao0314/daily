@@ -13,6 +13,7 @@ const initRender = require('@/libs/initRender');
 module.exports = async function (config) {
     let {port, entry} = config;
     let app = new Koa();
+    app.proxy = true;//X-Forwarded-For header
     app.context.appConfig = config;
     await initDatabase();
     await initRedis();

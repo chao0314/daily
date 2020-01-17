@@ -1,0 +1,55 @@
+
+ngnix 全局变量
+------------------------------------------------------------------------------------------------------
+$remote_addr		    // 获取客户端ip
+$binary_remote_addr	    // 客户端ip（二进制)
+$remote_port		    // 客户端port，如：50472
+$remote_user		    // 已经经过Auth Basic Module验证的用户名
+$host			        // 请求主机头字段，否则为服务器名称，如:blog.sakmon.com
+$request		        // 用户请求信息，如：GET ?a=1&b=2 HTTP/1.1
+$request_filename   	// 当前请求的文件的路径名，由root或alias和URI request组合而成，如：/2013/81.html
+$status			        // 请求的响应状态码,如:200
+$body_bytes_sent        // 响应时送出的body字节数数量。即使连接中断，这个数据也是精确的,如：40
+$content_length	        // 等于请求行的“Content_Length”的值
+$content_type	        // 等于请求行的“Content_Type”的值
+$http_referer	        // 引用地址
+$http_user_agent        // 客户端agent信息,如：Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.76 Safari/537.36
+$args		            // 与$query_string相同 等于当中URL的参数(GET)，如a=1&b=2，不带问号 ?
+$document_uri	        // 与$uri相同  这个变量指当前的请求URI，不包括任何参数(见$args) 如:/2013/81.html
+$document_root	        // 针对当前请求的根路径设置值
+$hostname	            // 如：centos53.localdomain
+$http_cookie	        // 客户端cookie信息
+$cookie_COOKIE	        // cookie COOKIE变量的值
+$is_args	            // 如果有$args参数，这个变量等于”?”，否则等于”"，空值，如?
+$limit_rate	            // 这个变量可以限制连接速率，0表示不限速
+$query_string	        // 与$args相同 等于当中URL的参数(GET)，如a=1&b=2
+$request_body	        // 记录POST过来的数据信息
+$request_body_file	    // 客户端请求主体信息的临时文件名
+$request_method	        // 客户端请求的动作，通常为GET或POST,如：GET
+$request_uri	        // 包含请求参数的原始URI，不包含主机名，如：/2013/81.html?a=1&b=2
+$scheme		            // HTTP方法（如http，https）,如：http
+$uri			        // 这个变量指当前的请求URI，不包括任何参数(见$args) 如:/2013/81.html
+$request_completion	    // 如果请求结束，设置为OK. 当请求未结束或如果该请求不是请求链串的最后一个时，为空(Empty)，如：OK
+$server_protocol	    // 请求使用的协议，通常是HTTP/1.0或HTTP/1.1，如：HTTP/1.1
+$server_addr		    // 服务器IP地址，在完成一次系统调用后可以确定这个值
+$server_name		    // 服务器名称，如：blog.sakmon.com
+$server_port		    // 请求到达服务器的端口号,如：80
+
+$http_x_forwarded_for   //如果网站使用了前端代理或负载均衡的话使用 引用X-Forwarded-For时要这样$http_x_forwarded_for
+
+-------------------------------------------------------------------------------------
+location 匹配规则：
+= : 表示精确匹配后面的url
+~ : 表示正则匹配，但是区分大小写
+~* : 正则匹配，不区分大小写
+^~ : 表示普通字符匹配，如果该选项匹配，只匹配该选项，不匹配别的选项，一般用来匹配目录
+@ : "@" 定义一个命名的 location，使用在内部定向时，例如 error_page
+
+***
+*** https://www.soamazing.cn/中文/路径        ×
+*** https://www.soamazing.cn/chinese/path    √
+*** nginx uri 路径中不要有中文 一是不专业不好看， 最重要的是如果不处理字符集会 产生乱码 ，nginx 转发失败！！！
+*** 需要使用中文的 可以在query 参数中携带，$args
+***
+
+------------------------------------------------------------------------------------------

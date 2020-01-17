@@ -18,6 +18,8 @@ make && make install
 rar a url.rar url.txt  压缩
 unrar x url.rar        解压
 -------------------------------------------------------------
+ls -l 查看文件以及权限
+
 ps -ef | grep xxx  搜索与 xxx 有关的进程
 
 find /xxx -name init   (精准搜索，名字必须为 init 才能搜索的到)
@@ -203,6 +205,20 @@ yum update nginx
    worker_processes  auto;            # 根据系统性能自动决定工作进程数量
    sendfile          on;              #绕过cpu直接向网卡发送数据 性能高
    gzip              on;              #开启gzip压缩
+   gzip_min_length   1;               #开启gzip压缩文件的最小值 1k
+
+   gzip_types               application/javascript      开启gzip压缩的文件类型 特别：不要压缩图片 无意义甚至适得其反，因为需要携带gzip压缩信息。
+                            application/json
+                            application/xhtml+xml
+                            application/xml
+                            text/css
+                            text/plain
+                    	    text/javascript;
+
+    #代理请求头 获取真实IP
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Real-Port $remote_port;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
   2.重载配置
 

@@ -5,6 +5,7 @@ import IndexGoods from "../components/Index/IndexGoods";
 
 const main = Axios.create({
     baseURL: 'http://localhost:8083',
+    // baseURL: 'https://www.soamazing.cn/api',
     headers: {
         token: localStorage.getItem('token')
     }

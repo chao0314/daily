@@ -4,7 +4,9 @@
  
 创建：
 
-CREATE USER '用户名'@'主机' [ IDENTIFIED ] BY [ PASSWORD ] 
+CREATE USER '用户名'@'主机'  [IDENTIFIED ] BY [ PASSWORD ]
+
+
 
 删除：
 
@@ -19,7 +21,11 @@ DROP USER '用户名'@'主机'
 
 	授予：
 	
-	GRANT 权限 ON 库/表/列 TO '用户名'@'主机' IDENTIFIED BY '密码' [WITH GRANT OPTION];
+	GRANT 权限 ON 库/表/列/  *.*（所有库所有表） TO '用户名'@'主机' IDENTIFIED BY '密码' [WITH GRANT OPTION];
+
+	GRANT  select , insert, update, create, drop  on  vtdc.employee  to  joe@'10.163.255.87'  identified  by '123';
+
+	> flush privileges; 更新权限
 	
 	权限：ALL、SELECT、SELECT,UPDATE
   库.表：库.*、*.*

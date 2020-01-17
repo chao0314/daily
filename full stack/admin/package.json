@@ -34,5 +34,6 @@
   "devDependencies": {
     "antd": "^3.26.3",
     "react-router-dom": "^5.1.2"
-  }
+  },
+  "homepage": "https://www.soamazing.cn/admin"
 }
