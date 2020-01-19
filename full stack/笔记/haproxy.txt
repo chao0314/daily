@@ -1,0 +1,87 @@
+虚拟机配网卡 添加双网卡： 物理服务器或云服务器基本都是双网卡
+
+虚拟机 -> 硬件 -> 添加 -> 网络适配器 -> NAT模式 
+
+运行haproxy的主机：
+
+内网网卡配置：
+
+> cd  /etc/sysconfig/network-scripts/
+
+> vim  /etc/sysconfig/network-scripts/fcfg-ens37 (具体名字依据vm)
+
+具体内容：
+
+NAME=ens37 //网卡名称
+TYPE=Ethernet
+BOOTPROTO=static // 启动协议 static固定ip
+IPADDR=192.168.1.1 //内网ip
+NETMASK=255.255.255.0 //子网掩码
+BROADCAST= 192.168.1.255 //内网广播地址 通常广播地址是255
+DEVICE=ens37  //网卡硬件设备
+ONBOOT=yes //网络随机启动
+
+------------------------------------------------------------------------
+
+haproxy cluster 的其他服务器 :
+
+               haproxy 
+               /		\	
+              /    	 \
+					server1   server2
+					
+双网卡 一个外网ip 一个内网ip，内网ip用来给集群内的服务做网关用，内网服务集群统一对外接口。
+
+GATEWAY=192.168.1.1 // 各后端服务的网关
+
+
+------------------------------------------------------------------------------------
+
+主服务装 haproxy  haproxy -f haproxy.cfg 检查配置文件 
+
+*** 多backend配置
+
+> yum install haproxy
+
+配置 注意haproxy的监听端口不要和nginx冲突，可以不装在一台机器。
+
+>vim /etc/haproxy/haproxy.cfg
+
+global  全局配置   数据库 服务 mode tcp
+
+stats socket 通过这个开启的socket可以随时监听 haproxy 状态
+
+frontebd xxx  名字  *:80或443
+	
+	mode http/https 用户访问的模式
+	default_backend  app
+
+
+backend  app 名字
+	mode http  haproxy 访问集群服务的模式 内网http 即可
+	balance     leastconn  负载均衡的算法
+	#option httpchk HEAD / HTTP/1.0 （新版本默认了？不用加）  以http 1.0 短连接高性能 只发head的方式 请求根路径 / 检查 集群服务器是否持续存活 
+  server  app1 192.168.1.2:80 check  check 表示需要检查
+  server  app2 192.168.1.3:80 check
+
+
+启动  haproxy -D -f haproxy.cfg
+
+> curl localhost/index.html 检查
+--------------------------------------------
+负载均衡算法
+  roundrobin		轮询	1,2,3,1,2,3,1, ...
+    【简单】
+
+  leastconn                      最小连接——考虑服务器负载（性能越好的服务器，处理东西越快，身上的连接越少）
+     【负载尽量均匀】
+
+  source                           每个客户端永远连接同一个服务器
+     【数据尽量没有断层】
+
+
+结论：最优的leastconn
+
+
+
+
