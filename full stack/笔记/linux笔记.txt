@@ -44,7 +44,13 @@ find /xxx -name init??? (模糊搜索，？ 表示单个字符，即搜索到 in
 
 多与管道符 | 结合使用
 
-kill -9 pid 杀死进程
+pkill 进程 按进程名关闭进程
+
+kill -9 pid 进程id关闭进程
+
+update-rc.d  -f xxxxx remove 删除xxx随机启动
+
+update-rc.d  xxxxx remove ？？？
 
 cat xxx 窗口输出
 
@@ -95,11 +101,11 @@ vi /etc/sysconfig/network-scripts/ifcfg-ens33(具体名字依据vm)
 
 二、用putty连接服务器(ssh客户端)
 
-  ps putty 选中及复制
+  ps1 putty 选中及复制
 
-  ps putty 时常断开 connection 里的keep session active a设置一个时间 例如 30 单位ms 心跳包检测
+  ps2 putty 时常断开 connection 里的keep session active a设置一个时间 例如 30 单位ms 心跳包检测
 
-  ps 改动东西以后要 save 保存一下 之后才会仍有用
+  ps3 改动东西以后要 save 保存一下 之后才会仍有用
 
 三、系统升级
 
@@ -135,7 +141,7 @@ TYPE=Ethernet
 BOOTPROTO=static // 启动协议 static固定ip
 IPADDR=192.168.183.130 //ip
 NETMASK=255.255.255.0 //子网掩码
-GATEWAY=192.168.183.2 //网关 不能乱配 需要在vm 查看 ： 编辑->虚 拟网络编辑器->NAT设置 / 或 > netstat -rn
+GATEWAY=192.168.183.2 //网关 不能乱配 需要在vm 查看 ： 编辑->虚拟网络编辑器->NAT设置 / 或 > netstat -rn
 NAME=ens33 //网卡名称
 UUID=7b41febe-a6a8-4f52-929b-d5121981c23d
 DEVICE=ens33
@@ -190,6 +196,8 @@ yum update nginx
  1.添加规则 防火墙
 
     添加端口（http默认80）   80/tcp协议链接       常驻 重启仍在
+
+ > netstat  -anp  |grep xxx端口号  查看某个端口是否被占用 listen 便是被占用
 
  > firewall-cmd --add-port=80/tcp --permanent
 
@@ -371,6 +379,7 @@ log-basename=mysqld #log文件名称 在 /var/lib/mysql/ 下
    Y
 
   Reload privilege tables now?
+  Reload privilege tables now
    Y
 
   6.登录到数据库

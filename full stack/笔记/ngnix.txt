@@ -53,3 +53,39 @@ location 匹配规则：
 ***
 
 ------------------------------------------------------------------------------------------
+
+Nginx配置upstream实现负载均衡
+
+Nginx能够配置代理多台服务器。当一台服务器宕机之后。仍能保持系统可用。详细配置步骤例如以下：
+
+1. 在http节点下，加入upstream节点。
+
+upstream linuxidc {
+      server 10.0.6.108:7080;
+      server 10.0.0.85:8980;
+}
+
+2.  将server节点下的location节点中的proxy_pass配置为：http:// + upstream名称，即“http://linuxidc”.
+
+location / {
+            root  html;
+            index  index.html index.htm;
+            proxy_pass http://linuxidc;
+}
+---------------------------------------------------------------------------------------
+
+nginx 免费版 与haproxy load balance 的区别:
+
+1  都支持多进程模型，haproxy从1.8之后，添加了多线程的模式，nginx 是web 服务器兼做负载 但性能也很高。
+ haproxy 是出发点是负载 http 模式性能很高，https 因为开启了加解密，所有其对转发性能的优化被抵消很多，所以适合内网服务。
+
+2 haproxy 有一个状态统计页面  官方支持会话保持、健康检查等。
+
+
+3 Haproxy的优点其实是转发性能稍高，因为haproxy追求zero copy的forward流程，所以代码都倾向于优化在这一点上。
+但是这个优势现在被广泛的TLS/SSL应用抹平了，对比0 copy节省的时间来说加解密的消耗的性能占绝大多数，所以haproxy基本上在现在的广泛SSL环境下没有什么优势了。
+除非想用纯HTTP，而且还想使用比较复杂的基于HTTP头部的Load Balance功能，那么Haproxy是个好选择，否则只是单纯LB的话，
+LVS性能其实更更高，毕竟运行在Kernel里面。
+
+
+从代码层面来说，Nginx的结构化代码和模块化都比Haproxy好太多

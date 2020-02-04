@@ -15,22 +15,27 @@
 NAME=ens37 //网卡名称
 TYPE=Ethernet
 BOOTPROTO=static // 启动协议 static固定ip
-IPADDR=192.168.1.1 //内网ip
+IPADDR=192.168.183.90 //内网ip 注意ip网段
 NETMASK=255.255.255.0 //子网掩码
 BROADCAST= 192.168.1.255 //内网广播地址 通常广播地址是255
 DEVICE=ens37  //网卡硬件设备
 ONBOOT=yes //网络随机启动
+----------------------------------------------------------------------
+设置DNS：
+vi /etc/resolv.conf
+
+ nameserver  网关 //将网关设为dns  共有 dns 114.114.114.114
 
 ------------------------------------------------------------------------
 
 haproxy cluster 的其他服务器 :
 
                haproxy 
-               /		\	
-              /    	 \
-					server1   server2
+               /	 \
+              /    	  \
+		  server1   server2
 					
-双网卡 一个外网ip 一个内网ip，内网ip用来给集群内的服务做网关用，内网服务集群统一对外接口。
+负载服务器配双网卡 一个外网ip 一个内网ip，内网ip用来给集群内的服务做网关用，内网服务集群统一对外接口。
 
 GATEWAY=192.168.1.1 // 各后端服务的网关
 
@@ -49,9 +54,16 @@ GATEWAY=192.168.1.1 // 各后端服务的网关
 
 global  全局配置   数据库 服务 mode tcp
 
-stats socket 通过这个开启的socket可以随时监听 haproxy 状态
+例如：
+  option forwardfor   except 127.0.0.0/8 # 除了  127.0.0.0 都转发ip
 
-frontebd xxx  名字  *:80或443
+如果服务器上的应用程序想记录发起请求的客户端的IP地址，需要在HAProxy上配置此选项,
+
+会把客户端的IP信息发送给服务器，在HTTP请求中添加"X-Forwarded-For"字段。
+
+  stats socket 通过这个开启的socket可以随时监听 haproxy 状态
+
+frontend xxx  名字  *:80或443
 	
 	mode http/https 用户访问的模式
 	default_backend  app
