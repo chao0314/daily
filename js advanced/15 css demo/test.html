@@ -57,6 +57,67 @@
     let oHeart = document.querySelector("#heart");
     oHeart.addEventListener("mouseleave", function () {
         this.style.transition = "transform ease 1s";
-    })
+    });
+
+
+    // let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    //
+    // function getByStep(arr, n) {
+    //     return arr.filter((v, i) => i % n === 0)
+    // }
+    //
+    // console.log(getByStep(arr, 2));
+    //
+    //
+    // console.log(Array(8))
+    // console.log(Array.of(8))
+    //
+    // let iterator = [0, 2, 3];
+    // let _lastVelements = [1, 2, 3];
+    // let eles = [];
+    //
+    // for (let i = 0; i < iterator.length; i++) {
+    //
+    //     let n = _lastVelements.findIndex(v => iterator[i] === v);
+    //     console.log("findIndex", n);
+    //     if (n !== -1) {
+    //         eles[i] = _lastVelements[n];
+    //         _lastVelements.splice(n, 1);
+    //     } else
+    //         eles[i] = null;
+    // }
+    // console.log(eles)
+    //
+
+    class One {
+        constructor() {
+            this.info = [81, 18];
+        }
+
+        say() {
+            this.info.forEach((v, i) => {
+                console.log(this);
+            })
+        }
+    }
+
+    class Two extends One{
+        constructor() {
+            super();
+            this.info = [1, 2, 3];
+        }
+    }
+
+    console.log(Two.prototype)
+
+    // let one = new One();
+    // let two = new Two();
+    // one.say();
+    // one.say.call(two);
+
+    window.onbeforeunload = function () {
+        alert("123")
+       localStorage.setItem("123","123")
+    }
 </script>
 </html>
