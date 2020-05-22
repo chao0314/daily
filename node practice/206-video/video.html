@@ -6,30 +6,17 @@
           content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
-    <title>files</title>
+    <title>Title</title>
     <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        html, body {
-            height: 100%;
-        }
-
-        ul {
-
-            background: url("./static/images/1.jpg");
-            height: 100%;
-            padding: 20px;
+        video {
+            display: block;
+            width: 500px;
+            height: 400px;
+            margin: auto;
         }
     </style>
 </head>
 <body>
-<ul>
-    <%dirs.forEach(item=>{%>
-    <li><a href="<%=parent%>/<%=item%>"><%=item%></a></li>
-    <%})%>
-
-</ul>
+<video src="./static/show.mp4" controls="controls"></video>
 </body>
 </html>
