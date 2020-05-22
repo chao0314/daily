@@ -1,20 +1,20 @@
 class Layer {
-    constructor(path, method, handler, options) {
+    constructor(path, method, handler, options={}) {
         this.path = path;
         this.method = method;
+        this.prefix = options.prefix || '';
         this.stack = Array.isArray(handler) ? handler : [handler];
     }
 
     match(path, method) {
 
-        return this.path === path && this.method === method;
+        return this.prefix + this.path === path && this.method === method;
     }
 
     setPrefix(prefix) {
-
-        this.path = prefix + this.path;
+        this.prefix = prefix;
     }
 
 }
 
-exports = module.exports = Layer
+exports = module.exports = Layer;

@@ -18,7 +18,10 @@ class Application extends EventEmitter {
     }
 
     handler(req, res) {
-        console.log('handler---------')
+        //temporary
+        if (req.url.includes('/favicon.ico'))  return res.end('');
+        console.log('handler---------', req.url);
+
 
         this.context = new Context(req, res);
         this.compose(this.middlewares, this.context).then(() => {
@@ -63,7 +66,7 @@ class Application extends EventEmitter {
             } else return Promise.resolve();
 
 
-        }
+        };
 
         return dispatch(0);
     }

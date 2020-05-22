@@ -13,6 +13,11 @@ class Request {
     get pathname() {
         return this.oUrl.pathname;
     }
+
+    get method(){
+        return this.req.method.toLocaleLowerCase();
+    }
 }
+
 
 exports = module.exports = Request;

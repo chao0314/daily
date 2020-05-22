@@ -2,9 +2,11 @@ const Layer = require('./layer');
 
 class Router {
 
-    constructor() {
+    constructor(options = {}) {
         this.layers = [];
         this.children = [];
+        this.prefix = options.prefix || '';
+
     }
 
     get(path, handler) {
@@ -17,20 +19,29 @@ class Router {
 
     use(path, middleware) {
 
+        if (middleware.router instanceof Router) {
+            middleware.router.setPrefix(path);
+            this.children.push(middleware);
+        } else {
+            this.get(path, middleware);
+            this.post(path, middleware);
+        }
 
     }
 
     routes() {
 
-        return (ctx, next) => {
+        const dispatch = async (ctx, next) => {
 
             let {url, method} = ctx;
-            console.log(url, method);
+            console.log("router---",url, method);
             let route = null;
 
             for (let i = 0; i < this.layers.length; i++) {
 
                 let cur = this.layers[i];
+
+                if (this.prefix) cur.setPrefix(this.prefix);
 
                 if (cur.match(url, method)) {
                     route = cur;
@@ -42,15 +53,31 @@ class Router {
                 return route.stack.forEach(handler => handler(ctx, next));
             }
 
-            if(this.children.length >0){
+            if (this.children.length > 0) {
 
+                for (let j = 0; j < this.children.length; j++) {
+                    let child = this.children[j];
+                    if (url.startsWith(child.router.prefix)) {
+                        return await child(ctx, next);
+                    }
+                }
 
             }
 
+            console.log('go next middleware');
+            //该路由中间件包括嵌套路由中间件都没有匹配到 进入下一个中间件
+            await next();
 
-        }
+        };
+
+        dispatch.router = this;
+        return dispatch;
 
 
+    }
+
+    setPrefix(prefix) {
+        this.prefix = prefix;
     }
 }
 

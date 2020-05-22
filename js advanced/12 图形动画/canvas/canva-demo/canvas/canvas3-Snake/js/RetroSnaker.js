@@ -75,7 +75,7 @@ var Game = (()=> {
 	 * 	- d: the diameter of the circle
 	 *	- fillColor: color filled the circle
 	 *	 this function draw the elements in the snake body
-	 * and the food
+	 * and the data
 	 ***************************************************/
 	function drawCircle(x, y, d, fillColor) {
 		ctx.beginPath();
@@ -89,10 +89,10 @@ var Game = (()=> {
 	 *	- width: the width of the canvas
 	 *	- height: the height of the canvas
 	 *	- colorA: color of the snake
-	 *	- colorB: color of the food
+	 *	- colorB: color of the data
 	 *	this function add the "keyup" eventlistener in the
-	 * DOM and init the food & snake. Init means  to decide
-	 * the initial food position and the snake position.
+	 * DOM and init the data & snake. Init means  to decide
+	 * the initial data position and the snake position.
 	 * NOT DRAWING SNAKE & FOOD ON THE CANVAS
 	 *
 	 ***************************************************/
@@ -151,7 +151,7 @@ var Game = (()=> {
 	}
 	/***************************************************
 	 * render()
-	 * this function draw the food and the snake on the
+	 * this function draw the data and the snake on the
 	 * canvas
 	 ***************************************************/
 	function render(arr) {
@@ -159,7 +159,7 @@ var Game = (()=> {
    	    	var _x = arr[0] * d,
     	 	 	_y = arr[1] * d;
  	  		drawCircle(_x, _y, d, food.color);
-       		//console.log("Render food Successed");
+       		//console.log("Render data Successed");
    		} else if (typeof arr[0] == "object") {
    			arr.forEach((pos) => {
 				var _x = pos[0] * d,
@@ -229,10 +229,10 @@ var Game = (()=> {
 	 *		yCount(number): number of balls each col can hold
 	 *  - directionChange: Dir-change -> code(number)
 	 *  - rendering: Game-rendering -> object:
-	 *		f: 2D array of food positions
+	 *		f: 2D array of data positions
 	 *			[0]: x-coordinate
 	 *			[1]: y-coordinate
-	 *		s: array of food position
+	 *		s: array of data position
 	 *		code: Arrow key hit by users
 	 *	- getScore: Get-score -> score(number)
 	 *  - over: Game-over ->undefined
@@ -262,13 +262,13 @@ var Game = (()=> {
 		}
 	})();
 	/***************************************************
-	 * food:
-	 * - pos(array): the positions of the food
-	 * - init(function): init the food
-	 * - initCheck: check whether the food was initialized
+	 * data:
+	 * - pos(array): the positions of the data
+	 * - init(function): init the data
+	 * - initCheck: check whether the data was initialized
 	 * inside the snake's body and reinitialized it
 	 * - collideCheck(function): check whether the snake
-	 * hit the food
+	 * hit the data
 	 ***************************************************/
 	var food = {
 		pos: [],

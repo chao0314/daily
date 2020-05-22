@@ -29,7 +29,7 @@ class Context {
 
     get method() {
 
-        return this.res.method;
+        return this.request.method;
     }
 
 }
