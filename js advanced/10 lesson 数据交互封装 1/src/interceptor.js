@@ -1,4 +1,4 @@
-import {isObj,assert} from "./util";
+import {isObj, assert} from "./util";
 
 export default class {
     constructor() {
@@ -10,8 +10,8 @@ export default class {
         assert(cb instanceof Function);
         assert(!err || (err && err instanceof Function));
         if (cb && err) return [this.interceptors.push(cb) - 1, this.errorIntercepotrs.push(err) - 1];
-        else if (cb) return this.interceptors.push(cb) - 1;
-        else if (err) return this.errorIntercepotrs.push(err) - 1;
+        else if (cb) return [this.interceptors.push(cb) - 1];
+        else if (err) return [null, this.errorIntercepotrs.push(err) - 1];
     }
 
     async iterator(config, type) {

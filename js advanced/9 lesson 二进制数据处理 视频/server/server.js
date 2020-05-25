@@ -32,13 +32,17 @@ router.post("/upload", async ctx => {
 router.get("/video/:name", async ctx => {
     const {name} = ctx.params;
     const {block = 0} = ctx.query;
-    console.log(ctx.headers["if-modified-since"]);
-    console.log("---block", block);
+    const {"if-modified-since": clientTime} = ctx.headers;
     let handle;
     try {
         handle = await fsp.open(path.resolve(__dirname, 'video', name), "r");
-        let {buffer, bytesRead} = await handle.read(Buffer.alloc(SIZE), 0, SIZE, SIZE * block);
         let stat = await handle.stat();
+        if (Math.floor(Number(clientTime)) === Math.floor(stat.mtimeMs)) {
+            ctx.status = 304;
+            return;
+        }
+        let {buffer, bytesRead} = await handle.read(Buffer.alloc(SIZE), 0, SIZE, SIZE * block);
+
         if (bytesRead < SIZE) {
             let temp = Buffer.alloc(bytesRead);
             temp.fill(buffer, 0, bytesRead);
@@ -47,7 +51,7 @@ router.get("/video/:name", async ctx => {
         ctx.set({
             "Content-Type": "video/mp4",
             "Content-length": bytesRead,
-            "Last-Modified":stat.mtimeMs,
+            "Last-Modified": stat.mtimeMs,
             "Video-Length": stat.size,
             "Video-Block": SIZE
         });
@@ -64,13 +68,20 @@ router.get("/video/:name", async ctx => {
 
 router.get("/img/:name", async ctx => {
     const {name} = ctx.params;
+    const {"if-modified-since": clientTime} = ctx.headers;
     let handle;
     try {
         handle = await fsp.open(path.resolve(__dirname, "img", name), "r");
+        let stat = await handle.stat();
+        if (Math.floor(Number(clientTime)) === Math.floor(stat.mtimeMs)) {
+            ctx.status = 304;
+            return;
+        }
         let data = await handle.readFile();
         ctx.status = 200;
         ctx.set({
             "content-type": "image/jpeg",
+            "Last-Modified": stat.mtimeMs,
             "content-length": handle.stat().size
         });
         ctx.body = data;

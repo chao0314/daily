@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>file</title>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+</head>
+<body>
+<div>
+    <input type="file">
+    <p>
+        <span></span>%
+    </p>
+    <button type="button">merge</button>
+    <div>
+        <img src="" alt="上传展示">
+    </div>
+</div>
+</body>
+<script>
+
+    const $ = document.querySelector.bind(document);
+    const oFile = $('input');
+    const oSpan = $('p span');
+    const oButton = $('button');
+    const oImg = $('img');
+    const NUM = 5;
+    let name;
+
+    async function request(data, cb) {
+        try {
+            let result = await axios.post('http://localhost:3000/api/upload', data);
+            cb && cb instanceof Function && cb(result);
+            return result;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    oFile.addEventListener('change', (e) => {
+        let aData = [];
+        let file = oFile.files[0];
+        let chunk = Math.floor(file.size / NUM);
+        let chunkIndex = 0;
+        name = file.name;
+        for (let i = 0; i < NUM; i++) {
+            let partData = new FormData();
+            let partFile = (i === NUM - 1) ? file.slice(chunkIndex) : file.slice(chunkIndex, chunkIndex + chunk);
+            partData.append(`chunk`, partFile);
+            partData.append('filename', `${i}-${file.name}`);
+            chunkIndex += chunk;
+            aData.push(partData);
+        }
+
+        Promise.all(aData.map(data => request(data, () => {
+            oSpan.innerHTML = Number(oSpan.innerHTML) + 100 / NUM;
+        }))).then(result => {
+            console.log('all response data  is ', result);
+            // alert('上传完成');
+        }).catch(e => {
+            alert('上传失败');
+        });
+
+    });
+    oButton.addEventListener('click', (e) => {
+        axios.get('http://localhost:3000/api/merge', {params: {name}}).then(res => {
+            console.log('merge success', res);
+            oImg.src = `http://localhost:3000/` + res.data;
+        })
+    })
+</script>
+</html>

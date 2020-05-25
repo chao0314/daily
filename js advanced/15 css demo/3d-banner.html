@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        html, body, ul, li, span {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 300px;
+            height: 100px;
+            margin: 300px auto;
+            list-style: none;
+            position: relative;
+            transform-style: preserve-3d;
+            /*perspective: 700px;*/
+            /*transform: rotate3d(1, 1, 0, -45deg);*/
+            display: flex;
+        }
+
+        ul > li {
+            width: 20%;
+            height: 100%;
+            transform-style: preserve-3d;
+            /*perspective: 700px;*/
+            position: relative;
+        }
+
+        li > span {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        li > span:nth-of-type(1) {
+            background: red;
+            transform: translateZ(-50px) rotateX(180deg);
+        }
+
+        li > span:nth-of-type(2) {
+            background: orange;
+            transform: translateY(50px) rotateX(-90deg);
+        }
+
+        li > span:nth-of-type(3) {
+            background: yellow;
+            transform: translateY(-50px) rotateX(90deg);
+        }
+
+        li > span:nth-of-type(4) {
+            background: green;
+            transform: translateZ(50px);
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+<ul>
+    <li><span>11</span><span>12</span><span>13</span><span>14</span></li>
+    <li><span>21</span><span>22</span><span>23</span><span>24</span></li>
+    <li><span>31</span><span>32</span><span>33</span><span>34</span></li>
+    <li><span>41</span><span>42</span><span>43</span><span>44</span></li>
+    <li><span>51</span><span>52</span><span>53</span><span>54</span></li>
+</ul>
+
+</body>
+
+<script>
+
+    window.addEventListener('DOMContentLoaded', function () {
+
+        const $ = document.querySelectorAll.bind(document);
+        const aLi = Array.from($('li'));
+        const flag = true;
+        let num = 0;
+        document.addEventListener('click', function () {
+
+            if (flag) {
+                num++;
+                aLi.forEach((li,i) => {
+                    // li.style.transition = `transform 0.5s ease `;
+                    // li.style.transform = `rotateX(-${90 * num}deg)`;
+                    // const aSpan = Array.from(li.querySelectorAll('span'));
+
+                    // li.forEach((span, i) => {
+
+                        li.style.transition = `transform 0.5s ease ${0.2 * i}s`;
+                        li.style.transform = `rotateX(-${90 * num}deg)`;
+                    // })
+
+                })
+            }
+
+        }, false)
+
+    }, false)
+</script>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "13-file-upload-slice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "fs-promise": "^2.0.3",
+    "koa": "^2.11.0",
+    "koa-better-body": "^3.3.4",
+    "koa-convert": "^1.2.0",
+    "koa-router": "^8.0.7",
+    "koa-static": "^5.0.0"
+  }
+}

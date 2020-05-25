@@ -3,19 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/markdown-navigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/markdown-navigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/markdown-navigator/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/full stack/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/canva-demo/canvas/canvas3-Snake/js/RetroSnaker.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/canva-demo/canvas/canvas3-Snake/js/RetroSnaker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node practice/koa-demo/src/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/node practice/koa-demo/src/application.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node practice/koa-demo/src/context.js" beforeDir="false" afterPath="$PROJECT_DIR$/node practice/koa-demo/src/context.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node practice/koa-demo/src/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/node practice/koa-demo/src/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node practice/koa-demo/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/node practice/koa-demo/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node practice/koa-router/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node practice/koa-router/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node practice/koa-router/src/layer.js" beforeDir="false" afterPath="$PROJECT_DIR$/node practice/koa-router/src/layer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node practice/koa-router/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/node practice/koa-router/src/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/src/interceptor.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/src/interceptor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/img-card.html" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/img-card.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/mp4-util" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/mp4-util" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/static/video.html" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/static/video.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/video/video.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/video/video.mp4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Children.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Children.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Other.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Other.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopSelect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/pages/goods.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/pages/goods.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/store/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +56,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -92,18 +95,6 @@
         <item itemvalue="Node.js.test.js" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -204,9 +195,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -225,6 +214,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="409" y="163" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590154621273">

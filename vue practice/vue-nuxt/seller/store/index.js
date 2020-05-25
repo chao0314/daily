@@ -98,7 +98,27 @@ export const actions = {
       }
     });
     return data;
-  }
+  },
 
+  async getShopGoods(store, payload) {
+    let {data: {data}} = await this.$axios.get('/item/list', {params: {shop: payload}});
+    return data;
+  },
+  async incrementGoods(store, payload) {
+    let {data} = await this.$axios.post('/item', payload, {
+      params: {
+        shop: payload.shopID,
+      }
+    });
+    console.log("increment goods", data);
+  },
+  async editGoods(store, payload) {
+    let {data} = await this.$axios.post('/item/'+payload.ID, payload, {
+      params: {
+        shop: payload.shopID,
+      }
+    });
+    console.log("edit goods", data);
+  }
 };
 export const getters = {};

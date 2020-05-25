@@ -57,7 +57,7 @@
     </style>
 </head>
 <body>
-<video id="video" poster="./picture.jpeg" controls></video>
+<video id="video" poster="./picture.jpeg" muted></video>
 <div id="control">
     <ul>
         <li id="pause">
@@ -106,8 +106,14 @@
             let decrease = $('#decrease');
             let mute = $('#mute');
             let fullscreen = $('#fullscreen');
-            const videoCode = `video/mp4; codecs="avc1.420020,mp4a.40.2";`;
+            // const videoCode = 'video/mp4; codecs="avc1.640028, mp4a.40.2"';
+            // const url = "http://localhost:3000/video/video.mp4";
+
+            const videoCode = 'video/mp4; codecs="avc1.64001f, mp4a.40.2"';
             const url = "http://localhost:3000/video/video.mp4";
+            const cache = [];
+            const removeCache = [];
+
 
             function refreshProgress(ele, current, total) {
                 assert(typeof current === 'number');
@@ -117,6 +123,7 @@
                 else if (current && total) cssText = `${100 * current / total}%`;
                 ele.style.width = cssText;
             }
+
 
             pause.addEventListener("click", function (e) {
                 if (video.paused || video.ended) video.play();
@@ -153,7 +160,7 @@
 
             if (window.MediaSource && MediaSource.isTypeSupported(videoCode)) {
                 let ms = new MediaSource();
-                let buffer;
+                let buffer, change;
                 video.src = URL.createObjectURL(ms);
                 ms.addEventListener("sourceopen", async function () {
                     buffer = ms.addSourceBuffer(videoCode);
@@ -161,11 +168,19 @@
                     refreshProgress(loaded, video.videoBlock, video.videoLength);
                 });
                 video.addEventListener("timeupdate", async function () {
-                    // console.log(this.buffered.start(0), this.buffered.end(0), this.currentTime);
+                    console.log("timeupdate");
+                    if (change) return;
                     let max = Math.ceil(video.videoLength / video.videoBlock);
-                    if ((this.buffered.end(0) - this.currentTime) < 60 && max - 1 > video.videoIndex) {
+                    if (this.buffered.length > 0) {
+                        //todo 小于一分钟加载
+                        if ((this.buffered.end(0) - this.currentTime) < 60 && max - 1 > video.videoIndex) {
+                            loadSource(url, buffer, video.videoIndex + 1);
+                        }
+
+                    } else if (max - 1 > video.videoIndex) {
                         loadSource(url, buffer, video.videoIndex + 1);
                     }
+                    // todo 刷新进度条
                     refreshProgress(played, this.currentTime / this.duration);
                     if (max - 1 > video.videoIndex) {
                         refreshProgress(loaded, video.videoBlock * (video.videoIndex + 1), video.videoLength);
@@ -179,32 +194,48 @@
                 progress.addEventListener("click", async function (e) {
                     let scale = e.offsetX / progress.offsetWidth;
                     let time = video.duration * scale;
-                    let start, end, noRange = true;
-                    if (buffer.buffered.length !== 0) {
-                        start = buffer.buffered.start(0);
-                        end = buffer.buffered.end(0);
-                        noRange = false;
-                    }
-
-                    video.currentTime = time;
+                    let block = Math.floor(scale * Math.ceil(video.videoLength / video.videoBlock));
+                    let start, end;
+                    start = buffer.buffered.start(0);
+                    end = buffer.buffered.end(0);
+                    console.log(time, start, end);
                     //向前 点进度条
-                    if (noRange || time < start) {
-                        buffer.remove(buffer.buffered.start(0), buffer.buffered.end(0));
-                        let block = Math.floor(scale * Math.ceil(video.videoLength / video.videoBlock));
-                        await loadSource(url, buffer, block);
+                    if (time < start) {
+
+                        change = true;
+                        ms.endOfStream();
+                        URL.revokeObjectURL(video.src);
+                        ms = new MediaSource();
+                        video.src = URL.createObjectURL(ms);
+                        ms.addEventListener("sourceopen", async function () {
+                            console.log("sourceopen====");
+                            video.currentTime = time;
+                            buffer = ms.addSourceBuffer(videoCode);
+                            for (let i = 0; i <= block; i++) {
+                                await loadSource(url, buffer, i);
+                            }
+                            refreshProgress(played, video.currentTime / video.duration);
+                            refreshProgress(loaded, video.videoBlock, video.videoLength);
+                            change = false;
+                        });
+
 
                     } else if (time > end) {
                         //向后 点进度条
+                        video.currentTime = time;
                         while (time > video.buffered.end(0)) {
                             await loadSource(url, buffer, video.videoIndex + 1);
                         }
                     }
 
 
+                    refreshProgress(played, video.currentTime / video.duration);
+
+
                 });
 
                 function loadSource(url, buffer, block = 0) {
-                    console.log("load----", block);
+
                     return new Promise(function (resolve, reject) {
                         assert(typeof url === "string");
                         const xhr = new XMLHttpRequest();
@@ -217,20 +248,29 @@
                                     video.videoIndex = block;
                                     video.videoLength = Number(this.getResponseHeader("Video-Length"));
                                     video.videoBlock = Number(this.getResponseHeader("Video-Block"));
-
-                                    buffer.addEventListener("updateend", function () {
+                                    buffer.onupdateend = function () {
+                                        console.log("updateend", block);
                                         // if ((video.videoBlock * (block + 1) >= video.videoLength) && ms.readyState === "open") {
                                         //     ms.endOfStream();
                                         // }
                                         // if (video.pause && block !== 0) video.play();
-                                        resolve(video);
-                                    });
-                                    try {
-                                        buffer.appendBuffer(this.response);
-                                    } catch (e) {
-                                        console.log(e);
-                                    }
 
+                                        if (cache.length === 0 && removeCache.length === 0) {
+                                            resolve(video);
+                                        } else if (removeCache.length !== 0) {
+                                            let [start, end] = removeCache.shift();
+                                            buffer.remove(start, end);
+                                        } else if (ms.readyState === "open" && !buffer.updating) {
+                                            buffer.appendBuffer(cache.shift());
+                                        }
+
+                                    };
+
+                                    if (ms.readyState === "open" && !buffer.updating) {
+                                        buffer.appendBuffer(this.response);
+                                    } else {
+                                        cache.push(this.response);
+                                    }
 
                                 } else {
                                     reject(new Error("video request failed"));

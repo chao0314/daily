@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            list-style: none;
+        }
+
+        .wrapper {
+            display: block;
+            margin: 200px auto;
+            position: relative;
+            width: 100px;
+            height: 200px;
+            background: pink;
+            overflow: hidden;
+        }
+
+        .content {
+            width: 80%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: green;
+        }
+
+        .scroll {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20%;
+            height: 100%;
+            background: silver;
+            /*border-radius: 10px;*/
+        }
+
+        .scroll-block {
+            position: absolute;
+            height: 30px;
+            background: red;
+            width: 100%;
+        }
+
+        .content > li {
+            height: 50px;
+            border: 1px solid #31bbac;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <ul class="content">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+    <div class="scroll">
+        <span class="scroll-block"></span>
+    </div>
+</div>
+
+</body>
+<script>
+    const $ = document.querySelector.bind(document);
+    let oWrapper = $('.wrapper');
+    let oContent = $('.content');
+    let oBlock = $('.scroll-block');
+    let oScrool = $('.scroll');
+    let owh = oWrapper.getBoundingClientRect()['height'];
+    let och = oContent.getBoundingClientRect()['height'];
+    let obh = (owh / och) * owh;
+
+    oBlock.style.height = obh + 'px';
+    let maxDown = oScrool.getBoundingClientRect()['height'] - oBlock.offsetHeight - oBlock.offsetTop;
+
+    oBlock.addEventListener('mousedown', down);
+
+    function down(e) {
+
+        let disY = e.clientY - this.offsetTop;
+
+        this.addEventListener('mousemove', scroll);
+        document.addEventListener('mouseup', function () {
+            console.log('up');
+            oBlock.removeEventListener('mousemove', scroll);
+        }, {once: true});
+
+        function scroll(e) {
+            let y = e.clientY - disY;
+            if (y > maxDown) y = maxDown;
+            if (y < 0) y = 0;
+
+            this.style.top = y + 'px';
+            oContent.style.top = -y / (owh - obh) * (och - owh) + 'px';
+
+            e.preventDefault();
+
+        }
+
+
+    }
+
+</script>
+<script>
+    let s = '123456';
+    console.log(s.slice(-2))
+
+    let arr = [1,2,3];
+
+    arr.forEach((v)=>{
+        console.log(v);
+        if (v===2) continue;
+    })
+</script>
+</html>

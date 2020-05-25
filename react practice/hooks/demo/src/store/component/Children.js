@@ -1,17 +1,20 @@
-import React, {} from 'react';
-import {useMapActions, useMapReducer, useMapSate} from "../index";
+import React, {useContext, useEffect} from 'react';
+import {Context} from "../index";
 
 
 export default (props) => {
-
-    const getNetworkContent = useMapActions('getNetworkContent');
+    const {state, useMapAction, useMapReducer} = useContext(Context);
+    const getNetworkContent = useMapAction('getNetworkContent');
     const setName = useMapReducer('setName');
-    const content = useMapSate('networkContent');
+    const content = state.networkContent;
+    useEffect(() => {
+        console.log('children effect');
+    });
 
     return (
         <div>
             <div>contnt:{content}</div>
-            <button type='button' onClick={() => getNetworkContent('https://www.bing.com')}>net</button>
+            <button type='button' onClick={() => getNetworkContent()}>net</button>
             <button type='button' onClick={() => setName("hello world")}>name</button>
         </div>
     );

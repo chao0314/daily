@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%
+        }
+
+        body {
+            display: flex;
+            /*justify-content: center;*/
+            align-items: stretch;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        header {
+            flex: 1 1 auto;
+            background: pink;
+
+        }
+
+        /*main {*/
+        /*    flex: 8 1 auto;*/
+        /*    background: blue;*/
+        /*    position: relative;*/
+        /*}*/
+
+        /*aside{*/
+        /*    width: 20%;*/
+        /*    height: 100%;*/
+        /*    background: #0b9788;*/
+        /*    position: absolute;*/
+        /*}*/
+        /*article{*/
+        /*    width: 80%;*/
+        /*    height: 100%;*/
+        /*    position: absolute;*/
+        /*    background: silver;*/
+        /*    right: 0;*/
+        /*}*/
+
+        main {
+            flex: 8 1 auto;
+            background: blue;
+            display: flex;
+        }
+
+        aside {
+            flex: 1 1 auto;
+            background: #0b9788;
+
+        }
+
+        article {
+            flex: 4 1 auto;
+            background: silver;
+
+        }
+
+        footer {
+            flex: 1 1 auto;
+            background: moccasin;
+        }
+
+
+    </style>
+</head>
+<body>
+<header>header</header>
+<main>
+    <aside>aside</aside>
+    <article>article</article>
+</main>
+<footer>footer</footer>
+</body>
+</html>

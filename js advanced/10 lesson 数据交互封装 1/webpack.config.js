@@ -20,7 +20,7 @@ module.exports = function (env = {}) {
             rules: [
                 {
                     test: /\.js$/i,
-                    exclude: /node_modules/,
+                    exclude: dev ? /node_modules/ : "",
                     use: [{
                         loader: "babel-loader",
                         options: {

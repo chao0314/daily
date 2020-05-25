@@ -2,7 +2,7 @@ MP4Box——用于将mp4转码为适合mediaSource使用：
 https://gpac.wp.imt.fr/downloads/gpac-nightly-builds/
 
 MP4Box命令示例（需安装mp4box后使用）：
-> MP4Box -dash 5000 -rap -frag-rap a.mp4
+> MP4Box -dash 5000 -rap -frag-rap video.mp4
 
 
 

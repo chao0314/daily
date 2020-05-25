@@ -3,42 +3,43 @@ import initState from "./state";
 import actions from "./actions";
 import reducers from "./reducers";
 
-let State;
-const Context = React.createContext({});
+export const Context = React.createContext({});
 
 function reducerWraper(state, action) {
     let {type, payload} = action;
-    console.log("reducerwraper", type, payload)
-    let res = reducers[type](state, payload);
-    console.log(res)
-    return res;
+    return reducers[type](state, payload);
 }
 
 
-export function useMapActions(name) {
-    const action = actions[name];
+export default (props) => {
+
     const [state, dispatch] = useReducer(reducerWraper, initState);
-    return (payload) => action(dispatch, payload);
+
+    function useMapAction(name) {
+        const action = actions[name];
+        return (payload) => action(dispatch, payload);
+
+    }
+
+    function useMapReducer(name) {
+        return (payload) => dispatch({type: name, payload});
+    }
+
+    // function useMapSate(name) {
+    // const value = useContext(Context);
+    //     return value[name];
+    //
+    // }
+
+    return (
+        <Context.Provider value={{state, useMapAction, useMapReducer}}>
+            {props.children}
+        </Context.Provider>
+    )
 
 }
 
-export function useMapReducer(name) {
-    const [state, dispatch] = useReducer(reducerWraper, initState);
-    return (payload) => dispatch({type: name, payload});
-}
 
-export function useMapSate(name) {
 
-    const state = useContext(Context);
-    return state[name];
-
-}
-
-export default (props) => (
-
-    <Context.Provider value={initState}>
-        {props.children}
-    </Context.Provider>
-)
 
 

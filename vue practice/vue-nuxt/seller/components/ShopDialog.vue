@@ -16,7 +16,7 @@
         <el-input type="color" v-model="data.banner_color" class="width"></el-input>
       </el-form-item>
       <el-form-item label="菜单">
-        <el-row type="flex" v-for="(item,index) in data.menus">
+        <el-row type="flex" v-for="(item,index) in data.menus" :key="index">
           <el-col>
             <el-input v-model="item.title" placeholder='菜单名称'></el-input>
           </el-col>
@@ -35,10 +35,7 @@
         <el-button type="primary" @click="submit">提交</el-button>
         <el-button type="default" @click="visible= false">取消</el-button>
       </el-form-item>
-
-
     </el-form>
-
 
   </el-dialog>
 

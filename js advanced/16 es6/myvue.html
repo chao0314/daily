@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./kvue3.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="app">
+<!--        {{   message }}-->
+        <div>
+            <span>
+                <span>
+                    <span> {{message}}</span>
+                </span>
+            </span>
+        </div>
+        {{mydata}}
+<!--        <div v-html="htmldata" ></div>-->
+        <input v-model="modelData" /> {{modelData}}
+    </div>
+</body>
+<script>
+let vm = new Kvue({
+    el:"#app",
+    data:{
+        message:"测试数据111122",
+        mydata:"some value",
+        htmldata:"html数据",
+        modelData:"双绑数据"
+    }
+})
+// vm[message]
+// vm.options.data.message = "修改的值";
+// console.log(vm.options.data);
+// vm.options.data.message = "111";
+// console.log(vm.options.data);
+
+
+
+</script>
+</html>

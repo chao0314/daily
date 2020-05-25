@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background: red;
+            height: 50px;
+        }
+
+        .search {
+            background: orange;
+            display: none;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            height: 50px;
+            z-index: 99;
+
+        }
+
+
+        article > .content {
+            background: pink;
+            height: 1980px;
+        }
+
+        article > aside {
+            position: fixed;
+            width: 50px;
+            height: 150px;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: yellow;
+        }
+
+        article > aside > span {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            background: green;
+        }
+
+        footer {
+
+            background: silver;
+        }
+
+    </style>
+</head>
+<body>
+<header>header search
+    <div class="search">search</div>
+</header>
+
+<article>
+    <div class="content"></div>
+    <aside>
+        <span>返回顶部</span>
+    </aside>
+</article>
+<footer> footer</footer>
+</body>
+<script>
+    const $ = document.querySelector.bind(document);
+    let oTopSearch = $('.search');
+    let oHeader = $('header');
+    let backTop = $('aside span');
+    let clientH = document.documentElement.clientHeight;
+
+    window.addEventListener('scroll', function () {
+        let top = oHeader.getBoundingClientRect()['bottom'];
+        let display = getComputedStyle(oTopSearch)['display'];
+        if (top < 0 && display === 'none') oTopSearch.style.display = 'block';
+        else if (top >= 0 && display === 'block') oTopSearch.style.display = 'none';
+        let scrollTop = document.documentElement.scrollTop;
+        let backDis = getComputedStyle(backTop)['display'];
+        if (scrollTop > clientH && backDis === 'none') {
+            backTop.style.display = 'block';
+        } else if (scrollTop <= clientH && backDis === 'block') {
+            backTop.style.display = 'none';
+        }
+
+
+    });
+
+    backTop.addEventListener('click', () => {
+        // window.scrollTo(0, 0);
+    })
+</script>
+</html>

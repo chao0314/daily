@@ -20,9 +20,6 @@
         img, canvas {
             display: block;
             margin: auto;
-        }
-
-        canvas {
             position: absolute;
             left: 0;
             top: 0;
@@ -46,14 +43,14 @@
     let H, W;
     let width, height;
     let x, y;
-    oImg.src = "./img/img-lg.jpg";
+    oImg.src = "./img/img.jpg";
     oImg.onload = function () {
         H = this.height;
         W = this.width;
         width = Math.min(this.width, innerWidth);
         height = Math.min(this.height, innerHeight);
-        oImg.style.width = innerWidth + 'px';
-        oImg.style.height = innerHeight + 'px';
+        oImg.style.width = width + 'px';
+        oImg.style.height = height + 'px';
         ctx.canvas.width = width;
         ctx.canvas.height = height;
         ctx.save();
