@@ -1,4 +1,4 @@
-const Koa = require('./src/index');
+const Koa = require('./index');
 const Router = require('../koa-router/src');
 
 const app = new Koa();
