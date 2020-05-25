@@ -72,7 +72,7 @@ exports = module.exports = async (ctx, next) => {
             console.log(key, filename);
             if (filename) {
                 //防止 图片等 二进制数据内有 \r\n\r\n 所以上面切过body不能用，普通 fields 数据不会出现这种情况。
-                let body =  entry.slice(header.length + '\r\n\r\n'.length,-2);
+                let body = entry.slice(header.length + '\r\n\r\n'.length, -2);//末尾有  \r\n 所以 -2
 
             } else {
 
