@@ -5,25 +5,24 @@ const headerLength = 6;
 const server = net.createServer(socket => {
     let unHandleBuffer = null;
     socket.on('data', chunk => {
+        // console.log('data', chunk);
         if (unHandleBuffer && unHandleBuffer.length > 0) {
             unHandleBuffer = Buffer.concat([unHandleBuffer, chunk]);
         } else {
             unHandleBuffer = chunk;
         }
 
-        let length = checkPackage(unHandleBuffer);
-        if (length > 0) {
+        let length = -1;
+        while ((length = checkPackage(unHandleBuffer)) > 0) {
 
             let request = decode(unHandleBuffer.slice(0, length))
 
             unHandleBuffer = unHandleBuffer.slice(length);
 
             console.log('request', request);
-
-            socket.write(encode({
-                seq: request.seq,
-                data: data[request.id]
-            }))
+            let response = encode({seq: request.seq, data: data[request.id]})
+            console.log('response', response);
+            socket.write(response);
 
         }
 
@@ -31,6 +30,9 @@ const server = net.createServer(socket => {
 
 })
 
+server.on('error', e => {
+    console.log('error', e);
+})
 server.listen(8090, () => {
 
     console.log('tcp server,port:8090');
@@ -38,13 +40,14 @@ server.listen(8090, () => {
 
 function checkPackage(data) {
 
-    if (headerLength > data.length) return -1;
     if (headerLength === data.length) return 0;
-    else {
+    if (headerLength < data.length) {
         let header = data.slice(0, headerLength);
         let bodyLength = header.readInt32BE(2);
-        return headerLength + bodyLength;
+        let totalLength = headerLength + bodyLength;
+        if (totalLength <= data.length) return totalLength;
     }
+    return -1;
 
 }
 
