@@ -6,8 +6,7 @@ class Template {
     constructor(path) {
         this.baseDir = path;
         this.cache = {}
-        // this.context = vm.createContext(this);
-
+        
         this.context = vm.createContext({
 
             include: this.include.bind(this)
@@ -37,7 +36,7 @@ class Template {
                  })
                 `, this.context);
 
-            console.log(_render.toString());
+            // console.log(_render.toString());
 
             this.cache[filename] = _render;
         }
