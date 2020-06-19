@@ -28,3 +28,5 @@ class Router {
         return this.match.bind(this);
     }
 }
+
+exports =  module.exports = Router;

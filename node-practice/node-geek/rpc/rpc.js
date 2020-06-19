@@ -14,16 +14,21 @@ class Rpc {
 
             let packageLength = -1;
             while ((packageLength = this.handler.checkReceiveComplete(unHandleBuffer)) > 0) {
-                let request = this.handler.decode(unHandleBuffer.slice(0, packageLength));
-                unHandleBuffer = unHandleBuffer.slice(packageLength);
-                callback instanceof Function && callback(request);
+                try {
+                    let request = this.handler.decode(unHandleBuffer.slice(0, packageLength));
+                    unHandleBuffer = unHandleBuffer.slice(packageLength);
+                    callback instanceof Function && callback(null, request);
+                } catch (e) {
+                    callback instanceof Function && callback(e);
+                }
+
             }
 
         })
     }
 
-    send(socket, data) {
-
+    send(socket, request, data) {
+        if (data.seq === void 0) data.seq = request.seq;
         let response = this.handler.encode(data);
         socket.write(response);
 

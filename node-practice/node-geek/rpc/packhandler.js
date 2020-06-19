@@ -35,12 +35,15 @@ class PackHandler extends Handler {
         let start = 0, end = 0;
         [start, end] = seq;
         let seqBuf = Buffer.alloc(end - start + 1);
-        seqBuf[this.mapMethod(end - start + 1, 'write')](seq);
+        seqBuf[this.mapMethod(end - start + 1, 'write')](data.seq);
         [start, end] = schemaName;
         let schemaNameBuf = Buffer.alloc(end - start + 1);
-        schemaNameBuf.write(schemaName, 0, end - start + 1);
-        //.................todo
-
+        schemaNameBuf.write(data.schemaName, 0, end - start + 1);
+        let bodyBuf = this.schemas[data.schemaName].encode(data.body);
+        [start, end] = bodyLength;
+        let bodyLengthBuf = Buffer.alloc(end - start + 1);
+        bodyLengthBuf[this.mapMethod(end - start + 1, 'write')](bodyBuf.length);
+        return Buffer.concat([seqBuf, schemaNameBuf, bodyLengthBuf, bodyBuf]);
 
     }
 
@@ -48,7 +51,7 @@ class PackHandler extends Handler {
         if (buffer.length > this.headerLength) {
             let header = buffer.slice(0, this.headerLength);
             let [start, end] = this.reqProto.bodyLength;
-            let bodyLength = buffer[this.mapMethod(end - start + 1)](start);
+            let bodyLength = header[this.mapMethod(end - start + 1)](start);
             let total = this.headerLength + bodyLength;
             if (buffer.length >= total) return total;
         }

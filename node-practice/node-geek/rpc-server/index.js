@@ -1,9 +1,12 @@
 const net = require('net');
-const Rpc = require('./rpc');
+const Rpc = require('../rpc/rpc');
+const EventEmitter = require('events');
 
-class Server {
+
+class Server extends EventEmitter {
 
     constructor(options) {
+        super();
         this.rpc = new Rpc(options.handler);
         this.server = this.createServer(options);
         this.middlewares = [];
@@ -13,14 +16,20 @@ class Server {
     createServer(options) {
         return net.createServer(options, socket => {
 
-            this.rpc.handle(socket, (request) => {
+            this.rpc.handle(socket, (error, request) => {
 
-                console.log('rpc request', request);
+                console.log('rpc request', error, request);
 
-                this.handleReq(request, {send: this.rpc.send.bind(socket)}).catch(e => {
-                    console.log(e);
-                    socket.write('500');
-                });
+                if (error) this.emit('error', error);
+
+                else {
+                    this.handleReq(request, {send: this.rpc.send.bind(socket, request)}).catch(e => {
+                        console.log(e);
+                        socket.write('500');
+                    });
+
+                }
+
 
             })
         })
