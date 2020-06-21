@@ -24,8 +24,8 @@ class Server extends EventEmitter {
 
                 else {
                     this.handleReq(request, {send: this.rpc.send.bind(socket, request)}).catch(e => {
-                        console.log(e);
-                        socket.write('500');
+                        console.log('handle error', e);
+                        this.emit('error', e);
                     });
 
                 }
@@ -35,6 +35,7 @@ class Server extends EventEmitter {
         })
 
     }
+
 
     listen(port, callback) {
 

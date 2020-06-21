@@ -22,7 +22,14 @@ message Article {
 message ColumnResponse {
     required Column column = 1;
     repeated Column recommendColumns = 2;
+    optional Error error = 3;
 }
 message ColumnRequest {
     required int32 columnid = 1;
+}
+
+message Error {
+    required int32 code = 1;
+    required string message = 2;
+
 }

@@ -6,7 +6,7 @@ class PackHandler extends Handler {
     constructor(options) {
         super(options);
         this.reqProto = options.reqProto;
-        this.reqProto = options.resProto;
+        this.resProto = options.resProto;
         this.headerLength = Object.values(this.reqProto).reduce((pre, [, cur]) => Math.max(pre, cur), 0) + 1;
     }
 
@@ -24,7 +24,7 @@ class PackHandler extends Handler {
 
         return {
             seq,
-            req: body
+            body
         }
 
     }

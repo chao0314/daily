@@ -6,7 +6,7 @@ class Handler {
             4: 'UInt32BE',
             2: 'UInt16BE',
             1: 'UInt8'
-        }
+        };
         this.schemas = schemas;
     }
 
