@@ -7,7 +7,7 @@ class Client extends EventEmitter {
     constructor(options) {
 
         super();
-        this.timeout = options.timeout || 5000;
+        this.timeout = options.timeout || 10000;
         this.rpc = new Rpc(options.handler);
         this.connection = this.createConnection(options);
         // this.interceptors = [];
@@ -25,12 +25,13 @@ class Client extends EventEmitter {
                     console.log('server response', error, response);
                     // if  exist error, do nothing, waiting  handle timeout
                     if (!error) {
-                        let {seq, body: {error}} = response;
-                        let {callback} = this.queue[seq];
+                        let {seq, body,body: {error}} = response;
+                        let value = this.queue[seq];
                         //timeout , have been clear
-                        if (info === void 0) return;
-                        if (error) callback(error);
-                        else callback(null, body);
+                        if (value === void 0) return;
+                        if (error) value.callback(error);
+                        else value.callback(null, body);
+                        delete this.queue[seq];
                     }
 
 
@@ -42,10 +43,11 @@ class Client extends EventEmitter {
     }
 
     send(data) {
+        data.seq = ++this.seq;
         return new Promise((resolve, reject) => {
-            this.rpc.send(this, this.connection, data);
+            this.rpc.send(this.connection, {}, data);
             this.setTimeout();
-            this.pool[++this.seq] = {
+            this.queue[this.seq] = {
                 startTime: Date.now(),
                 callback: (err, res) => {
                     if (err) reject(err);
@@ -70,8 +72,9 @@ class Client extends EventEmitter {
         let now = Date.now();
         Object.entries(this.queue).forEach(([seq, {startTime, callback}]) => {
             if (now - startTime >= this.timeout) {
-                callback(new Error('request timeout'));
                 delete this.queue[seq];
+                callback(new Error('request timeout'));
+
             }
         });
         this.timer = null;

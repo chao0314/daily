@@ -19,11 +19,16 @@ class PackHandler extends Handler {
         [start, end] = seq;
         seq = header[this.mapMethod(end - start + 1)](start);
         [start, end] = schemaName;
-        schemaName = buffer.slice(start, end + 1).toString();
+        let schemaNameBuf = buffer.slice(start, end + 1);
+        //slice ox00 ,buffer invalid padding data
+        let index = schemaNameBuf.indexOf(0);
+        if (index > 0) schemaNameBuf = schemaNameBuf.slice(0, index);
+        schemaName =  schemaNameBuf.toString('utf8');
         body = this.schemas[schemaName].decode(body);
 
         return {
             seq,
+            schemaName,
             body
         }
 
@@ -38,7 +43,7 @@ class PackHandler extends Handler {
         seqBuf[this.mapMethod(end - start + 1, 'write')](data.seq);
         [start, end] = schemaName;
         let schemaNameBuf = Buffer.alloc(end - start + 1);
-        schemaNameBuf.write(data.schemaName, 0, end - start + 1);
+        schemaNameBuf.write(data.schemaName, 0, 'utf8');
         let bodyBuf = this.schemas[data.schemaName].encode(data.body);
         [start, end] = bodyLength;
         let bodyLengthBuf = Buffer.alloc(end - start + 1);

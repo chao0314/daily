@@ -4,9 +4,9 @@ class Router {
         this._routes = [];
     }
 
-    use(schema, handler) {
+    use(schemaName, handler) {
 
-        this._routes.push({schema, handler});
+        this._routes.push({schemaName, handler});
 
     }
 
@@ -14,7 +14,7 @@ class Router {
 
         for (let i = 0; i < this._routes.length; i++) {
             let route = this._routes[i];
-            if (route.schema === request.schema) {
+            if (route.schemaName === request.schemaName) {
                 return await route.handler(request, ctx);
             }
 
@@ -29,4 +29,4 @@ class Router {
     }
 }
 
-exports =  module.exports = Router;
+exports = module.exports = Router;

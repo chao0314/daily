@@ -23,7 +23,8 @@ class Server extends EventEmitter {
                 if (error) this.emit('error', error);
 
                 else {
-                    this.handleReq(request, {send: this.rpc.send.bind(socket, request)}).catch(e => {
+
+                    this.handleReq(request, {send: this.rpc.send.bind(this.rpc, socket, request)}).catch(e => {
                         console.log('handle error', e);
                         this.emit('error', e);
                     });
