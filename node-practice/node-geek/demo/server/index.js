@@ -4,6 +4,9 @@ const koaStatic = require('koa-static');
 const path = require('path');
 const TplEngine = require('../../template');
 const remoteClient = require('./client');
+const apolloServer = require('../apollo-server');
+
+const ssrRender =
 let app = new Koa();
 let router = new Router();
 let tpl = new TplEngine(path.resolve(__dirname, '../views'))
@@ -22,7 +25,14 @@ router.get('/detail', async ctx => {
 
 });
 
+//rpc
 app.use(router.routes());
+
+//graphql
+app.use(apolloServer.getMiddleware({path: '/api'}))
+
+//ssr
+
 
 
 app.listen(8080, () => {
