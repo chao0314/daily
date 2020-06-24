@@ -5,14 +5,15 @@ const path = require('path');
 const TplEngine = require('../../template');
 const remoteClient = require('./client');
 const apolloServer = require('../apollo-server');
-
-const ssrRender =
+const serverRender = require('../ssr/server');
+const mockData = require('../mockdata/column');
 let app = new Koa();
 let router = new Router();
 let tpl = new TplEngine(path.resolve(__dirname, '../views'))
+
 app.use(koaStatic(path.resolve(__dirname, '../public')));
 
-
+//rpc
 router.get('/detail', async ctx => {
 
     // console.log('id is ', ctx.query.id);
@@ -25,14 +26,27 @@ router.get('/detail', async ctx => {
 
 });
 
-//rpc
+//ssr
+
+router.get('/list', async ctx => {
+    //cache ???
+    let ssrString = serverRender({columns: mockData});
+    // console.log('-----', ssrString);
+    ctx.body = tpl.render('list.html', {
+        ssrString,
+        ssrData: mockData,
+        filterType: ctx.query.filt || 0,
+        sortType: ctx.query.sortType || 0
+
+    })
+
+})
+
+
 app.use(router.routes());
 
 //graphql
 app.use(apolloServer.getMiddleware({path: '/api'}))
-
-//ssr
-
 
 
 app.listen(8080, () => {

@@ -4,8 +4,8 @@ const ReactDOM = require('react-dom');
 
 class App extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         let {initData, initFilterType, initSortType} = this.props;
         this.state = {
             columns: initData,
@@ -44,6 +44,8 @@ class App extends React.Component {
 }
 
 ReactDOM.hydrate(
-    <App {...ssrProps}/>,
+    <App {...window.ssrProps}/>,
     document.getElementById('reactApp')
 )
+
+exports = module.exports = App;

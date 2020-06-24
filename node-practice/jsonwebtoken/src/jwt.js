@@ -1,7 +1,5 @@
 const crypto = require('crypto');
-const secret = 'hello world';
 
-// const SHA256 =
 
 class Jwt {
     constructor(options = {}) {
@@ -27,7 +25,14 @@ class Jwt {
 
     verify(token) {
 
-        let [header, payload, signed] = token.split('.');
+        if (this.algInsatnce.verify(token)) {
+
+            let [, payload] = token.split('.');
+
+            return JSON.parse(Jwt.decodeBase64Url(payload));
+
+
+        }
 
 
     }
@@ -44,6 +49,15 @@ class Jwt {
 
     }
 
+    static decodeBase64Url(payload) {
+        //base64  3*8 =>4*6(高位补零) 体积扩大1/3。原数据不足3字节时补=，解码时以4字节为单元。
+        payload += new Array(5 - payload.length % 4);
+
+        return Buffer.from(payload, 'base64').toString();
+
+    }
+
+
     static createAlg(name, secret) {
 
         // todo some other alg
@@ -59,17 +73,24 @@ class SHA256 {
 
     constructor(secret) {
         this.secret = secret;
-        this.instance = crypto.createHmac('sha256', secret);
     }
 
     encode(data) {
 
-        return this.instance.update(data).digest('base64');
+        return crypto.createHmac('sha256', this.secret).update(data).digest('base64');
     }
 
-    decode(data) {
+    // decode(signed, data) {
+    //
+    //     return this.encode(data) === signed;
+    //
+    // }
 
+    verify(data) {
 
+        let [header, payload, signed] = data.split('.');
+        console.log('sign',signed,this.encode([header,payload].join(".")))
+        return this.encode([header, payload].join('.')) === signed;
     }
 
 
