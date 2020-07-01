@@ -1,4 +1,4 @@
-//¼´Ê±±àÒë ĞÔÄÜ£¿£¿£¿ ¿ÉÒÔwebpack Ô¤±àÒë jsx
+//å³æ—¶ç¼–è¯‘ æ€§èƒ½ï¼Ÿï¼Ÿï¼Ÿ å¯ä»¥webpack é¢„ç¼–è¯‘ jsx
 const register = require('babel-register');
 register({
     presets: ['react']

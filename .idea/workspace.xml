@@ -2,32 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/src/interceptor.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/src/interceptor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/10 lesson 数据交互封装 1/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/img-card.html" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/img-card.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/mp4-util" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/mp4-util" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/static/video.html" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/static/video.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/video/video.mp4" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/9 lesson 二进制数据处理 视频/server/video/video.mp4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Children.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Children.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Other.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/component/Other.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react practice/hooks/demo/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/react practice/hooks/demo/src/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopSelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/components/ShopSelect.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/pages/goods.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/pages/goods.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue practice/vue-nuxt/seller/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/full stack/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/full stack/笔记/nginx-soamazing.conf" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/笔记/nginx-soamazing.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/full stack/笔记/ngnix.txt" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/笔记/ngnix.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-practice/node-geek/demo/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-geek/demo/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-practice/node-geek/demo/ssr/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-geek/demo/ssr/server/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="daily" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -36,6 +22,7 @@
         <option value="package.json" />
         <option value="Vue Single File Component" />
         <option value="HTML File" />
+        <option value="GraphQL File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -60,39 +47,47 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.16.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/node-practice/node-geek/demo/public" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="D:/dev/nodejs/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
-    <property name="ts.external.directory.path" value="D:\Program Files\JetBrains\WebStorm 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="ts.external.directory.path" value="E:\workspace\daily\vue practice\ts-project\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\workspace\daily\test" />
-      <recent name="F:\workspace\daily\full stack\server\utils" />
-      <recent name="F:\workspace\daily\full stack\server\static\js" />
-      <recent name="F:\workspace\daily\vue practice\cascader-jwt-dynamic_router-permission_button\practice-demo\server" />
-      <recent name="F:\workspace\daily\js advanced\7 lesson 触摸 事件队列\js" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\public" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\ssr\server" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\ssr\browser" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\ssr\com-components" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\views" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\workspace\daily\full stack\server" />
-      <recent name="F:\workspace\daily\js advanced\10 lesson 数据交互封装 1" />
-      <recent name="F:\workspace\daily\js advance\6 lesson 事件基础\magnifier\homework\css" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\views" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\public" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo\server\client" />
+      <recent name="E:\workspace\daily\node-practice\node-geek" />
+      <recent name="E:\workspace\daily\node-practice\node-geek\demo" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node practice/koa-demo/test.js" working-dir="$PROJECT_DIR$/node practice/koa-demo">
+  <component name="RunManager" selected="Node.js.index.js">
+    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node-practice/node-geek/demo/server/index.js" working-dir="$PROJECT_DIR$/node-practice/node-geek/demo/server">
+      <method v="2" />
+    </configuration>
+    <configuration name="remote-server.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node-practice/node-geek/demo/remote/remote-server.js" working-dir="$PROJECT_DIR$/node-practice/node-geek/demo/remote">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.test.js" />
+        <item itemvalue="Node.js.index.js" />
+        <item itemvalue="Node.js.remote-server.js" />
       </list>
     </recent_temporary>
   </component>
@@ -181,11 +176,42 @@
       <workItem from="1579312098893" duration="1495000" />
       <workItem from="1589980520638" duration="1606000" />
       <workItem from="1590151261856" duration="4621000" />
+      <workItem from="1590457352564" duration="37000" />
+      <workItem from="1590457402218" duration="4055000" />
+      <workItem from="1590471779538" duration="14000" />
+      <workItem from="1590471822775" duration="32000" />
+      <workItem from="1590471869233" duration="584000" />
+      <workItem from="1590472716134" duration="135000" />
+      <workItem from="1590472861343" duration="63000" />
+      <workItem from="1590472958368" duration="5345000" />
+      <workItem from="1590543717740" duration="6796000" />
+      <workItem from="1590629370493" duration="2047000" />
+      <workItem from="1590731055700" duration="734000" />
+      <workItem from="1591345415038" duration="23000" />
+      <workItem from="1592185626251" duration="12270000" />
+      <workItem from="1592271139068" duration="5922000" />
+      <workItem from="1592374019384" duration="8710000" />
+      <workItem from="1592443913583" duration="16362000" />
+      <workItem from="1592530318697" duration="984000" />
+      <workItem from="1592533521855" duration="14000" />
+      <workItem from="1592533578901" duration="129000" />
+      <workItem from="1592533718206" duration="10756000" />
+      <workItem from="1592790069290" duration="1738000" />
+      <workItem from="1592791838191" duration="8700000" />
+      <workItem from="1592876030456" duration="14151000" />
+      <workItem from="1592962609106" duration="757000" />
+      <workItem from="1592963690372" duration="5635000" />
+      <workItem from="1593307865623" duration="82000" />
+      <workItem from="1593414140382" duration="2360000" />
+      <workItem from="1593480926181" duration="5096000" />
+      <workItem from="1593499764078" duration="3435000" />
+      <workItem from="1593503884080" duration="2182000" />
+      <workItem from="1593591268891" duration="993000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
@@ -217,73 +243,118 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="409" y="163" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590154621273">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state x="327" y="130" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592894360343">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="327" y="130" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1592894360343" />
     <state x="409" y="163" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1032@0.0.1920.1032" timestamp="1590154621273" />
-    <state width="1892" height="347" key="GridCell.Tab.0.bottom" timestamp="1590156620401">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state x="502" y="212" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1592548304612">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="502" y="212" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1592548304612" />
+    <state x="516" y="281" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1592533705454">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="516" y="281" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1536.824@0.0.1536.824" timestamp="1592533705454" />
+    <state x="499" y="191" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper" timestamp="1590380616440">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="499" y="191" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper/0.0.1536.824@0.0.1536.824" timestamp="1590380616440" />
+    <state x="608" y="356" key="#com.intellij.ide.util.TreeDirectoryChooserDialog" timestamp="1592814710955">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="608" y="356" key="#com.intellij.ide.util.TreeDirectoryChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1592814710955" />
+    <state x="543" y="153" key="FileChooserDialogImpl" timestamp="1592533697982">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="543" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1592533697982" />
+    <state width="1515" height="397" key="GridCell.Tab.0.bottom" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1515" height="397" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.0.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1892" height="347" key="GridCell.Tab.0.center" timestamp="1590156620401">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.0.center" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.0.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1892" height="347" key="GridCell.Tab.0.left" timestamp="1590156620401">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.0.left" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.0.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1892" height="347" key="GridCell.Tab.0.right" timestamp="1590156620401">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.0.right" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.0.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1892" height="347" key="GridCell.Tab.1.bottom" timestamp="1590156620309">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.1.bottom" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.1.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1892" height="347" key="GridCell.Tab.1.center" timestamp="1590156620309">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.1.center" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.1.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1892" height="347" key="GridCell.Tab.1.left" timestamp="1590156620309">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.1.left" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.1.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1892" height="347" key="GridCell.Tab.1.right" timestamp="1590156620309">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.1.right" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.1.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1892" height="347" key="GridCell.Tab.2.bottom" timestamp="1590156620310">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.2.bottom" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.2.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1892" height="347" key="GridCell.Tab.2.center" timestamp="1590156620310">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.2.center" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.2.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1892" height="347" key="GridCell.Tab.2.left" timestamp="1590156620309">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.2.left" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.2.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1892" height="347" key="GridCell.Tab.2.right" timestamp="1590156620310">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.2.right" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.2.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1892" height="347" key="GridCell.Tab.3.bottom" timestamp="1590156620310">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.3.bottom" timestamp="1593503869657">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.3.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593503869657" />
     <state width="1892" height="347" key="GridCell.Tab.3.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1892" height="347" key="GridCell.Tab.3.center" timestamp="1590156620310">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.3.center" timestamp="1593503869657">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.3.center/0.0.1536.824@0.0.1536.824" timestamp="1593503869657" />
     <state width="1892" height="347" key="GridCell.Tab.3.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1892" height="347" key="GridCell.Tab.3.left" timestamp="1590156620310">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.3.left" timestamp="1593503869656">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.3.left/0.0.1536.824@0.0.1536.824" timestamp="1593503869656" />
     <state width="1892" height="347" key="GridCell.Tab.3.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1892" height="347" key="GridCell.Tab.3.right" timestamp="1590156620310">
-      <screen x="0" y="0" width="1920" height="1032" />
+    <state width="1515" height="397" key="GridCell.Tab.3.right" timestamp="1593503869657">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state width="1515" height="397" key="GridCell.Tab.3.right/0.0.1536.824@0.0.1536.824" timestamp="1593503869657" />
     <state width="1892" height="347" key="GridCell.Tab.3.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
+    <state x="270" y="56" key="SettingsEditor" timestamp="1593307945654">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="270" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1593307945654" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1592968474400">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1592968474400" />
   </component>
 </project>

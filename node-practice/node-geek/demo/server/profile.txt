@@ -1,0 +1,189 @@
+Statistical profiling result from isolate-000001DA27836F20-14044-v8.log, (6366 ticks, 1 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   6014   94.5%          C:\WINDOWS\SYSTEM32\ntdll.dll
+    302    4.7%          D:\Program Files\nodejs\node.exe
+      2    0.0%          C:\WINDOWS\system32\mswsock.dll
+      2    0.0%          C:\WINDOWS\System32\KERNEL32.DLL
+      1    0.0%          C:\WINDOWS\System32\WS2_32.dll
+      1    0.0%          C:\WINDOWS\System32\KERNELBASE.dll
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      4    0.1%    9.1%  LazyCompile: *resolve path.js:130:10
+      4    0.1%    9.1%  LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      3    0.0%    6.8%  LazyCompile: *nextTick internal/process/task_queues.js:105:18
+      2    0.0%    4.5%  LazyCompile: *processPromiseRejections internal/process/promises.js:171:34
+      2    0.0%    4.5%  LazyCompile: *pipeOnDrainFunctionResult _stream_readable.js:783:44
+      2    0.0%    4.5%  LazyCompile: *normalize path.js:265:12
+      2    0.0%    4.5%  LazyCompile: *Readable.read _stream_readable.js:387:35
+      2    0.0%    4.5%  LazyCompile: *Readable.pipe _stream_readable.js:638:35
+      1    0.0%    2.3%  RegExp: ^[\^_`a-zA-Z\-0-9!#$%&'*+.|~]+$
+      1    0.0%    2.3%  LazyCompile: *writeHead _http_server.js:243:19
+      1    0.0%    2.3%  LazyCompile: *resolvePath E:\workspace\daily\node-practice\node-geek\node_modules\resolve-path\index.js:45:22
+      1    0.0%    2.3%  LazyCompile: *parserOnMessageComplete _http_common.js:138:33
+      1    0.0%    2.3%  LazyCompile: *parserOnIncoming _http_server.js:715:26
+      1    0.0%    2.3%  LazyCompile: *onfinish _stream_readable.js:758:20
+      1    0.0%    2.3%  LazyCompile: *onceWrapper events.js:422:21
+      1    0.0%    2.3%  LazyCompile: *onSocket E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\index.js:106:20
+      1    0.0%    2.3%  LazyCompile: *onFinished E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\index.js:45:20
+      1    0.0%    2.3%  LazyCompile: *maybeReadMore_ _stream_readable.js:593:24
+      1    0.0%    2.3%  LazyCompile: *listener E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\index.js:161:20
+      1    0.0%    2.3%  LazyCompile: *insertGuarded internal/timers.js:315:23
+      1    0.0%    2.3%  LazyCompile: *dirname path.js:582:10
+      1    0.0%    2.3%  LazyCompile: *afterWriteTick _stream_writable.js:513:24
+      1    0.0%    2.3%  LazyCompile: *_send _http_outgoing.js:282:49
+      1    0.0%    2.3%  LazyCompile: *_addListener events.js:349:22
+      1    0.0%    2.3%  LazyCompile: *ReadStream._read internal/fs/streams.js:144:38
+      1    0.0%    2.3%  LazyCompile: *OutgoingMessage.uncork _http_outgoing.js:242:44
+      1    0.0%    2.3%  LazyCompile: *Accepts.encoding.Accepts.encodings E:\workspace\daily\node-practice\node-geek\node_modules\accepts\index.js:127:40
+      1    0.0%    2.3%  LazyCompile: *<anonymous> internal/util/debuglog.js:57:18
+      1    0.0%    2.3%  LazyCompile: *<anonymous> internal/streams/destroy.js:38:30
+      1    0.0%    2.3%  LazyCompile: *<anonymous> _http_outgoing.js:514:45
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+     43    0.7%   97.7%  JavaScript
+      0    0.0%    0.0%  C++
+     12    0.2%   27.3%  GC
+   6322   99.3%          Shared libraries
+      1    0.0%          Unaccounted
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+   6014   94.5%  C:\WINDOWS\SYSTEM32\ntdll.dll
+     74    1.2%    LazyCompile: *writeGeneric internal/stream_base_commons.js:141:22
+     71   95.9%      LazyCompile: *connectionCorkNT _http_outgoing.js:697:26
+     71  100.0%        LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      3    4.1%      LazyCompile: *Writable.uncork _stream_writable.js:326:37
+      3  100.0%        LazyCompile: ~OutgoingMessage.uncork _http_outgoing.js:242:44
+      3  100.0%          LazyCompile: ~connectionCorkNT _http_outgoing.js:697:26
+      3  100.0%            LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+
+    302    4.7%  D:\Program Files\nodejs\node.exe
+    114   37.7%    D:\Program Files\nodejs\node.exe
+     22   19.3%      LazyCompile: ~openSync fs.js:448:18
+     22  100.0%        LazyCompile: ~readFileSync fs.js:356:22
+     19   86.4%          LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:1166:37
+     19  100.0%            LazyCompile: ~Module.load internal/modules/cjs/loader.js:989:33
+      2    9.1%          LazyCompile: ~load E:\workspace\daily\node-practice\node-geek\node_modules\babel-register\lib\cache.js:51:14
+      2  100.0%            Eval: ~<anonymous> E:\workspace\daily\node-practice\node-geek\node_modules\babel-register\lib\node.js:1:1
+      1    4.5%          LazyCompile: ~Module._extensions..json internal/modules/cjs/loader.js:1182:39
+      1  100.0%            LazyCompile: ~Module.load internal/modules/cjs/loader.js:989:33
+     12   10.5%      LazyCompile: ~wrapSafe internal/modules/cjs/loader.js:1055:18
+     12  100.0%        LazyCompile: ~Module._compile internal/modules/cjs/loader.js:1111:37
+     12  100.0%          LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:1166:37
+     12  100.0%            LazyCompile: ~Module.load internal/modules/cjs/loader.js:989:33
+      7    6.1%      LazyCompile: ~readSync fs.js:499:18
+      7  100.0%        LazyCompile: ~tryReadSync fs.js:344:21
+      7  100.0%          LazyCompile: ~readFileSync fs.js:356:22
+      7  100.0%            LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:1166:37
+      7    6.1%      LazyCompile: ~readPackage internal/modules/cjs/loader.js:239:21
+      7  100.0%        LazyCompile: ~readPackageExports internal/modules/cjs/loader.js:296:28
+      7  100.0%          LazyCompile: ~applyExports internal/modules/cjs/loader.js:488:22
+      7  100.0%            LazyCompile: ~resolveExports internal/modules/cjs/loader.js:540:24
+      6    5.3%      LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      5   83.3%        D:\Program Files\nodejs\node.exe
+      1   16.7%        LazyCompile: *dispatch E:\workspace\daily\node-practice\node-geek\node_modules\koa-compose\index.js:35:23
+      1  100.0%          LazyCompile: *handleRequest E:\workspace\daily\node-practice\node-geek\node_modules\koa\lib\application.js:146:27
+      1  100.0%            LazyCompile: *parserOnIncoming _http_server.js:715:26
+      6    5.3%      D:\Program Files\nodejs\node.exe
+      3   50.0%        LazyCompile: *isHidden E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:149:19
+      2   66.7%          LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      2  100.0%            LazyCompile: *dispatch E:\workspace\daily\node-practice\node-geek\node_modules\koa-compose\index.js:35:23
+      1   33.3%          LazyCompile: ~send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      1  100.0%            LazyCompile: ~serve E:\workspace\daily\node-practice\node-geek\node_modules\koa-static\index.js:39:33
+      1   16.7%        LazyCompile: ~processTicksAndRejections internal/process/task_queues.js:69:35
+      1   16.7%        LazyCompile: ~FastBuffer internal/buffer.js:944:1
+      1  100.0%          LazyCompile: ~createUnsafeBuffer buffer.js:134:28
+      1  100.0%            LazyCompile: *ReadStream._read internal/fs/streams.js:144:38
+      1   16.7%        Eval: ~<static_fields_initializer> internal/bootstrap/loaders.js:165:3
+      1  100.0%          Eval: ~<anonymous> internal/bootstrap/loaders.js:1:1
+      4    3.5%      LazyCompile: ~writevGeneric internal/stream_base_commons.js:116:23
+      2   50.0%        LazyCompile: ~Socket._writeGeneric net.js:754:42
+      2  100.0%          LazyCompile: ~Socket._writev net.js:786:36
+      2  100.0%            LazyCompile: ~doWrite _stream_writable.js:431:17
+      2   50.0%        LazyCompile: *Socket._writeGeneric net.js:754:42
+      2  100.0%          LazyCompile: ~Socket._writev net.js:786:36
+      2  100.0%            LazyCompile: ~doWrite _stream_writable.js:431:17
+      4    3.5%      LazyCompile: ~handleWriteReq internal/stream_base_commons.js:45:24
+      3   75.0%        LazyCompile: ~writeGeneric internal/stream_base_commons.js:141:22
+      3  100.0%          LazyCompile: ~Socket._writeGeneric net.js:754:42
+      3  100.0%            LazyCompile: ~Socket._write net.js:791:35
+      1   25.0%        LazyCompile: *OutgoingMessage.uncork _http_outgoing.js:242:44
+      1  100.0%          LazyCompile: ~connectionCorkNT _http_outgoing.js:697:26
+      1  100.0%            LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      4    3.5%      LazyCompile: *ReadStream._read internal/fs/streams.js:144:38
+      3   75.0%        LazyCompile: *Readable.read _stream_readable.js:387:35
+      3  100.0%          LazyCompile: *maybeReadMore_ _stream_readable.js:593:24
+      3  100.0%            LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      1   25.0%        LazyCompile: ~<anonymous> internal/fs/streams.js:146:38
+      1  100.0%          LazyCompile: *onceWrapper events.js:422:21
+      1  100.0%            LazyCompile: *emit events.js:269:44
+      3    2.6%      LazyCompile: ~compileForInternalLoader internal/bootstrap/loaders.js:266:27
+      3  100.0%        LazyCompile: ~nativeModuleRequire internal/bootstrap/loaders.js:299:29
+      1   33.3%          Eval: ~<anonymous> internal/process/task_queues.js:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader internal/bootstrap/loaders.js:266:27
+      1   33.3%          Eval: ~<anonymous> fs.js:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader internal/bootstrap/loaders.js:266:27
+      1   33.3%          Eval: ~<anonymous> assert.js:1:1
+      1  100.0%            LazyCompile: ~compileForInternalLoader internal/bootstrap/loaders.js:266:27
+      2    1.8%      LazyCompile: ~stat internal/modules/cjs/loader.js:133:14
+      2  100.0%        LazyCompile: ~tryFile internal/modules/cjs/loader.js:347:17
+      2  100.0%          LazyCompile: ~tryExtensions internal/modules/cjs/loader.js:362:23
+      2  100.0%            LazyCompile: ~Module._findPath internal/modules/cjs/loader.js:639:28
+      2    1.8%      LazyCompile: ~closeSync fs.js:414:19
+      2  100.0%        LazyCompile: ~<anonymous> E:\workspace\node_modules\graceful-fs\graceful-fs.js:49:71
+      1   50.0%          LazyCompile: ~writeFileSync fs.js:1277:23
+      1  100.0%            LazyCompile: ~save E:\workspace\daily\node-practice\node-geek\node_modules\babel-register\lib\cache.js:32:14
+      1   50.0%          LazyCompile: ~readFileSync fs.js:356:22
+      1  100.0%            LazyCompile: ~Module._extensions..js internal/modules/cjs/loader.js:1166:37
+      2    1.8%      LazyCompile: ~<anonymous> E:\workspace\node_modules\graceful-fs\graceful-fs.js:40:41
+      1   50.0%        LazyCompile: ~<anonymous> fs.js:154:10
+      1   50.0%        LazyCompile: *<anonymous> fs.js:154:10
+      2    1.8%      LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      2    1.8%      LazyCompile: *go$open E:\workspace\node_modules\graceful-fs\graceful-fs.js:252:22
+      2  100.0%        LazyCompile: *ReadStream internal/fs/streams.js:64:20
+      2  100.0%          LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      2  100.0%            D:\Program Files\nodejs\node.exe
+      2    1.8%      LazyCompile: *_storeHeader _http_outgoing.js:345:22
+      2  100.0%        LazyCompile: *writeHead _http_server.js:243:19
+      2  100.0%          LazyCompile: *ondata _stream_readable.js:712:18
+      2  100.0%            LazyCompile: *readableAddChunk _stream_readable.js:217:26
+      2    1.8%      LazyCompile: *<anonymous> E:\workspace\node_modules\graceful-fs\graceful-fs.js:40:41
+      2  100.0%        LazyCompile: *<anonymous> fs.js:154:10
+     16    5.3%    LazyCompile: *ReadStream._read internal/fs/streams.js:144:38
+     13   81.3%      LazyCompile: *Readable.read _stream_readable.js:387:35
+     10   76.9%        LazyCompile: *maybeReadMore_ _stream_readable.js:593:24
+     10  100.0%          LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      3   23.1%        LazyCompile: ~maybeReadMore_ _stream_readable.js:593:24
+      3  100.0%          LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      2   12.5%      LazyCompile: ~<anonymous> internal/fs/streams.js:146:38
+      2  100.0%        LazyCompile: *onceWrapper events.js:422:21
+      2  100.0%          LazyCompile: *emit events.js:269:44
+      2  100.0%            LazyCompile: ~<anonymous> E:\workspace\node_modules\graceful-fs\graceful-fs.js:202:53
+      1    6.3%      LazyCompile: *<anonymous> internal/fs/streams.js:146:38
+      1  100.0%        LazyCompile: *onceWrapper events.js:422:21
+      1  100.0%          LazyCompile: *emit events.js:269:44
+      1  100.0%            LazyCompile: ~<anonymous> E:\workspace\node_modules\graceful-fs\graceful-fs.js:202:53
+      6    2.0%    LazyCompile: *<anonymous> internal/fs/streams.js:177:55
+      6  100.0%      LazyCompile: *wrapper fs.js:485:19
+      4    1.3%    LazyCompile: *writeGeneric internal/stream_base_commons.js:141:22
+      4  100.0%      LazyCompile: *connectionCorkNT _http_outgoing.js:697:26
+      4  100.0%        LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
+      4    1.3%    LazyCompile: *go$open E:\workspace\node_modules\graceful-fs\graceful-fs.js:252:22
+      4  100.0%      LazyCompile: *ReadStream internal/fs/streams.js:64:20
+      4  100.0%        LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      4  100.0%          D:\Program Files\nodejs\node.exe
+
