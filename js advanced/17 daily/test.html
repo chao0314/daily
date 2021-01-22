@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    let name = "global";
+    let obj = {
+        name: "test",
+        say: () => {
+            console.log("name", this, this.name)
+        }
+    }
+
+    obj.say()
+    setTimeout(obj.say, 1000);
+
+    class Test {
+
+        constructor() {
+            this.name = "hello"
+            this.say = () => {
+                console.log("name", this, this.name)
+            }
+        }
+
+
+    }
+</script>
+</html>

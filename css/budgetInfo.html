@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        input {
+            outline: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .increment {
+
+            background: #50aff8;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .increment a {
+
+            height: 40px;
+            width: 60px;
+            line-height: 40px;
+            float: right;
+            margin-right: 40px;
+            color: white;
+            background: orange;
+            text-align: center;
+
+        }
+
+        .content li {
+            display: inline-block;
+            min-height: 40px;
+            border-bottom: 1px solid silver;
+        }
+
+        .content li span {
+            display: inline-block;
+            line-height: 1.5;
+            text-align: center;
+            font-size: 12px;
+            vertical-align: middle;
+            word-break: break-all;
+
+
+        }
+
+        .content .small {
+            width: 30px;
+        }
+
+        .content .middle {
+            width: 50px;
+        }
+
+        .content .large {
+            width: 100px;
+        }
+
+        .content .odd {
+            background: #f6f7fb;
+
+        }
+
+        .content .title {
+            font-size: 12px;
+            font-weight: bold;
+            line-height: 39px;
+
+        }
+
+        .search {
+            background: #f6f7fb;
+            border: 1px solid silver;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 800px;
+            height: 400px;
+            margin: auto;
+            padding: 10px;
+            /*display: none;*/
+        }
+
+        .search .condition {
+            text-align: center;
+        }
+
+        .search .condition input[type=text] {
+            height: 30px;
+            margin-right: 5px;
+            width: 150px;
+        }
+
+        .search .condition input[type=button] {
+            height: 30px;
+            margin-right: 5px;
+            width: 40px;
+        }
+
+        .search .list {
+            height: 320px;
+            padding-top: 10px;
+            margin-top: 10px;
+            overflow-y: auto;
+        }
+
+        .list li {
+            text-align: center;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        .list li a {
+            height: 30px;
+            display: inline-block;
+            width: 100%;
+            color: black;
+            line-height: 30px;
+        }
+
+        .list li a:hover {
+            background: #0d8cf5;
+            color: white;
+        }
+
+        .list li span {
+            margin: 0 20px;
+        }
+
+        .info {
+            background: #f6f7fb;
+            width: 700px;
+            margin: auto;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            height: 550px;
+            padding: 0 50px;
+            border: 1px solid silver;
+            display: none;
+        }
+
+        .info p {
+            margin: 5px 5px 0;
+            height: 30px;
+            border-bottom: 1px solid silver;
+
+        }
+
+        .info p span {
+            min-width: 130px;
+            display: inline-block;
+        }
+
+        .info p input {
+            height: 100%;
+            width: 200px;
+
+        }
+
+        .info .progress {
+
+            height: 100px;
+
+        }
+
+        .info .progress textarea {
+            width: 200px;
+            font-size: 14px;
+            outline: none;
+
+        }
+
+        .info .progress span {
+            display: inline-block;
+            height: 100%;
+            line-height: 100px;
+            vertical-align: top;
+        }
+
+        .info .operation {
+            border: none;
+            text-align: center;
+        }
+
+        .info .operation input {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .primary {
+            background: #0d8cf5;
+            border: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap-box">
+    <div class="increment"><a href="javascript:;">新增</a></div>
+    <ul class="content">
+        <li class="title odd">
+            <span class="small">序号</span><span class="large">预算文号</span><span
+                class="middle">预算年份</span><span class="large">预算名称</span><span class="large">费用类预算编号</span><span
+                class="large">预算费用类型</span><span class="large">PQ/SQ单号</span><span
+                class="small">全款</span><span class="large">付款进度</span><span class="small">币种</span><span
+                class="small">税率</span><span class="large">不含税金额</span><span class="large">原币金额</span><span
+                class="large">含税金额</span>
+        </li>
+        <li class="even">
+            <span class="small">1</span><span class="large">国航股份发[2019] 1号</span><span
+                class="middle">2020</span><span class="large">xxxxxy预算</span><span
+                class="large">11111111111111</span><span
+                class="large">预算费用类型</span><span class="large">113800002222</span><span
+                class="small">是</span><span class="large">第1/5笔，为订单总金额的10%</span><span class="small">人民币</span><span
+                class="small">17%</span><span class="large">10000000.00</span><span class="large">原币金额</span><span
+                class="large">含税金额</span>
+        </li>
+    </ul>
+
+</div>
+<div class="search">
+    <div class="condition">
+        年份：<input type="text">名称：<input type="text"><input type="button" value="查询" class="primary"><input type="button"
+                                                                                                           value="取消">
+    </div>
+    <ul class="list">
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+        <li><a href="javascript:;"><span>2020</span><span>xxxx预算</span></a></li>
+    </ul>
+</div>
+<div class="info">
+    <p><span>预算文号：</span><span>国航股份发[2019] 1号</span></p>
+    <p><span>预算年份：</span><span>2020</span></p>
+    <p><span>预算名称：</span><span>xxxx预算</span></p>
+    <p><span>费用类预算编号：</span><span>xxxx预算</span></p>
+    <p><span>预算费用类型：</span><span>xxxx预算</span></p>
+    <p><span>PQ/SQ单号：</span><span>xxxx预算</span></p>
+    <p><span>付款币种：</span><input type="text" class="currency"></p>
+    <p><span>税率（%）：</span><input type="text" class="rate"></p>
+    <p><span>不含税金额：</span><input type="text" class="noRateAmount"></p>
+    <p><span>原币金额：</span><input type="text" class="original"></p>
+    <p><span>含税金额：</span><input type="hasRateAmount"></p>
+    <p class="progress"><span>付款进度：</span><textarea id="" cols="15" rows="5"></textarea></p>
+    <p class="operation"><input type="button" value="确认" class="primary"><input type="button" value="取消"></p>
+
+
+</div>
+
+</body>
+</html>

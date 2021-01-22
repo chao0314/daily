@@ -2,7 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/daily.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/daily.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/full stack/笔记/linux笔记.txt" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/笔记/linux笔记.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/full stack/笔记/node-db.js" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/笔记/node-db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/canva-demo/canvas/俄罗斯方块/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/canva-demo/canvas/俄罗斯方块/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js advanced/17 daily/currying.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/17 daily/currying.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-practice/node-error/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-process-error/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-practice/node-error/cluster.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-process-error/cluster.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-practice/node-geek/demo/server/profile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-geek/demo/server/profile.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-practice/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node-practice/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,11 +24,14 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="package.json" />
-        <option value="Vue Single File Component" />
-        <option value="HTML File" />
         <option value="GraphQL File" />
+        <option value="Vue Single File Component" />
+        <option value="TypeScript Vue Component" />
+        <option value="CSS File" />
+        <option value="React Class Component" />
+        <option value="React File" />
+        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -25,11 +40,13 @@
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JsFlowSettings">
-    <service-enabled>true</service-enabled>
-    <exe-path />
-    <other-services-enabled>true</other-services-enabled>
-    <auto-save>true</auto-save>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1OPhA3mEpSn7qCECGHxH7HrTzOi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -44,51 +61,67 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="12.16.0" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/node-practice/node-geek/demo/public" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="javascript.nodejs.core.library.configured.version" value="12.18.4" />
+    <property name="javascript.nodejs.core.library.typings.version" value="12.19.12" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/car-web-hook/src/store/user" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="D:/dev/nodejs/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="E:\workspace\daily\vue practice\ts-project\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+    <property name="vuejs.nuxt.types-notification-shown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\public" />
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\ssr\server" />
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\ssr\browser" />
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\ssr\com-components" />
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\views" />
+      <recent name="E:\workspace\daily\example\car-web-hook\src\store\user" />
+      <recent name="E:\workspace\daily\example\car-web-hook\src\store\test" />
+      <recent name="E:\workspace\daily\example\car-web-hook\src\assert" />
+      <recent name="E:\workspace\daily\example\car-web-hook\src\assert\css" />
+      <recent name="E:\workspace\daily\example\car-web-hook" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\views" />
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\public" />
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo\server\client" />
-      <recent name="E:\workspace\daily\node-practice\node-geek" />
-      <recent name="E:\workspace\daily\node-practice\node-geek\demo" />
+      <recent name="E:\workspace\daily\vue-simple\public" />
+      <recent name="E:\workspace\daily\vue-simple\src" />
+      <recent name="E:\workspace\daily\example\car-web-hook\src\store\test" />
+      <recent name="E:\workspace\daily\example\car-web-hook\src\store\user" />
+      <recent name="E:\workspace\daily\example\car-web-hook\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.cluster.js">
-    <configuration name="cluster.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node-practice/node-error/cluster.js" working-dir="$PROJECT_DIR$/node-practice/node-error">
+  <component name="RunManager" selected="Node.js.test.js">
+    <configuration name="budgetInfo.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/budgetInfo.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node-practice/node-geek/demo/server/index.js" working-dir="$PROJECT_DIR$/node-practice/node-geek/demo/server">
+    <configuration name="mi.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/mi/mi.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="remote-server.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/node-practice/node-geek/demo/remote/remote-server.js" working-dir="$PROJECT_DIR$/node-practice/node-geek/demo/remote">
+    <configuration name="sina.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/sina-m/sina.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
+    <configuration name="test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/example/car-web-hook/src/test.js" working-dir="$PROJECT_DIR$/example/car-web-hook/src">
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.budgetInfo.html" />
+      <item itemvalue="JavaScript Debug.mi.html" />
+      <item itemvalue="JavaScript Debug.sina.html" />
+      <item itemvalue="Node.js.test.js" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Node.js.cluster.js" />
-        <item itemvalue="Node.js.index.js" />
-        <item itemvalue="Node.js.remote-server.js" />
+        <item itemvalue="Node.js.test.js" />
+        <item itemvalue="JavaScript Debug.sina.html" />
+        <item itemvalue="JavaScript Debug.mi.html" />
+        <item itemvalue="JavaScript Debug.budgetInfo.html" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -205,14 +238,157 @@
       <workItem from="1593499764078" duration="3435000" />
       <workItem from="1593503884080" duration="2182000" />
       <workItem from="1593591268891" duration="1306000" />
-      <workItem from="1593740090568" duration="9014000" />
+      <workItem from="1593740090568" duration="9686000" />
+      <workItem from="1594001220068" duration="4207000" />
+      <workItem from="1594608030858" duration="759000" />
+      <workItem from="1595473654657" duration="705000" />
+      <workItem from="1595573343749" duration="1014000" />
+      <workItem from="1596162876704" duration="3269000" />
+      <workItem from="1596421412634" duration="1206000" />
+      <workItem from="1596513148092" duration="2205000" />
+      <workItem from="1596611781335" duration="821000" />
+      <workItem from="1596613153803" duration="1523000" />
+      <workItem from="1597647787209" duration="3601000" />
+      <workItem from="1597714554634" duration="12699000" />
+      <workItem from="1597754996354" duration="2539000" />
+      <workItem from="1597799313025" duration="8308000" />
+      <workItem from="1598014155804" duration="4677000" />
+      <workItem from="1598057038180" duration="5820000" />
+      <workItem from="1598235334890" duration="11998000" />
+      <workItem from="1598409038707" duration="602000" />
+      <workItem from="1598430478790" duration="238000" />
+      <workItem from="1598594835936" duration="8033000" />
+      <workItem from="1598620449430" duration="1728000" />
+      <workItem from="1598665181718" duration="13683000" />
+      <workItem from="1598841761754" duration="10517000" />
+      <workItem from="1598926090473" duration="15744000" />
+      <workItem from="1599009264899" duration="16096000" />
+      <workItem from="1599050566983" duration="6391000" />
+      <workItem from="1599095276418" duration="15752000" />
+      <workItem from="1599139081174" duration="4805000" />
+      <workItem from="1599215679455" duration="1682000" />
+      <workItem from="1599284418968" duration="6261000" />
+      <workItem from="1599446969794" duration="7994000" />
+      <workItem from="1599527658168" duration="3146000" />
+      <workItem from="1599613777029" duration="15854000" />
+      <workItem from="1599700381280" duration="12611000" />
+      <workItem from="1599787881493" duration="16716000" />
+      <workItem from="1599830046338" duration="3369000" />
+      <workItem from="1600047012772" duration="17815000" />
+      <workItem from="1600132901422" duration="14632000" />
+      <workItem from="1600409228890" duration="3897000" />
+      <workItem from="1600651071241" duration="13829000" />
+      <workItem from="1600736909501" duration="7725000" />
+      <workItem from="1600757321812" duration="5803000" />
+      <workItem from="1600778356192" duration="3122000" />
+      <workItem from="1600823885319" duration="14773000" />
+      <workItem from="1600909357781" duration="2704000" />
+      <workItem from="1600996306024" duration="11220000" />
+      <workItem from="1601038486285" duration="5610000" />
+      <workItem from="1601170254724" duration="17200000" />
+      <workItem from="1601209410718" duration="3240000" />
+      <workItem from="1601213370926" duration="3095000" />
+      <workItem from="1601262321902" duration="16023000" />
+      <workItem from="1601340640451" duration="7371000" />
+      <workItem from="1601355806348" duration="243000" />
+      <workItem from="1601356100359" duration="104000" />
+      <workItem from="1601356216919" duration="3275000" />
+      <workItem from="1601602284281" duration="1138000" />
+      <workItem from="1601628982673" duration="4681000" />
+      <workItem from="1602205783918" duration="759000" />
+      <workItem from="1602212364064" duration="13221000" />
+      <workItem from="1602297614552" duration="1063000" />
+      <workItem from="1602465504174" duration="11839000" />
+      <workItem from="1602552185533" duration="17740000" />
+      <workItem from="1602637948881" duration="21663000" />
+      <workItem from="1602682275563" duration="3055000" />
+      <workItem from="1602730543561" duration="15237000" />
+      <workItem from="1603085324774" duration="623000" />
+      <workItem from="1603266660460" duration="599000" />
+      <workItem from="1603331603491" duration="682000" />
+      <workItem from="1603332550451" duration="4520000" />
+      <workItem from="1603346949514" duration="6621000" />
+      <workItem from="1603677667057" duration="11301000" />
+      <workItem from="1603760751896" duration="35000" />
+      <workItem from="1603761195578" duration="738000" />
+      <workItem from="1603762196020" duration="52000" />
+      <workItem from="1603762320774" duration="428000" />
+      <workItem from="1603762976466" duration="35000" />
+      <workItem from="1603763109127" duration="5527000" />
+      <workItem from="1603846173971" duration="19600000" />
+      <workItem from="1603935447619" duration="18773000" />
+      <workItem from="1604019409266" duration="18190000" />
+      <workItem from="1604280040767" duration="2987000" />
+      <workItem from="1604285089763" duration="4475000" />
+      <workItem from="1604364736491" duration="4668000" />
+      <workItem from="1604451430733" duration="12500000" />
+      <workItem from="1604538575739" duration="9273000" />
+      <workItem from="1604637693518" duration="835000" />
+      <workItem from="1604905477963" duration="618000" />
+      <workItem from="1604988219307" duration="9353000" />
+      <workItem from="1605057647122" duration="14231000" />
+      <workItem from="1605168184688" duration="2397000" />
+      <workItem from="1605229288849" duration="7058000" />
+      <workItem from="1605237247932" duration="1501000" />
+      <workItem from="1605247845906" duration="7554000" />
+      <workItem from="1605840244895" duration="1241000" />
+      <workItem from="1606019651141" duration="1811000" />
+      <workItem from="1606105144181" duration="599000" />
+      <workItem from="1606351952648" duration="316000" />
+      <workItem from="1606717024804" duration="1130000" />
+      <workItem from="1606718312664" duration="318000" />
+      <workItem from="1606784649466" duration="1248000" />
+      <workItem from="1606876079720" duration="2460000" />
+      <workItem from="1606957725499" duration="601000" />
+      <workItem from="1607065204521" duration="1198000" />
+      <workItem from="1607388888774" duration="1145000" />
+      <workItem from="1607391382563" duration="931000" />
+      <workItem from="1607392407110" duration="33000" />
+      <workItem from="1607392532413" duration="1841000" />
+      <workItem from="1607477703650" duration="602000" />
+      <workItem from="1607908130170" duration="1776000" />
+      <workItem from="1607918383445" duration="5851000" />
+      <workItem from="1608011790743" duration="5457000" />
+      <workItem from="1608096852695" duration="5125000" />
+      <workItem from="1608185369112" duration="3172000" />
+      <workItem from="1608253579165" duration="1261000" />
+      <workItem from="1608262244701" duration="11622000" />
+      <workItem from="1608513202165" duration="2455000" />
+      <workItem from="1608599824816" duration="1203000" />
+      <workItem from="1608618476239" duration="8005000" />
+      <workItem from="1608684538535" duration="17041000" />
+      <workItem from="1608771195431" duration="2449000" />
+      <workItem from="1608856989678" duration="17674000" />
+      <workItem from="1609117451462" duration="13315000" />
+      <workItem from="1609203006616" duration="9899000" />
+      <workItem from="1609291391234" duration="10306000" />
+      <workItem from="1609376814944" duration="15807000" />
+      <workItem from="1609722129716" duration="12465000" />
+      <workItem from="1609808534625" duration="847000" />
+      <workItem from="1609894782101" duration="2017000" />
+      <workItem from="1610075841178" duration="268000" />
+      <workItem from="1610076182127" duration="624000" />
+      <workItem from="1610077080572" duration="714000" />
+      <workItem from="1610079784694" duration="6100000" />
+      <workItem from="1610346392586" duration="133000" />
+      <workItem from="1610346541274" duration="4304000" />
+      <workItem from="1610412923984" duration="17402000" />
+      <workItem from="1610499889002" duration="15868000" />
+      <workItem from="1610676663461" duration="597000" />
+      <workItem from="1610933824112" duration="716000" />
+      <workItem from="1610936847480" duration="14613000" />
+      <workItem from="1611017340112" duration="8908000" />
+      <workItem from="1611105825038" duration="7966000" />
+      <workItem from="1611189962408" duration="8694000" />
+      <workItem from="1611301735764" duration="370000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,119 +417,11 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="327" y="130" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592894360343">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="327" y="130" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1592894360343" />
-    <state x="409" y="163" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1032@0.0.1920.1032" timestamp="1590154621273" />
-    <state x="502" y="212" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1592548304612">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="502" y="212" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824@0.0.1536.824" timestamp="1592548304612" />
-    <state x="516" y="281" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1592533705454">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="516" y="281" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.0.1536.824@0.0.1536.824" timestamp="1592533705454" />
-    <state x="499" y="191" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper" timestamp="1590380616440">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="499" y="191" key="#com.intellij.ide.scriptingContext.ui.PerFileMappingsDialogWrapper/0.0.1536.824@0.0.1536.824" timestamp="1590380616440" />
-    <state x="608" y="356" key="#com.intellij.ide.util.TreeDirectoryChooserDialog" timestamp="1592814710955">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="608" y="356" key="#com.intellij.ide.util.TreeDirectoryChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1592814710955" />
-    <state x="543" y="153" key="FileChooserDialogImpl" timestamp="1592533697982">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="543" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1592533697982" />
-    <state width="1515" height="387" key="GridCell.Tab.0.bottom" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.0.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1515" height="387" key="GridCell.Tab.0.center" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.0.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1515" height="387" key="GridCell.Tab.0.left" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.0.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1515" height="387" key="GridCell.Tab.0.right" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.0.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620401" />
-    <state width="1515" height="387" key="GridCell.Tab.1.bottom" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.1.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1515" height="387" key="GridCell.Tab.1.center" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.1.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1515" height="387" key="GridCell.Tab.1.left" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.1.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1515" height="387" key="GridCell.Tab.1.right" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.1.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1515" height="387" key="GridCell.Tab.2.bottom" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.2.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1515" height="387" key="GridCell.Tab.2.center" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.2.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1515" height="387" key="GridCell.Tab.2.left" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.2.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620309" />
-    <state width="1515" height="387" key="GridCell.Tab.2.right" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.2.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1515" height="387" key="GridCell.Tab.3.bottom" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.3.bottom/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.3.bottom/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1515" height="387" key="GridCell.Tab.3.center" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.3.center/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.3.center/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1515" height="387" key="GridCell.Tab.3.left" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.3.left/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.3.left/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state width="1515" height="387" key="GridCell.Tab.3.right" timestamp="1593749609689">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1515" height="387" key="GridCell.Tab.3.right/0.0.1536.824@0.0.1536.824" timestamp="1593749609689" />
-    <state width="1892" height="347" key="GridCell.Tab.3.right/0.0.1920.1032@0.0.1920.1032" timestamp="1590156620310" />
-    <state x="270" y="56" key="SettingsEditor" timestamp="1593307945654">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="270" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1593307945654" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1593746203914">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1593746203914" />
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/daily$mi_html.dat" NAME="mi.html Coverage Results" MODIFIED="1603332889137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="WipCoverageRunner" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

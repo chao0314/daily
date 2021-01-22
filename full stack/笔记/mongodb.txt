@@ -1,0 +1,184 @@
+mongodb 安装自动执行服务
+cmd : mongod --config "xxx/xxx/mongodb.conf" --install --serviceName "MongoDB"
+
+-------------------------------------------------------------------------------------
+linux 安装
+
+$ mkdir -p /data /data/db
+$ cd /data
+$ curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel70-4.4.0.tgz
+$ tar -xvf mongodb-linux-x86_64-rhel70-4.4.0.tgz
+$ export PATH=$PATH:/data/mongodb-linux-x86_64-rhel70-4.4.0/bin
+$ mongod --dbpath /data/db --port 27017 --logpath /data/db/mongod.log
+//$ mongod --dbpath /data/db --port 27017 --logpath /data/db/mongod.log --fork –bind_ip 0.0.0.0
+
+//mongo 是客户端 shell命令,在安装包 bin/目录下 ./mongo 执行
+
+
+--------------------------------------------------------------------------------------
+
+repo 安装：
+
+新建 /etc/yum.repos.d/mongodb.repo，内容为
+
+[mongodb-org]
+name=MongoDB Repository
+baseurl=https://mirrors.aliyun.com/mongodb/yum/redhat/7/mongodb-org/4.4/x86_64/
+#baseurl=https://mirrors.tuna.tsinghua.edu.cn/mongodb/yum/el$releasever/
+gpgcheck=0
+enabled=1
+
+刷新缓存并安装 mongodb-org 即可。
+
+#sudo yum makecache
+sudo yum install mongodb-org
+#sudo mongod --dbpath /data/db --port 27017 --logpath /data/db/mongod.log
+//默认配置启动
+sudo  systemctl start mongod
+//开机启动
+sudo  systemctl enable mongod
+
+------------------------------------------------------------------------------------------
+导入数据：
+在dump目录（默认使用）下 sudo  mongorestore
+
+默认配置文件在
+(whereis xxx) 查看
+/etc/mongod.conf
+
+修改bindip 为0.0.0.0 监听通用端口 默认为127.0.0.1 监听本地ip
+
+
+
+-----------------------------------------------------------------------------------------------
+
+复制集：
+1.创建: mkdir /data /data/db
+
+/data/db1
+/data/db2
+/data/db3
+
+2. /data 下创建配置文件 mongod.conf (注意yuml格式中空格的要求)
+
+
+# /data/db1/mongod.conf
+systemLog:
+  destination: file
+  path: /data/db1/mongod.log # log path
+  logAppend: true
+storage:
+  dbPath: /data/db1 # data directory
+  journal:
+      enabled: true
+net:
+  bindIp: 0.0.0.0
+  port: 28017 # port
+replication:
+  replSetName: rs0
+  enableMajorityReadConcern: true #readConcern
+processManagement:
+  fork: true
+#security:
+  #authorization: enabled # username password
+  #keyFile: /data/mongod.key
+
+
+3. 启动各个节点的mongod
+
+mongod -f /data/mongod.conf
+mongod -f /data/mongod.conf
+mongod -f /data/mongod.conf
+
+4.配置复制集
+
+> mongo --port 28017
+> rs.initiate({
+    _id: "rs0",
+    members: [{
+        _id: 0,
+        host: "192.168.183.150:28017"
+    }, {
+        _id: 1,
+        host: "192.168.183.151:28018"
+    }, {
+        _id: 2,
+        host: "192.168.183.152:28019"
+    }]
+})
+
+5. 每个节点开启secondary节点读权限，以防止读写分离 readPreference 设置参数是不生效，从节点不能读取
+
+>mongo localhost:28018 或 mongo --port xxxxx
+
+> rs.slaveOk()
+
+//
+rs.stepDown(seconds) primary 降级 secondary
+将当前主库实例“降级”，则seconds时间内，这个实例不会把自己选为primary角色。
+
+----------------------------------------------------------------------------------------------------------
+6.开启鉴权
+
+//各节点配置文件中修改 security字段
+security:
+  authorization: enabled # username password
+  keyFile: /data/mongod.key
+
+
+//任意 xxx数字生成 mongod.key 文件，用户复制集节点间的认证，单节点生成后拷贝到其他节点
+
+openssl rand -base64 753 > /data/mongod.key
+---------------------------------------------------------
+//或者启动mongod时命令行指定 mongod –-auth –-port 27017 –-dbpath /data/db --keyFile /data/mongod.key
+---------------------------------------------------------
+//mongod 启用鉴权后 首次无密码登录只可以创建超级用户 用于后续创建其他用户
+
+db.createUser({user: "super", pwd: "super", roles: [{role: "root", db: "admin"}]})
+
+//检查
+db.runCommand({getParameter: 1, authenticationMechanisms: 1})
+
+//客户端超级用户登录
+mongo -u super -p super --authenticationDatabase admin --port 28017
+
+//创建某库的只读用户 要在 primary 节点上操作 切换到 admin 库创建
+db.createUser({user: "reader", pwd: "reader123", roles: [{ role:"read", db: "test" },...]})
+
+//创建某库的读写用户 早在primary 节点上操作
+db.createUser({user: "writer", pwd: "writer123", roles: [{ role:"readWrite", db: "test" },...]})
+
+//添加用户角色
+db.grantRolesToUser( "writer",[{ role: "readWrite", db: "wcar" }])
+
+mongo -u writer -p writer123 --authenticationDatabase admin --port 28017
+
+-----------------------------------------------------------------------------------------------------------
+7. 数据备份和恢复
+
+导出数据：
+mongodump -h 127.0.0.1:28017 -d xxx -c xxx --oplog -u super -p super
+• -h  host
+• -d database 可选
+• -c  collection 可选
+• --oplog: 复制 mongodump 开始到结束过程中的所有 oplog 并输出到结果中。 默认输出文件位于 dump/oplog.bson
+
+恢复数据：要在primary 节点上操作
+mongorestore -h 127.0.0.1:port --oplogReplay dump -u super -p super (默认)
+• --oplogReplay: 恢复完数据文件后再重放 oplog。默认重放 dump/oplog.bson
+
+另：更精准的恢复如指定恢复时间等操作，见pdf3
+
+
+使用技巧：
+
+1.创建索引 db.test.createIndex({city:1,{background:true}) //background 参数开启后台创建索引
+2.pref index
+3.e (equal) s (sort) r(range) 索引查找顺序性能高
+
+
+--------------------------------------------------------------------------------------------------
+
+//monngodb 复制集连接 url
+
+mongodb://super:super@192.168.183.150:28017/?authSource=admin&replicaSet=rs0&readPreference=primary&appname=MongoDB%20Compass&ssl=false

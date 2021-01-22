@@ -1,0 +1,30 @@
+.light {
+    color: red;
+    border: 1px solid greenyellow;
+}
+
+.alert {
+
+    width: 400px;
+    height: 200px;
+    background: #bce8f1;
+    margin: 200px auto;
+}
+
+.feature {
+    display: flex;
+}
+
+.feature input {
+    width: 30%;
+}
+
+
+.feature span {
+    width: 20px;
+    display: inline-block;
+    border: 1px solid silver;
+    text-align: center;
+    line-height: 30px;
+    margin: 0 2px;
+}

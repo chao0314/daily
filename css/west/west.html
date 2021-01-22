@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ul {
+            overflow: hidden;
+            margin: 200px auto 0;
+            width: 800px;
+
+        }
+
+        /*ul::after {*/
+        /*    content: '';*/
+        /*    display: block;*/
+        /*    clear: both;*/
+        /*    visibility: hidden;*/
+        /*    width: 0;*/
+        /*}*/
+
+        li {
+            list-style: none;
+            width: 200px;
+            height: 240px;
+            background: pink;
+            float: left;
+            animation: move 1s steps(8, end) infinite;
+        }
+
+        li:nth-child(1) {
+            background: url("./images/west_01.png") no-repeat;
+
+        }
+
+        li:nth-child(2) {
+            background: url("./images/west_02.png") no-repeat;
+
+        }
+
+        li:nth-child(3) {
+            width: 170px;
+            background: url("./images/west_03.png") no-repeat;
+            animation: move-2 1s steps(8, end) infinite;
+        }
+
+        li:nth-child(4) {
+            background: url("./images/west_04.png") no-repeat;
+            animation: move-3 1s steps(8, end) infinite;
+
+        }
+
+
+        @keyframes move {
+
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+
+                background-position: -1600px 0;
+            }
+        }
+
+        @keyframes move-2 {
+
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+
+                background-position: -1360px 0;
+            }
+        }
+
+        @keyframes move-3 {
+
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+
+                background-position: -1680px 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+
+</body>
+</html>

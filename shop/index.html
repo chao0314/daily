@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>中宇蛋糕</title>
+    <style>
+        html, body, header, section, footer, div, img, p, form, input, button, label {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /*border: 1px red solid;*/
+        }
+
+        html {
+            font-size: 100px;
+        }
+
+        body {
+            font-size: 16px;
+        }
+
+        header {
+            width: 100%;
+            font-size: 14px;
+            text-align: center;
+            height: 20px;
+            line-height: 20px;
+            margin-top: 5px;
+
+        }
+
+        .show {
+            margin: 24px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 16px;
+
+        }
+
+        .show > div {
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            margin: 5px 0;
+
+
+        }
+
+        .show > div > img {
+            width: 100%;
+            height: calc(100% - 28px);
+            border-radius: 5px;
+            border: 1px solid silver;
+
+        }
+
+        .show > div > p {
+
+            height: 28px;
+            font-size: 14px;
+            text-align: center;
+            line-height: 28px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+
+        }
+
+        .order {
+            display: none;
+        }
+
+        .order > form {
+
+            padding: 24px 0 24px 0.32rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        .order label {
+            font-size: 14px;
+            width: 0.3rem;
+        }
+
+        .order > form > div {
+            height: 30px;
+            width: 100%;
+            border-style: none;
+        }
+
+        .order > form > div > input {
+
+            height: 30px;
+            width: 1.8rem;
+        }
+
+        .button {
+
+            text-align: center;
+            transform: translateX(-0.32rem);
+        }
+
+        .button > button {
+
+            width: 0.6rem;
+            height: 0.3rem;
+            margin: 24px;
+        }
+
+    </style>
+</head>
+<body>
+<header>蛋糕预定</header>
+<section class="show">
+    <div><img src="./static/img/1.jpg" alt="">
+        <p>xxx蛋糕</p></div>
+    <div><img src="./static/img/2.jpg" alt="">
+        <p>xxx蛋糕</p></div>
+    <div><img src="./static/img/3.jpg" alt="">
+        <p>xxx蛋糕</p></div>
+</section>
+<section class="order">
+    <form action="">
+        <div>
+            <label for="cake">蛋糕：</label>
+            <input type="text" name="cake" id="cake" disabled>
+        </div>
+        <div>
+            <label for="name">姓名：</label>
+            <input type="text" name="name" id="name">
+        </div>
+        <div>
+            <label for="phone">电话：</label>
+            <input type="number" name="phone" id="phone">
+        </div>
+
+        <div>
+            <label for="year">　年：</label>
+            <input type="number" name="year" id="year">
+        </div>
+
+        <div>
+            <label for="month">　月：</label>
+            <input type="number" name="month" id="month">
+        </div>
+        <div>
+            <label for="day">　日：</label>
+            <input type="number" name="day" id="day">
+        </div>
+
+
+        <div class="button">
+            <button type="submit">提交</button>
+            <button type="button">取消</button>
+        </div>
+    </form>
+</section>
+<footer>浙江信息分部技术支持</footer>
+</body>
+<script src="./static/js/flex.js"></script>
+<script src="./static/js/axios.min.js"></script>
+<script>
+
+    var $ = document.querySelectorAll.bind(document);
+    var oShow = $('.show')[0];
+    var oDrder = $('.order')[0]
+    var oSubmit = $(".button > button[type=submit]")[0];
+    var oCancel = $(".button > button[type=button]")[0];
+    // console.log(oSubmit, oCancel)
+    $('.show > div').forEach(item => {
+
+        item.addEventListener('click', function () {
+            oShow.style.display = 'none';
+            oDrder.style.display = 'block';
+        })
+    })
+
+    oSubmit.addEventListener('click', function () {
+        oShow.style.display = 'flex';
+        oDrder.style.display = 'none';
+    })
+    oCancel.addEventListener('click', function () {
+        oShow.style.display = 'flex';
+        oDrder.style.display = 'none';
+    })
+
+</script>
+</html>

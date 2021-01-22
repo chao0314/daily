@@ -1,0 +1,22 @@
+.dialog-panel {
+    position: fixed;
+    left: 50%;
+    top: 100px;
+    width: 500px;
+    margin-left: -250px;
+    z-index: 99;
+    bottom: 200px;
+    overflow: auto;
+    height: 600px;
+}
+
+.dialog-shadow {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.3;
+    z-index: 98;
+}

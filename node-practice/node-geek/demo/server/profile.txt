@@ -21,15 +21,15 @@ Statistical profiling result from isolate-000001DA27836F20-14044-v8.log, (6366 t
       2    0.0%    4.5%  LazyCompile: *Readable.pipe _stream_readable.js:638:35
       1    0.0%    2.3%  RegExp: ^[\^_`a-zA-Z\-0-9!#$%&'*+.|~]+$
       1    0.0%    2.3%  LazyCompile: *writeHead _http_server.js:243:19
-      1    0.0%    2.3%  LazyCompile: *resolvePath E:\workspace\daily\node-practice\node-geek\node_modules\resolve-path\index.js:45:22
+      1    0.0%    2.3%  LazyCompile: *resolvePath E:\workspace\daily\node-practice\node-geek\node_modules\resolve-path\installer.js:45:22
       1    0.0%    2.3%  LazyCompile: *parserOnMessageComplete _http_common.js:138:33
       1    0.0%    2.3%  LazyCompile: *parserOnIncoming _http_server.js:715:26
       1    0.0%    2.3%  LazyCompile: *onfinish _stream_readable.js:758:20
       1    0.0%    2.3%  LazyCompile: *onceWrapper events.js:422:21
-      1    0.0%    2.3%  LazyCompile: *onSocket E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\index.js:106:20
-      1    0.0%    2.3%  LazyCompile: *onFinished E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\index.js:45:20
+      1    0.0%    2.3%  LazyCompile: *onSocket E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\installer.js:106:20
+      1    0.0%    2.3%  LazyCompile: *onFinished E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\installer.js:45:20
       1    0.0%    2.3%  LazyCompile: *maybeReadMore_ _stream_readable.js:593:24
-      1    0.0%    2.3%  LazyCompile: *listener E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\index.js:161:20
+      1    0.0%    2.3%  LazyCompile: *listener E:\workspace\daily\node-practice\node-geek\node_modules\on-finished\installer.js:161:20
       1    0.0%    2.3%  LazyCompile: *insertGuarded internal/timers.js:315:23
       1    0.0%    2.3%  LazyCompile: *dirname path.js:582:10
       1    0.0%    2.3%  LazyCompile: *afterWriteTick _stream_writable.js:513:24
@@ -37,7 +37,7 @@ Statistical profiling result from isolate-000001DA27836F20-14044-v8.log, (6366 t
       1    0.0%    2.3%  LazyCompile: *_addListener events.js:349:22
       1    0.0%    2.3%  LazyCompile: *ReadStream._read internal/fs/streams.js:144:38
       1    0.0%    2.3%  LazyCompile: *OutgoingMessage.uncork _http_outgoing.js:242:44
-      1    0.0%    2.3%  LazyCompile: *Accepts.encoding.Accepts.encodings E:\workspace\daily\node-practice\node-geek\node_modules\accepts\index.js:127:40
+      1    0.0%    2.3%  LazyCompile: *Accepts.encoding.Accepts.encodings E:\workspace\daily\node-practice\node-geek\node_modules\accepts\installer.js:127:40
       1    0.0%    2.3%  LazyCompile: *<anonymous> internal/util/debuglog.js:57:18
       1    0.0%    2.3%  LazyCompile: *<anonymous> internal/streams/destroy.js:38:30
       1    0.0%    2.3%  LazyCompile: *<anonymous> _http_outgoing.js:514:45
@@ -93,17 +93,17 @@ Statistical profiling result from isolate-000001DA27836F20-14044-v8.log, (6366 t
       7  100.0%        LazyCompile: ~readPackageExports internal/modules/cjs/loader.js:296:28
       7  100.0%          LazyCompile: ~applyExports internal/modules/cjs/loader.js:488:22
       7  100.0%            LazyCompile: ~resolveExports internal/modules/cjs/loader.js:540:24
-      6    5.3%      LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      6    5.3%      LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\installer.js:37:21
       5   83.3%        D:\Program Files\nodejs\node.exe
-      1   16.7%        LazyCompile: *dispatch E:\workspace\daily\node-practice\node-geek\node_modules\koa-compose\index.js:35:23
+      1   16.7%        LazyCompile: *dispatch E:\workspace\daily\node-practice\node-geek\node_modules\koa-compose\installer.js:35:23
       1  100.0%          LazyCompile: *handleRequest E:\workspace\daily\node-practice\node-geek\node_modules\koa\lib\application.js:146:27
       1  100.0%            LazyCompile: *parserOnIncoming _http_server.js:715:26
       6    5.3%      D:\Program Files\nodejs\node.exe
-      3   50.0%        LazyCompile: *isHidden E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:149:19
-      2   66.7%          LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
-      2  100.0%            LazyCompile: *dispatch E:\workspace\daily\node-practice\node-geek\node_modules\koa-compose\index.js:35:23
-      1   33.3%          LazyCompile: ~send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
-      1  100.0%            LazyCompile: ~serve E:\workspace\daily\node-practice\node-geek\node_modules\koa-static\index.js:39:33
+      3   50.0%        LazyCompile: *isHidden E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\installer.js:149:19
+      2   66.7%          LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\installer.js:37:21
+      2  100.0%            LazyCompile: *dispatch E:\workspace\daily\node-practice\node-geek\node_modules\koa-compose\installer.js:35:23
+      1   33.3%          LazyCompile: ~send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\installer.js:37:21
+      1  100.0%            LazyCompile: ~serve E:\workspace\daily\node-practice\node-geek\node_modules\koa-static\installer.js:39:33
       1   16.7%        LazyCompile: ~processTicksAndRejections internal/process/task_queues.js:69:35
       1   16.7%        LazyCompile: ~FastBuffer internal/buffer.js:944:1
       1  100.0%          LazyCompile: ~createUnsafeBuffer buffer.js:134:28
@@ -155,7 +155,7 @@ Statistical profiling result from isolate-000001DA27836F20-14044-v8.log, (6366 t
       2    1.8%      LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
       2    1.8%      LazyCompile: *go$open E:\workspace\node_modules\graceful-fs\graceful-fs.js:252:22
       2  100.0%        LazyCompile: *ReadStream internal/fs/streams.js:64:20
-      2  100.0%          LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      2  100.0%          LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\installer.js:37:21
       2  100.0%            D:\Program Files\nodejs\node.exe
       2    1.8%      LazyCompile: *_storeHeader _http_outgoing.js:345:22
       2  100.0%        LazyCompile: *writeHead _http_server.js:243:19
@@ -184,6 +184,6 @@ Statistical profiling result from isolate-000001DA27836F20-14044-v8.log, (6366 t
       4  100.0%        LazyCompile: *processTicksAndRejections internal/process/task_queues.js:69:35
       4    1.3%    LazyCompile: *go$open E:\workspace\node_modules\graceful-fs\graceful-fs.js:252:22
       4  100.0%      LazyCompile: *ReadStream internal/fs/streams.js:64:20
-      4  100.0%        LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\index.js:37:21
+      4  100.0%        LazyCompile: *send E:\workspace\daily\node-practice\node-geek\node_modules\koa-send\installer.js:37:21
       4  100.0%          D:\Program Files\nodejs\node.exe
 

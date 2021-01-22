@@ -1,5 +1,5 @@
-// ¿ÂÀï»¯ ÈÃº¯Êı±äµÃ¸ü¾ßÌåÒ»Ğ©
-//bindº¯Êı µ×²ã»úÖÆ Àí½â¿ÂÀï»¯
+// æŸ¯é‡ŒåŒ– è®©å‡½æ•°å˜å¾—æ›´å…·ä½“ä¸€äº›
+//bindå‡½æ•° åº•å±‚æœºåˆ¶ ç†è§£æŸ¯é‡ŒåŒ–
 // isType context type   => isString isBoolean
 
 
@@ -31,7 +31,7 @@ console.log(currying(add)(1)(2)(3)(4));
 
 
 /*
-À©Õ¹£º
+æ‰©å±•ï¼š
 * sum(1)(2)(3)  6;
   sum(1, 2, 3)(4)  10;
   sum(1)(2)(3)(4)(5)  15;
@@ -61,8 +61,8 @@ console.log(sum(1)(2)(3).end);
 console.log(sum(1, 2, 3)(4).end);
 console.log(sum(1)(2)(3)(4)(5).end);
 
-// ·´¿ÂÀï»¯  ÈÃÒ»¸öº¯ÊıµÄÓ¦ÓÃ·¶Î§ ±äµÃ¸ü¹ãÒ»Ğ©
-//ÀıÈç Object.prototype.toString
+// åæŸ¯é‡ŒåŒ–  è®©ä¸€ä¸ªå‡½æ•°çš„åº”ç”¨èŒƒå›´ å˜å¾—æ›´å¹¿ä¸€äº›
+//ä¾‹å¦‚ Object.prototype.toString
 
 function unCurrying(fn) {
     return function (context, ...args) {

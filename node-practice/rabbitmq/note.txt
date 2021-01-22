@@ -1,0 +1,3 @@
+参考：
+
+http://www.squaremobius.net/amqp.node/channel_api.html#confirmchannel

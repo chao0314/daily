@@ -1,0 +1,23 @@
+{
+  "name": "daily",
+  "version": "1.0.0",
+  "description": "daily project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chao0314/daily.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chao0314/daily/issues"
+  },
+  "homepage": "https://github.com/chao0314/daily#readme",
+  "dependencies": {
+    "mongoose": "^5.9.27"
+  }
+}

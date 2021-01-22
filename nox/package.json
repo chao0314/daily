@@ -1,0 +1,31 @@
+{
+  "name": "nox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.13.0",
+    "koa-router": "^9.4.0",
+    "module-alias": "^2.2.2",
+    "mongoose": "^5.10.3",
+    "redis": "^3.0.2"
+  },
+  "_moduleAliases": {
+    "@/utils": "./utils",
+    "@/libs": "./libs",
+    "@/app": "./app",
+    "@/config": "./config.js",
+    "@/router": "./libs/di/router.js",
+    "@/controller": "./libs/di/controller.js",
+    "@/service": "./libs/di/service.js",
+    "@/dao": "./libs/di/dao.js",
+    "@/model": "./libs/di/model.js",
+    "@/mongo": "./libs/di/mongoModel.js"
+  }
+}
