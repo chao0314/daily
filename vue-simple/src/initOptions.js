@@ -1,4 +1,5 @@
 import initState from "./initState";
+import compileToFunction from "./compiler/index";
 
 export default function initOptionsMixin(Vue) {
 
@@ -26,9 +27,10 @@ export default function initOptionsMixin(Vue) {
             let template = vm.$options.template;
             if (!template) template = $el.outerHTML;
             vm.$options.render = compileToFunction(template);
+
         }
 
-        mountComponent(vm, $el);
+        // mountComponent(vm, $el);
 
     }
 
