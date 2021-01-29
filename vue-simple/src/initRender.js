@@ -31,5 +31,10 @@ export default function initRenderMixin(Vue) {
         return typeof value === 'object' ? JSON.stringify(value) : value;
     }
 
+    Vue.prototype._renderToVDomTree = function () {
+        const vm = this;
+        // 根据模板编译出来的 render函数，当然也有可能是用户写的
+        return vm.$options.render.call(vm);
 
+    }
 }

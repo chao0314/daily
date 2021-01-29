@@ -20,7 +20,7 @@ export default function compileToFunction(template) {
     if (root && root.type === 1) {
 
         let codeStr = genCode(root);
-        let renderStr = `with(this){return ${codeStr}`;
+        let renderStr = `with(this){return ${codeStr}}`;
         return new Function(renderStr);
 
     } else throw new Error('need root element or template error');

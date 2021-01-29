@@ -10,8 +10,8 @@
     <script src="../dist/umd/vue.js"></script>
 </head>
 <body>
-<div id="app" title="hello" style="color:silver;background:orange">hello {{name}} today<span
-        style="color:red;background:black">world</span>
+<div id="app" title="hello" style="color:silver;background:orange">hello <h2>{{name}}</h2> today,<span
+        style="color:red;background:black">world !</span>
 </div>
 </body>
 <script>
@@ -20,7 +20,7 @@
         el: "#app",
         data() {
             return {
-                name: "hello",
+                name: "wzc",
                 arr: [1, 2, 3],
                 arrObj: [{name: "arrObj"}]
 

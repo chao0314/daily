@@ -114,13 +114,22 @@ export default function parseHtml(tpl = "") {
 
             onEnd(endMatch[1]);
             tpl = tpl.slice(endMatch[0].length);
+            //结束标签后面可能还有文本 例如 <div> hello <h2> wonderful</h2> world</div>
+            // 但由于 startTagOpen 和 endTag 都是起始匹配 ，so...
+            //stack.length === 0 说明已经没有元素来容纳这部分文本了，是模板出错，下面处理。
+            let nextFlag = tpl.indexOf('<');
+            if (stack.length !== 0 && nextFlag > 0) {
+                let text = tpl.slice(0, nextFlag);
+                onText(text);
+                tpl = tpl.slice(nextFlag);
+            }
 
         } else {
-            console.log('there is something out of tag :', tpl);
+            console.error('there is something out of tag :', tpl);
             break;
         }
     }
-
+    console.log("end  tpl", tpl);
     if (stack.length !== 0) throw new Error('tag not match,please check !');
     return root;
 

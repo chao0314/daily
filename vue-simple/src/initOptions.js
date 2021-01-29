@@ -1,5 +1,6 @@
 import initState from "./initState";
 import compileToFunction from "./compiler/index";
+import {mountComponent} from "./lifecycle";
 
 export default function initOptionsMixin(Vue) {
 
@@ -30,7 +31,7 @@ export default function initOptionsMixin(Vue) {
 
         }
 
-        // mountComponent(vm, $el);
+        mountComponent(vm, $el);
 
     }
 
