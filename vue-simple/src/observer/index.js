@@ -1,5 +1,6 @@
 import {isObj} from "../utils/index";
 import hijackArray from "./array";
+import Depend from "./depend";
 
 class Observer {
     constructor(data) {
@@ -39,19 +40,33 @@ class Observer {
 
 
     defineReactive(obj, key, value) {
-        //  typeof value also is obj
+        // one prop/key  one dep, one dep maybe has many watcher
+        //one  component has one watcher, one watcher normal has many dep
+        let dep = new Depend();
+        //  typeof value also  maybe is obj
         observe(value);
         Object.defineProperty(obj, key, {
 
             get() {
                 console.log('reactive get', key, value);
+
+                if (Depend.getActiveWatcher()) {
+
+
+
+
+
+                }
+
                 return value;
             },
             set(newVal) {
-                console.log('reactive set', key, value);
-                // typeof new value is obj
-                observe(newVal);
-                value = newVal;
+                if (newVal !== value) {
+                    console.log('reactive set', key, value);
+                    // typeof new value is obj
+                    observe(newVal);
+                    value = newVal;
+                }
 
             }
         })
@@ -67,8 +82,8 @@ export default function observe(data) {
 
 
     if (typeof data !== 'object') return;
-    if (data.__ob__) return;
+    if (data.__ob__) return data;
 
-    new Observer(data);
+    return new Observer(data);
 
 }
