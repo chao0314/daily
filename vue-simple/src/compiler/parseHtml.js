@@ -64,6 +64,7 @@ export default function parseHtml(tpl = "") {
         let startMatch = tpl.match(startTagOpen);
         let endMatch = tpl.match(endTag);
         if (startMatch) {
+            // console.log("start---",startMatch)
             let [full, tagName] = startMatch;
             let attrs = [];
             tpl = tpl.slice(full.length);
@@ -93,14 +94,15 @@ export default function parseHtml(tpl = "") {
                 if (nextFlag !== -1) {
                     let text = tpl.slice(0, nextFlag);
                     tpl = tpl.slice(nextFlag);
-                    if (startClose[0] === '/>') {
+                    // console.log("------",startClose)
+                    if (startClose[1] === '/' || tagName === 'br' || tagName === 'input') {
                         onEnd(tagName);
                     }
                     onText(text);
 
                 } else {
                     //自闭合标签 之后没有没有其他标签（开始或结束）， 但有文本，说明格式不对。
-                    if (startClose[0] === '/>' && tpl.length > 0) throw new Error('tag not match close ')
+                    if ((startClose[1] === '/' || tagName === 'br' || tagName === 'input') && tpl.length > 0) throw new Error('tag not match close ')
 
                 }
 

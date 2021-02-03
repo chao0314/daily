@@ -10,8 +10,9 @@
     <script src="../dist/umd/vue.js"></script>
 </head>
 <body>
-<div id="app" title="hello" style="color:silver;background:orange">hello <h2>{{name}}</h2> today,<span
-        style="color:red;background:black">world !</span>
+<div id="app" title="hello" style="color:silver;background:orange">hello <h2>{{name}}</h2> today,{{arrObj[0].name}}
+    <br/><span
+            style="color:red;background:black">world !</span>
 </div>
 </body>
 <script>
@@ -39,6 +40,14 @@
     // vm.arrObj[0].name = "change";
     // vm.arrObj.push({name: "new push"});
     // console.log(vm.arrObj);
+    //
+    setTimeout(() => {
+        vm.name = "wzc1";
+        vm.name = "wzc2";
+        vm.name = "wzc3";
+        vm.arrObj[0].name = "hello obj";
+
+    }, 2000)
 
 
 </script>

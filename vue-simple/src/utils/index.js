@@ -8,3 +8,5 @@ export function isObj(value) {
 
     return value && value instanceof Object && !Array.isArray(value);
 }
+
+

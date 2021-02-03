@@ -19,6 +19,8 @@ class Observer {
 
             this.observeArray(data);
         }
+        // observer 的自有dep 用于收集使用该对象的 watcher,以便于后续 $set 扩展
+        this.dep = new Depend();
 
 
     }
@@ -44,16 +46,30 @@ class Observer {
         //one  component has one watcher, one watcher normal has many dep
         let dep = new Depend();
         //  typeof value also  maybe is obj
-        observe(value);
+        // 如果 value 是基本类型，则 ob为 undefined，因为基本类型无需再观测，只需 set/get时进行相应处理即可。
+        let ob = observe(value);
         Object.defineProperty(obj, key, {
 
             get() {
                 console.log('reactive get', key, value);
+                let activeWatcher = Depend.getActiveWatcher();
+                // console.log(" get activeWatcher",activeWatcher)
+                if (activeWatcher) {
+                    // 每个属性需要收集此时的 active watcher,即使是类似 {{user}} data(){return {user:{name:"hello"}}}对象，
+                    //由于在模板渲染的时候有 JSON.stringify 仍会执行到每个具体字段(name)的 get
+                    dep.addWatcher(activeWatcher);
 
-                if (Depend.getActiveWatcher()) {
+                    if (ob) {
+                        // value 是对象或数组,本身也需要收集此时的 active watcher，便于后续 $set
+                        ob.dep.addWatcher(activeWatcher);
 
+                    }
 
+                    // value 是数组，那么数组的每个子元素如果是对象或数组，也要收集此时的 active watcher，尤其还需要考虑多层数组
+                    if (ob && Array.isArray(value)) {
+                        Depend.dependArray(value, activeWatcher);
 
+                    }
 
 
                 }
@@ -62,10 +78,12 @@ class Observer {
             },
             set(newVal) {
                 if (newVal !== value) {
-                    console.log('reactive set', key, value);
+                    console.log('reactive set', key, newVal);
                     // typeof new value is obj
                     observe(newVal);
                     value = newVal;
+                    // notify  these watchers update who depend this value;
+                    dep.notify();
                 }
 
             }
@@ -82,7 +100,7 @@ export default function observe(data) {
 
 
     if (typeof data !== 'object') return;
-    if (data.__ob__) return data;
+    if (data.__ob__) return data.__ob__;
 
     return new Observer(data);
 

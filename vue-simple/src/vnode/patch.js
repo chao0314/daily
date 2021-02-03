@@ -1,11 +1,10 @@
-
-
 export default function patchDomTree(oldVNode, newVNode) {
 
     if (oldVNode.nodeType === 1) {
         //初次渲染  oldVNode 是真实 dom 元素
         let newElement = createElement(newVNode);
         oldVNode.parentElement.replaceChild(newElement, oldVNode);
+        return newElement;
     }
 
 
