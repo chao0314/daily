@@ -1,5 +1,6 @@
 import {isFn} from './utils/index';
 import observe from "./observer/index";
+import Watcher from "./observer/watcher";
 
 export default function initState(vm) {
 
@@ -8,6 +9,17 @@ export default function initState(vm) {
         initData(vm);
 
     }
+
+    // computed
+
+
+    // watch
+
+    if (vm.$options.watch) {
+        initWatch(vm);
+
+    }
+
 
 }
 
@@ -34,5 +46,29 @@ function proxyData(receiver, proxyKey, key) {
 
 
     })
+
+}
+
+function initWatch(vm) {
+
+    let watch = vm.$options.watch;
+
+    Object.entries(watch).forEach(([key, value]) => {
+
+        $watch(vm, key, value);
+    })
+
+
+}
+
+export function $watch(vm, key, handler) {
+
+    if (Array.isArray(handler)) handler = function (newV, oldV) {
+        handler.forEach(h => h(newV, oldV));
+
+    }
+
+    new Watcher(vm, key, handler, {isCustomWatch: true})
+
 
 }

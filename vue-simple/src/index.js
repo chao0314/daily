@@ -1,6 +1,6 @@
 import initOptionsMixin from "./initOptions";
 import initRenderMixin from "./initRender";
-import initLifeCycleMixin from "./lifecycle";
+import initLifeCycleMixin from "./initLifecycle";
 
 function Vue(options) {
 

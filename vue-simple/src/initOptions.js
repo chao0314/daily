@@ -1,6 +1,6 @@
-import initState from "./initState";
+import initState, {$watch} from "./initState";
 import compileToFunction from "./compiler/index";
-import {mountComponent} from "./lifecycle";
+import {mountComponent} from "./initLifecycle";
 
 export default function initOptionsMixin(Vue) {
 
@@ -13,6 +13,8 @@ export default function initOptionsMixin(Vue) {
         vm.$mount(vm.$options.el);
 
     }
+
+    Vue.prototype.$watch = $watch;
 
     Vue.prototype.$mount = function (el) {
 

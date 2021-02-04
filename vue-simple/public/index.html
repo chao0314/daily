@@ -26,6 +26,13 @@
                 arrObj: [{name: "arrObj"}]
 
             }
+        },
+        watch: {
+            name(newV, oldV) {
+                console.log("this is  watch", newV, oldV);
+
+            }
+
         }
     })
 
