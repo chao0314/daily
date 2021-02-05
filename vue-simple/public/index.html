@@ -12,7 +12,7 @@
 <body>
 <div id="app" title="hello" style="color:silver;background:orange">hello <h2>{{name}}</h2> today,{{arrObj[0].name}}
     <br/><span
-            style="color:red;background:black">world !</span>
+            style="color:red;background:black">world ! {{fullName}}</span>
 </div>
 </body>
 <script>
@@ -23,13 +23,24 @@
             return {
                 name: "wzc",
                 arr: [1, 2, 3],
-                arrObj: [{name: "arrObj"}]
+                arrObj: [{name: "arrObj"}],
+                firstname: "first name"
 
             }
         },
         watch: {
             name(newV, oldV) {
                 console.log("this is  watch", newV, oldV);
+
+            }
+
+        },
+        computed: {
+
+            fullName() {
+
+                return "this is computed test" + this.firstname;
+
 
             }
 
@@ -53,6 +64,8 @@
         vm.name = "wzc2";
         vm.name = "wzc3";
         vm.arrObj[0].name = "hello obj";
+
+        vm.firstname = "first name changed !!!"
 
     }, 2000)
 

@@ -7,7 +7,9 @@ export default class Depend {
 
 
     static setActiveWatcher(watcher) {
+        Depend.watchStack.push(watcher);
         Depend.activeWatcher = watcher;
+
     }
 
     static getActiveWatcher() {
@@ -16,8 +18,9 @@ export default class Depend {
     }
 
     static clearActiveWatcher() {
+        Depend.watchStack.pop();
+        Depend.activeWatcher = Depend.watchStack[Depend.watchStack.length - 1];
 
-        Depend.activeWatcher = null;
     }
 
     static dependArray(arr, watcher) {
@@ -56,3 +59,4 @@ export default class Depend {
 }
 
 Depend.activeWatcher = null;
+Depend.watchStack = [];
