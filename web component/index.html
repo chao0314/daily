@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+
+        .w-collapse {
+            background: silver;
+            border: 1px;
+            width: 200px;
+        }
+
+        .w-collapse-item {
+            background: orange;
+            color: white;
+        }
+
+        .w-collapse-item p {
+
+            background: pink;
+            color: red;
+        }
+    </style>
+
+</head>
+<body>
+<div id="component">
+    <w-collapse>
+        <w-collapse-item>
+            <span slot="title">node</span>
+            <span slot="content">this is node</span>
+        </w-collapse-item>
+        <w-collapse-item>
+            <span slot="title">vue</span>
+            <span slot="content">this is vue</span>
+        </w-collapse-item>
+        <w-collapse-item>
+            <span slot="title">react</span>
+            <span slot="content">this is react</span>
+
+        </w-collapse-item>
+    </w-collapse>
+
+</div>
+
+<template id="w-collapse">
+
+    <ul class="w-collapse">
+        <slot></slot>
+    </ul>
+
+</template>
+
+<template id="w-collapse-item">
+    <li class="w-collapse-item">
+        <p>
+            <slot name="title"></slot>
+        </p>
+        <div>
+            <slot name="content"></slot>
+        </div>
+    </li>
+</template>
+</body>
+
+<script>
+
+
+    class Collapse extends HTMLElement {
+
+        constructor() {
+            super();
+
+        }
+
+
+    }
+
+    class CollapseItem extends HTMLElement {
+        constructor() {
+            super();
+        }
+    }
+
+
+
+
+
+    customElements.define("w-collapse", Collapse);
+    customElements.define("w-collapse-item", CollapseItem);
+
+
+</script>
+<script>
+
+
+</script>
+
+</html>
