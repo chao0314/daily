@@ -1,14 +1,20 @@
 import initState, {$watch} from "./initState";
 import compileToFunction from "./compiler/index";
-import {mountComponent} from "./initLifecycle";
+import {mountComponent, callLifeCycleHook} from "./initLifecycle";
+import {mergeOptions} from "./utils/index";
 
 export default function initOptionsMixin(Vue) {
 
     Vue.prototype._initOptions = function (options) {
         const vm = this;
-        vm.$options = options;
+        //Vue 或 子组件构造函数
+        vm.$options = mergeOptions(vm.constructor.staticOptions, options);
+
+        callLifeCycleHook(vm, 'beforeCreate');
 
         initState(vm); //init data computed watch ...
+
+        callLifeCycleHook(vm, 'created');
 
         vm.$mount(vm.$options.el);
 

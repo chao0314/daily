@@ -2,7 +2,7 @@ import patchDomTree from "./vnode/patch";
 import Watcher from "./observer/watcher";
 
 export default function initLifeCycleMixin(Vue) {
-
+    // 目前 mounted updated 都执行，即未区分是否首次渲染，对 lifecycle hook 略有影响。
     Vue.prototype._update = function (vnode) {
 
         const vm = this;
@@ -30,3 +30,14 @@ export function mountComponent(vm, $el) {
 
 
 }
+
+
+export function callLifeCycleHook(vm, lifecycle) {
+
+    let handlers = vm.$options[lifecycle] || [];
+
+    handlers.forEach(handler => handler.call(vm));
+
+
+}
+

@@ -16,7 +16,7 @@ const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g //文本节点的内容 注意  
 export default function compileToFunction(template) {
 
     let root = parseHtml(template);
-    console.log(root);
+    // console.log(root);
     if (root && root.type === 1) {
 
         let codeStr = genCode(root);

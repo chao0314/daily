@@ -32,18 +32,21 @@ export default class Watcher {
     }
 
     updateComponent() {
-        console.log("update Component or watch");
+        // console.log("update Component or watch or computed");
         if (this.isCustomWatch) {
 
             let newV = this.getWatchValueFn();
             this.watchUpdatedFn.call(this.vm, newV, this.value);
             this.value = newV;
-
-        } else if (this.isComputedWatch) {
-
-            this.computedCacheIsValid = false;
-
-        } else this.updateComponentFn();
+        }
+            // } else if (this.isComputedWatch) {
+            //
+            //     console.log("---isComputedWatch---update----")
+            //
+            //     this.computedCacheIsValid = false;
+            //
+        // }
+        else this.updateComponentFn();
 
         this.callback && this.callback();
 
@@ -58,8 +61,8 @@ export default class Watcher {
 
         } else if (this.isComputedWatch) {
 
-            this.computedCacheIsValid = true;
             this.value = this.getComputedValueFn.call(this.vm);
+            this.computedCacheIsValid = true;
 
         } else this.updateComponent();
         Depend.clearActiveWatcher();
@@ -69,8 +72,13 @@ export default class Watcher {
     update() {
         // 依赖的数据更新了，此时需要更新组件，重新渲染
         //异步渲染
-        //update queue invoke updateComponent real
-        updateQueue.push(this);
+
+        if (this.isComputedWatch) {
+            // computed 的更新是同步的，否则若是异步的，在组件取值时候，computedCache 的值未变
+            this.computedCacheIsValid = false;
+
+            //update queue invoke updateComponent real
+        } else updateQueue.push(this);
 
 
     }

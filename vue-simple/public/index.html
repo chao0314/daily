@@ -17,6 +17,18 @@
 </body>
 <script>
 
+    Vue.mixin({
+        beforeCreate() {
+            console.log('beforeCreate from mixin');
+
+        },
+        created() {
+
+            console.log('created from mixin');
+        }
+
+    })
+
     let vm = new Vue({
         el: "#app",
         data() {
@@ -30,7 +42,7 @@
         },
         watch: {
             name(newV, oldV) {
-                console.log("this is  watch", newV, oldV);
+                // console.log("this is  watch", newV, oldV);
 
             }
 
@@ -39,11 +51,18 @@
 
             fullName() {
 
-                return "this is computed test" + this.firstname;
+                return "this is computed test " + this.firstname;
 
 
             }
 
+        },
+
+        beforeCreate() {
+            console.log('beforeCreate')
+        },
+        created() {
+            console.log('created');
         }
     })
 
@@ -59,15 +78,22 @@
     // vm.arrObj.push({name: "new push"});
     // console.log(vm.arrObj);
     //
-    setTimeout(() => {
-        vm.name = "wzc1";
-        vm.name = "wzc2";
-        vm.name = "wzc3";
-        vm.arrObj[0].name = "hello obj";
-
-        vm.firstname = "first name changed !!!"
-
-    }, 2000)
+    // setTimeout(() => {
+    //     vm.name = "wzc1";
+    //     vm.name = "wzc2";
+    //     vm.name = "wzc3";
+    //     vm.arrObj[0].name = "hello obj";
+    //
+    //     vm.firstname = "first name changed !!!"
+    //
+    // }, 2000)
+    //
+    // setTimeout(() => {
+    //
+    //
+    //     vm.firstname = "first name changed 222"
+    //
+    // }, 4000)
 
 
 </script>

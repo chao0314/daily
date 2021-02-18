@@ -131,7 +131,7 @@ export default function parseHtml(tpl = "") {
             break;
         }
     }
-    console.log("end  tpl", tpl);
+    // console.log("end  tpl", tpl);
     if (stack.length !== 0) throw new Error('tag not match,please check !');
     return root;
 

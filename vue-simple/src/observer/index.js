@@ -51,7 +51,7 @@ class Observer {
         Object.defineProperty(obj, key, {
 
             get() {
-                console.log('reactive get', key, value);
+                // console.log('reactive get', key, value);
                 let activeWatcher = Depend.getActiveWatcher();
                 // console.log(" get activeWatcher",activeWatcher)
                 if (activeWatcher) {
@@ -78,7 +78,7 @@ class Observer {
             },
             set(newVal) {
                 if (newVal !== value) {
-                    console.log('reactive set', key, newVal);
+                    // console.log('reactive set', key, newVal);
                     // typeof new value is obj
                     observe(newVal);
                     value = newVal;
