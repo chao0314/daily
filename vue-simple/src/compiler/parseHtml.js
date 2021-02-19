@@ -9,56 +9,9 @@ const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g //文本节点的内容
 const endTag = new RegExp(`^<\\/${qnameCapture}[^>]*>`); // 匹配标签结尾的 </div>
 
 
-let root;
-let stack = [];
-
-function onStart(tagName, attrs) {
-    // console.log('onStart', tagName, attrs);
-
-    let astNode = {
-        type: 1,
-        attrs,
-        tagName,
-        parent: null,
-        children: []
-    }
-
-    if (!root) root = astNode;
-    else {
-        let parent = stack[stack.length - 1];
-        parent.children.push(astNode);
-        astNode.parent = parent;
-    }
-
-    stack.push(astNode);
-
-
-}
-
-function onText(text) {
-    // console.log('onText', text);
-    let astNode = {
-        type: 3,
-        text,
-        parent: null
-    }
-
-    let parent = stack[stack.length - 1];
-    if (!parent) throw new Error('only text,need a root element');
-    parent.children.push(astNode);
-    astNode.parent = parent;
-
-}
-
-function onEnd(tagName) {
-    // console.log('onEnd', tagName);
-    let topEl = stack.pop();
-    if (tagName !== topEl.tagName) throw  new Error('tag not match');
-
-}
-
-
 export default function parseHtml(tpl = "") {
+    let root;
+    let stack = [];
 
     while (tpl = tpl.trim()) {
         let startMatch = tpl.match(startTagOpen);
@@ -135,6 +88,51 @@ export default function parseHtml(tpl = "") {
     if (stack.length !== 0) throw new Error('tag not match,please check !');
     return root;
 
+
+    function onStart(tagName, attrs) {
+        // console.log('onStart', tagName, attrs);
+
+        let astNode = {
+            type: 1,
+            attrs,
+            tagName,
+            parent: null,
+            children: []
+        }
+
+        if (!root) root = astNode;
+        else {
+            let parent = stack[stack.length - 1];
+            parent.children.push(astNode);
+            astNode.parent = parent;
+        }
+
+        stack.push(astNode);
+
+
+    }
+
+    function onText(text) {
+        // console.log('onText', text);
+        let astNode = {
+            type: 3,
+            text,
+            parent: null
+        }
+
+        let parent = stack[stack.length - 1];
+        if (!parent) throw new Error('only text,need a root element');
+        parent.children.push(astNode);
+        astNode.parent = parent;
+
+    }
+
+    function onEnd(tagName) {
+        // console.log('onEnd', tagName);
+        let topEl = stack.pop();
+        if (tagName !== topEl.tagName) throw  new Error('tag not match');
+
+    }
 
 }
 

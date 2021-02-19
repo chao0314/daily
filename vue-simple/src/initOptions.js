@@ -18,6 +18,8 @@ export default function initOptionsMixin(Vue) {
 
         vm.$mount(vm.$options.el);
 
+        callLifeCycleHook(vm, 'mounted');
+
     }
 
     Vue.prototype.$watch = $watch;
