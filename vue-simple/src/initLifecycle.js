@@ -26,7 +26,7 @@ export function mountComponent(vm, $el) {
 
     }
 
-    new Watcher(vm, updateComponent, () => console.log("component update"));
+    new Watcher(vm, updateComponent, () => console.log("component watcher update"));
 
 
 }
@@ -35,7 +35,6 @@ export function mountComponent(vm, $el) {
 export function callLifeCycleHook(vm, lifecycle) {
 
     let handlers = vm.$options[lifecycle] || [];
-
     handlers.forEach(handler => handler.call(vm));
 
 
