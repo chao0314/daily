@@ -1,5 +1,6 @@
 import patchDomTree from "./vnode/patch";
 import Watcher from "./observer/watcher";
+import nextTick from "./utils/nextTick";
 
 export default function initLifeCycleMixin(Vue) {
     // 目前 mounted updated 都执行，即未区分是否首次渲染，对 lifecycle hook 略有影响。
@@ -10,6 +11,8 @@ export default function initLifeCycleMixin(Vue) {
         vm.$el = patchDomTree(vm.$el, vnode);
 
     }
+
+    Vue.prototype.$nextTick = nextTick;
 
 
 }
