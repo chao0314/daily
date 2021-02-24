@@ -26,9 +26,9 @@ export default function patchDomTree(oldVNode, newVNode) {
         oldVNode.el.parentElement.replaceChild(el, oldVNode.el);
     } else if (!oldVNode.tagName) {
         // 是文本节点 直接替换
-        el = oldVNode.el;
-        el.textContent = newVNode.text;
-        newVNode.el = el;
+
+        oldVNode.el.textContent = newVNode.text;
+        el = newVNode.el = oldVNode.el;
 
     } else {
         //只要是同名标签就认为可以复用，此处无需比较 key,key 更多用在子元素列表中
@@ -37,11 +37,89 @@ export default function patchDomTree(oldVNode, newVNode) {
 
         const oldProps = oldVNode.data || {};
         const newProps = newVNode.data || {};
-        el = createElement(newVNode);
-        propsDiffHandler(el, oldProps, newProps);
+        // 复用 old vnode 的已创建dom 元素
+        el = newVNode.el = propsDiffHandler(oldVNode.el, oldProps, newProps);
 
         // 比对 处理子节点 children
         //todo...
+        const oldChildren = oldVNode.children || [];
+        const newChildren = newVNode.children || [];
+
+        if (oldChildren.length > 0 && newChildren.length > 0) {
+
+            let oldStartIndex = 0;
+            let oldStartNode = oldChildren[oldStartIndex];
+            let oldEndIndex = oldChildren.length - 1;
+            let oldEndNode = oldChildren[oldEndIndex];
+            let newStartIndex = 0;
+            let newStartNode = newChildren[newStartIndex];
+            let newEndIndex = newChildren.length - 1;
+            let newEndNode = newChildren[newEndIndex];
+
+            while (oldStartIndex <= oldEndIndex && newStartIndex <= newEndIndex) {
+
+                //可能在乱序比较时，已经被处理了，留有 null 占位，直接跳过
+                if (!oldStartNode) {
+                    oldStartNode = oldChildren[++oldStartIndex];
+                    continue;
+                }
+
+                if (!oldEndNode) {
+                    oldEndNode = oldChildren[--oldEndIndex];
+                    continue;
+
+                }
+
+
+                //头头比较  node 相同，那么向后移动头指针，同时更 继续 patch(若无 children其实本质就是处理 props);
+                if (equal(newStartNode, oldStartNode)) {
+                    patchDomTree(oldStartNode, newStartNode);
+                    oldStartNode = oldChildren[++oldStartIndex];
+                    newStartNode = newChildren[++newStartIndex];
+                    // 尾尾比较
+                } else if (equal(newEndNode, oldEndNode)) {
+                    patchDomTree(oldEndNode, newEndNode);
+                    oldEndNode = oldChildren[--oldEndIndex];
+                    newEndNode = newChildren[--newEndIndex];
+                    //头尾比较
+                } else if (equal(newStartNode, oldEndNode)) {
+
+                    patchDomTree(oldEndNode, newStartNode);
+                    el.insertBefore(oldEndNode.el, oldStartNode.el);
+                    oldEndNode = oldChildren[--oldEndIndex];
+                    newStartNode = newChildren[++newStartIndex];
+                    //尾头比较
+                } else if (equal(newEndNode, oldStartNode)) {
+
+                    patchDomTree(oldStartNode, newEndNode);
+                    //insertBefore(e,null) === appendChild(e)
+                    el.insertBefore(oldStartNode.el, oldEndNode.el.nextSibling);
+                    oldStartNode = oldChildren[++oldStartIndex];
+                    newEndNode = newChildren[--newEndIndex];
+                    //乱序比较
+                } else {
+
+
+
+
+
+                }
+
+
+            }
+
+
+        } else if (oldChildren.length > 0) {
+            //原有，现无，直接删
+            el.innerHTML = '';
+
+        } else if (newChildren.length > 0) {
+            //原无，现有，直接添
+
+            newChildren.forEach(child => el.appendChild(createElement(child)));
+
+
+        }
 
 
     }
@@ -73,6 +151,13 @@ function propsDiffHandler(el, oldProps, newProps) {
         } else el.setAttribute(key, value);
     })
 
+    return el;
+
+}
+
+function equal(nodeA, nodeB) {
+
+    return nodeA && nodeB && nodeA.tagName === nodeB.tagName && nodeA.key === nodeB.key;
 
 }
 
