@@ -56,6 +56,12 @@ export default function patchDomTree(oldVNode, newVNode) {
             let newEndIndex = newChildren.length - 1;
             let newEndNode = newChildren[newEndIndex];
 
+            const keyIndexMap = oldChildren.reduce((preRes, cur, index) => {
+
+                if (cur.key) preRes[cur.key] = index;
+                return preRes;
+            }, {})
+
             while (oldStartIndex <= oldEndIndex && newStartIndex <= newEndIndex) {
 
                 //可能在乱序比较时，已经被处理了，留有 null 占位，直接跳过
@@ -99,14 +105,42 @@ export default function patchDomTree(oldVNode, newVNode) {
                     //乱序比较
                 } else {
 
+                    const index = keyIndexMap[newStartNode.key];
+                    if (index) {
+                        let matchNode =  oldChildren[index];
+                        oldChildren[index]=  null;
+                        patchDomTree(matchNode,newStartNode);
+                        el.insertBefore(matchNode.el,oldStartNode.el);
 
 
+                    } else {
+
+                        el.insertBefore(createElement(newStartNode), oldStartNode.el);
+
+                    }
+
+                    newStartNode = newChildren[++newStartIndex];
 
 
                 }
 
 
             }
+
+            // while 跳出了
+            // 新的已经处理完，旧的有没用到的，删掉
+            if(oldStartIndex <=oldEndIndex){
+
+
+            }
+
+            //新的还没处理完，旧的已无可用，插入
+            if(newStartIndex <= newEndIndex){
+
+
+            }
+
+
 
 
         } else if (oldChildren.length > 0) {
