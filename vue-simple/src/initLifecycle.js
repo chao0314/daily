@@ -8,7 +8,24 @@ export default function initLifeCycleMixin(Vue) {
 
         const vm = this;
         //用虚拟dom 生成真实dom
-        vm.$el = patchDomTree(vm.$el, vnode);
+        const oldVNode = vm._curVNode;
+
+        if (oldVNode) {
+            callLifeCycleHook(vm, 'beforeUpdate');
+            vm.$el = patchDomTree(oldVNode, vnode);
+            callLifeCycleHook(vm, 'updated');
+
+
+        } else {
+            //初次渲染
+            callLifeCycleHook(vm, 'beforeMount');
+            vm.$el = patchDomTree(vm.$el, vnode);
+            callLifeCycleHook(vm, 'mounted');
+
+        }
+
+
+        vm._curVNode = vnode;
 
     }
 

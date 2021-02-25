@@ -26,8 +26,9 @@ export default function patchDomTree(oldVNode, newVNode) {
         oldVNode.el.parentElement.replaceChild(el, oldVNode.el);
     } else if (!oldVNode.tagName) {
         // 是文本节点 直接替换
-
-        oldVNode.el.textContent = newVNode.text;
+        const oldText = oldVNode.el.textContent.trim();
+        const newText = newVNode.text.trim();
+        if (oldText !== newText) oldVNode.el.textContent = newVNode.text;
         el = newVNode.el = oldVNode.el;
 
     } else {
@@ -107,10 +108,10 @@ export default function patchDomTree(oldVNode, newVNode) {
 
                     const index = keyIndexMap[newStartNode.key];
                     if (index) {
-                        let matchNode =  oldChildren[index];
-                        oldChildren[index]=  null;
-                        patchDomTree(matchNode,newStartNode);
-                        el.insertBefore(matchNode.el,oldStartNode.el);
+                        let matchNode = oldChildren[index];
+                        oldChildren[index] = null;
+                        patchDomTree(matchNode, newStartNode);
+                        el.insertBefore(matchNode.el, oldStartNode.el);
 
 
                     } else {
@@ -129,18 +130,44 @@ export default function patchDomTree(oldVNode, newVNode) {
 
             // while 跳出了
             // 新的已经处理完，旧的有没用到的，删掉
-            if(oldStartIndex <=oldEndIndex){
+            if (oldStartIndex <= oldEndIndex) {
+
+                for (let i = oldStartIndex; i <= oldEndIndex; i++) {
+                    //may be null 乱序比较被置 null
+                    if (oldChildren[i]) el.removeChild(oldChildren[i].el);
+
+                }
 
 
             }
 
             //新的还没处理完，旧的已无可用，插入
-            if(newStartIndex <= newEndIndex){
+            if (newStartIndex <= newEndIndex) {
+
+                for (let i = newStartIndex; i <= newEndIndex; i++) {
+
+
+                    /*
+                    是 null 说明 newEndNode就是初始最后一个，不是null 说明是处理后的，最后一个
+
+                    *  a b
+                    *
+                    *  a b c d
+
+                    *   a d
+                    *   a b c d
+                    *
+
+                    * */
+                    let nearEndNode = newChildren[newEndIndex + 1];
+
+                    el.insertBefore(createElement(newChildren[i]), nearEndNode ? nearEndNode.el : null);
+
+
+                }
 
 
             }
-
-
 
 
         } else if (oldChildren.length > 0) {
@@ -182,7 +209,7 @@ function propsDiffHandler(el, oldProps, newProps) {
 
         if (key === 'style') {
             Object.entries(value).forEach(([k, v]) => el.style[k] = v);
-        } else el.setAttribute(key, value);
+        } else if (key !== 'key') el.setAttribute(key, value);
     })
 
     return el;
@@ -195,7 +222,7 @@ function equal(nodeA, nodeB) {
 
 }
 
-function createElement(vnode) {
+export function createElement(vnode) {
 
     //data 近似 props
     let {tagName, data, children, text, componentOptions} = vnode;
