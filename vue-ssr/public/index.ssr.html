@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!--vue-ssr-outlet-->
+
+<!-- 本质上是 ejs模板 -->
+<!--html-webpack-plugin全局暴露 htmlWebpackPlugin 变量，options 上有 自定义 属性：client-->
+<script src="<%=htmlWebpackPlugin.options.client%>"></script>
+</body>
+</html>

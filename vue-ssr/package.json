@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client-dev": "webpack serve --config config/webpack.client.js",
+    "client-build": "webpack --config config/webpack.client.js --watch",
+    "server-build": "webpack --config config/webpack.server.js.js --watch",
+    "all-build": "concurrently \" npm run client-build \"  \"npm run server-build \""
   },
   "keywords": [],
   "author": "",
