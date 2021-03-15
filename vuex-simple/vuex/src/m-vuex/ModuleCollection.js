@@ -18,14 +18,14 @@ class ModuleCollection {
             //[a,b,c]
             const parentModule = path.slice(0, -1).reduce((parent, path) => parent[path], this.rootModule);
 
-            parentModule.setChildModule(path.slice(path.length - 1), module);
+            parentModule.setChildModule(path[(path.length - 1)], module);
 
         } else this.rootModule = module;
 
 
         if (rawModule.modules) {
 
-            rawModule.modules.entries(([name, raw]) => this.registerModule(path.concat(name), raw));
+            Object.entries(rawModule.modules).forEach(([name, raw]) => this.registerModule(path.concat(name), raw));
 
 
         }
@@ -41,7 +41,6 @@ class ModuleCollection {
         let ns = '';
 
         path.reduce((parent, name) => {
-
             const module = parent.getChildModule(name);
             if (module.namespaced) ns += `${name}/`;
             return module;
