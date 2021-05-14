@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+    const app = document.getElementById('app');
+    const {reactive, shallowReactive, readonly, shallowReadonly, effect, ref, toRef, toRefs} = VueReactivity;
+    const nameRef = ref('hello');
+    const state = reactive({msg: "hello world", age: 18});
+    const {msg, age} = toRefs(state);
+
+    effect(() => {
+
+        app.innerHTML = nameRef.value + age.value + msg.value;
+    })
+
+    setTimeout(() => {
+
+        nameRef.value = 'ref change';
+        msg.value = 'toRefs change';
+    }, 2000)
+
+
+</script>
+
+</body>
+</html>

@@ -19,7 +19,7 @@
 
     };
 
-    class Scroll extends Queue {
+    class Scroll extends UpdateQueue {
         constructor(el, options) {
             assert(el);
             super();
