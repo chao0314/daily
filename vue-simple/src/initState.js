@@ -134,7 +134,7 @@ export function $watch(vm, key, handler) {
 
     }
 
-    let w = new Watcher(vm, key, handler, {isCustomWatch: true})
+    let w = new Watcher(vm, key, handler, { true})
 
     if (immediate) {
         w.updateComponent()

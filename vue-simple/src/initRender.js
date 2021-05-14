@@ -33,7 +33,7 @@ export default function initRenderMixin(Vue) {
 
     Vue.prototype._renderToVDomTree = function () {
         const vm = this;
-        // 根据模板编译出来的 render函数，当然也有可能是用户写的
+        // 根据模板编译出来的 render函数，当然也有可能是用户写的 render
         return vm.$options.render.call(vm);
 
     }

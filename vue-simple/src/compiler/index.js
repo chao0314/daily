@@ -2,6 +2,7 @@ import parseHtml from "./parseHtml";
 
 const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g //文本节点的内容 注意  g 模式
 /*
+* initRender.js
 * _c('div', {id: 'app', style: {color: 'red'}}, _t('hello'), _c('span', {}, _t('world')));
 *
 * _c(tagName,props,...children) 创建元素 ,props 包括但不限于 attrs
@@ -41,19 +42,19 @@ function genCode(node) {
     } else if (node.type === 3) {
         // text node    hello {{name}} world => "hello" + name + "world"
         let {text: rawText} = node;
-        let fragement = [];
+        let fragment = [];
         let textMatch;
         let lastIndex = defaultTagRE.lastIndex = 0;
         // console.log('rawText', rawText);
         while ((textMatch = defaultTagRE.exec(rawText)) !== null) {
             let {index} = textMatch;
-            fragement.push(JSON.stringify(rawText.slice(lastIndex, index)), `_s(${textMatch[1]})`);
+            fragment.push(JSON.stringify(rawText.slice(lastIndex, index)), `_s(${textMatch[1]})`);
             lastIndex = defaultTagRE.lastIndex;
 
         }
-        fragement.push(JSON.stringify(rawText.slice(lastIndex)));
+        fragment.push(JSON.stringify(rawText.slice(lastIndex)));
 
-        return `_t(${fragement.join('+')})`;
+        return `_t(${fragment.join('+')})`;
 
 
     }
