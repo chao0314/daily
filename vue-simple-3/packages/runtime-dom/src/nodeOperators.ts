@@ -8,6 +8,7 @@ export const createTextNode = text => document.createTextNode(text || '');
 export const setElementText = (el, text) => el.textContent = text;
 export const setTextNodeValue = (node, text) => node.nodeValue = text;
 export const querySelector = selector => document.querySelector(selector);
+export const  nextSibling = target => target.nextSibling;
 
 
 

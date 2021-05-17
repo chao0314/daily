@@ -12,6 +12,7 @@ export function createRenderer(rendererOptions) {
         insert: hostInsert,
         remove: hostRemove,
         patchProp: hostPatchProp,
+        nextSibling: hostNextSibling,
         createElement: hostCreateElement,
         createTextNode: hostCreateText,
         setTextNodeValue: hostSetText,
@@ -30,16 +31,57 @@ export function createRenderer(rendererOptions) {
 
     }
 
-    function processElement(oldVNode, newVNode, container) {
+    function processElement(oldVNode, newVNode, container, anchor = null) {
 
         //初次渲染 element mount
         if (isNo(oldVNode)) {
 
-            mountElement(newVNode, container);
+            mountElement(newVNode, container, anchor);
+        } else {
+            // 更新渲染 element update
+            const oldProps = oldVNode.props || {};
+            const newProps = newVNode.props || {};
+            const el = newVNode.el = oldVNode.el;
+
+            patchProps(el, oldProps, newProps)
+
+
         }
 
 
     }
+
+
+    function patchChildren(el,oldVNode,newVNode,a) {
+
+        const oldChildren = oldVNode.children || null;
+        const newChildren = newVNode.children || null;
+
+
+
+
+
+
+
+    }
+
+    function patchProps(el, oldProps, newProps) {
+
+        Object.entries(newProps).forEach(([prop, value]) => {
+            const oldV = oldProps[prop];
+            if (value !== oldProps[prop]) patchProp(el, prop, oldV, value);
+
+        })
+
+        Object.entries(oldProps).forEach(([prop, value]) => {
+            const newV = newProps[prop];
+            if (isNo(newV)) patchProp(el, prop, value, null);
+
+        })
+
+
+    }
+
 
     function processText(oldVNode, newVNode, container) {
 
@@ -54,7 +96,7 @@ export function createRenderer(rendererOptions) {
     }
 
 
-    function mountElement(vnode, container) {
+    function mountElement(vnode, container, anchor = null) {
 
         const {type, props, children, shapeFlag} = vnode;
         const el = vnode.el = hostCreateElement(type);
@@ -71,7 +113,7 @@ export function createRenderer(rendererOptions) {
 
         }
 
-        hostInsert(el,container);
+        hostInsert(el, container, anchor);
 
 
     }
@@ -84,6 +126,12 @@ export function createRenderer(rendererOptions) {
                 // 已渲染,更新操作
                 //todo...
                 console.log('update component');
+                const oldTree = instance.subtree;
+                const instanceProxyToUse = instance.proxy;
+                const newTree = instance.render.call(instanceProxyToUse, instanceProxyToUse);
+                instance.subtree = newTree;
+                patch(oldTree, newTree, container);
+
 
             } else {
                 //初次渲染
@@ -120,12 +168,35 @@ export function createRenderer(rendererOptions) {
 
     }
 
+    function unmount(vNode) {
 
-    function patch(oldVNode, newVNode, container) {
+        const {shapeFlag} = vnode;
+
+        //是元素 卸载
+        if (shapeFlag & ShapeFlags.ELEMENT) {
+            hostRemove(vNode.el);
+            vNode = null;
+        }
+
+    }
+
+
+    function patch(oldVNode, newVNode, container, anchor = null) {
 
         const {type, shapeFlag} = newVNode;
+
+        if (oldVNode && oldVNode.type !== type) {
+            // type 不同 直接替换
+            // type 可能是元素 tag字符串 或者 组件对象
+            anchor = oldVNode.el.nextSibling;
+            unmount(oldVNode);
+            oldVNode = null;
+
+        }
+
+
         if (type === Text) return processText(oldVNode, newVNode, container);
-        if (shapeFlag & ShapeFlags.ELEMENT) return processElement(oldVNode, newVNode, container);
+        if (shapeFlag & ShapeFlags.ELEMENT) return processElement(oldVNode, newVNode, container, anchor);
         if (shapeFlag & ShapeFlags.STATEFUL_COMPONENT) return processComponent(oldVNode, newVNode, container);
 
     }
