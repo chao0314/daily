@@ -34,6 +34,7 @@ export function createRenderer(rendererOptions) {
         const oldChildrenFlag = oldVNode.shapeFlag;
         const newChildrenFlag = newVNode.shapeFlag;
 
+
         // 原来无 现在无
         if (isNo(oldChildren) && isNo(newChildren)) return;
 
@@ -278,10 +279,10 @@ export function createRenderer(rendererOptions) {
                 }
             }
 
-            console.log(newReactiveIndexToOldIndex);
+            // console.log(newReactiveIndexToOldIndex);
 
             const lis = getLIS(newReactiveIndexToOldIndex);
-            console.log('lis', lis)
+            // console.log('lis', lis)
             //倒序插入 才能找到 anchor
             let curIndexOfLIS = lis.length - 1;
 
@@ -357,7 +358,7 @@ export function createRenderer(rendererOptions) {
 
     function processElement(oldVNode, newVNode, container, anchor = null) {
 
-        console.log('process element')
+        // console.log('process element')
 
         //初次渲染 element mount
         if (isNo(oldVNode)) {
@@ -374,7 +375,7 @@ export function createRenderer(rendererOptions) {
 
 
             //dom diff
-            patchChildrenDiff(el, oldVNode.children, newVNode.children, anchor);
+            patchChildren(el, oldVNode, newVNode, anchor);
 
         }
 
@@ -384,7 +385,7 @@ export function createRenderer(rendererOptions) {
     function processText(oldVNode, newVNode, container, anchor = null) {
 
 
-        console.log('process text');
+        // console.log('process text');
 
         //初次渲染 text node
         if (isNo(oldVNode)) {
@@ -430,7 +431,7 @@ export function createRenderer(rendererOptions) {
 
         instance.update = effect(function componentEffect() {
 
-            const {beforeMount,mounted,beforeUpdate,updated} = instance;
+            const {beforeMount, mounted, beforeUpdate, updated} = instance;
 
 
             if (instance.isMounted) {
@@ -438,7 +439,7 @@ export function createRenderer(rendererOptions) {
                 //todo...
                 console.log('update component');
                 // lifecycle 生命周期
-                if(isArray(beforeUpdate)) invokeArrFns(beforeUpdate);
+                if (isArray(beforeUpdate)) invokeArrFns(beforeUpdate);
 
                 const oldTree = instance.subtree;
                 const instanceProxyToUse = instance.proxy;
@@ -447,13 +448,13 @@ export function createRenderer(rendererOptions) {
                 patch(oldTree, newTree, container);
 
                 // 考虑 组件异步渲染
-               if(isArray(updated)) nextTick(()=>invokeArrFns(updated));
+                if (isArray(updated)) nextTick(() => invokeArrFns(updated));
 
 
             } else {
                 //初次渲染
                 // lifecycle 生命周期
-                if(isArray(beforeMount)) invokeArrFns(beforeMount);
+                if (isArray(beforeMount)) invokeArrFns(beforeMount);
 
                 const instanceProxyToUse = instance.proxy;
                 //构建组件的 virtual dom tree ,即组件的 虚拟 dom 子树
@@ -466,7 +467,7 @@ export function createRenderer(rendererOptions) {
                 instance.isMounted = true;
                 instance.vnode.el = instance.subtree.el;
                 // 考虑组件异步渲染
-               if(isArray(mounted)) nextTick(()=>invokeArrFns(mounted));
+                if (isArray(mounted)) nextTick(() => invokeArrFns(mounted));
 
             }
 
@@ -514,7 +515,7 @@ export function createRenderer(rendererOptions) {
 
     function patch(oldVNode, newVNode, container, anchor = null) {
 
-        console.log(oldVNode,newVNode);
+        // console.log(oldVNode,newVNode);
 
         const {type, shapeFlag} = newVNode;
 
