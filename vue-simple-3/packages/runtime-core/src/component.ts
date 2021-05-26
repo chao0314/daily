@@ -1,6 +1,8 @@
 import {isFn, isNo, isObj, ShapeFlags} from "@vue/shared";
 import componentInstanceProxyHandler from "./componentInstanceProxyHandler";
 
+let currentInstance = null;
+
 export function createComponentInstance(vnode) {
 
     const instance = {
@@ -33,10 +35,23 @@ export function setupComponent(instance) {
     // 插槽的解析 initSlot()
     instance.children = children;
     const isStatefulComponent = ShapeFlags.STATEFUL_COMPONENT & instance.vnode.shapeFlag;
+    //有状态组件
     if (isStatefulComponent) setupStatefulComponent(instance);
 
 
 }
+
+export function getCurrentInstance() {
+    return currentInstance;
+
+}
+
+export function setCurrentInstance(instance) {
+
+    currentInstance = instance;
+
+}
+
 
 function setupStatefulComponent(instance) {
 
@@ -45,7 +60,12 @@ function setupStatefulComponent(instance) {
     instance.proxy = new Proxy(instance.ctx, componentInstanceProxyHandler as any);
     if (setup) {
         const context = createSetupContext(instance)
+        // setup 函数执行前 设置当前 instance ,而后 setup 中 lifecycle hook 执行，能够找到对应的 instance，并且使用
+        //闭包技巧将 属于自己的 instance 保存下来
+        // setup 执行完 情路
+        setCurrentInstance(instance);
         const setupResult = setup(instance.props, context);
+        setCurrentInstance(null);
         if (isFn(setupResult)) instance.render = setupResult;
         else if (isObj(setupResult)) instance.setupState = setupResult;
     }
@@ -60,6 +80,7 @@ function setupStatefulComponent(instance) {
     //没有setup 返回的 render 函数，但是有模板 那么需要模板编译
     if (isNo(instance.render) && template) {
         //todo...
+        console.log('need compile template');
 
     }
 

@@ -1,10 +1,11 @@
 import {createVNode, normalizeVNode, Text} from "./vnode";
-import {isNo, isSameVNode, ShapeFlags} from "@vue/shared";
+import {invokeArrFns, isArray, isNo, isSameVNode, isString, ShapeFlags} from "@vue/shared";
 import {createComponentInstance, setupComponent} from "./component";
 import {effect} from "@vue/reactivity";
 import {patchProp} from "../../runtime-dom/src/patchProp";
 import {queueJob} from "./scheduler";
 import {getLIS} from "./longestIncreasingSubsequence";
+import {nextTick} from "../../shared/src/asyncQueue";
 
 
 export function createRenderer(rendererOptions) {
@@ -345,12 +346,18 @@ export function createRenderer(rendererOptions) {
 
             mountComponent(newVNode, container);
 
+        } else {
+
+            // todo...
+            console.log('todo component update');
         }
 
 
     }
 
     function processElement(oldVNode, newVNode, container, anchor = null) {
+
+        console.log('process element')
 
         //初次渲染 element mount
         if (isNo(oldVNode)) {
@@ -365,6 +372,7 @@ export function createRenderer(rendererOptions) {
 
             patchProps(el, oldProps, newProps);
 
+
             //dom diff
             patchChildrenDiff(el, oldVNode.children, newVNode.children, anchor);
 
@@ -375,6 +383,8 @@ export function createRenderer(rendererOptions) {
 
     function processText(oldVNode, newVNode, container, anchor = null) {
 
+
+        console.log('process text');
 
         //初次渲染 text node
         if (isNo(oldVNode)) {
@@ -420,19 +430,31 @@ export function createRenderer(rendererOptions) {
 
         instance.update = effect(function componentEffect() {
 
+            const {beforeMount,mounted,beforeUpdate,updated} = instance;
+
+
             if (instance.isMounted) {
                 // 已渲染,更新操作
                 //todo...
                 console.log('update component');
+                // lifecycle 生命周期
+                if(isArray(beforeUpdate)) invokeArrFns(beforeUpdate);
+
                 const oldTree = instance.subtree;
                 const instanceProxyToUse = instance.proxy;
                 const newTree = instance.render.call(instanceProxyToUse, instanceProxyToUse);
                 instance.subtree = newTree;
                 patch(oldTree, newTree, container);
 
+                // 考虑 组件异步渲染
+               if(isArray(updated)) nextTick(()=>invokeArrFns(updated));
+
 
             } else {
                 //初次渲染
+                // lifecycle 生命周期
+                if(isArray(beforeMount)) invokeArrFns(beforeMount);
+
                 const instanceProxyToUse = instance.proxy;
                 //构建组件的 virtual dom tree ,即组件的 虚拟 dom 子树
                 //此处的 render 函数是 setupComponent 处理的 rendererOptions 里的 setup 的函数返回值
@@ -443,6 +465,8 @@ export function createRenderer(rendererOptions) {
                 patch(null, instance.subtree, container);
                 instance.isMounted = true;
                 instance.vnode.el = instance.subtree.el;
+                // 考虑组件异步渲染
+               if(isArray(mounted)) nextTick(()=>invokeArrFns(mounted));
 
             }
 
@@ -489,6 +513,8 @@ export function createRenderer(rendererOptions) {
 
 
     function patch(oldVNode, newVNode, container, anchor = null) {
+
+        console.log(oldVNode,newVNode);
 
         const {type, shapeFlag} = newVNode;
 

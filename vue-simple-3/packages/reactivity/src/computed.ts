@@ -14,6 +14,7 @@ class ComputedRefImp {
         this._v_isRef = true;
         this.effect = effect(getter, {
             lazy: true, scheduler: () => {
+                // computed 依赖的 数据改变了，再取值的时候要重新计算
                 this.dirty = true;
                 // 通知 依赖此 computed 的 effect 重新执行 （取值）
                 trigger(this, TriggerOperators.SET, 'value');
