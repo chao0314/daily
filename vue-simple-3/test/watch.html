@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <script src="../node_modules/@vue/reactivity/dist/reactivity.global.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+    const app = document.getElementById('app');
+    const {
+        reactive,
+        shallowReactive,
+        readonly,
+        shallowReadonly,
+        effect,
+        ref,
+        toRef,
+        toRefs,
+        computed,
+        watch,
+        watchEffect
+    } = VueReactivity;
+
+    const state = reactive({
+        name: 'hello watch api'
+    })
+
+    // const full = computed(() => state.firstname + state.lastname);
+
+    watch(() => state.name, (value, prevValue) => {
+
+        console.log(value);
+        app.innerHTML = value;
+
+
+    });
+
+    // effect(() => {
+    //     app.innerHTML = full.value;
+    //
+    // })
+
+    watchEffect(() => {
+
+        console.log('--watchEffect--', state.name);
+    })
+
+
+    setTimeout(() => {
+
+        state.name = 'watch value changed 1';
+    }, 1000)
+
+    setTimeout(() => {
+
+        state.name = 'watch value changed 2';
+        state.name = 'watch value changed 3';
+        state.name = 'watch value changed 4';
+    }, 4000)
+
+
+</script>
+
+</body>
+</html>
