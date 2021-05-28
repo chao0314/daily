@@ -27,12 +27,13 @@ function doWatch(source, cb, options = {flush: 'pre', immediate: false}) {
     const getter = () => source.call(instance);
     const {flush = 'pre', immediate = false} = options;
     const handler = () => {
-        const newValue = getter();
+
         if (isFn(cb)) {
+            const newValue = getter();
             if (value === newValue) return;
             cb(newValue, value);
             value = newValue;
-        }else{
+        } else {
             // watchEffect
             // watch effect 是没有 cb 的 watch ,当依赖改变后，重新执行 source fn
             getter();
@@ -64,21 +65,20 @@ function doWatch(source, cb, options = {flush: 'pre', immediate: false}) {
 
     // 借助 effect 收集依赖
     const watchEff = effect(getter, {
-        lazy: false,
+        // 下面延后处理
+        lazy: true,
         scheduler
     })
 
-    value = getter();
-
+    // 初次获取返回值 并收集依赖
+    value = watchEff();
     if (cb) {
 
         if (immediate) {
 
             handler();
-
         }
     }
-
 
 }
 
