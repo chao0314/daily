@@ -1,8 +1,44 @@
 1、 借助 lerna 初始化 monorepo 多仓库管理代码
 
+$ npm install -g lerna
+
+或者
+
+$ npx lerna init
+
+或者
+
 $ yarn global add lerna
 
 $ lerna init
+
+``` javascript
+lerna.json:
+
+{
+    "packages": [
+        "packages/*"
+     ],
+    "version": "0.0.0",
+    "npmClient": "yarn", // 使用yarn管理
+    "useWorkspaces": true // 使用workspace,需要配置package.json
+    
+    }
+    
+    
+package.json:
+
+{
+    "name": "root",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "devDependencies": {
+        "lerna": "^3.22.1"
+    }
+}    
+```
 
 2、 lerna 创建组件独立仓库
 
@@ -55,7 +91,7 @@ declare module '*.vue' {
 
 > yarn add webpack webpack-cli webpack-dev-server vue-loader@next @vue/compiler-sfc -D
 
-> yarn add babel-loader @babel/core @babel/preset-env @babel/preset-typescript babel-plugin-module-resolver url-loader file-loader html-webpack-plugin css-loader sass-loader style-loader sass -D
+> yarn add babel-loader @babel/core @babel/preset-env @babel/preset-typescript  @babel/plugin-transform-typescript babel-plugin-module-resolver url-loader file-loader html-webpack-plugin css-loader sass-loader style-loader sass -D
 
 
 7、 组件库打包
