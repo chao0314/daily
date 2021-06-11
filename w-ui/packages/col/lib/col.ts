@@ -18,21 +18,36 @@ export default defineComponent({
             type: Number,
             default: 0,
             validator: (offset: number) => offset >= 0
-        }
+        },
+        xs:{
+
+        },
+        sm:{
+
+        },
+        md:{},
+        lg:{},
+        xl:{}
+
+
     },
     setup(props, {slots}) {
 
         const gutter: number = inject("colGutter") ?? 0;
         const clazz = computed(() => {
             const res = [];
-            const ps = ['span','offset'] as const;
-
+            const ps = ['span', 'offset'] as const;
+            const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
             ps.forEach(p => {
-
                 res.push(`w-col-${p}-${props[p]}`);
-
             })
 
+            // 响应式参数
+            sizes.forEach(size => {
+
+
+
+            })
 
 
             return [
