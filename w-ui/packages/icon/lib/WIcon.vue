@@ -1,15 +1,27 @@
 <template>
   <div>
-    icon
+    <i :class=clazz></i>
   </div>
 
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {computed, defineComponent, toRefs} from 'vue'
 
 export default defineComponent({
-  name: "WIcon"
+  name: "WIcon",
+  props: {
+    name: String
+  },
+  setup(props, ctx) {
+    const {name} = toRefs(props);
+    const clazz = computed(() => `w-icon-${name.value}`);
+    return {
+      clazz
+    }
+  }
+
+
 })
 </script>
 

@@ -1,10 +1,13 @@
 import {App} from "vue";
+import {Component} from "*.vue";
 import Button from "@w-ui/button";
 import Icon from "@w-ui/icon";
-import {Component} from "*.vue";
+import Row from "@w-ui/row";
+import Col from "@w-ui/col";
+
 
 const components = [
-    Button, Icon
+    Button, Icon, Row, Col
 ]
 
 const install = (app: App): void => {
@@ -19,5 +22,4 @@ const install = (app: App): void => {
 
 export default {
     install
-
 }

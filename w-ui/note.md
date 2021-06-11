@@ -92,6 +92,9 @@ declare module '*.vue' {
 > yarn add webpack webpack-cli webpack-dev-server vue-loader@next @vue/compiler-sfc -D
 
 > yarn add babel-loader @babel/core @babel/preset-env @babel/preset-typescript  @babel/plugin-transform-typescript babel-plugin-module-resolver url-loader file-loader html-webpack-plugin css-loader sass-loader style-loader sass -D
+> 
+
+// 注意babel的配置 为全局公用的 需要配置 @babel/plugin-transform-typescript 转换 vue里的ts
 
 
 7、 组件库打包
