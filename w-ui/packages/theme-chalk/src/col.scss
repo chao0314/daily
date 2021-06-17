@@ -1,5 +1,6 @@
 @import "./common/var";
 @import "./mixins/mixin.scss";
+@import "./common/responsive";
 
 @include b(col) {
   box-sizing: border-box;
@@ -18,4 +19,65 @@
 
   }
 
+}
+
+@include res(xs) {
+  @for $i from 0 through 24 {
+    .#{$namespace}-col-xs-#{$i} {
+      max-width: (1 / 24 * $i * 100) * 1%;
+      flex: 0 0 (1 / 24 * $i * 100) * 1%;
+    }
+    .#{$namespace}-col-xs-offset-#{$i} {
+      margin-left: (1 / 24 * $i * 100) * 1%;
+    }
+  }
+}
+
+@include res(sm) {
+  @for $i from 0 through 24 {
+    .#{$namespace}-col-sm-#{$i} {
+      max-width: (1 / 24 * $i * 100) * 1%;
+      flex: 0 0 (1 / 24 * $i * 100) * 1%;
+    }
+    .#{$namespace}-col-sm-offset-#{$i} {
+      margin-left: (1 / 24 * $i * 100) * 1%;
+    }
+  }
+}
+
+@include res(md) {
+  @for $i from 0 through 24 {
+    .#{$namespace}-col-md-#{$i} {
+      max-width: (1 / 24 * $i * 100) * 1%;
+      flex: 0 0 (1 / 24 * $i * 100) * 1%;
+    }
+
+    .#{$namespace}-col-md-offset-#{$i} {
+      margin-left: (1 / 24 * $i * 100) * 1%;
+    }
+  }
+}
+
+@include res(lg) {
+  @for $i from 0 through 24 {
+    .#{$namespace}-col-lg-#{$i} {
+      max-width: (1 / 24 * $i * 100) * 1%;
+      flex: 0 0 (1 / 24 * $i * 100) * 1%;
+    }
+    .#{$namespace}-col-lg-offset-#{$i} {
+      margin-left: (1 / 24 * $i * 100) * 1%;
+    }
+  }
+}
+
+@include res(xl) {
+  @for $i from 0 through 24 {
+    .#{$namespace}-col-xl-#{$i} {
+      max-width: (1 / 24 * $i * 100) * 1%;
+      flex: 0 0 (1 / 24 * $i * 100) * 1%;
+    }
+    .#{$namespace}-col-xl-offset-#{$i} {
+      margin-left: (1 / 24 * $i * 100) * 1%;
+    }
+  }
 }

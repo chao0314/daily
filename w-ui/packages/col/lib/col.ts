@@ -19,15 +19,11 @@ export default defineComponent({
             default: 0,
             validator: (offset: number) => offset >= 0
         },
-        xs:{
-
-        },
-        sm:{
-
-        },
-        md:{},
-        lg:{},
-        xl:{}
+        xs: Number,
+        sm: Number,
+        md: Number,
+        lg: Number,
+        xl: Number
 
 
     },
@@ -45,8 +41,12 @@ export default defineComponent({
             // 响应式参数
             sizes.forEach(size => {
 
+                if (typeof props[size] === 'number') {
 
-
+                    // 把span 这个固定宽度删除掉
+                    res.shift();
+                    res.push(`w-col-${size}-${props[size]}`)
+                }
             })
 
 

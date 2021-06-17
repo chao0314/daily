@@ -40,14 +40,34 @@
         </w-col>
       </w-row>
     </div>
+    <w-row>
+      <w-col :sm="12" :lg="6">
+        <div style="background: red">111</div>
+      </w-col>
+      <w-col :sm="12" :lg="6">
+        <div style="background: yellow">222</div>
+      </w-col
+      >
+      <w-col :sm="12" :lg="6">
+        <div style="background: pink">333</div>
+      </w-col>
+      <w-col :sm="12" :lg="6">
+        <div style="background: yellowgreen">444</div>
+      </w-col>
+    </w-row>
+    <br>
+    <w-checkbox v-model="check">checkbox</w-checkbox>
+    <p>{{check}}</p>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, toRefs} from 'vue'
+import {defineComponent, reactive, toRefs, ref} from 'vue'
+import WCheckbox from "../packages/checkbox/lib/WCheckbox.vue";
 
 export default defineComponent({
   name: "App",
+  components: {WCheckbox},
   setup() {
     const state = reactive({
       iconName: "loading"
@@ -62,10 +82,12 @@ export default defineComponent({
       state.iconName = "play"
     }, 2000)
 
+    const check = ref<boolean>(true)
 
     return {
       ...toRefs(state),
-      clickHandler
+      clickHandler,
+      check
     };
   }
 
