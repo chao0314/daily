@@ -2,7 +2,7 @@ import {computed, ComputedRef, getCurrentInstance, inject} from 'vue';
 
 export type CheckboxGroupProvide = {
     flag?: string,
-    checkboxValues?: ComputedRef,
+    checkedValues?: ComputedRef,
     handleChangeOrUpdate?: (val: unknown) => void
 
 }
@@ -21,24 +21,39 @@ export interface ICheckboxProps {
 export default function useCheckbox(props: ICheckboxProps) {
     const {emit} = getCurrentInstance();
     const groupProvide = inject<CheckboxGroupProvide>('CheckboxGroup', {});
-    const {flag, checkboxValues, handleChangeOrUpdate} = groupProvide;
+    const {flag, checkedValues, handleChangeOrUpdate} = groupProvide;
     const isGroup = flag === 'CheckboxGroup';
-    const checked = computed(() => {
-        if (isGroup && Array.isArray(checkboxValues)) return checkboxValues.includes(props.label);
-        else return props.checked
-    })
+    // let isChecked = computed(() => {
+    //
+    //     const values = checkedValues?.value;
+    //     if (isGroup && Array.isArray(values)) return values.includes(props.label);
+    //     else return props.checked
+    // })
 
     const handleChange = (e: InputEvent) => {
         const target = e.target as HTMLInputElement
-
-        emit('update:modeValue', target.checked);
+        emit('change', target.checked);
 
 
     }
 
+    const modelVal = computed({
+        get() {
+
+            return isGroup ? checkedValues?.value : props.modelValue;
+        },
+        set(val) {
+
+            isGroup ? handleChangeOrUpdate(val) : emit('update:modelValue', val);
+        }
+
+
+    })
+
+    // console.log("ischecked", isChecked.value)
 
     return {
-        checked,
+        modelVal,
         handleChange
     }
 

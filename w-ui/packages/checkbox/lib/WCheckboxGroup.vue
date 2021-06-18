@@ -11,24 +11,24 @@ import {computed, defineComponent, provide} from 'vue'
 export default defineComponent({
   name: "WCheckboxGroup",
   props: {
-    modeValue: {
+    modelValue: {
       type: Array,
       required: true
     }
   },
-  emits: ['update:modeValue', 'change'],
+  emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
 
-    const checkboxValues = computed(() => props.modeValue);
+    const checkedValues = computed(() => props.modelValue);
     const handleChangeOrUpdate = value => {
       emit('change', value);
-      emit('update:modeValue', value);
+      emit('update:modelValue', value);
 
     }
 
     provide('CheckboxGroup', {
       flag: 'CheckboxGroup',
-      checkboxValues,
+      checkedValues,
       handleChangeOrUpdate
     })
 

@@ -3,8 +3,7 @@
     <span class="w-checkbox__input">
       <input
           type="checkbox"
-          v-model="model"
-          :checked="checked"
+          v-model="modelVal"
           @change="handleChange"
           :name="name"
           :disabled="disabled"
@@ -26,17 +25,17 @@ import useCheckbox from "./useCheckbox";
 
 export default defineComponent({
   name: "WCheckbox",
-  emits: ['change', 'update:modeValue'],
+  emits: ['change', 'update:modelValue'],
   props: {
     name: String,
-    modeValue: [Boolean, String, Number],
+    modelValue: [Boolean, String, Number],
     label: [String, Number, Boolean],
     checked: Boolean,
     disabled: Boolean,
     indeterminate: Boolean,
 
   },
-  setup(props, {emit}) {
+  setup(props) {
 
     return {
       ...useCheckbox(props)

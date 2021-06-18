@@ -4,10 +4,13 @@ import Button from "@w-ui/button";
 import Icon from "@w-ui/icon";
 import Row from "@w-ui/row";
 import Col from "@w-ui/col";
+import Checkbox from "@w-ui/checkbox";
+import CheckboxGroup from "@w-ui/checkbox-group";
+
 
 
 const components = [
-    Button, Icon, Row, Col
+    Button, Icon, Row, Col,Checkbox,CheckboxGroup
 ]
 
 const install = (app: App): void => {

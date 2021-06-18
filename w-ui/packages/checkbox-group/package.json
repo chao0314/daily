@@ -1,0 +1,26 @@
+{
+  "name": "@w-ui/checkbox-group",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "wangzichao <zhichao0314@126.com>",
+  "homepage": "https://github.com/chao0314/daily#readme",
+  "license": "ISC",
+  "main": "lib/checkbox-group.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chao0314/daily.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/chao0314/daily/issues"
+  }
+}

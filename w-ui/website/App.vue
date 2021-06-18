@@ -57,7 +57,11 @@
     </w-row>
     <br>
     <w-checkbox v-model="check">checkbox</w-checkbox>
-    <p>{{check}}</p>
+    <p>{{ check }}</p>
+    <w-checkbox-group v-model="checkGroup">
+      <w-checkbox v-for="value in list" :label="value">{{value}}</w-checkbox>
+    </w-checkbox-group>
+    <p>{{ checkGroup }}</p>
   </div>
 </template>
 
@@ -83,11 +87,18 @@ export default defineComponent({
     }, 2000)
 
     const check = ref<boolean>(true)
+    // const checkGroup = ref<string[]>(["a", "b", "c"]);
+    const checkGroup = ref(["b"]);
+
+    const list = ["a", "b", "c"]
+
 
     return {
       ...toRefs(state),
       clickHandler,
-      check
+      check,
+      checkGroup,
+      list
     };
   }
 
