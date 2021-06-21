@@ -1,2 +1,17 @@
 @import "./common/var.scss";
 @import "./mixins/mixin.scss";
+
+@include b(transfer) {
+  display: flex;
+  border: 1px solid pink;
+  justify-content: center;
+}
+
+@include b(transfer-panel) {
+  border: 1px solid dodgerblue;
+  max-height: 200px;
+  overflow-y: auto;
+
+
+
+}

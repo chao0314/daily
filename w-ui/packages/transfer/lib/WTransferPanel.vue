@@ -8,11 +8,9 @@
         <w-checkbox>选项1</w-checkbox>
         <w-checkbox>选项2</w-checkbox>
         <w-checkbox>选项3</w-checkbox>
+
       </w-checkbox-group>
-
-
     </div>
-
 
   </div>
 
