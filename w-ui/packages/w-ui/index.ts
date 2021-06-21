@@ -6,11 +6,11 @@ import Row from "@w-ui/row";
 import Col from "@w-ui/col";
 import Checkbox from "@w-ui/checkbox";
 import CheckboxGroup from "@w-ui/checkbox-group";
-
+import Transfer from "@w-ui/transfer";
 
 
 const components = [
-    Button, Icon, Row, Col,Checkbox,CheckboxGroup
+    Button, Icon, Row, Col, Checkbox, CheckboxGroup, Transfer
 ]
 
 const install = (app: App): void => {

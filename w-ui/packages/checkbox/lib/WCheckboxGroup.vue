@@ -12,8 +12,7 @@ export default defineComponent({
   name: "WCheckboxGroup",
   props: {
     modelValue: {
-      type: Array,
-      required: true
+      type: Array
     }
   },
   emits: ['update:modelValue', 'change'],

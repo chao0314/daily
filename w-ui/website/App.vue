@@ -62,6 +62,8 @@
       <w-checkbox v-for="value in list" :label="value">{{value}}</w-checkbox>
     </w-checkbox-group>
     <p>{{ checkGroup }}</p>
+    <br>
+    <w-transfer></w-transfer>
   </div>
 </template>
 

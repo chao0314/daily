@@ -1,0 +1,18 @@
+0 silly argv {
+0 silly argv   _: [ 'create' ],
+0 silly argv   lernaVersion: '4.0.0',
+0 silly argv   '$0': 'D:\\Program Files\\nodejs\\node_modules\\lerna\\cli.js',
+0 silly argv   name: 'transfer'
+0 silly argv }
+1 notice cli v4.0.0
+2 verbose rootPath E:\workspace\daily\w-ui
+3 error Error: canceled
+3 error     at Interface.<anonymous> (D:\Users\admin\AppData\Roaming\nvm\v14.16.1\node_modules\lerna\node_modules\read\lib\read.js:66:13)
+3 error     at Interface.emit (events.js:315:20)
+3 error     at Interface._ttyWrite (readline.js:875:16)
+3 error     at ReadStream.onkeypress (readline.js:213:10)
+3 error     at ReadStream.emit (events.js:315:20)
+3 error     at emitKeys (internal/readline/utils.js:345:14)
+3 error     at emitKeys.next (<anonymous>)
+3 error     at ReadStream.onData (readline.js:1144:36)
+3 error     at ReadStream.emit (events.js:315:20)
