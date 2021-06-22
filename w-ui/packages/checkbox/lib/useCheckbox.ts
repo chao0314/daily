@@ -34,12 +34,10 @@ export default function useCheckbox(props: ICheckboxProps) {
         const target = e.target as HTMLInputElement
         emit('change', target.checked);
 
-
     }
 
     const modelVal = computed({
         get() {
-
             return isGroup ? checkedValues?.value : props.modelValue;
         },
         set(val) {
@@ -50,7 +48,7 @@ export default function useCheckbox(props: ICheckboxProps) {
 
     })
 
-    // console.log("ischecked", isChecked.value)
+    // console.log("isChecked", isChecked.value)
 
     return {
         modelVal,

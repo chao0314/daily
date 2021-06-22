@@ -6,23 +6,24 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, provide} from 'vue'
+import {computed, defineComponent, provide, watch} from 'vue'
 
 export default defineComponent({
   name: "WCheckboxGroup",
   props: {
     modelValue: {
       type: Array
-    }
+    },
+    name: String
   },
   emits: ['update:modelValue', 'change'],
   setup(props, {emit}) {
 
     const checkedValues = computed(() => props.modelValue);
+    
     const handleChangeOrUpdate = value => {
-      emit('change', value);
       emit('update:modelValue', value);
-
+      emit('change', value);
     }
 
     provide('CheckboxGroup', {

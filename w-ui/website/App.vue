@@ -59,11 +59,11 @@
     <w-checkbox v-model="check">checkbox</w-checkbox>
     <p>{{ check }}</p>
     <w-checkbox-group v-model="checkGroup">
-      <w-checkbox v-for="value in list" :label="value">{{value}}</w-checkbox>
+      <w-checkbox v-for="value in list" :label="value">{{ value }}</w-checkbox>
     </w-checkbox-group>
     <p>{{ checkGroup }}</p>
     <br>
-    <w-transfer></w-transfer>
+    <w-transfer :data="data" v-model="transferValue"></w-transfer>
   </div>
 </template>
 
@@ -94,13 +94,33 @@ export default defineComponent({
 
     const list = ["a", "b", "c"]
 
+    const generateData = (num) => {
+      const data = [];
+      for (let i = 1; i <= num; i++) {
+        data.push({
+          key: i,
+          label: `option-${i}`,
+          disabled: i % 4 === 0
+        })
+
+      }
+
+      return data;
+
+    }
+
+    const data = generateData(10);
+    const transferValue = ref([2,3]);
+
 
     return {
       ...toRefs(state),
       clickHandler,
       check,
       checkGroup,
-      list
+      list,
+      data,
+      transferValue
     };
   }
 
