@@ -1,12 +1,12 @@
 <template>
   <div class="w-transfer">
-    <w-transfer-panel :data="sourceData" @change="handleSourceChange"></w-transfer-panel>
+    <w-transfer-panel :data="sourceData" @change="handleSourceChange" ref="sourceRef"></w-transfer-panel>
     <div class="w-transfer__buttons">
       <w-button icon="arrow-left-bold" @click="handleTargetToSource"></w-button>
       &nbsp;
       <w-button icon="arrow-right-bold" @click="handleSourceToTarget"></w-button>
     </div>
-    <w-transfer-panel :data="targetData" @change="handleTargetChange"></w-transfer-panel>
+    <w-transfer-panel :data="targetData" @change="handleTargetChange" ref="targetRef"></w-transfer-panel>
   </div>
 
 </template>
@@ -15,14 +15,14 @@
 import {computed, defineComponent, PropType, ref} from 'vue'
 import WTransferPanel from "./WTransferPanel.vue";
 import WButton from "@w-ui/button/lib/WButton.vue";
-import {DataItem} from './types';
+import {DataItem, ItemKey} from './types';
 
 export default defineComponent({
   name: "WTransfer",
   components: {WTransferPanel, WButton},
   props: {
     modelValue: {
-      type: Array as PropType<number[] | string[]>,
+      type: Array as PropType<ItemKey[]>,
       default: () => []
     },
     data: {
@@ -32,8 +32,11 @@ export default defineComponent({
 
 
   },
-  setup(props) {
-    let sourceChecked: ItemKey[], targetChecked: ItemKey[];
+  emits: ["update:modelValue"],
+  setup(props, {emit}) {
+    let sourceChecked: ItemKey[] =[], targetChecked: ItemKey[]=[];
+    const sourceRef =  ref(null);
+    const targetRef =  ref(null);
 
     const {sourceData, targetData} = computed(() => {
       const sourceData = ref([]);
@@ -63,22 +66,46 @@ export default defineComponent({
     }
 
     const handleTargetToSource = () => {
-      console.log('t to  s',targetChecked)
 
       targetData.value = targetData.value.filter(({key}) => !targetChecked.includes(key));
-      console.log(targetData.value)
+
+      const willMoveData = props.data.reduce((pre: DataItem[], cur: DataItem) => {
+        if (targetChecked.includes(cur.key)) return pre.concat(cur);
+        return pre;
+      }, []);
+
+      sourceData.value = sourceData.value.concat(willMoveData).sort((a, b) => a.key - b.key);
+
+      emit('update:modelValue', targetData.value.map((item: DataItem) => item.key));
+      sourceRef.value.handleClearChecked();
+      targetRef.value.handleClearChecked();
 
 
     }
 
     const handleSourceToTarget = () => {
 
+      sourceData.value = sourceData.value.filter(({key}) => !sourceChecked.includes(key));
+
+      const willMoveData = props.data.reduce((pre: DataItem[], cur: DataItem) => {
+        if (sourceChecked.includes(cur.key)) return pre.concat(cur);
+        return pre;
+
+      }, [])
+
+      targetData.value = targetData.value.concat(willMoveData).sort((a, b) => a.key - b.key);
+
+      emit('update:modelValue', targetData.value.map((item: DataItem) => item.key));
+      sourceRef.value.handleClearChecked();
+      targetRef.value.handleClearChecked();
+
 
     }
 
 
     return {
-
+      sourceRef,
+      targetRef,
       sourceData,
       targetData,
       handleSourceChange,

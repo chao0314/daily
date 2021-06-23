@@ -47,7 +47,7 @@ export default defineComponent({
     const iconName = computed(() => `w-icon-${props.icon}`);
 
     const clickHandler = (e) => {
-      console.log('button click inner');
+      // console.log('button click inner');
       emit('click', e);
     }
 

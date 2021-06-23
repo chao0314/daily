@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, watch, ref, reactive} from 'vue'
+import {defineComponent, watch, ref, PropType, onUpdated, onMounted} from 'vue'
 import WCheckboxGroup from "@w-ui/checkbox/lib/WCheckboxGroup.vue";
 import WCheckbox from "@w-ui/checkbox/lib/WCheckbox.vue";
 import {DataItem, ItemKey} from "./types";
@@ -29,7 +29,11 @@ export default defineComponent({
   },
   props: {
     data: {
-      type: Array as PropsType<DataItem>,
+      type: Array as PropType<DataItem[]>,
+      default: () => []
+    },
+    isChecked: {
+      type: Array as PropType<ItemKey[]>,
       default: () => []
     }
 
@@ -42,27 +46,31 @@ export default defineComponent({
       emit('change', val || checked.value);
     };
     watch(() => checkAll.value, (newV: boolean) => {
-      console.log(newV)
       checked.value = [];
       props.data.forEach(item => {
         if (newV && !item.disabled) checked.value.push(item.key)
       })
 
-      emit('change',checked.value);
+      if (newV && checked.value.length > 0) emit('change', checked.value);
 
     })
+
+    const handleClearChecked = () => {
+      checked.value = [];
+      checkAll.value = false;
+    };
 
 
     return {
       checked,
       checkAll,
-      handleCheckChange
+      handleCheckChange,
+      handleClearChecked
 
     }
 
 
   }
-
 
 })
 </script>

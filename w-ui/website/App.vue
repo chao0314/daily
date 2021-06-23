@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, toRefs, ref} from 'vue'
+import {defineComponent, reactive, toRefs, ref, watch, onUpdated} from 'vue'
 import WCheckbox from "../packages/checkbox/lib/WCheckbox.vue";
 
 export default defineComponent({
@@ -110,7 +110,10 @@ export default defineComponent({
     }
 
     const data = generateData(10);
-    const transferValue = ref([2,3]);
+    const transferValue = ref([2, 3]);
+
+    watch(() => transferValue.value, (value => console.log('transfer value', transferValue.value)));
+
 
 
     return {
