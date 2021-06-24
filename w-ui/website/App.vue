@@ -64,16 +64,17 @@
     <p>{{ checkGroup }}</p>
     <br>
     <w-transfer :data="data" v-model="transferValue"></w-transfer>
+    <br>
+    <button @click="handleShowMessage">show message</button>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent, reactive, toRefs, ref, watch, onUpdated} from 'vue'
-import WCheckbox from "../packages/checkbox/lib/WCheckbox.vue";
+import {showMessage} from "@w-ui/message";
 
 export default defineComponent({
   name: "App",
-  components: {WCheckbox},
   setup() {
     const state = reactive({
       iconName: "loading"
@@ -114,6 +115,10 @@ export default defineComponent({
 
     watch(() => transferValue.value, (value => console.log('transfer value', transferValue.value)));
 
+    const handleShowMessage = () => {
+
+      showMessage('hello message');
+    }
 
 
     return {
@@ -123,7 +128,8 @@ export default defineComponent({
       checkGroup,
       list,
       data,
-      transferValue
+      transferValue,
+      handleShowMessage
     };
   }
 

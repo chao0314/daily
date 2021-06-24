@@ -1,0 +1,60 @@
+@import "./common/var.scss";
+@import "./mixins/mixin.scss";
+
+@include b(message) {
+
+  position: fixed;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 10px;
+  color: white;
+
+
+  @include m(primary) {
+    background: $--color-primary;
+  }
+  @include m(success) {
+    background: $--color-success;
+
+  }
+  @include m(info) {
+    background: $--color-info;
+
+  }
+  @include m(danger) {
+    background: $--color-danger;
+  }
+  @include m(warning) {
+    background: $--color-warning;
+
+  }
+
+
+}
+
+
+.message-enter-from, .message-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -40px);
+
+
+}
+
+//.message-enter-to,.message-enter-from{
+//
+//  opacity: 1;
+//
+//  top: 100px;
+//}
+
+
+.message-enter-active, .message-leave-active {
+
+  transition: all 0.5s ease-out;
+
+}
+

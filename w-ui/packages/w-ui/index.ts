@@ -7,10 +7,13 @@ import Col from "@w-ui/col";
 import Checkbox from "@w-ui/checkbox";
 import CheckboxGroup from "@w-ui/checkbox-group";
 import Transfer from "@w-ui/transfer";
+import Message from "@w-ui/message";
+
+export {showMessage} from "@w-ui/message";
 
 
 const components = [
-    Button, Icon, Row, Col, Checkbox, CheckboxGroup, Transfer
+    Button, Icon, Row, Col, Checkbox, CheckboxGroup, Transfer,Message
 ]
 
 const install = (app: App): void => {
@@ -27,7 +30,6 @@ export default {
     install
 }
 
-export  {
 
 
-}
+
