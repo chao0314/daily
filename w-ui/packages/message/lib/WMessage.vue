@@ -1,5 +1,5 @@
 <template>
-  <transition name="message">
+  <transition name="message" @after-leave="handleLeave">
     <div :class=clazz :style="styles" v-show="shouldShow">
       {{ message }}
     </div>
@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, PropType, reactive, ref} from 'vue'
+import {computed, defineComponent, onMounted, onUnmounted, onUpdated, PropType, ref, watch} from 'vue'
 
 type MessageType = "primary" | "warning" | "danger" | "default" | "info" | "success"
 export default defineComponent({
@@ -26,31 +26,61 @@ export default defineComponent({
       type: Number,
       default: 0
 
+    },
+    duration: {
+      type: Number,
+      default: 3000
+    },
+    handleClosed: {
+      type: Function as PropType<(el: HTMLElement) => void>
     }
 
 
   },
   setup(props) {
 
+    watch(() => props.offset, () => console.log('offset change'));
 
-    const styles = computed(() => ({
 
-      top: props.offset * 60 + 'px'
-    }))
+    const shouldRemove = ref(true);
+    const styles = computed(() => {
+
+      console.log("style", props.offset);
+      return {
+
+        top: props.offset * 60 + 'px'
+      }
+    })
     const clazz = computed(() => `w-message w-message--${props.type}`);
 
     const shouldShow = ref(false);
+    const handleLeave = (el) => {
+
+      props.handleClosed?.(el);
+      shouldRemove.value = false;
+
+    }
+    let timer;
 
     onMounted(() => {
+      console.log("mounted")
       shouldShow.value = true;
-
+      timer = setTimeout(() => {
+        shouldShow.value = false;
+        timer = null;
+      }, props.duration);
     });
-
+    onUnmounted(() => {
+      console.log('unmounted')
+      if (timer) clearTimeout(timer);
+    })
 
     return {
       styles,
       clazz,
-      shouldShow
+      shouldShow,
+      handleLeave,
+      shouldRemove
     }
 
 

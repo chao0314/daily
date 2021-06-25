@@ -6,7 +6,7 @@
       &nbsp;
       <w-button icon="arrow-right-bold" @click="handleSourceToTarget"></w-button>
     </div>
-    <w-transfer-panel :data="targetData" @change="handleTargetChange" ref="targetRef"></w-transfer-panel>
+    <w-transfer-panel :data="targetData" @change="handleTargetChange" ref="targetRef" ></w-transfer-panel>
   </div>
 
 </template>
@@ -34,9 +34,9 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, {emit}) {
-    let sourceChecked: ItemKey[] =[], targetChecked: ItemKey[]=[];
-    const sourceRef =  ref(null);
-    const targetRef =  ref(null);
+    let sourceChecked: ItemKey[] = [], targetChecked: ItemKey[] = [];
+    const sourceRef = ref(null);
+    const targetRef = ref(null);
 
     const {sourceData, targetData} = computed(() => {
       const sourceData = ref([]);
@@ -101,6 +101,7 @@ export default defineComponent({
 
 
     }
+
 
 
     return {
