@@ -6,7 +6,7 @@
       &nbsp;
       <w-button icon="arrow-right-bold" @click="handleSourceToTarget"></w-button>
     </div>
-    <w-transfer-panel :data="targetData" @change="handleTargetChange" ref="targetRef" ></w-transfer-panel>
+    <w-transfer-panel :data="targetData" @change="handleTargetChange" ref="targetRef"></w-transfer-panel>
   </div>
 
 </template>
@@ -102,8 +102,6 @@ export default defineComponent({
 
     }
 
-
-
     return {
       sourceRef,
       targetRef,
@@ -112,7 +110,7 @@ export default defineComponent({
       handleSourceChange,
       handleTargetChange,
       handleTargetToSource,
-      handleSourceToTarget
+      handleSourceToTarget,
     }
 
 

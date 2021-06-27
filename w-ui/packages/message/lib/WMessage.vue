@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import {computed, defineComponent, onMounted, onUnmounted, onUpdated, PropType, ref, watch} from 'vue'
+import {computed, defineComponent, onMounted, onUnmounted, onUpdated, PropType, reactive, ref, watch} from 'vue'
 
 type MessageType = "primary" | "warning" | "danger" | "default" | "info" | "success"
 export default defineComponent({
@@ -39,16 +39,16 @@ export default defineComponent({
   },
   setup(props) {
 
-    watch(() => props.offset, () => console.log('offset change'));
+    // watch(() => props.offset, () => console.log('offset change'));
 
 
     const shouldRemove = ref(true);
+    const style = reactive({top: props.offset * 60 + 'px'});
     const styles = computed(() => {
 
-      console.log("style", props.offset);
       return {
-
-        top: props.offset * 60 + 'px'
+        top: props.offset * 60 + 'px',
+        ...style
       }
     })
     const clazz = computed(() => `w-message w-message--${props.type}`);
@@ -73,14 +73,25 @@ export default defineComponent({
     onUnmounted(() => {
       console.log('unmounted')
       if (timer) clearTimeout(timer);
-    })
+    });
+
+    const setOffset = (offset: number) => style.top = offset * 60 + 'px';
+
+    const test = ref('hi hi');
+    onUpdated(() => console.log('updated'));
+
+    setTimeout(() => {
+
+      test.value = 'ha ha ha';
+    }, 2000)
 
     return {
       styles,
       clazz,
       shouldShow,
       handleLeave,
-      shouldRemove
+      shouldRemove,
+      setOffset
     }
 
 

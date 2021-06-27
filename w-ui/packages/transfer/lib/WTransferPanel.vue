@@ -6,7 +6,7 @@
     <div class="w-transfer-panel__body">
       <w-checkbox-group v-model="checked" @change="handleCheckChange">
         <w-checkbox v-for="item in data" :key="item.key" :label="item.key" :disabled="item.disabled">{{
-            item.label
+          item.label
           }}
         </w-checkbox>
       </w-checkbox-group>
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, watch, ref, PropType, onUpdated, onMounted, onUnmounted} from 'vue'
+import {defineComponent, watch, ref, PropType, onUpdated, onMounted, onUnmounted, reactive} from 'vue'
 import WCheckboxGroup from "@w-ui/checkbox/lib/WCheckboxGroup.vue";
 import WCheckbox from "@w-ui/checkbox/lib/WCheckbox.vue";
 import {DataItem, ItemKey} from "./types";
@@ -35,7 +35,7 @@ export default defineComponent({
     isChecked: {
       type: Array as PropType<ItemKey[]>,
       default: () => []
-    },
+    }
 
   },
   emits: ['change'],
@@ -59,8 +59,6 @@ export default defineComponent({
       checked.value = [];
       checkAll.value = false;
     };
-
-
 
 
     return {

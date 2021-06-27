@@ -12,6 +12,7 @@
   text-align: center;
   border-radius: 10px;
   color: white;
+  transition: top 0.2s ease-in;
 
 
   @include m(primary) {
