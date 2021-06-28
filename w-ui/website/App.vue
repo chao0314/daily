@@ -1,71 +1,89 @@
 <template>
   <div>
-    <w-icon :name=iconName></w-icon>
-    <w-button icon="w-icon-loading" type="primary" round @click="clickHandler">按钮</w-button>
-    <w-row>
-      <w-col :span="6">
-        <div class="w-col-span-6" style="background: red">111ccc</div>
-      </w-col>
-      <w-col :span="6" :offset="6">
-        <div style="background: yellow">222</div>
-      </w-col
-      >
-      <w-col :span="6">
-        <div style="background: pink">333</div>
-      </w-col>
-    </w-row>
-    <div style="border: 3px purple solid; width: 80%; margin: 0 auto">
-      <w-row :gutter="20">
-        <w-col :span="8">
-          <div style="background: red">111</div>
+    <div v-show="false">
+      <w-icon :name=iconName></w-icon>
+      <w-button icon="w-icon-loading" type="primary" round @click="clickHandler">按钮</w-button>
+      <w-row>
+        <w-col :span="6">
+          <div class="w-col-span-6" style="background: red">111ccc</div>
         </w-col>
-        <w-col :span="8">
+        <w-col :span="6" :offset="6">
           <div style="background: yellow">222</div>
-        </w-col>
-        <w-col :span="8">
+        </w-col
+        >
+        <w-col :span="6">
           <div style="background: pink">333</div>
         </w-col>
       </w-row>
-    </div>
-    <div style="border: 3px purple solid; width: 80%; margin: 0 auto">
-      <w-row justify="space-around">
-        <w-col :span="2">
+      <div style="border: 3px purple solid; width: 80%; margin: 0 auto">
+        <w-row :gutter="20">
+          <w-col :span="8">
+            <div style="background: red">111</div>
+          </w-col>
+          <w-col :span="8">
+            <div style="background: yellow">222</div>
+          </w-col>
+          <w-col :span="8">
+            <div style="background: pink">333</div>
+          </w-col>
+        </w-row>
+      </div>
+      <div style="border: 3px purple solid; width: 80%; margin: 0 auto">
+        <w-row justify="space-around">
+          <w-col :span="2">
+            <div style="background: red">111</div>
+          </w-col>
+          <w-col :span="2">
+            <div style="background: yellow">222</div>
+          </w-col>
+          <w-col :span="2">
+            <div style="background: pink">333</div>
+          </w-col>
+        </w-row>
+      </div>
+      <w-row>
+        <w-col :sm="12" :lg="6">
           <div style="background: red">111</div>
         </w-col>
-        <w-col :span="2">
+        <w-col :sm="12" :lg="6">
           <div style="background: yellow">222</div>
-        </w-col>
-        <w-col :span="2">
+        </w-col
+        >
+        <w-col :sm="12" :lg="6">
           <div style="background: pink">333</div>
         </w-col>
+        <w-col :sm="12" :lg="6">
+          <div style="background: yellowgreen">444</div>
+        </w-col>
       </w-row>
+      <br>
+      <w-checkbox v-model="check">checkbox</w-checkbox>
+      <p>{{ check }}</p>
+      <w-checkbox-group v-model="checkGroup">
+        <w-checkbox v-for="value in list" :label="value">{{ value }}</w-checkbox>
+      </w-checkbox-group>
+      <p>{{ checkGroup }}</p>
+      <br>
+      <w-transfer :data="data" v-model="transferValue"></w-transfer>
+      <br>
+      <button @click="handleShowMessage">show message</button>
+      <br><br>
+
     </div>
-    <w-row>
-      <w-col :sm="12" :lg="6">
-        <div style="background: red">111</div>
-      </w-col>
-      <w-col :sm="12" :lg="6">
-        <div style="background: yellow">222</div>
-      </w-col
-      >
-      <w-col :sm="12" :lg="6">
-        <div style="background: pink">333</div>
-      </w-col>
-      <w-col :sm="12" :lg="6">
-        <div style="background: yellowgreen">444</div>
-      </w-col>
-    </w-row>
-    <br>
-    <w-checkbox v-model="check">checkbox</w-checkbox>
-    <p>{{ check }}</p>
-    <w-checkbox-group v-model="checkGroup">
-      <w-checkbox v-for="value in list" :label="value">{{ value }}</w-checkbox>
-    </w-checkbox-group>
-    <p>{{ checkGroup }}</p>
-    <br>
-    <w-transfer :data="data" v-model="transferValue"></w-transfer>
-    <br>
-    <button @click="handleShowMessage">show message</button>
+
+    <div>
+      <w-collapse v-model="collapseData" :accordion="false">
+        <w-collapse-item title="one" name="1">
+          <p> this is one collapse</p>
+        </w-collapse-item>
+        <w-collapse-item title="two" name="2">
+          <p>this is two collapse</p>
+        </w-collapse-item>
+        <w-collapse-item title="three" name="3">
+          this is three collapse
+        </w-collapse-item>
+      </w-collapse>
+    </div>
   </div>
 </template>
 
@@ -117,10 +135,11 @@ export default defineComponent({
 
     const handleShowMessage = () => {
 
-      showMessage('hello message');
+      showMessage({message: 'hello message'});
     }
 
 
+    const collapseData = ref(['1']);
     return {
       ...toRefs(state),
       clickHandler,
@@ -129,7 +148,8 @@ export default defineComponent({
       list,
       data,
       transferValue,
-      handleShowMessage
+      handleShowMessage,
+      collapseData
     };
   }
 

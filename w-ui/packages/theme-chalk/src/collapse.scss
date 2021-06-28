@@ -1,0 +1,46 @@
+@import "mixins/mixin.scss";
+@import "common/var.scss";
+
+@include b(collapse) {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  font-size: 13px;
+
+}
+
+@include b(collapse-item) {
+  @include e(header) {
+    display: flex;
+    cursor: pointer;
+    line-height: 32px;
+    border-bottom: 1px solid #ccc;
+    background: oldlace;
+  }
+  @include e(body) {
+    padding-bottom: 25px;
+    border-bottom: 1px solid #ccc;
+    background: pink;
+  }
+}
+
+//.collapse-enter-from, .collapse-leave-to {
+//  height: 0;
+//}
+
+//.collapse-enter-active {
+//
+//  transition: height 0.5s ease;
+//
+//}
+//
+//.collapse-leave-active {
+//  transition: height 0.5s ease;
+//
+//}
+
+// height auto 无法自动实现动画，需要结合动画钩子函数
+.collapse-transition {
+
+  transition: all 0.5s ease;
+
+}

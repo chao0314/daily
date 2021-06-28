@@ -6,6 +6,6 @@ declare module "*.vue" {
     const component: ReturnType<typeof defineComponent> & {
         install(app: App): void
     };
-    export type Component = typeof component;
+    // export type Component = typeof component;
     export default component
 }
