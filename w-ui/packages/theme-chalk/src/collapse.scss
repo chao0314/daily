@@ -15,11 +15,24 @@
     line-height: 32px;
     border-bottom: 1px solid #ccc;
     background: oldlace;
+    outline: none;
+    margin: 0;
   }
-  @include e(body) {
+
+
+  @include e(wrap) {
+    will-change: height;
+    background-color: silver;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-bottom: 1px solid  silver;
+  }
+
+  @include e(content) {
     padding-bottom: 25px;
-    border-bottom: 1px solid #ccc;
-    background: pink;
+    font-size: 14px;
+    color: black;
+    //line-height: 1.769230769230769;
   }
 }
 
@@ -39,8 +52,9 @@
 //}
 
 // height auto 无法自动实现动画，需要结合动画钩子函数
+
 .collapse-transition {
-
-  transition: all 0.5s ease;
-
+  transition: 0.3s height ease-in-out, 0.3s padding-top ease-in-out, 0.3s padding-bottom ease-in-out;
 }
+
+

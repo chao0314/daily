@@ -12,7 +12,7 @@ export default defineComponent({
   name: "WCollapse",
   props: {
     modelValue: {
-      type: Array as PropType<string[] | number[]>,
+      type: Array as PropType<string[]>,
       default: () => []
     },
     accordion: {
@@ -24,7 +24,7 @@ export default defineComponent({
   emits: ["update:modelValue"],
   setup(props, {emit}) {
     const activeNames = computed(() => props.modelValue);
-    const handleItemClick = (name) => {
+    const handleItemClick = (name:string) => {
       let names: string[] | number[];
       if (props.accordion) {
 

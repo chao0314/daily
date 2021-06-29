@@ -74,10 +74,10 @@
     <div>
       <w-collapse v-model="collapseData" :accordion="false">
         <w-collapse-item title="one" name="1">
-          <p> this is one collapse</p>
+          <div> this is one collapse</div>
         </w-collapse-item>
         <w-collapse-item title="two" name="2">
-          <p>this is two collapse</p>
+         this is two collapse
         </w-collapse-item>
         <w-collapse-item title="three" name="3">
           this is three collapse
@@ -139,7 +139,7 @@ export default defineComponent({
     }
 
 
-    const collapseData = ref(['1']);
+    const collapseData = ref([]);
     return {
       ...toRefs(state),
       clickHandler,

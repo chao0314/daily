@@ -1,5 +1,7 @@
+import {ComputedRef} from "vue";
+
 export type CollapseProvide = {
-    activeNames?: string[],
+    activeNames?: ComputedRef<string[]>,
     handleItemClick?: (name?: string) => void
 
 }
