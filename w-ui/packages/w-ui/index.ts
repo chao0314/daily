@@ -8,6 +8,7 @@ import CheckboxGroup from "@w-ui/checkbox-group";
 import Transfer from "@w-ui/transfer";
 import Message from "@w-ui/message";
 import Collapse from "@w-ui/collapse";
+import InfiniteScroll from "@w-ui/infinite-scroll";
 
 export {showMessage} from "@w-ui/message";
 
@@ -24,6 +25,9 @@ const install = (app: App): void => {
         app.component(comp.name, comp);
 
     })
+
+    //指令
+    InfiniteScroll.install(app);
 
 }
 

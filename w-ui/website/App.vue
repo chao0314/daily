@@ -77,7 +77,7 @@
           <div> this is one collapse</div>
         </w-collapse-item>
         <w-collapse-item title="two" name="2">
-         this is two collapse
+          this is two collapse
         </w-collapse-item>
         <w-collapse-item title="three" name="3">
           this is three collapse
@@ -85,6 +85,10 @@
       </w-collapse>
     </div>
   </div>
+
+  <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+    <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
+  </ul>
 </template>
 
 <script lang="ts">
@@ -140,6 +144,12 @@ export default defineComponent({
 
 
     const collapseData = ref([]);
+    const count = ref(0)
+
+    const load = () => {
+      count.value += 2
+
+    }
     return {
       ...toRefs(state),
       clickHandler,
@@ -149,7 +159,9 @@ export default defineComponent({
       data,
       transferValue,
       handleShowMessage,
-      collapseData
+      collapseData,
+      count,
+      load
     };
   }
 
@@ -158,5 +170,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.infinite-list {
+
+  border: 1px solid silver;
+
+}
+
+.infinite-list li {
+
+  list-style-type: none;
+}
 
 </style>
