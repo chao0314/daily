@@ -21,7 +21,7 @@
         .content {
             height: 300px;
             background: pink;
-            margin: 20px 0;
+            padding: 20px 0;
             overflow: hidden;
             border: 10px solid oldlace;
             box-sizing: border-box;
@@ -55,7 +55,7 @@
 
     container.addEventListener('scroll', () => {
 
-        console.log(container.scrollTop, content.offsetHeight, content.scrollHeight)
+        console.log(content.clientHeight, content.offsetHeight, content.scrollHeight)
     })
 
 </script>

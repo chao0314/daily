@@ -1,0 +1,66 @@
+@import "mixins/mixin.scss";
+@import "common/var.scss";
+// 正常 w-input
+@include b(input) {
+  // w-input
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  //w-input__inner
+  @include e(inner) { // 输入框 无样式 并且border-box
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    outline: none;
+    width: 100%;
+  }
+
+  //w-input__suffix
+  @include e(suffix) {
+    position: absolute;
+    top: 0;
+    right: 5px;
+  }
+
+  @include e(prefix) {
+    position: absolute;
+    left: 5px;
+    top: 0;
+  }
+  //w-input--suffix
+  @include m(suffix) { // 有icon 加padding
+    .w-input__inner {
+      padding-right: 30px;
+    }
+  }
+  @include m(prefix) {
+    .w-input__inner {
+      padding-left: 30px;
+    }
+  }
+
+}
+
+
+// 增加前后元素 变成网格  让前后元素 跑到一行去
+//w-input-group
+@include b(input-group) {
+  display: inline-table;
+  .w-input__inner {
+    vertical-align: middle;
+    display: table-cell;
+  }
+  //w-input-group__append
+  @include e(append) {
+    width: 1px;
+    display: table-cell;
+    white-space: nowrap;
+    padding: 0 15px;
+  }
+  @include e(prepend) {
+    width: 1px;
+    display: table-cell;
+    white-space: nowrap;
+    padding: 0 15px;
+  }
+}

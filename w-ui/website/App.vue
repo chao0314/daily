@@ -92,7 +92,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, toRefs, ref, watch, onUpdated} from 'vue'
+import {defineComponent, reactive, toRefs, ref, watch, onUpdated, watchEffect} from 'vue'
 import {showMessage} from "@w-ui/message";
 
 export default defineComponent({
@@ -144,12 +144,17 @@ export default defineComponent({
 
 
     const collapseData = ref([]);
-    const count = ref(0)
+    const count = ref(8)
 
     const load = () => {
+      console.log('load');
       count.value += 2
 
     }
+
+    watchEffect(() => {
+      console.log('watch effect');
+    })
     return {
       ...toRefs(state),
       clickHandler,
@@ -173,6 +178,7 @@ export default defineComponent({
 .infinite-list {
 
   border: 1px solid silver;
+  height: 100px;
 
 }
 

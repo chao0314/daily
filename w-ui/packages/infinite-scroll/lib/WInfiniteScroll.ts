@@ -1,6 +1,5 @@
 import {ComponentPublicInstance, nextTick, ObjectDirective} from 'vue';
 import {getOffsetTop, getScrollContainer, throttle} from "../../utils";
-import InfiniteScroll from "../index";
 
 type InfiniteScrollCallback = () => void;
 type InfiniteScrollEl = HTMLElement & {
@@ -23,7 +22,7 @@ const props = {
     },
     distance: {
         type: Number,
-        default: 0
+        default: 5
     },
     disabled: {
         type: Boolean,
@@ -40,11 +39,9 @@ type  Props = typeof props;
 
 type  ScrollProps = { [K in keyof Props]: Props[K]['default'] };
 
-function getScrollProps(el: InfiniteScrollEl): ScrollProps {
+function getScrollProps(el: InfiniteScrollEl, instance: ComponentPublicInstance): ScrollProps {
 
     // 1 组件实例上找 2 绑定的dom元素 attributes上找 3 默认值
-
-    const {instance} = el.infinite;
 
     return Object.entries(props).reduce((memo, [key, value]) => {
 
@@ -78,6 +75,7 @@ function checkContainerFull(el: InfiniteScrollEl) {
 }
 
 function onScroll(el: InfiniteScrollEl) {
+    console.log('on  scroll')
 
     const {container, scrollCallback, distance, observer, disabled, instance} = el.infinite;
 
@@ -86,6 +84,7 @@ function onScroll(el: InfiniteScrollEl) {
 
     //滚动容器就是绑定指令的元素  常见
     if (container === el) {
+
         const {scrollHeight, clientHeight, scrollTop} = el;
         if (scrollTop + clientHeight >= scrollHeight - distance) scrollCallback(instance);
 
@@ -120,10 +119,10 @@ const WInfiniteScroll: ObjectDirective<InfiniteScrollEl, InfiniteScrollCallback>
         await nextTick();
 
         const container: HTMLElement = getScrollContainer(el);
-        const {immediate, disabled, delay, distance} = getScrollProps(el);
+        const {immediate, disabled, delay, distance} = getScrollProps(el, instance);
         const onScrollHandler = throttle(() => onScroll(el), delay);
 
-        el.infinite =  {scrollCallback,instance,container,distance,disabled,onScrollHandler}
+        el.infinite = {scrollCallback, instance, container, distance, disabled, onScrollHandler}
         if (!disabled && immediate) {
             // 如果初始时的内容没有填满 container 的 clientHeight 那么自动填满
             const observer = new MutationObserver(throttle(() => checkContainerFull(el), 100));

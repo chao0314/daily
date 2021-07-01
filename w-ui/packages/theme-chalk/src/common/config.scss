@@ -1,8 +1,8 @@
 // 采用 bem 规则 block__element--modifier
 $namespace: 'w'; // scss变量  命名空间
 $state-prefix: 'is-'; // 状态
-$modifier-separator: '--'; // 表修饰作用
-$element-separator: '__'; // 元素之间的分割
+$modifier-separator: '--'; // 表修饰作用 双中划线
+$element-separator: '__'; // 元素之间的分割  双下划线
 
 // 响应式
 
