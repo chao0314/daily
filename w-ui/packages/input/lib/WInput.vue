@@ -11,7 +11,7 @@
         ref="inputRef"
         :disabled="disabled"
         :readonly="readonly"
-        v-bind="attrs"
+        v-bind="$attrs"
         :placeholder="placeholder"
         @input="handleInput"
         @focus="handleFocus"
@@ -28,7 +28,7 @@
       <i
           v-if="showClear"
           class="w-icon-delete"
-          @click="clear"
+          @click="handleClear"
           @mousedown.prevent
       ></i>
       <i
@@ -46,7 +46,17 @@
 </template>
 
 <script lang="ts">
-import {ref, Ref, defineComponent, computed, getCurrentInstance} from 'vue'
+import {
+  ref,
+  Ref,
+  defineComponent,
+  computed,
+  getCurrentInstance,
+  nextTick,
+  onMounted,
+  watch,
+  onUpdated
+} from 'vue'
 
 const PENDANT_MAP = {
   suffix: 'append',
@@ -67,14 +77,17 @@ export default defineComponent({
     prefixIcon: {type: String, default: ""}, // 后icon
     label: {type: String}, // input配合的label属性
   },
-  setup(props, {attrs, slots}) {
+  emit: ["update:modelValue", "change", "clear", "input", "focus", "keydown", "blur"],
+  setup(props, ctx) {
+
+    const {slots, emit} = ctx;
 
     const instance = getCurrentInstance();
 
     const clazz = computed(() => [
       "w-input",
       {
-        "w-input-group": ctx.slots.prepend || ctx.slots.append,
+        "w-input-group": slots.prepend || slots.append,
         "w-input--prefix": props.prefixIcon,
         "w-input--suffix": props.suffixIcon || props.clearable || props.showPassword,
       },
@@ -86,6 +99,15 @@ export default defineComponent({
       const el = ref.value;
       el.value = String(props.modelValue);
     };
+
+    //监控值变化更新输入框中内容
+    watch(
+        () => props.modelValue,
+        (val) => {
+          console.log('input watch', val);
+          setNativeInputValue(inputRef);
+        }
+    );
 
     const calcIconOffset = (place: string) => {
       // 将前后icon 移动到 前位置或者后位置
@@ -99,6 +121,13 @@ export default defineComponent({
       }
 
     };
+
+    onMounted(() => {
+      setNativeInputValue(inputRef); // 设置输入框的值
+      // 更新icon位置
+      calcIconOffset('suffix');
+      calcIconOffset('prefix');
+    });
 
     const showClear = computed( // 显示清除按钮
         () =>
@@ -127,41 +156,79 @@ export default defineComponent({
       focus();
     };
 
-    onMounted(() => {
-      setNativeInputValue(inputRef); // 设置输入框的值
-      // 更新icon位置
-      calcIconOffset('suffix');
-      calcIconOffset('prefix');
-    });
 
-    const clear = () => {  // 清除实现
-      ctx.emit("update:modelValue", "");
-      ctx.emit("change", "");
-      ctx.emit("clear");
+    const handleClear = () => {  // 清除实现
+      emit("update:modelValue", "");
+      emit("change", "");
+      emit("clear");
     };
     const handleInput = (e) => { // 输入事件
+      console.log('handle input')
       let v = e.target.value;
-      ctx.emit("update:modelValue", v);
-      ctx.emit("input", v);
+      emit("update:modelValue", v);
+      emit("input", v);
     };
     const handleFocus = (event) => { // 获取焦点
-      ctx.emit("focus", event);
+      emit("focus", event);
     };
     const handleBlur = (event) => { // 处理失去焦点
-      ctx.emit("blur", event);
-      zformItem.formItemMitt?.emit("z.form.blur", [props.modelValue]);
+      emit("blur", event);
+      // zformItem.formItemMitt?.emit("z.form.blur", [props.modelValue]);
     };
     const handleChange = (event) => { // 处理事件变化
-      ctx.emit("change", event.target.value);
+      emit("change", event.target.value);
     };
     const handleKeydown = (e) => { // 处理键盘
-      ctx.emit("keydown", e);
+      emit("keydown", e);
     };
+
+    /*
+    * 响应式 attrs ,ctx.attrs本身不是响应式的 ，官方文档建议在 onUpdated 中依据更改做出相应处理
+    * 另一种方式
+      instance.attrs = reactive(instance.attrs);
+      watchEffect(() => {
+            // 监控attrs的变化 重新做赋值操作
+            const rest = {};
+            Object.entries(instance.attrs).forEach(([key, value]) => {rest[key] = value;});
+            attrs.value = rest;
+      });
+    * */
+
+
+    // const attrs = ref({});
+    //
+    // onUpdated(() => {
+    //   console.log('---updated---')
+      // const rest = {...attrs.value};
+      // let shouldReset = false;
+      // Object.entries(ctx.attrs).forEach(([key, value]) => {
+      //
+      //   if (rest[key] !== value) {
+      //     rest[key] = value;
+      //     shouldReset = true;
+      //   }
+      //
+      // });
+      // if (shouldReset) attrs.value = rest;
+
+    // })
 
 
     return {
+      // attrs,
       clazz,
-      inputRef
+      inputRef,
+      showClear,
+      showPwdVisible,
+      passwordVisible,
+      handlePasswordVisible,
+      handleClear,
+      handleInput,
+      handleFocus,
+      handleBlur,
+      handleChange,
+      handleKeydown
+
     }
 
   }

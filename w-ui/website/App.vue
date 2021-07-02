@@ -89,6 +89,8 @@
   <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
     <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
   </ul>
+  <br>
+  <w-input v-model="inputVal" v-bind="inputAttrs"></w-input>
 </template>
 
 <script lang="ts">
@@ -152,9 +154,19 @@ export default defineComponent({
 
     }
 
+
     watchEffect(() => {
       console.log('watch effect');
     })
+
+    const inputVal = ref("input");
+    const inputAttrs = reactive({a: 1});
+    watch(() => inputVal.value, (val) => {
+      console.log('input change', val)
+    })
+
+    // setInterval(() => inputAttrs.a = Math.random(), 1000)
+
     return {
       ...toRefs(state),
       clickHandler,
@@ -166,7 +178,10 @@ export default defineComponent({
       handleShowMessage,
       collapseData,
       count,
-      load
+      load,
+      inputVal,
+      inputAttrs
+
     };
   }
 

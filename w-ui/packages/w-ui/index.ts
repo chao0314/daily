@@ -9,13 +9,14 @@ import Transfer from "@w-ui/transfer";
 import Message from "@w-ui/message";
 import Collapse from "@w-ui/collapse";
 import InfiniteScroll from "@w-ui/infinite-scroll";
+import Input from "@w-ui/input";
 
 export {showMessage} from "@w-ui/message";
 
 const {WCollapse, WCollapseItem} = Collapse;
 
 const components = [
-    Button, Icon, Row, Col, Checkbox, CheckboxGroup, Transfer, Message, WCollapse, WCollapseItem
+    Button, Icon, Row, Col, Checkbox, CheckboxGroup, Transfer, Message, WCollapse, WCollapseItem,Input
 ]
 
 const install = (app: App): void => {
