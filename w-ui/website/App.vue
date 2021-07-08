@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-show="false">
+  <div v-show="false">
+    <div>
       <w-icon :name=iconName></w-icon>
       <w-button icon="w-icon-loading" type="primary" round @click="clickHandler">按钮</w-button>
       <w-row>
@@ -84,13 +84,19 @@
         </w-collapse-item>
       </w-collapse>
     </div>
+    <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+      <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
+    </ul>
+    <br>
+    <w-input v-model="inputVal" v-bind="inputAttrs"></w-input>
   </div>
 
-  <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
-    <li v-for="i in count" class="infinite-list-item">{{ i }}</li>
-  </ul>
   <br>
-  <w-input v-model="inputVal" v-bind="inputAttrs"></w-input>
+  <w-form :model="formModel" :rules="rules">
+    <w-form-item label="姓名" prop="name">
+      <w-input v-model="formModel.name"></w-input>
+    </w-form-item>
+  </w-form>
 </template>
 
 <script lang="ts">
@@ -167,6 +173,16 @@ export default defineComponent({
 
     // setInterval(() => inputAttrs.a = Math.random(), 1000)
 
+    const formModel = reactive({name: "hello"});
+    watch(() => formModel.name, () => {
+      console.log(formModel.name);
+    })
+
+    const rules = {
+      name: [
+        { required: true, message: '请输入活动名称', trigger: 'blur' }
+      ]
+    }
     return {
       ...toRefs(state),
       clickHandler,
@@ -180,7 +196,9 @@ export default defineComponent({
       count,
       load,
       inputVal,
-      inputAttrs
+      inputAttrs,
+      formModel,
+      rules
 
     };
   }

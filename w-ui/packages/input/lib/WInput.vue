@@ -55,7 +55,7 @@ import {
   nextTick,
   onMounted,
   watch,
-  onUpdated
+  onUpdated, inject
 } from 'vue'
 
 const PENDANT_MAP = {
@@ -129,6 +129,8 @@ export default defineComponent({
       calcIconOffset('prefix');
     });
 
+    const formItem = inject('WFormItem', {} as any);
+
     const showClear = computed( // 显示清除按钮
         () =>
             props.clearable &&
@@ -174,9 +176,11 @@ export default defineComponent({
     const handleBlur = (event) => { // 处理失去焦点
       emit("blur", event);
       // zformItem.formItemMitt?.emit("z.form.blur", [props.modelValue]);
+      formItem.handleBlur();
     };
     const handleChange = (event) => { // 处理事件变化
       emit("change", event.target.value);
+      formItem.handleChange();
     };
     const handleKeydown = (e) => { // 处理键盘
       emit("keydown", e);
@@ -199,17 +203,17 @@ export default defineComponent({
     //
     // onUpdated(() => {
     //   console.log('---updated---')
-      // const rest = {...attrs.value};
-      // let shouldReset = false;
-      // Object.entries(ctx.attrs).forEach(([key, value]) => {
-      //
-      //   if (rest[key] !== value) {
-      //     rest[key] = value;
-      //     shouldReset = true;
-      //   }
-      //
-      // });
-      // if (shouldReset) attrs.value = rest;
+    // const rest = {...attrs.value};
+    // let shouldReset = false;
+    // Object.entries(ctx.attrs).forEach(([key, value]) => {
+    //
+    //   if (rest[key] !== value) {
+    //     rest[key] = value;
+    //     shouldReset = true;
+    //   }
+    //
+    // });
+    // if (shouldReset) attrs.value = rest;
 
     // })
 
