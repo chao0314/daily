@@ -97,11 +97,21 @@
       <w-input v-model="formModel.name"></w-input>
     </w-form-item>
   </w-form>
+  <br>
+  <w-virtual-list :items="items" :itemHeight="30">
+    <template v-slot:default="{item}">
+      <w-virtual-list-item :item="item">
+        {{item.id}}---{{item.value}}
+      </w-virtual-list-item>
+    </template>
+  </w-virtual-list>
 </template>
 
 <script lang="ts">
 import {defineComponent, reactive, toRefs, ref, watch, onUpdated, watchEffect} from 'vue'
 import {showMessage} from "@w-ui/message";
+import Mock from 'mockjs';
+
 
 export default defineComponent({
   name: "App",
@@ -180,9 +190,20 @@ export default defineComponent({
 
     const rules = {
       name: [
-        { required: true, message: '请输入活动名称', trigger: 'blur' }
+        {required: true, message: '请输入活动名称', trigger: 'blur'}
       ]
     }
+
+    const items = [];
+
+    for (let i = 0; i < 40; i++) {
+      items.push({
+        id: i,
+        value: Mock.Random.string('lower', 3, 5)
+      })
+
+    }
+
     return {
       ...toRefs(state),
       clickHandler,
@@ -198,7 +219,8 @@ export default defineComponent({
       inputVal,
       inputAttrs,
       formModel,
-      rules
+      rules,
+      items
 
     };
   }

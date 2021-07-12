@@ -11,14 +11,15 @@ import Collapse from "@w-ui/collapse";
 import InfiniteScroll from "@w-ui/infinite-scroll";
 import Input from "@w-ui/input";
 import {Form, FormItem} from '@w-ui/form';
+import {VirtualList, VirtualListItem} from '@w-ui/virtual-list';
 
 export {showMessage} from "@w-ui/message";
 
 const {WCollapse, WCollapseItem} = Collapse;
 
 const components = [
-    Button, Icon, Row, Col, Checkbox, CheckboxGroup, Transfer, Message, WCollapse, WCollapseItem, Input,Form,FormItem
-]
+    Button, Icon, Row, Col, Checkbox, CheckboxGroup, Transfer, Message, WCollapse, WCollapseItem, Input, Form, FormItem,
+    VirtualList, VirtualListItem]
 
 const install = (app: App): void => {
 
