@@ -2,15 +2,17 @@
   <div class="w-virtual-list" ref="containerRef" @scroll="handleScroll">
     <div class="w-virtual-list-scrollbar" ref="barRef"></div>
     <div class="w-virtual-list-content" :style=style>
-      <div v-for="(item,index) in visibleItems" :key="index" ref="itemsRef">
+      <div v-for="(item,index) in visibleItems" :key="index" :full_index="item._full_index"
+           :ref="(el)=>setItemRef(index,el)">
         <slot :item="item"></slot>
       </div>
     </div>
   </div>
 </template>
 
+
 <script lang="ts">
-import {computed, defineComponent, onMounted, provide, reactive, ref, toRefs} from 'vue'
+import {computed, defineComponent, nextTick, onMounted, onUpdated, provide, reactive, ref, toRefs} from 'vue'
 import {throttle} from "../../utils";
 
 export default defineComponent({
@@ -18,11 +20,11 @@ export default defineComponent({
   props: {
     items: {
       type: Array,
-      default: () => []
+      default: () => [{}]
     },
     itemHeight: {
       type: Number,
-      default: 0
+      default: 30
     },
     remain: {//前 中 后可见多少个 三倍
       type: Number,
@@ -38,25 +40,21 @@ export default defineComponent({
     const curStart = ref(0);
     const curEnd = ref(props.remain);
     const containerRef = ref(null);
-    const itemsRef = ref(null);
     const barRef = ref(null);
     const offsetTop = ref(0);
-    let remainStart, remainEnd;
+    const remainStart = computed(() => curStart.value > props.remain ? curStart.value - props.remain : 0);
+    const remainEnd = computed(() => curEnd.value < props.items.length - props.remain ? curEnd.value + props.remain : props.items.length);
+    const itemsWithIndex = computed(() => props.items.map((item: {}, index) => ({...item, _full_index: index})));
 
-
-    const visibleItems = computed(() => {
-
-      if (curStart.value > props.remain) remainStart = curStart.value - props.remain;
-      else remainStart = 0;
-      if (curEnd.value < props.items.length - props.remain) remainEnd = curEnd.value + props.remain;
-      else remainEnd = props.items.length;
-      console.log(remainStart, remainEnd)
-      return props.items.slice(remainStart, remainEnd);
-
-
-    })
-
+    const visibleItems = computed(() => itemsWithIndex.value.slice(remainStart.value, remainEnd.value));
+    // content 最多 3 remain  远比 items scrollbar 小，所以当滚动后需要translate 下移，否则就是空白平
+    //因为content 被卷进去了。而 动态更新 visibleItems 为的就是 渲染数据 下移 ，视觉上滚动
     const style = computed(() => ({transform: `translateY(${offsetTop.value}px)`}));
+    const itemsRef = [];
+    const setItemRef = (index, el) => props.variable && (itemsRef[index] = el);
+
+
+    let itemsPositions = [];
 
 
     provide('WVirtualList', {
@@ -65,46 +63,106 @@ export default defineComponent({
 
     onMounted(() => {
 
+      containerRef.value.style.height = props.itemHeight * props.remain + 'px';
+
       if (props.itemHeight > 0 && !props.variable) {
         // item  固定高度
         barRef.value.style.height = props.itemHeight * props.items.length + 'px';
-        containerRef.value.style.height = props.itemHeight * props.remain + 'px';
 
       } else {
         // item 高度不固定
-
+        itemsPositions = updateItemsPositions(itemsPositions);
+        barRef.value.style.height = (itemsPositions[itemsPositions.length - 1].bottom - itemsPositions[0].top) + 'px';
 
       }
 
 
     })
 
+    onUpdated(() => {
+      console.log("u", itemsRef);
+      itemsPositions = updateItemsPositions(itemsPositions);
+    })
+
+
+    const updateItemsPositions = (itemsPositions = []) => {
+
+      // 数据变了 重置
+      if (itemsPositions.length !== itemsWithIndex.value.length) itemsPositions = [];
+
+      if (itemsPositions.length === 0 && itemsRef.length > 0) {
+
+        //预估的数值，用于滚动条高度
+        itemsPositions = props.items.map((item, index) => ({
+          top: props.itemHeight * index,
+          bottom: props.itemHeight * (index + 1)
+        }))
+
+        itemsRef.forEach((item) => {
+
+          const fullIndex = item.getAttribute('full_index');
+
+          console.log('fullIndex', fullIndex);
+          const {top, bottom} = item.getBoundingClientRect();
+          itemsPositions[fullIndex] = {top, bottom};
+
+        })
+
+      } else if (itemsRef.length > 0) {
+
+        for (let i = 0; i < itemsRef.length; i++) {
+
+          const item = itemsRef[i];
+          const {top, bottom} = item.getBoundingClientRect();
+          const fullIndex = item.getAttribute('full_index');
+          const {top: oldTop, bottom: oldBottom} = itemsPositions[fullIndex];
+          const diff = (bottom - top) - (oldBottom - oldTop);
+          if (diff === 0) continue;
+
+          for (let j = fullIndex + 1; j < itemsPositions.length; j++) {
+
+            const position = itemsPositions[j];
+            position.top += diff;
+            position.bottom += diff;
+
+          }
+
+
+        }
+
+
+      }
+
+      return itemsPositions;
+
+
+    }
+
+
     const handleScroll = throttle(() => {
 
-      console.log(containerRef.value.scrollTop)
 
       const scrollTop = containerRef.value.scrollTop;
 
       if (props.variable) {
-        //item 高度不固定
+        //item 高度不固定 二分查找 找到当前的 item
 
 
       } else {
-
         curStart.value = Math.floor(scrollTop / props.itemHeight);
         curEnd.value = curStart.value + props.remain;
-        offsetTop.value = scrollTop - remainStart * props.itemHeight - scrollTop % props.itemHeight;
+        offsetTop.value = scrollTop - (curStart.value - remainStart.value) * props.itemHeight - scrollTop % props.itemHeight;
 
       }
 
 
-    }, 200)
+    }, 30)
 
 
     return {
       visibleItems,
       containerRef,
-      itemsRef,
+      setItemRef,
       barRef,
       handleScroll,
       offsetTop,

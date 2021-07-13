@@ -45,4 +45,9 @@ export function getOffsetTop(el: HTMLElement) {
 
 }
 
+type  Position = { index: number, top: number, bottom: number };
 
+export function binSearchPosition(positions: Position[], offset: number) {
+
+
+}
