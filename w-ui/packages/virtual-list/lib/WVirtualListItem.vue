@@ -1,6 +1,6 @@
 <template>
   <div class="w-virtual-list-item" :style="style">
-  <slot></slot>
+    <slot></slot>
   </div>
 </template>
 
@@ -20,10 +20,10 @@ export default defineComponent({
 
     const {itemHeight} = inject('WVirtualList', {} as any);
     const style = computed(() => {
+      const s = {}
+      if (itemHeight) s["height"] = itemHeight + 'px';
 
-      return {
-        "height": itemHeight + 'px'
-      }
+      return s;
     })
     // console.log(props.item)
 

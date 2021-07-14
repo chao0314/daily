@@ -98,7 +98,7 @@
     </w-form-item>
   </w-form>
   <br>
-  <w-virtual-list :items="items"  :variable="true" style="height: 300px">
+  <w-virtual-list :items="items"  :variable="true">
     <template v-slot:default="{item}">
       <w-virtual-list-item :item="item">
         {{item.id}}---{{item.value}}

@@ -3,7 +3,7 @@
     <div class="w-virtual-list-scrollbar" ref="barRef"></div>
     <div class="w-virtual-list-content" :style=style>
       <div v-for="(item,index) in visibleItems" :key="index" :full_index="item._full_index"
-           :ref="(el)=>setItemRef(index,el)">
+           :ref="setItemRef">
         <slot :item="item"></slot>
       </div>
     </div>
@@ -12,8 +12,19 @@
 
 
 <script lang="ts">
-import {computed, defineComponent, nextTick, onMounted, onUpdated, provide, reactive, ref, toRefs} from 'vue'
-import {throttle} from "../../utils";
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  onBeforeMount, onBeforeUpdate,
+  onMounted,
+  onUpdated,
+  provide,
+  reactive,
+  ref,
+  toRefs
+} from 'vue'
+import {binSearchPositionIndex, throttle} from "../../utils";
 
 export default defineComponent({
   name: "WVirtualList",
@@ -50,15 +61,15 @@ export default defineComponent({
     // content 最多 3 remain  远比 items scrollbar 小，所以当滚动后需要translate 下移，否则就是空白平
     //因为content 被卷进去了。而 动态更新 visibleItems 为的就是 渲染数据 下移 ，视觉上滚动
     const style = computed(() => ({transform: `translateY(${offsetTop.value}px)`}));
-    const itemsRef = [];
-    const setItemRef = (index, el) => props.variable && (itemsRef[index] = el);
+    let itemsRef = [];
+    const setItemRef = el => props.variable && el && (itemsRef.push(el));
 
 
     let itemsPositions = [];
 
 
     provide('WVirtualList', {
-      itemHeight: props.itemHeight
+      itemHeight: props.variable ? void 0 : props.itemHeight
     })
 
     onMounted(() => {
@@ -79,13 +90,21 @@ export default defineComponent({
 
     })
 
+    onBeforeUpdate(() => itemsRef = []);
+
     onUpdated(() => {
-      console.log("u", itemsRef);
-      itemsPositions = updateItemsPositions(itemsPositions);
+      //更新 positions 以及 scrollbar 的长度
+      nextTick(() => {
+
+        itemsPositions = updateItemsPositions(itemsPositions);
+        console.log(itemsPositions[itemsPositions.length - 1], itemsPositions[0])
+        barRef.value.style.height = (itemsPositions[itemsPositions.length - 1].bottom - itemsPositions[0].top) + 'px';
+      })
     })
 
 
     const updateItemsPositions = (itemsPositions = []) => {
+
 
       // 数据变了 重置
       if (itemsPositions.length !== itemsWithIndex.value.length) itemsPositions = [];
@@ -94,6 +113,7 @@ export default defineComponent({
 
         //预估的数值，用于滚动条高度
         itemsPositions = props.items.map((item, index) => ({
+          index,
           top: props.itemHeight * index,
           bottom: props.itemHeight * (index + 1)
         }))
@@ -101,29 +121,37 @@ export default defineComponent({
         itemsRef.forEach((item) => {
 
           const fullIndex = item.getAttribute('full_index');
-
-          console.log('fullIndex', fullIndex);
           const {top, bottom} = item.getBoundingClientRect();
-          itemsPositions[fullIndex] = {top, bottom};
+          itemsPositions[fullIndex].top = top;
+          itemsPositions[fullIndex].bottom = bottom;
 
         })
 
       } else if (itemsRef.length > 0) {
 
+
         for (let i = 0; i < itemsRef.length; i++) {
 
           const item = itemsRef[i];
+
           const {top, bottom} = item.getBoundingClientRect();
-          const fullIndex = item.getAttribute('full_index');
+          const fullIndex = Number(item.getAttribute('full_index'));
           const {top: oldTop, bottom: oldBottom} = itemsPositions[fullIndex];
           const diff = (bottom - top) - (oldBottom - oldTop);
+
+          console.log('fullIndex--',fullIndex,);
+
           if (diff === 0) continue;
 
           for (let j = fullIndex + 1; j < itemsPositions.length; j++) {
 
             const position = itemsPositions[j];
-            position.top += diff;
-            position.bottom += diff;
+
+            if (position) {
+              position.top += diff;
+              position.bottom += diff;
+            }
+
 
           }
 
@@ -146,6 +174,20 @@ export default defineComponent({
 
       if (props.variable) {
         //item 高度不固定 二分查找 找到当前的 item
+        // console.log("index", binSearchPositionIndex(itemsPositions, scrollTop))
+        const curIndex = binSearchPositionIndex(itemsPositions, scrollTop);
+        if (curIndex > 0) {
+
+          curStart.value = curIndex;
+          curEnd.value = curIndex + props.remain;
+
+          const {top: diff} = itemsPositions[0];
+          const {top: remainTop} = itemsPositions[remainStart.value];
+          const {top: curTop} = itemsPositions[curIndex];
+          // console.log("---", scrollTop, remainTop, curTop);
+          offsetTop.value = scrollTop - (curTop + (scrollTop - (curTop - diff)) - remainTop);
+
+        }
 
 
       } else {
