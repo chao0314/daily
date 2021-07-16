@@ -1,0 +1,48 @@
+@import "./common/var.scss";
+@import "./mixins/mixin.scss";
+
+@include b(table) {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  position: relative;
+
+  & table {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 5px;
+      text-align: left;
+
+    }
+
+    th:nth-child(1), td:nth-child(1) {
+      padding: 0;
+      text-align: center;
+    }
+
+    thead tr {
+
+      background: silver;
+    }
+
+    tbody tr:nth-child(even) {
+
+      background: pink;
+
+    }
+
+  }
+  @include e(container) {
+    width: 100%;
+  }
+
+
+
+}

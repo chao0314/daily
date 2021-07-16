@@ -98,14 +98,17 @@
     </w-form-item>
   </w-form>
   <br>
-  <w-virtual-list :items="items"  :variable="true">
+  <w-virtual-list :items="items" :variable="true">
     <template v-slot:default="{item}">
       <w-virtual-list-item :item="item">
-        {{item.id}}---{{item.value}}
+        {{ item.id }}---{{ item.value }}
       </w-virtual-list-item>
     </template>
   </w-virtual-list>
+  <br>
+  <w-table :columns=tableData.columns :data="tableData.data" :height="150"></w-table>
 </template>
+
 
 <script lang="ts">
 import {defineComponent, reactive, toRefs, ref, watch, onUpdated, watchEffect} from 'vue'
@@ -204,6 +207,89 @@ export default defineComponent({
 
     }
 
+    const tableData = {
+      orderBy: {
+        // 如何排序
+        // name:true, // 能排序
+        age: "asc",
+        address: "desc"
+      },
+      selectedItems: [], // 当前用户选中了哪一项
+      columns: [
+        {
+          title: "Name",
+          key: "name",
+        },
+        {
+          title: "Age",
+          key: "age"
+        },
+        {
+          title: "Address",
+          key: "address",
+
+        }
+      ],
+      data: [
+        {
+          id: 1,
+          name: "John Brown",
+          age: 18,
+          address: "New York No. 1 Lake Park",
+          date: "2019-10-03"
+        },
+        {
+          id: 2,
+          name: "Jim Green",
+          age: 24,
+          address: "London No. 1 Lake Park",
+          date: "2019-10-01"
+        },
+        {
+          id: 3,
+          name: "Joe Black",
+          age: 30,
+          address: "Sydney No. 1 Lake Park",
+          date: "2019-10-02"
+        },
+        {
+          id: 4,
+          name: "Jon Snow",
+          age: 26,
+          address: "Ottawa No. 2 Lake Park",
+          date: "2019-10-04"
+        },
+        {
+          id: 5,
+          name: "John Brown",
+          age: 18,
+          address: "New York No. 1 Lake Park",
+          date: "2019-10-03"
+        },
+        {
+          id: 6,
+          name: "Jim Green",
+          age: 24,
+          address: "London No. 1 Lake Park",
+          date: "2018-10-01"
+        },
+        {
+          id: 7,
+          name: "Joe Black",
+          age: 30,
+          address: "Sydney No. 1 Lake Park",
+          date: "2018-10-02"
+        },
+        {
+          id: 8,
+          name: "Jon Snow",
+          age: 26,
+          address: "Ottawa No. 2 Lake Park",
+          date: "2018-10-04"
+        }
+      ]
+    }
+
     return {
       ...toRefs(state),
       clickHandler,
@@ -220,7 +306,8 @@ export default defineComponent({
       inputAttrs,
       formModel,
       rules,
-      items
+      items,
+      tableData
 
     };
   }

@@ -55,6 +55,7 @@ export default defineComponent({
     const offsetTop = ref(0);
     const remainStart = computed(() => curStart.value > props.remain ? curStart.value - props.remain : 0);
     const remainEnd = computed(() => curEnd.value < props.items.length - props.remain ? curEnd.value + props.remain : props.items.length);
+
     const itemsWithIndex = computed(() => props.items.map((item: {}, index) => ({...item, _full_index: index})));
 
     const visibleItems = computed(() => itemsWithIndex.value.slice(remainStart.value, remainEnd.value));
@@ -109,7 +110,7 @@ export default defineComponent({
       // 数据变了 重置
       if (itemsPositions.length !== itemsWithIndex.value.length) itemsPositions = [];
 
-      if (itemsPositions.length === 0 && itemsRef.length > 0) {
+      if (itemsPositions.length === 0) {
 
         //预估的数值，用于滚动条高度
         itemsPositions = props.items.map((item, index) => ({
@@ -118,16 +119,9 @@ export default defineComponent({
           bottom: props.itemHeight * (index + 1)
         }))
 
-        itemsRef.forEach((item) => {
 
-          const fullIndex = item.getAttribute('full_index');
-          const {top, bottom} = item.getBoundingClientRect();
-          itemsPositions[fullIndex].top = top;
-          itemsPositions[fullIndex].bottom = bottom;
-
-        })
-
-      } else if (itemsRef.length > 0) {
+      }
+      if (itemsRef.length > 0) {
 
 
         for (let i = 0; i < itemsRef.length; i++) {
@@ -139,9 +133,12 @@ export default defineComponent({
           const {top: oldTop, bottom: oldBottom} = itemsPositions[fullIndex];
           const diff = (bottom - top) - (oldBottom - oldTop);
 
-          console.log('fullIndex--',fullIndex,);
+          // console.log('fullIndex--', fullIndex, diff);
+          // console.log(fullIndex + "--", top, bottom);
 
           if (diff === 0) continue;
+
+          itemsPositions[fullIndex].bottom += diff;
 
           for (let j = fullIndex + 1; j < itemsPositions.length; j++) {
 
