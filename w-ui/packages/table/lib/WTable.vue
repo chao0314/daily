@@ -83,8 +83,8 @@ export default defineComponent({
 
       if (props.height) {
         containerPadding.value = fixedHeadRef.value.getBoundingClientRect().height;
-        const fixedHeadThs = Array.from(fixedHeadRef.value.querySelectorAll('thead tr th'));
-        const containerTbodyTdsOfFirstTr = Array.from(containerTbodyRef.value.querySelectorAll('tr:first-child td'));
+        const fixedHeadThs: HTMLElement[] = Array.from(fixedHeadRef.value.querySelectorAll('thead tr th'));
+        const containerTbodyTdsOfFirstTr: HTMLElement[] = Array.from(containerTbodyRef.value.querySelectorAll('tr:first-child td'));
 
         console.log(fixedHeadThs, containerTbodyTdsOfFirstTr)
 
