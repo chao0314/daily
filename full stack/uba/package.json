@@ -10,6 +10,6 @@
   "license": "ISC",
   "devDependencies": {
     "bluebird": "^3.7.2",
-    "redis": "^2.8.0"
+    "redis": "^3.1.1"
   }
 }
