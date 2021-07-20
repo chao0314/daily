@@ -20,8 +20,8 @@
     // vue3 template -> render函数 3个步骤   把html解析成抽象语法树（ast） 描述语法本身  2.转化ast树 加标记和进行优化 (transform)  3.生成render函数（字符串拼接）
 
     let {baseCompile} = VueCompilerDOM
-    let ast = baseCompile(`<div id="app">hello<p>{{name}}</p></div>`)
-    console.log(ast);
+    let ast = baseCompile(`{{name}}`)
+
 
 </script>
 </body>

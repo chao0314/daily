@@ -1,3 +1,5 @@
+import get = Reflect.get;
+
 export const enum NodeTypes {
     ROOT,
     ElEMENT,
@@ -27,13 +29,16 @@ type Cursor = {
 
 type Location = {
     start: Cursor,
-    end: Cursor
+    end: Cursor,
+    source: string
 }
 
 type Node = {
     type: number,
-    content?: string,
-    loc: Location
+    content: string | Node,
+    loc: Location,
+    isStatic?: boolean,
+    isConstant?: boolean
 
 }
 
@@ -56,18 +61,150 @@ function isEnd(context: Context) {
 
 }
 
-function parseText(context: Context) {
+function parseText(context: Context): Node {
 
     //遇到 < {{ 这两个字符 说明纯文本结束
     const endTokens = ["<", "{{"];
-    const {source} =  context;
-    let endIndex = 0;
+    const {source, originalSource} = context;
+    let endIndex = source.length;
     for (let i = 0; i < endTokens.length; i++) {
+        let index = source.indexOf(endTokens[i]);
+        if (index !== -1 && endIndex > index) endIndex = index;
+    }
+    // 多个文本空格  替换为一个
+    const content = source.slice(0, endIndex).replace(/\s+/g, " ");
 
-        let index =  source.indexOf(endTokens[i]);
+    const start = getCursor(context);
+    advance(context, endIndex);
+    const end = getCursor(context);
+
+
+    return {
+        type: NodeTypes.TEXT,
+        content,
+        loc: {
+            start,
+            end,
+            source: originalSource.slice(start.offset, end.offset)
+        }
+
+    }
+
+
+}
+
+
+function advance(context, index) {
+
+    const {source} = context;
+
+    context = mutationPosition(context, source, index);
+
+    context.source = source.slice(index);
+
+    return context;
+
+
+}
+
+
+function mutationPosition(ctx: Context | Cursor, source: string, index: number) {
+
+    let lineCount = 0;
+    let newLineStartIndex = -1;
+
+    // '\n'.charCodeAt(0) === 10
+    for (let i = 0; i < index; i++) {
+        //换行符
+        if (source.charCodeAt(i) === 10) {
+            lineCount++;
+            newLineStartIndex = i;
+        }
 
 
     }
+    ctx.offset += index
+    ctx.line += lineCount;
+    //没换行 列数直接加，换行了重新计算
+    ctx.column = newLineStartIndex === -1 ? ctx.column + index : index - newLineStartIndex;
+    return ctx;
+}
+
+
+function getCursor(context: Context): Cursor {
+
+    const {line, column, offset} = context;
+    return {line, column, offset};
+
+
+}
+
+
+function parseInterpolation(context: Context): Node {
+
+    //{{ name }}
+    const start = getCursor(context);
+    //裁掉 {{
+    advance(context, 2);
+    const {source, originalSource} = context;
+    const innerStart = getCursor(context);
+    //留作后面更新 innerEnd
+    const innerEnd = getCursor(context);
+    const closeIndex = source.indexOf("}}");
+
+    //有可能包含 空白 换行等
+    const rawContent = source.slice(0, closeIndex);
+    const content = rawContent.trim();
+
+    // 裁掉中间内容
+    advance(context, closeIndex);
+
+    const spaceOffset = rawContent.indexOf(content);
+    //前段 有 空白 换行等 更新 innerStart
+    if (spaceOffset > 0) mutationPosition(innerStart, rawContent, spaceOffset);
+    //更新 innerEnd  ，内容有 空白 换行等
+    mutationPosition(innerEnd, rawContent, spaceOffset + content.length);
+    // 裁掉 }}
+    advance(context, 2);
+
+    const end = getCursor(context);
+
+    return {
+
+        type: NodeTypes.INTERPOLATION,
+        content: {
+            type: NodeTypes.SIMPLE_EXPRESSION,
+            isStatic: false,
+            isConstant: false,
+            content: originalSource.slice(innerStart.offset, innerEnd.offset),
+            loc: {
+                start: innerStart,
+                end: innerEnd,
+                source: originalSource.slice(innerStart.offset, innerEnd.offset)
+            }
+
+        },
+        loc: {
+            start,
+            end,
+            source: originalSource.slice(start.offset, end.offset)
+        }
+    }
+
+
+}
+
+function parseElement(context: Context): Node {
+
+    const
+    const start =  getCursor(context);
+
+
+
+
+
+
+
 
 
 }
@@ -81,27 +218,40 @@ function parseTpl(context: Context) {
         let node: Node;
         //模板语法
         if (source.startsWith("{{")) {
+            console.log("interpolation");
+            node = parseInterpolation(context);
 
             //元素
         } else if (source.startsWith("<")) {
+            console.log('element');
+            node = parseElement(context);
 
 
             //文本
         } else {
 
+            console.log("text");
             node = parseText(context);
 
 
         }
 
+        astNodes.push(node);
+
 
     }
+
+    return astNodes;
+
 
 }
 
 function baseParse(tpl: string) {
 
     const context = createParserContext(tpl);
+    const ast = parseTpl(context);
+
+    return ast;
 
 
 }
