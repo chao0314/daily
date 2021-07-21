@@ -1,5 +1,4 @@
-import get = Reflect.get;
-
+const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
 export const enum NodeTypes {
     ROOT,
     ElEMENT,
@@ -35,14 +34,19 @@ type Location = {
 
 type Node = {
     type: number,
-    content: string | Node,
     loc: Location,
+    content?: string | Node,
+    tag?: string,
     isStatic?: boolean,
-    isConstant?: boolean
+    isConstant?: boolean,
+    children?: Node[],
+    isSelfClosing?: boolean
 
 }
 
 function createParserContext(tpl: string): Context {
+
+    tpl = tpl.trim();
 
     return {
         line: 1,
@@ -194,17 +198,89 @@ function parseInterpolation(context: Context): Node {
 
 }
 
+function advanceSpace(context: Context) {
+
+    const spaceRegExp = /^\s+/;
+    const match = spaceRegExp.exec(context.source);
+    if (match) advance(context, match[0].length);
+
+}
+
+
+const elementStack = [];
+
 function parseElement(context: Context): Node {
 
-    const
-    const start =  getCursor(context);
+    //<div>hello<p>{{name}}</p></div>
+    const tagStartReg = /^<([A-Za-z]+)\s*/i;
+    const tagEndReg = /^<\/([A-Za-z]+)\s*>/i;
+    const start = getCursor(context);
+    const match = tagStartReg.exec(context.source);
+    const endMatch = tagEndReg.exec(context.source);
+
+    if (match) {
+        const tag = match[1];
+        advance(context, match[0].length);
+        advanceSpace(context);
+        // todo...attributes
 
 
 
 
+        //自闭和标签
+        const isSelfClosing = context.source.startsWith('/>');
+        if (isSelfClosing) advance(context, 2);
+        else if (context.source.startsWith('>')) {
+
+            //非自闭和标签
+            advance(context, 1);
+            console.log('tag', tag)
 
 
+        } else throw  new Error('tag invalid closed');
 
+
+        // 非自闭和的 loc 的 end 和 source 后续更新
+
+        const end = getCursor(context);
+
+        let element = {
+            type: NodeTypes.ElEMENT,
+            tag,
+            children: null,
+            isSelfClosing,
+            loc: {
+                start,
+                end: isSelfClosing ? end : null,
+                source: isSelfClosing ? context.originalSource.slice(start.offset, end.offset) : ""
+            }
+
+        }
+
+        if (!isSelfClosing) elementStack.push(element);
+        //处理 子内容
+        // if (tag === 'p') debugger
+        element.children = parseTpl(context);
+        return element;
+
+
+    } else if (endMatch) {
+
+        //处理 关闭标签
+        console.log("end match", endMatch, elementStack)
+
+        const endTag = endMatch[1];
+        const element = elementStack.pop();
+        console.log(endTag, element.tag)
+        if (endTag !== element.tag) throw new Error('tag no matched');
+        advance(context, endMatch[0].length);
+
+        //更新 element end 和 source
+        element.loc.end = getCursor(context);
+        element.loc.source = context.originalSource.slice(element.loc.start.offset, element.loc.end.offset);
+
+
+    } else throw new Error('tag invalid start ' + context.source);
 
 
 }
@@ -236,7 +312,7 @@ function parseTpl(context: Context) {
 
         }
 
-        astNodes.push(node);
+        node && astNodes.push(node);
 
 
     }
