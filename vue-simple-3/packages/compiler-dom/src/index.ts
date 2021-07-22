@@ -1,4 +1,3 @@
-const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
 export const enum NodeTypes {
     ROOT,
     ElEMENT,
@@ -35,13 +34,25 @@ type Location = {
 type Node = {
     type: number,
     loc: Location,
-    content?: string | Node,
     tag?: string,
+    props?: PropNode[],
+    content?: string | Node,
     isStatic?: boolean,
     isConstant?: boolean,
     children?: Node[],
     isSelfClosing?: boolean
 
+}
+
+type PropNode = {
+
+    type: number,
+    name: string,
+    loc: Location,
+    value?: Node,
+    exp?: Node,
+    arg?: Node,
+    modifier?: string[]
 }
 
 function createParserContext(tpl: string): Context {
@@ -209,7 +220,143 @@ function advanceSpace(context: Context) {
 
 const elementStack = [];
 
-function parseElement(context: Context): Node {
+function parseAttributes(context: Context) {
+
+    const props: PropNode[] = [];
+
+    // const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
+    while (context.source.length > 0 && context.source.search(/^\/?>/) === -1) {
+
+        console.log("attrs----", context.source)
+        const prop = parseAttr(context);
+        prop && props.push(prop);
+        advanceSpace(context);
+    }
+
+    return props.length > 0 ? props : null;
+
+
+}
+
+/*
+* type PropNode = {
+
+    type: number,
+    name: string,
+    loc: Location,
+    value?: Node,
+    exp?: Node,
+    arg?: Node,
+    modifier?: string[]
+}
+
+* */
+
+function parseAttr(context: Context) {
+    const attrReg = /^((\@?\:?[\w\-\.]+)\s*=\s*)(\"?\'?\s*(\w+)\s*\"?\'?)/;
+
+    const match = attrReg.exec(context.source);
+
+    if (match) {
+        const start = getCursor(context);
+        const [all, pre, key, last, value] = match;
+        console.log("attr match", all, pre, key, last, value);
+        const prop: PropNode = {} as PropNode;
+        const dirReg = /^(@|v-on:|:|v-bind:)/i;
+        const modifierReg = /^\.(\w+)+?/g;
+        const dirMatch = dirReg.exec(key);
+
+        //:click.native = handle  key :click.native
+        if (dirMatch) {
+            const [prefix] = dirMatch;
+            prop.type = NodeTypes.DIRECTIVE;
+            if (prefix === "@" || prefix === "v-on:") prop.name = 'on';
+            if (prefix === ':' || prefix === "v-bind:") prop.name = 'bind';
+
+            advance(context, prefix.length);
+            const argStart = getCursor(context);
+            let arg = key, modifier = []
+            //有修饰符
+            if (key.indexOf(".")) [arg, ...modifier] = key.split(".");
+            advance(context, arg.length);
+            const argEnd = getCursor(context);
+
+            prop.modifier = modifier;
+            prop.arg = {
+                type: NodeTypes.SIMPLE_EXPRESSION,
+                content: arg,
+                isStatic: true,
+                isConstant: true,
+                loc: {
+                    start: argStart,
+                    end: argEnd,
+                    source: arg
+                }
+            }
+
+            advance(context, pre.length - prefix.length - arg.length);
+            // :value = " 'value' " 裁掉 空格 引号等
+            advance(context, last.indexOf(value));
+            const expStart = getCursor(context);
+            advance(context, value.length);
+            const expEnd = getCursor(context);
+            //此处与 attr 不同 attr 带有 引号等 source 是 last 不是 value
+            advance(context, last.length - value.length);
+
+            prop.exp = {
+
+                type: NodeTypes.SIMPLE_EXPRESSION,
+                content: value,
+                isStatic: false,
+                isConstant: false,
+                loc: {
+                    start: expStart,
+                    end: expEnd,
+                    source: value
+                }
+
+
+            }
+
+
+        } else {
+            prop.type = NodeTypes.ATTRIBUTE;
+            prop.name = key;
+            advance(context, pre.length);
+            const valueStart = getCursor(context);
+            //可能有 单引号 双引号 空格等
+            advance(context, last.length);
+            const valueEnd = getCursor(context);
+            prop.value = {
+                type: NodeTypes.TEXT,
+                content: value,
+                loc: {
+                    start: valueStart,
+                    end: valueEnd,
+                    source: last
+                }
+
+            };
+
+        }
+
+        prop.loc = {
+            start,
+            end: getCursor(context),
+            source: all
+        }
+
+
+        return prop;
+
+
+    }
+
+
+}
+
+
+function parseElement(context: Context) {
 
     //<div>hello<p>{{name}}</p></div>
     const tagStartReg = /^<([A-Za-z]+)\s*/i;
@@ -224,8 +371,8 @@ function parseElement(context: Context): Node {
         advanceSpace(context);
         // todo...attributes
 
-
-
+        const props = parseAttributes(context);
+        console.log("----props----", props);
 
         //自闭和标签
         const isSelfClosing = context.source.startsWith('/>');
@@ -236,15 +383,14 @@ function parseElement(context: Context): Node {
             advance(context, 1);
             console.log('tag', tag)
 
-
-        } else throw  new Error('tag invalid closed');
+        } else throw  new Error('tag invalid closed: ' + context.source);
 
 
         // 非自闭和的 loc 的 end 和 source 后续更新
 
         const end = getCursor(context);
 
-        let element = {
+        const element: Node = {
             type: NodeTypes.ElEMENT,
             tag,
             children: null,
@@ -256,7 +402,7 @@ function parseElement(context: Context): Node {
             }
 
         }
-
+        if (props) element.props = props;
         if (!isSelfClosing) elementStack.push(element);
         //处理 子内容
         // if (tag === 'p') debugger
