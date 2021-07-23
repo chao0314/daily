@@ -254,33 +254,29 @@ function parseAttributes(context: Context) {
 
 function parseAttr(context: Context) {
     const attrReg = /^((\@?\:?[\w\-\.]+)\s*=\s*)(\"?\'?\s*(\w+)\s*\"?\'?)/;
-
     const match = attrReg.exec(context.source);
-
     if (match) {
         const start = getCursor(context);
         const [all, pre, key, last, value] = match;
         console.log("attr match", all, pre, key, last, value);
         const prop: PropNode = {} as PropNode;
         const dirReg = /^(@|v-on:|:|v-bind:)/i;
-        const modifierReg = /^\.(\w+)+?/g;
         const dirMatch = dirReg.exec(key);
 
-        //:click.native = handle  key :click.native
+        //:click.native = "handle"  key :click.native
         if (dirMatch) {
             const [prefix] = dirMatch;
             prop.type = NodeTypes.DIRECTIVE;
             if (prefix === "@" || prefix === "v-on:") prop.name = 'on';
             if (prefix === ':' || prefix === "v-bind:") prop.name = 'bind';
-
             advance(context, prefix.length);
             const argStart = getCursor(context);
-            let arg = key, modifier = []
+            const argAndModifier = key.slice(prefix.length);
+            let arg = argAndModifier, modifier = []
             //有修饰符
-            if (key.indexOf(".")) [arg, ...modifier] = key.split(".");
+            if (argAndModifier.indexOf(".")) [arg, ...modifier] = argAndModifier.split(".");
             advance(context, arg.length);
             const argEnd = getCursor(context);
-
             prop.modifier = modifier;
             prop.arg = {
                 type: NodeTypes.SIMPLE_EXPRESSION,
@@ -296,15 +292,17 @@ function parseAttr(context: Context) {
 
             advance(context, pre.length - prefix.length - arg.length);
             // :value = " 'value' " 裁掉 空格 引号等
-            advance(context, last.indexOf(value));
+            const valueIndex = last.indexOf(value);
+            const expPreSpaceAndQuote = last.slice(0, valueIndex);
+            advance(context, valueIndex);
             const expStart = getCursor(context);
             advance(context, value.length);
             const expEnd = getCursor(context);
-            //此处与 attr 不同 attr 带有 引号等 source 是 last 不是 value
-            advance(context, last.length - value.length);
+            //此处与 html属性 attr不同 attr, 带有 引号等 source 是 last 不是 value
+
+            advance(context, last.length - value.length - expPreSpaceAndQuote.length);
 
             prop.exp = {
-
                 type: NodeTypes.SIMPLE_EXPRESSION,
                 content: value,
                 isStatic: false,
@@ -370,6 +368,7 @@ function parseElement(context: Context) {
         advance(context, match[0].length);
         advanceSpace(context);
         // todo...attributes
+
 
         const props = parseAttributes(context);
         console.log("----props----", props);
@@ -471,9 +470,22 @@ function parseTpl(context: Context) {
 function baseParse(tpl: string) {
 
     const context = createParserContext(tpl);
+    // 多节点处理
+    const rootStart = getCursor(context);
     const ast = parseTpl(context);
+    const rootEnd = getCursor(context);
 
-    return ast;
+
+    return {
+        type: NodeTypes.ROOT,
+        children: ast,
+        loc: {
+            start: rootStart,
+            end: rootEnd,
+            source: context.originalSource
+        }
+
+    };
 
 
 }
@@ -482,6 +494,8 @@ function baseParse(tpl: string) {
 export function baseCompile(template: string) {
     // 讲模板转换成ast语法树
     const ast = baseParse(template);
+
+
     console.log(ast)
 }
 
