@@ -5,6 +5,9 @@ import Depend from "./observer/depend";
 
 export default function initState(vm) {
 
+    //init props
+    //todo...
+
     if (vm.$options.data) {
 
         initData(vm);
@@ -89,6 +92,8 @@ function initComputed(vm) {
             }
 
             let activeWatcher = Depend.getActiveWatcher();
+            //将computed 自己的依赖 添加到当前的非 computed watcher 的激活 watcher，也就是computed 属性的 组件 watcher 上
+            //这样 computed的依赖属性改变了，组件也能渲染
             if (activeWatcher) {
                 // console.log("---active--")
                 w.addOwnDepToActiveWatcher(activeWatcher);
@@ -134,7 +139,7 @@ export function $watch(vm, key, handler) {
 
     }
 
-    let w = new Watcher(vm, key, handler, { true})
+    let w = new Watcher(vm, key, handler, { isCustomWatch:true})
 
     if (immediate) {
         w.updateComponent()

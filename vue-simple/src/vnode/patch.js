@@ -105,14 +105,12 @@ export default function patchDomTree(oldVNode, newVNode) {
                     newEndNode = newChildren[--newEndIndex];
                     //乱序比较
                 } else {
-
                     const index = keyIndexMap[newStartNode.key];
                     if (index) {
                         let matchNode = oldChildren[index];
                         oldChildren[index] = null;
                         patchDomTree(matchNode, newStartNode);
                         el.insertBefore(matchNode.el, oldStartNode.el);
-
 
                     } else {
 
