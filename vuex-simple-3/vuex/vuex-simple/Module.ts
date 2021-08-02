@@ -45,17 +45,38 @@ class Module {
     }
 
 
-    mutationsEach(){
+    mutationsEach(callback: Function) {
+
+        Object.entries(this._rawModule.mutations).forEach(([key, mutation]) => {
+
+            callback(`${this.getNamespaces()}/${key}`, mutation);
+
+
+        })
 
 
     }
 
-    actionsEach(){
+    actionsEach(callback: Function) {
+
+        Object.entries(this._rawModule.actions).forEach(([key, action]) => {
+
+            callback(`${this.getNamespaces()}/${key}`, action);
+
+
+        })
 
 
     }
 
-    gettersEach(){
+    gettersEach(callback: Function) {
+
+        Object.entries(this._rawModule.getters).forEach(([key, getter]) => {
+
+            callback(`${this.getNamespaces()}/${key}`, getter);
+
+
+        })
 
 
     }
