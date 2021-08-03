@@ -44,6 +44,11 @@ class Module {
         return this._namespaces.join('/');
     }
 
+    getRawNamespaces() {
+
+        return this._namespaces;
+    }
+
 
     mutationsEach(callback: Function) {
 

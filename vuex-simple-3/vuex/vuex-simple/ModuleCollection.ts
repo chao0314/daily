@@ -26,6 +26,27 @@ class ModuleCollection {
         })
 
     }
+
+
+    hotRegisterModule(path: string[], rawModule: StoreOption) {
+
+        const hotModule = new Module(rawModule);
+        const key = path[path.length - 1];
+        const parentPath = path.slice(0, path.length - 1);
+
+        const parentModule = parentPath.reduce((parent: Module, path: string) => {
+
+            const module = parent.getChildModule(path);
+            if (!module) throw  new Error("module path error");
+            return module as Module;
+
+        }, this.rootModule);
+
+        parentModule.setChildModule(key, hotModule);
+        if (rawModule.namespace) hotModule.setNamespaces([...parentModule.getRawNamespaces(), key]);
+
+
+    }
 }
 
 export default ModuleCollection;
