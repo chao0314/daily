@@ -52,9 +52,12 @@ class Module {
 
     mutationsEach(callback: Function) {
 
+        const namespace = this.getNamespaces();
+
         Object.entries(this._rawModule.mutations).forEach(([key, mutation]) => {
 
-            callback(`${this.getNamespaces()}/${key}`, mutation);
+            const path = namespace ? `${namespace}/${key}` : key;
+            callback(path, mutation);
 
 
         })
@@ -64,9 +67,12 @@ class Module {
 
     actionsEach(callback: Function) {
 
-        Object.entries(this._rawModule.actions).forEach(([key, action]) => {
+        const namespace = this.getNamespaces();
 
-            callback(`${this.getNamespaces()}/${key}`, action);
+        Object.entries(this._rawModule.actions ?? {}).forEach(([key, action]) => {
+
+            const path = namespace ? `${namespace}/${key}` : key;
+            callback(path, action);
 
 
         })
@@ -76,9 +82,13 @@ class Module {
 
     gettersEach(callback: Function) {
 
-        Object.entries(this._rawModule.getters).forEach(([key, getter]) => {
+        const namespace = this.getNamespaces();
 
-            callback(`${this.getNamespaces()}/${key}`, getter);
+        Object.entries(this._rawModule.getters ?? {}).forEach(([key, getter]) => {
+
+            const path = namespace ? `${namespace}/${key}` : key;
+
+            callback(path, getter);
 
 
         })

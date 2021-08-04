@@ -43,6 +43,7 @@ class ModuleCollection {
         }, this.rootModule);
 
         parentModule.setChildModule(key, hotModule);
+        console.log("hot",parentModule)
         if (rawModule.namespace) hotModule.setNamespaces([...parentModule.getRawNamespaces(), key]);
 
 

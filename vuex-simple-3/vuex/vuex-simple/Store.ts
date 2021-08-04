@@ -8,8 +8,8 @@ export type  Modules = { [key: string]: any }
 export type  StoreOption = {
     state: object,
     mutations: object,
-    actions: object,
-    getters: object,
+    actions?: object,
+    getters?: object,
     modules?: Modules,
     namespace?: boolean,
     strict?: boolean,
@@ -30,7 +30,7 @@ class Store {
     private readonly _getters = Object.create(null);
     private readonly _mutations = Object.create(null);
     private readonly _actions = Object.create(null);
-    public getters = {};
+    public getters!: object;
     private isCommiting = false;
     private readonly isStrict;
     private readonly plugins: Function[];
@@ -131,7 +131,7 @@ class Store {
 
             store._getters[key] = () => {
 
-                getter.call(store, reactiveState, store.getters);
+                return getter.call(store, reactiveState, store.getters);
             }
 
 
@@ -149,6 +149,8 @@ class Store {
 
         //判断是否是根 module
         if (store.moduleCollection.rootModule === module) {
+
+            store.getters = Object.create(null);
 
             Object.entries(store._getters).forEach(([key, getter]) => {
 
@@ -183,7 +185,7 @@ class Store {
     }
 
 
-    commit(mutationName: string, payload: any) {
+    commit = (mutationName: string, payload: any) => {
 
         const store = this;
 
@@ -198,7 +200,7 @@ class Store {
     }
 
 
-    dispatch(actionName: string, payload: any) {
+    dispatch = (actionName: string, payload: any) => {
 
         const store = this;
 
@@ -210,10 +212,13 @@ class Store {
 
     replaceState(newState: { [key: string]: any }) {
 
+        console.log("replace state", newState)
+
         const store = this;
         // 严格模式下 不能直接修改状态
         store.withCommiting(() => {
             store._state.data = newState;
+            store.resetStore(store, store.moduleCollection.rootModule, store.state);
 
         })
 
@@ -226,7 +231,7 @@ class Store {
         if (typeof path === 'string') path = [path];
 
         store.moduleCollection.hotRegisterModule(path, rawModule);
-        store.installModule(store, store.moduleCollection.rootModule);
+        // store.installModule(store, store.moduleCollection.rootModule);
         store.resetStore(store, store.moduleCollection.rootModule, store.state);
 
 

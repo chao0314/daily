@@ -1,47 +1,57 @@
 <template>
-  <div>
-    count:{{ count }}<br>
-    one count :{{one}} <br>
-    two count :{{two}} <br>
-    three count :{{three}}
-  </div>
-  <button @click="clickHandler">click</button>
+  计数器:{{ count }} {{ $store.state.count }}
+  <button @click="$store.state.count++">错误修改</button>
 
+  <hr/>
+  double:{{ double }} {{ $store.getters.double }}
+  <hr>
+
+  <!-- 同步修改 -->
+  <button @click="add">同步修改</button>
+  <button @click="asyncAdd">异步修改</button>
+
+  <hr/>
+  a模块: {{ aCount }} b模块:{{ bCount }} c模块:{{ cCount }}
+
+  <button @click="$store.commit('aCount/add', 1)">改a模块</button>
+  <button @click="$store.commit('bCount/add', 1)">改b模块</button>
+  <button @click="$store.commit('aCount/cCount/add', 1)">改c模块</button>
 </template>
+<script>
+import {computed, toRefs} from 'vue'
+import {useStore} from '../vuex-simple/index';
 
-<script lang="ts">
-import {computed, defineComponent} from 'vue';
-import {useStore} from "../vuex-simple";
-
-export default defineComponent({
+export default {
   name: 'App',
-  setup(props) {
+  setup() { // vue3 有个compositionApi的入口
+    const store = useStore();
 
-    const store: any = useStore();
     console.log(store)
-    const count = computed(() => store.state.count);
-    const one = computed(() => store.state.one.count);
-    const two = computed(() => store.state.two.count);
-    const three = computed(() => store.state.one.three.count);
-    const clickHandler = () => {
-      console.log('click handler');
+
+    function add() {
+      store.commit('add', 1)
     }
 
+    function asyncAdd() {
+      store.dispatch('asyncAdd', 1).then(() => {
+        alert('ok')
+      })
+    }
 
+    // const t =  computed(() => store.getters.double);
+    // console.log("store getters----------",store.getters,store.getters.double)
     return {
-      count,
-      one,
-      two,
-      three,
-      clickHandler
-
+      count: computed(() => store.state.count),
+      double: computed(() => store.getters.double),
+      aCount: computed(() => store.state.aCount.count),
+      bCount: computed(() => store.state.bCount.count),
+      cCount: computed(() => store.state.aCount.cCount.count),
+      add,
+      asyncAdd
     }
   }
 
-
-});
+}
 </script>
 
-<style>
 
-</style>

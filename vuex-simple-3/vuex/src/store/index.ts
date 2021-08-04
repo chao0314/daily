@@ -1,13 +1,16 @@
 import {createStore} from '../../vuex-simple';
 import Store from "../../vuex-simple/Store";
 
+type State = { [key: string]: any };
 
-function customPlugin(store:Store) {
+
+function customPlugin(store: Store) {
     let local = localStorage.getItem('VUEX:STATE');
     if (local) {
+        console.log("replace---local",local)
         store.replaceState(JSON.parse(local))
     }
-    store.subscribe((mutation:object, state:object) => { // 每当状态发生变化 （调用了mutation的时候 就会执行此回调）
+    store.subscribe((mutation: object, state: object) => { // 每当状态发生变化 （调用了mutation的时候 就会执行此回调）
         localStorage.setItem('VUEX:STATE', JSON.stringify(state))
     })
 }
@@ -22,31 +25,31 @@ const store = createStore({
         count: 0
     },
     getters: { // 计算属性 vuex4 他并没有实现计算属性的功能
-        double(state) {
+        double(state: State) {
             return state.count * 2
         }
     },
     mutations: { // 可以更改状态 必须是同步更改的
-        add(state, payload) {
+        add(state: State, payload: any) {
             state.count += payload
         }
     },
     actions: { // 可以调用其他action，或者调用mutation
-        asyncAdd({ commit }, payload) {
+        asyncAdd({commit}: Store, payload: any) {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     commit('add', payload);
-                    resolve()
+                    resolve(void 0);
                 }, 1000)
             })
         }
     },
     modules: { // 子模块 实现逻辑的拆分
         aCount: {
-            namespaced: true,
-            state: { count: 0 },
+            namespace: true,
+            state: {count: 0},
             mutations: {
-                add(state, payload) { // aCount/add
+                add(state: State, payload: any) { // aCount/add
                     state.count += payload
                 }
             },
@@ -63,10 +66,10 @@ const store = createStore({
             // }
         },
         bCount: {
-            state: { count: 0 },
-            namespaced: true,
+            state: {count: 0},
+            namespace: true,
             mutations: {
-                add(state, payload) {
+                add(state: State, payload: any) {
                     state.count += payload
                 }
             },
@@ -83,17 +86,16 @@ const store = createStore({
 
 
 store.registerModule(['aCount', 'cCount'], {
-    namespaced: true,
+    namespace: true,
     state: {
         count: 100,
     },
     mutations: {
-        add(state, payload) {
+        add(state: State, payload: any) {
             state.count += payload
         }
     },
 })
-
 
 
 export default store;
