@@ -12,6 +12,8 @@ export default function createWebHistory(base = '') {
         get: () => historyNavigation.state.value
     })
 
+    return history;
+
 
 }
 
