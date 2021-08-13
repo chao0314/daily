@@ -74,7 +74,7 @@ export function createRouter(options) {
             const route = {};
             //currentRoute 经常变，computed 响应式，可以在组件内相应变化
             Object.keys(INIT_LOCATION).forEach(key => {
-                route[key] = computed(() => currentRoute[key]);
+                route[key] = computed(() => currentRoute.value[key]);
             })
 
             // 借助 reactive自动解包 ref，route.xxx 即可 就不通用 route.xxx.value 使用了

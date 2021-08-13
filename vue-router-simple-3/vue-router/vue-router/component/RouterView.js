@@ -11,11 +11,12 @@ export default {
 
         return () => {
             const record = matchedRecordRef.value;
+            //改进后 可以成为 命名多视图路由
             const component = record && record.components.default;
 
-            if (component) return h(component);
-            else return h(slots.default && slots.default());
+            console.log("router-view", depth, component, slots.default);
 
+            if (component) return h(component);
 
         }
 
