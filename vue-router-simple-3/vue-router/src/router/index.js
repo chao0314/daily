@@ -26,8 +26,38 @@ const routes = [
 const router = createRouter({ // mode
     history: createWebHistory(),
     routes
-})
+});
 
+router.beforeEach((to, from, next) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log('beforeEach1', to);
+            resolve();
+        }, 1000);
+    })
+});
+router.beforeEach((to, from, next) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log('beforeEach2', to);
+            resolve();
+        }, 1000);
+    })
+});
+router.beforeEach((to, from, next) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log('beforeEach3', to);
+            resolve();
+        }, 1000);
+    })
+});
+router.beforeResolve((to, from, next) => {
+    console.log('beforeResolve', to);
+})
+router.afterEach((to, from, next) => {
+    console.log('afterEach', to);
+})
 
 
 export default router

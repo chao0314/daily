@@ -14,12 +14,77 @@ const INIT_LOCATION = {
     matched: []
 }
 
+
+function createGuardCollection() {
+
+    const handlers = [];
+    const set = handler => handlers.push(handler);
+    const get = () => handlers;
+    return {
+        set,
+        get
+    }
+
+}
+
+
+function extractChangeRecords(to, from) {
+
+    const leavingRecords = [];
+    const updatingRecords = [];
+    const enteringRecords = [];
+    const toMatched = to.matched;
+    const fromMatched = from.matched;
+    const length = Math.max(toMatched.length, fromMatched.length);
+    for (let i = 0; i < length; i++) {
+        // a/b =>a/b/c  a/b/c => a/b
+        const toRecord = toMatched[i];
+        const fromRecord = fromMatched[i];
+
+        if (toRecord) {
+            if (fromMatched.find(record => record.path === toRecord.path)) {
+                // form 有 to 有 update
+                updatingRecords.push(toRecord);
+            } else {
+                // from 无 to 有 enter
+                enteringRecords.push(toRecord);
+
+            }
+        }
+
+        if (fromRecord) {
+
+            if (toMatched.find(record => record.path !== fromRecord.path)) {
+
+                // from 有 to 无  leave
+                leavingRecords.push(fromRecord);
+
+            }
+
+        }
+
+
+    }
+
+
+}
+
+function navigate(to, from) {
+
+
+}
+
+
 export function createRouter(options) {
 
     const {history, routes} = options;
     const routerMatcher = createRouterMatcher(routes);
     // 初始化 理由  如果 reactive 直接用，那么每次赋值都需要 处理
     const currentRoute = shallowRef(INIT_LOCATION);
+
+    const beforeEachCollection = createGuardCollection();
+    const beforeResolveCollection = createGuardCollection();
+    const afterEachCollection = createGuardCollection();
 
     function push(location) {
 
@@ -99,9 +164,12 @@ export function createRouter(options) {
                 push(history.location)
             }
 
-
         },
-        push
+        push,
+        //用于添加 全局钩子函数
+        beforeEach: beforeEachCollection.set,
+        beforeResolve: beforeResolveCollection.set,
+        afterEach: afterEachCollection.set
 
 
     }
