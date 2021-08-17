@@ -14,7 +14,7 @@ export default {
     setup(props, {slots}) {
 
         const router = useRouter();
-        return () => h('a', {click: router.push(props.to)}, slots.default && slots.default());
+        return () => h('a', {onClick: () => router.push(props.to)}, slots.default && slots.default());
 
     }
 }
