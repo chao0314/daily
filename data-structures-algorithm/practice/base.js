@@ -205,7 +205,7 @@ const replaceSpace = function (s) {
  */
 const reverseLeftWords = function (s, n) {
 
-    return  s.slice(n)+s.slice(0, n);
+    return s.slice(n) + s.slice(0, n);
 };
 
 
@@ -216,9 +216,93 @@ const reverseLeftWords = function (s, n) {
  * @return {number}
  */
 
-const removeDuplicates = function(nums) {
+const removeDuplicates = function (nums) {
+
+    let leftIndex = 0;
+    let rightIndex = 1;
+
+    while (rightIndex < nums.length) {
+
+        const left = nums[leftIndex];
+        const right = nums[rightIndex];
+        if (left !== right) {
+
+            //前面有重复
+            if (rightIndex - leftIndex > 1) {
+
+                nums[leftIndex + 1] = right;
+
+            }
+
+            leftIndex++;
+            rightIndex++;
+
+        } else {
+            //有重复 left 不用动， right 向后探查
+            rightIndex++;
+        }
 
 
+    }
+    //nums.length =  leftIndex+1;
+    return leftIndex + 1;
 
 };
 
+//剑指 Offer 67. 把字符串转换成整数 https://leetcode-cn.com/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/
+
+/**
+ * @param {string} str
+ * @return {number}
+ */
+
+const strToInt = function (str) {
+    const INT_MAX = Math.pow(2, 31) - 1;
+    const INT_MIN = -Math.pow(2, 31);
+    // const reg = /\d/;
+    const sReg = /^\d+/g;
+    let s = str.trim();
+    let flag = 1;
+    let int = 0;
+    const first = s[0];
+    if (first === "-" || first === "+") {
+        s = s.slice(1);
+        flag = 1 * (first + 1);
+    }
+
+    let res = s.match(sReg);
+    if (res) {
+        s = res[0];
+        const len = s.length;
+        for (let i = 0; i < s.length; i++) {
+            const char = s[i];
+            // if (reg.test(char)) {
+
+            const diff = Math.pow(10, len - 1 - i) * char;
+
+            if (flag > 0) {
+                int += diff;
+                if (int > INT_MAX) return INT_MAX;
+
+            } else {
+                int -= diff;
+                if (int < INT_MIN) return INT_MIN;
+
+            }
+
+            // } else {
+            //
+            //     if (i > 0) int = int / Math.pow(10, len - i);
+            //     break;
+            // }
+
+        }
+    }
+
+    return int;
+
+};
+
+
+// let s = "words and 987"
+// console.log(strToInt(s))
