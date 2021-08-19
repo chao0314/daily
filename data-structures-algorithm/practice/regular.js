@@ -211,30 +211,42 @@ const oneEditAway2 = function (first, second) {
     }
 
     // 遇到不同的了
-
     if (f === s) {
         //f 修改一次
         i++;
         j++;
     }
-
     // 短的添加一次 即 长的删除一次
     if (f < s) j++;
     // 短的添加一次 即 长的删除一次
     if (f > s) i++;
 
+    //已经 修改 添加 删除 过一次  接下来必须都成功
+
+    while (i < f && j < s) {
+
+        if (first[i] !== second[j]) return false;
+        i++;
+        j++;
+    }
+
+    //都便利完成了
+
+    return true;
+
+
 }
 
 
-// first = "islander"
-// second = "slander"
-// // first = "teacher"
-// // second = "bleacher"
-// // first = "t"
-// // second = "b"
-// // first = "teacher"
-// // second = "teamer"
-// console.log(oneEditAway2(first, second))
+// let first = "islander"
+// let second = "slander"
+// let first = "teacher"
+// let second = "bleacher"
+// let first = "t"
+// let second = "b"
+// let first = "teacher"
+// let second = "teamer"
+// console.log("---",oneEditAway2(first, second))
 
 //面试题 16.15. 珠玑妙算  https://leetcode-cn.com/problems/master-mind-lcci/
 
@@ -245,5 +257,67 @@ const oneEditAway2 = function (first, second) {
  */
 const masterMind = function (solution, guess) {
 
+    const answer = [0, 0];
+    const cache = [];
+    let flag = 0;
+    let index = -1;
+
+    for (let i = 0; i < solution.length; i++) {
+
+        const s = solution[i];
+
+        for (let j = 0; j < guess.length; j++) {
+
+            const g = guess[j];
+
+            if (s === g) {
+                if (i === j) {
+                    answer[0]++;
+                    flag = 0;
+                    cache[j] = true;
+                    break;
+                }
+                //伪猜中 已经算过了
+                if (cache[j]) continue;
+                if (i > j) {
+                    flag = 1;
+                    index = j;
+                } else {
+                    //前面已经标记过了
+                    if (flag === 1) break;
+                    //没有标记 直接计算
+                    answer[1]++;
+                    flag = 0;
+                    cache[j] = true;
+                    break;
+                }
+
+            }
+
+
+        }
+
+        if (flag === 1) {
+            flag = 0;
+            answer[1]++;
+            cache[index] = true;
+        }
+
+
+    }
+
+    return answer;
+
 
 };
+
+// let solution = "RGBY";
+// let guess = "GGRR";
+// let solution = "BRBB";
+// let guess = "RBGY";
+// let solution = "BRGB"
+// let guess = "RBBY";
+let solution = "BGBG"
+
+let guess = "RGBR";
+console.log(masterMind(solution, guess))
