@@ -258,56 +258,41 @@ const oneEditAway2 = function (first, second) {
 const masterMind = function (solution, guess) {
 
     const answer = [0, 0];
-    const cache = [];
-    let flag = 0;
-    let index = -1;
-
+    const sUsed = [];
+    const gUsed = [];
+    //全对的
     for (let i = 0; i < solution.length; i++) {
-
         const s = solution[i];
+        const g = guess[i];
+        if (s === g) {
+            sUsed[i] = true;
+            gUsed[i] = true;
+            answer[0]++;
+        }
+    }
 
-        for (let j = 0; j < guess.length; j++) {
+    //半对的
+    for (let m = 0; m < guess.length; m++) {
 
-            const g = guess[j];
-
-            if (s === g) {
-                if (i === j) {
-                    answer[0]++;
-                    flag = 0;
-                    cache[j] = true;
-                    break;
-                }
-                //伪猜中 已经算过了
-                if (cache[j]) continue;
-                if (i > j) {
-                    flag = 1;
-                    index = j;
-                } else {
-                    //前面已经标记过了
-                    if (flag === 1) break;
-                    //没有标记 直接计算
-                    answer[1]++;
-                    flag = 0;
-                    cache[j] = true;
-                    break;
-                }
+        if (gUsed[m]) continue;
+        const g = guess[m];
+        for (let n = 0; n < solution.length; n++) {
+            if (sUsed[n]) continue;
+            const s = solution[n];
+            if (g === s) {
+                // guess 已经循环过了，不会在循环，设不设置都可以
+                // gUsed[m] = true;
+                sUsed[n] = true;
+                answer[1]++;
+                break;
 
             }
 
-
         }
-
-        if (flag === 1) {
-            flag = 0;
-            answer[1]++;
-            cache[index] = true;
-        }
-
 
     }
 
     return answer;
-
 
 };
 
@@ -317,7 +302,177 @@ const masterMind = function (solution, guess) {
 // let guess = "RBGY";
 // let solution = "BRGB"
 // let guess = "RBBY";
-let solution = "BGBG"
+// let solution = "BGBG"
+// let guess = "RGBR";
+// console.log(masterMind(solution, guess))
 
-let guess = "RGBR";
-console.log(masterMind(solution, guess))
+//面试题 16.04. 井字游戏 https://leetcode-cn.com/problems/tic-tac-toe-lcci/
+
+/**
+ * @param {string[]} board
+ * @return {string}
+ */
+const tictactoe = function (board) {
+
+    const xReg = /^X+$/ig;
+    const oReg = /^O+$/ig;
+    let leftLine = "";
+    let rightLine = "";
+    let columns = [];
+    let hasSpace = false;
+    //判断行 和 pending
+    for (let r = 0; r < board.length; r++) {
+        const row = board[r];
+        if (row.includes(" ")) hasSpace = true;
+        const xMatch = xReg.exec(row);
+        // 可能有多行都满足 胜利条件的时候
+        if (xMatch) return 'X';
+        else {
+            const oMatch = oReg.exec(row);
+            if (oMatch) return 'O';
+        }
+
+        //判断列 和 对角线
+        if (r === 0) {
+            for (let i = 0; i < row.length; i++) {
+                columns[i] = row[i];
+            }
+
+            leftLine += row[0];
+            rightLine += row[row.length - 1];
+        } else {
+            for (let j = 0; j < columns.length; j++) {
+                const c = columns[j];
+                if (c !== false && row[j] !== c) columns[j] = false;
+                if (leftLine !== false && row[r] !== leftLine) leftLine = false;
+                if (rightLine !== false && row[board.length - 1 - r] !== rightLine) rightLine = false;
+
+
+            }
+
+
+        }
+
+
+    }
+
+    for (let i = 0; i < columns.length; i++) {
+
+        const col = columns[i];
+        if (!col) continue;
+        if (col === "X") return "X";
+        else if (col === "O") return "O";
+
+
+    }
+
+    if (leftLine !== false && leftLine !== " ") return leftLine;
+    if (rightLine !== false && rightLine !== " ") return rightLine;
+
+    return hasSpace ? "Pending" : "Draw";
+
+}
+
+// let board = ["O X", " XO", "X O"];
+// let board = ["OOX","XXO","OXO"];
+// let board = ["OOX","XXO","OX "];
+// console.log(tictactoe(board))
+
+//55. 跳跃游戏 https://leetcode-cn.com/problems/jump-game/
+
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+const canJump = function (nums) {
+    //只要能获得的 最大下标，超过数组长度即可
+    let maxIndex = 0;
+
+    for (let i = 0; i < nums.length; i++) {
+
+        const value = nums[i];
+        //当前的 index 已经超过了 上一轮的 最大可到达 index
+        // 例如 [1,0,0,2]
+        if (maxIndex < i) return false;
+        //更新最大可到达下标
+        if (maxIndex < i + value) maxIndex = i + value;
+
+        if (maxIndex >= nums.length - 1) return true;
+    }
+
+    return false;
+
+
+};
+
+//48. 旋转图像 https://leetcode-cn.com/problems/rotate-image/
+
+/**
+ * @param {number[][]} matrix
+ * @return {void} Do not return anything, modify matrix in-place instead.
+ */
+const rotate = function (matrix) {
+
+    // 先 上下翻转
+    const len = matrix.length
+    for (let i = 0; i < Math.floor(len / 2); i++) {
+        const r = matrix[i];
+        matrix[i] = matrix[len - 1 - i];
+        matrix[len - 1 - i] = r;
+
+    }
+    // 左斜 对角线翻转
+    for (let j = 0; j < len; j++) {
+        const r = matrix[j];
+        for (let k = 0; k < r.length; k++) {
+            //已经换过了 不用换
+            if (j >= k) continue;
+            const temp = matrix[j][k];
+            matrix[j][k] = matrix[k][j];
+            matrix[k][j] = temp;
+
+        }
+
+    }
+
+    console.log(matrix);
+    // return matrix;
+
+};
+
+// let matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+//
+// rotate(matrix)
+
+
+//非原地 借助矩阵 行变列 /列变行
+//第1行变第1列
+const rotate2 = function (matrix) {
+
+    const m = matrix.slice(0);
+    const len = matrix.length;
+    for (let i = 0; i < len; i++) {
+        const row = matrix[i];
+
+        for (let j = 0; j < row.length; j++) {
+
+            m[j][j] = matrix[i][j];
+
+
+        }
+
+    }
+
+    console.log(m);
+    return m;
+
+
+}
+
+//
+let matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+
+rotate2(matrix)
+// let matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]];
+//
+// rotate(matrix)
