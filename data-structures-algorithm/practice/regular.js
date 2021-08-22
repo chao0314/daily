@@ -446,18 +446,16 @@ const rotate = function (matrix) {
 
 
 //非原地 借助矩阵 行变列 /列变行
-//第1行变第1列
+//第1行变第3列
 const rotate2 = function (matrix) {
 
-    const m = matrix.slice(0);
     const len = matrix.length;
+    const m = JSON.parse(JSON.stringify(matrix));
     for (let i = 0; i < len; i++) {
         const row = matrix[i];
-
-        for (let j = 0; j < row.length; j++) {
-
-            m[j][j] = matrix[i][j];
-
+        const rLen = row.length;
+        for (let j = 0; j < rLen; j++) {
+            m[j][rLen - 1 - i] = row[j];
 
         }
 
@@ -470,9 +468,65 @@ const rotate2 = function (matrix) {
 }
 
 //
-let matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-
-rotate2(matrix)
+// let matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+//
+// rotate2(matrix)
 // let matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]];
 //
 // rotate(matrix)
+
+//54. 螺旋矩阵 https://leetcode-cn.com/problems/spiral-matrix/
+
+/**
+ * @param {number[][]} matrix
+ * @return {number[]}
+ */
+const spiralOrder = function (matrix) {
+
+    const m = matrix.length;
+    const n = matrix[0].length;
+    const result = [];
+    let direction = true;
+    for (let i = 0; i < Math.floor(m / 2); i++) {
+
+        const row = matrix[i];
+
+        for (let j = 0; j < n; j++) {
+
+            const val = direction ? row[j] : row[n - 1 - j];
+
+            if (val) {
+
+                result.push(val);
+                direction ? row[j] = null : row[n - 1 - j] = null;
+
+            }
+        }
+
+    }
+
+
+    return result;
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
