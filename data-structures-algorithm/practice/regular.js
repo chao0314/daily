@@ -486,22 +486,59 @@ const spiralOrder = function (matrix) {
     const m = matrix.length;
     const n = matrix[0].length;
     const result = [];
-    let direction = true;
-    for (let i = 0; i < Math.floor(m / 2); i++) {
+    if (m < 1 || n < 1) return result;
+
+
+    for (let i = 0; i < Math.ceil(m / 2); i++) {
 
         const row = matrix[i];
+        const rowEnd = m - i;
+        const colStart = i;
+        const colEnd = n - i;
 
-        for (let j = 0; j < n; j++) {
+        //没有满足条件的列了
+        if (colStart >= colEnd) break;
 
-            const val = direction ? row[j] : row[n - 1 - j];
+        for (let j = colStart; j < colEnd; j++) {
 
-            if (val) {
+            result.push(row[j]);
 
-                result.push(val);
-                direction ? row[j] = null : row[n - 1 - j] = null;
 
-            }
         }
+
+
+        //就这一行了 结束
+        if (i === rowEnd - 1) break;
+
+        //顺时针 向下
+
+        // 开始列 和 结束列 是同一列 结束
+        for (let k = i + 1; k < rowEnd - 1; k++) {
+
+
+            result.push(matrix[k][colEnd - 1]);
+
+        }
+
+        const correspondRow = matrix[rowEnd - 1];
+
+        for (let j = colEnd - 1; j >= colStart; j--) {
+
+            // 顺时针 倒序
+            result.push(correspondRow[j]);
+
+        }
+
+
+        //就一列 结束 在前面顺时针向下时 已经计算过了
+        if (colStart === colEnd - 1) break;
+        for (let l = rowEnd - 1 - 1; l > i; l--) {
+
+            result.push(matrix[l][colStart]);
+        }
+
+        console.log("-----", result)
+
 
     }
 
@@ -511,17 +548,97 @@ const spiralOrder = function (matrix) {
 };
 
 
+// let matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+// [1,2,3,6,9,8,7,4,5]
+
+// let matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+//[1,2,3,4,8,12,11,10,9,5,6,7]
+// let matrix = [[1, 2, 3, 4], [5, 6, 7, 8]]
+// let matrix = [[7], [9], [6]]
+// let matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]
+// let matrix = [[2, 3, 4], [5, 6, 7], [8, 9, 10], [11, 12, 13], [14, 15, 16]]
+// let matrix = [[1, 11], [2, 12], [3, 13], [4, 14], [5, 15], [6, 16], [7, 17], [8, 18], [9, 19], [10, 20]]
+// //[7,9,6]
+//
+// console.log(spiralOrder(matrix))
+
+//240. 搜索二维矩阵 II https://leetcode-cn.com/problems/search-a-2d-matrix-ii/
+
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+const searchMatrix = function (matrix, target) {
+    const M = matrix.length;
+    const N = matrix[0].length;
+
+    for (let i = 0; i < M; i++) {
+        const row = matrix[i];
+
+        if (target >= row[0] && target <= row[N - 1]) {
+
+            let start = 0;
+            let end = row.length - 1;
+            let middle = Math.floor((end + start) / 2);
+
+            while (start <= end) {
+                const midVal = row[middle];
+                if (midVal === target) return true;
+                if (midVal < target) start = middle + 1;
+                if (midVal > target) end = middle - 1;
+
+                middle = Math.floor((end + start) / 2);
+
+
+            }
 
 
 
+        }
+    }
+
+    return false;
 
 
+};
 
 
+// let matrix = [[1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30]],
+//     target = 5
+// //true
+
+let matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20
 
 
+console.log(searchMatrix(matrix, target))
 
 
+// function search(row, target) {
+//
+//     let start = 0;
+//     let end = row.length - 1;
+//     let middle = Math.floor((end + start) / 2);
+//
+//     while (start <= end) {
+//         const midVal = row[middle];
+//         if (midVal === target) return true;
+//         if (midVal < target) start = middle + 1;
+//         if (midVal > target) end = middle - 1;
+//
+//         middle = Math.floor((end + start) / 2);
+//
+//
+//     }
+//
+//     return false;
+//
+//
+// }
+
+
+// let row = [1, 2, 3, 4, 5];
+// console.log(search(row, 3))
 
 
 
