@@ -446,3 +446,59 @@ const removeNthFromEnd = function (head, n) {
 
 
 };
+
+//160. 相交链表 https://leetcode-cn.com/problems/intersection-of-two-linked-lists/
+/**
+ * @param {ListNode} headA
+ * @param {ListNode} headB
+ * @return {ListNode}
+ */
+//hash 简单 双指针略复杂
+const getIntersectionNode = function (headA, headB) {
+
+    if (!headA || !headB) return null;
+    let pa = headA;
+    let pb = headB;
+    //不相交的两条链表 最终都是 null
+    while (pa !== pb) {
+        if (!pa) pa = headB;
+        else pa = pa.next;
+        if (!pb) pb = headA;
+        else pb = pb.next;
+
+    }
+
+    return pa;
+
+};
+
+
+// let headA = createLinkedList([2, 6, 4]);
+// let headB = createLinkedList([1, 5]);
+//
+// console.log("++++++", getIntersectionNode(headA, headB))
+
+//141. 环形链表  https://leetcode-cn.com/problems/linked-list-cycle/
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+// hash 简单 ，快慢指针 “套圈”
+const hasCycle = function (head) {
+    if (!head || !head.next) return false;
+    let slow = head;
+    let fast = head.next;
+
+    while (fast) {
+
+        if (slow === fast) return true;
+        slow = slow.next;
+        fast = (fast.next && fast.next.next) || null;
+
+    }
+
+    return false;
+
+
+};
