@@ -246,7 +246,7 @@ var TripleInOne = function (stackSize) {
 
     this.stack = [];
     this.size = stackSize;
-    this.indexs = [0, stackSize, stackSize * 2];
+    this.indexs = [-1, stackSize - 1, stackSize * 2 - 1];
 
 };
 
@@ -258,9 +258,9 @@ var TripleInOne = function (stackSize) {
 TripleInOne.prototype.push = function (stackNum, value) {
 
     const index = this.indexs[stackNum]
-    if (index < this.size * (stackNum + 1)) {
+    if (index < this.size * (stackNum + 1) - 1) {
 
-        this.stack[index] = value;
+        this.stack[index + 1] = value;
         this.indexs[stackNum]++;
 
     }
@@ -288,6 +288,12 @@ TripleInOne.prototype.pop = function (stackNum) {
  */
 TripleInOne.prototype.peek = function (stackNum) {
 
+    const index = this.indexs[stackNum];
+
+    if (index < this.size * stackNum) return -1;
+
+    return this.stack[index];
+
 };
 
 /**
@@ -296,4 +302,46 @@ TripleInOne.prototype.peek = function (stackNum) {
  */
 TripleInOne.prototype.isEmpty = function (stackNum) {
 
+    return this.indexs[stackNum] < this.size * stackNum;
+
 };
+
+//20. 有效的括号 https://leetcode-cn.com/problems/valid-parentheses/
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function (s) {
+
+    const stack = [];
+    const reg = /\(|\[|\{/;
+
+
+    for (let i = 0; i < s.length; i++) {
+
+        const char = s[i];
+        if (reg.test(char)) stack.push(char);
+        else {
+
+            const  cache =  stack.pop();
+            if(char === ")" && cache !== "(") return false;
+            else if(char === "]" && cache !== "[") return false;
+            else if(char === "}" && cache !== "{") return false;
+
+        }
+
+
+
+
+
+    }
+
+    return stack.length ===0;
+
+
+};
+
+const s =  "{[]}";
+
+console.log(isValid(s))
