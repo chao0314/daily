@@ -324,24 +324,127 @@ var isValid = function (s) {
         if (reg.test(char)) stack.push(char);
         else {
 
-            const  cache =  stack.pop();
-            if(char === ")" && cache !== "(") return false;
-            else if(char === "]" && cache !== "[") return false;
-            else if(char === "}" && cache !== "{") return false;
+            const cache = stack.pop();
+            if (char === ")" && cache !== "(") return false;
+            else if (char === "]" && cache !== "[") return false;
+            else if (char === "}" && cache !== "{") return false;
 
         }
 
 
-
-
-
     }
 
-    return stack.length ===0;
+    return stack.length === 0;
 
 
 };
 
-const s =  "{[]}";
+// const s =  "{[]}";
 
-console.log(isValid(s))
+// console.log(isValid(s))
+
+//面试题 16.26. 计算器  https://leetcode-cn.com/problems/calculator-lcci/
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var calculate = function (s) {
+    let str = s.trim();
+    const numbers = [];
+    const operators = [];
+    const numReg = /^\d+/;
+    const opeReg = /^\+|\-|\*|\/|\(|\)/;
+    let result = 0;
+
+
+    while (str.length > 0) {
+        let char;
+        const res = numReg.exec(str);
+        //数字
+        if (res) {
+            char = res[0];
+            str = str.slice(char.length).trim();
+            char = Number(char);
+
+            const operator = operators[operators.length - 1];
+
+            if (operator === "*") {
+
+                numbers.push(numbers.pop() * char);
+                operators.pop();
+            } else if (operator === "/") {
+
+                numbers.push(Math.floor(numbers.pop() / char));
+                operators.pop();
+
+            } else numbers.push(char);
+
+
+        } else {
+            //符号
+            const opeRes = opeReg.exec(str);
+            if (opeRes) {
+                char = opeRes[0];
+                str = str.slice(1).trim();
+                if (char === ")") {
+                    while (numbers.length > 0) {
+
+                        const operator = operators.pop();
+                        //括号内容已经计算了 （3/4） 括号内的 乘除 已经计算了 只剩 加减
+                        if (operator === "(") break;
+                        if (operator === "+") numbers.push(numbers.pop() + numbers.pop());
+                        else if (operator === "-") numbers.push(-numbers.pop() + numbers.pop());
+
+                    }
+
+                    console.log("---)----",numbers,operators)
+                    // debugger;
+
+                    //括号处理完 继续与前面匹配 1*（2+3） 不可能有连续的 乘除 因为必然在这之前已经处理了
+                    const operator = operators[operators.length - 1];
+                    if (operator === "*") {
+                        numbers.push(numbers.pop() * numbers.pop());
+                        operators.pop();
+                    }
+
+                    if (operator === "/") {
+                        numbers.push(Math.floor(1 / numbers.pop() * numbers.pop()));
+                        operators.pop();
+                    }
+
+
+                } else operators.push(char);
+
+            }
+
+
+        }
+
+
+    }
+
+    console.log(numbers,operators)
+    result = numbers[0];
+    for (let j = 1; j < numbers.length; j++) {
+
+        const operator = operators.shift();
+        if (operator === "+") result += numbers[j];
+        else if (operator === "-") result -= numbers[j];
+    }
+
+    return result;
+
+
+};
+
+
+// let s = "(2+6*3+5-(3*14/7+2)*5)+3"
+// let s = "0"
+// let  s = "2*(5+5*2)/3+(6/2+8)"
+// let s = "6-4/2"
+// let s = "1+1"
+// let s = "3/2"
+let s = "2-4-(8+2-6+(8+4-(1)+8-10))"
+
+console.log(calculate(s))
