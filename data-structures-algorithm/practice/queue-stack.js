@@ -627,42 +627,43 @@ var dailyTemperatures = function (temperatures) {
  * @param {number[]} height
  * @return {number}
  */
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
 var trap = function (height) {
 
     let result = 0;
     const stack = [];
-    //柱子 左边
-    let leftIndex = 0;
 
-    for (let i = 1; i < height.length; i++) {
+    for (let i = 0; i < height.length; i++) {
 
-        let h = height[i];
-        //左边 高度
-        const leftH = height[leftIndex];
-        //初始 左边柱子
-        if (leftH === 0) leftIndex = i;
-        else {
-            //还没有低洼 柱子更新
-            if (stack.length === 0) {
-                if (leftH <= h) leftIndex = i;
-                else stack.push(i);
-            } else {
-                // stack 中的值 一定小于 left
-                const preLow = height[stack[stack.length - 1]];
-                if (preLow >= h) stack.push(i);
-                else {
+        //少于2 不能构成 接雨水的 低洼空间
+        while (stack.length >= 2) {
+            const curH = height[i];
+            const centerH = height[stack[stack.length - 1]];
+            if (centerH < curH) {
+                const leftIndex = stack[stack.length - 2];
+                const leftH = height[leftIndex];
+                const sideH = Math.min(leftH, curH);
+                //中间部分 也要计算
+                const distance = i - leftIndex - 1;
+                //两边比中间高 才能存水
+                if (sideH > centerH) result += (sideH - centerH) * distance;
+                //这个区块已经作为 小三角存水区域计算过了，分治的思想
+                stack.pop();
+            } else break;
 
-                    const minH = Math.min(leftH, h);
-
-
-                }
-
-
-            }
 
         }
+
+        stack.push(i);
 
 
     }
 
+    return result;
+
 };
+
+
