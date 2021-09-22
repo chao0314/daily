@@ -1,6 +1,6 @@
-// 冒泡  核心 ：两两交换  原地 O(n2)
-let arr = [1, '3', 3, 6, 5, 2, 4];
+let arr = [1, '3', 3, 6, 5, 2, 7, 4];
 
+// 冒泡  核心 ：两两交换  原地 O(n2)
 function bubble(arr) {
 
     for (let i = 0; i < arr.length - 1; i++) {
@@ -79,6 +79,7 @@ function insertionSort(arr) {
 
 // 归并排序 O(nlogn)  非原地 需要申请空间 O(n) 稳定
 // 1 对折划分 2 两个有序数组合并
+//先分，后合 ，合的时候排序
 
 function mergeSort(arr, left, right) {
 
@@ -131,9 +132,72 @@ function mergeSort(arr, left, right) {
 
 }
 
-console.log(mergeSort(arr, 0, arr.length - 1));
+// console.log(mergeSort(arr, 0, arr.length - 1));
 
 
+//快速排序 原地 不稳定 时间复杂度 O(nlogn) 空间复杂度 o(logn) 性能比 堆排序好
+//选择基准点 分大小，递归分治排序，组合时不需要做排序
+// 先分 后合，分的时候排序
+
+
+function quickSort(arr, left, right) {
+
+    if (left < right) {
+
+        const partitionIndex = getPartitionIndex(arr, left, right);
+        // 左侧 小值 排序
+        quickSort(arr, left, partitionIndex - 1);
+        // 右侧 大值 排序
+        quickSort(arr, partitionIndex + 1, right);
+
+    }
+
+
+    return arr;
+
+    function getPartitionIndex(arr, left, right) {
+        const flag = arr[right];
+
+        while (left < right) {
+
+            while (left < right && arr[left] <= flag) {
+                left++;
+            }
+
+            // 因为选最后一个最为参照点，而且循环结束后 会对参照点特殊处理，所以此时 left 可以直接赋值覆盖
+            if (left < right) {
+                arr[right] = arr[left];
+                right--;
+                //left 不 -- ，不动是为了后续 right直接覆盖
+
+            }
+
+
+            while (left < right && arr[right] > flag) {
+                right--;
+            }
+
+            //左右 交换
+            if (left < right) {
+                //此时的left 在上面也已经用过了，可以直接赋值覆盖
+                arr[left] = arr[right];
+                left++;
+                //right 不 -- ，不动是为了后续 left直接覆盖
+            }
+
+
+        }
+
+        // left === right
+        arr[left] = flag;
+        return left;
+
+    }
+
+
+}
+
+console.log(quickSort(arr, 0, arr.length - 1));
 
 
 
