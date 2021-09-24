@@ -197,11 +197,118 @@ function quickSort(arr, left, right) {
 
 }
 
-console.log(quickSort(arr, 0, arr.length - 1));
+// console.log(quickSort(arr, 0, arr.length - 1));
+
+//面试题 10.01. 合并排序的数组
+//https://leetcode-cn.com/problems/sorted-merge-lcci/
+/**
+ * @param {number[]} A
+ * @param {number} m
+ * @param {number[]} B
+ * @param {number} n
+ *
+ */
+
+// 插入排序
+const merge = function (A, m, B, n) {
+
+    for (let i = 0; i < B.length; i++) {
+
+        const valueB = B[i];
+
+        for (let j = m - 1; j >= -1; j--) {
+
+            const valueA = A[j];
+
+            if (valueA !== undefined && valueA > valueB) {
+
+                A[j + 1] = valueA;
+
+            } else {
+                A[j + 1] = valueB;
+                m++;
+                break;
+
+            }
+        }
 
 
+    }
+
+    return A;
+
+};
 
 
+// console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3))
+// console.log(merge([0, 0, 3, 0, 0, 0, 0, 0, 0], 3, [-1], 1))
 
 
+//242. 有效的字母异位词
+//https://leetcode-cn.com/problems/valid-anagram/
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
+const isAnagram = function (s, t) {
+
+    const sortS = s.split("").sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0)).join("");
+    const sortT = t.split("").sort((a, b) => a.charCodeAt(0) - b.charCodeAt(0)).join("");
+
+    return sortS === sortT;
+
+
+};
+
+
+// console.log(isAnagram("anagram", "nagaram"))
+
+
+//1502. 判断能否形成等差数列
+//https://leetcode-cn.com/problems/can-make-arithmetic-progression-from-sequence/
+
+/**
+ * @param {number[]} arr
+ * @return {boolean}
+ */
+
+const canMakeArithmeticProgression = function (arr) {
+
+    if (arr.length > 2) {
+        const sortArr = arr.sort((a, b) => a - b);
+        let diff = sortArr[1] - sortArr[0];
+        for (let i = 2; i < sortArr.length; i++) {
+
+            if (sortArr[i] - sortArr[i - 1] !== diff) return false;
+
+        }
+    }
+
+    return true;
+
+};
+
+//252. 会议室
+//https://leetcode-cn.com/problems/meeting-rooms/
+
+
+/**
+ * @param {number[][]} intervals
+ * @return {boolean}
+ */
+const canAttendMeetings = function (intervals) {
+
+    if (intervals.length > 1) {
+
+        const sortIntervals = intervals.sort(([a,], [b,]) => a - b);
+        for (let i = 0; i < sortIntervals.length-1; i++) {
+
+            if (sortIntervals[i][1] > sortIntervals[i + 1][0]) return false
+        }
+    }
+    return true;
+
+};
 
