@@ -303,7 +303,7 @@ const canAttendMeetings = function (intervals) {
     if (intervals.length > 1) {
 
         const sortIntervals = intervals.sort(([a,], [b,]) => a - b);
-        for (let i = 0; i < sortIntervals.length-1; i++) {
+        for (let i = 0; i < sortIntervals.length - 1; i++) {
 
             if (sortIntervals[i][1] > sortIntervals[i + 1][0]) return false
         }
@@ -312,3 +312,178 @@ const canAttendMeetings = function (intervals) {
 
 };
 
+//56. 合并区间
+//https://leetcode-cn.com/problems/merge-intervals/
+/**
+ * @param {number[][]} intervals
+ * @return {number[][]}
+ */
+
+// 区间排序后， 如果前一个区间的结束 大于等于 后一个区间的开始就进行合并
+const mergeIntervals = function (intervals) {
+
+    if (intervals.length < 2) return intervals;
+    const sorted = intervals.sort(([a,], [b,]) => a - b);
+    for (let i = 0; i < sorted.length - 1; i++) {
+
+        const intervalOne = sorted[i];
+        const intervalTwo = sorted[i + 1];
+
+        if (intervalOne[1] >= intervalTwo[0]) {
+
+            intervals[i] = null;
+            if (intervalOne[1] >= intervalTwo[1]) intervals[i + 1] = intervalOne;
+            else intervals[i + 1] = [intervalOne[0], intervalTwo[1]];
+        }
+
+
+    }
+
+    return intervals.filter(interval => interval);
+
+
+};
+
+
+//剑指 Offer 21. 调整数组顺序使奇数位于偶数前面
+//https://leetcode-cn.com/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+const exchange = function (nums) {
+
+    let left = 0;
+    let right = nums.length - 1;
+
+    while (left < right) {
+
+        while (left < right && nums[left] % 2 === 1) left++;
+
+        while (left < right && nums[right] % 2 === 0) right--;
+
+        const temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+
+
+    }
+
+    return nums;
+
+
+};
+
+
+// console.log(exchange([1, 2, 3, 4]))
+
+//75. 颜色分类
+//https://leetcode-cn.com/problems/sort-colors/
+/**
+ * @param {number[]} nums
+ * @return {void} Do not return anything, modify nums in-place instead.
+ */
+// 实现一个排序
+// 快排
+const sortColors = function (nums) {
+
+
+    quickSort(nums, 0, nums.length - 1);
+
+    return nums;
+
+
+    function quickSort(nums, left, right) {
+
+
+        if (left < right) {
+
+            const partitionIndex = getPartitionIndex(nums, left, right);
+
+            quickSort(nums, left, partitionIndex - 1);
+
+            quickSort(nums, partitionIndex + 1, right);
+
+
+        }
+
+        function getPartitionIndex(nums, left, right) {
+
+            const flag = nums[right];
+
+
+            while (left < right) {
+
+                while (left < right && nums[left] <= flag) left++;
+
+                if (left < right) nums[right--] = nums[left];
+
+                while (left < right && nums[right] > flag) right--;
+
+                if (left < right) nums[left++] = nums[right];
+
+            }
+
+            // left === right
+            nums[left] = flag;
+            return left;
+
+
+        }
+
+
+    }
+
+
+};
+
+
+// console.log(sortColors([2, 0, 2, 1, 1, 0]))
+
+//147. 对链表进行插入排序
+//https://leetcode-cn.com/problems/insertion-sort-list/
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+
+function ListNode(val, next) {
+    this.val = (val === undefined ? 0 : val)
+    this.next = (next === undefined ? null : next)
+}
+
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+
+
+
+const insertionSortList = function (head) {
+
+    const dummyHead = new ListNode();
+    let q = dummyHead;
+    let p = head;
+
+    if (!head || !head.next) return head;
+
+    while (p) {
+
+        const pVal = p.val;
+
+        while (q.next) {
+
+            const qVal = q.val;
+
+
+        }
+
+        const next = q.next;
+        q.next = new ListNode(p.val, next);
+
+    }
+
+};
