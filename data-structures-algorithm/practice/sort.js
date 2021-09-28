@@ -455,6 +455,23 @@ function ListNode(val, next) {
     this.next = (next === undefined ? null : next)
 }
 
+function createLinkedList(nodes = []) {
+
+
+    let head = new ListNode();
+    let tail = head;
+    for (let i = 0; i < nodes.length; i++) {
+
+        tail.next = new ListNode(nodes[i]);
+
+        tail = tail.next;
+    }
+
+    return head.next;
+
+
+}
+
 /**
  * @param {ListNode} head
  * @return {ListNode}
@@ -465,25 +482,319 @@ function ListNode(val, next) {
 const insertionSortList = function (head) {
 
     const dummyHead = new ListNode();
-    let q = dummyHead;
+
     let p = head;
 
     if (!head || !head.next) return head;
 
     while (p) {
-
+        let sortedP = dummyHead;
         const pVal = p.val;
 
-        while (q.next) {
+        while (sortedP.next) {
 
-            const qVal = q.val;
+            if (sortedP.next.val < pVal) {
+
+                sortedP = sortedP.next;
+
+            } else break;
+
+        }
+
+        const next = sortedP.next;
+        sortedP.next = new ListNode(p.val, next);
+        p = p.next;
+
+    }
+
+    return dummyHead.next;
+
+};
+
+//148. 排序链表
+//https://leetcode-cn.com/problems/sort-list/
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+
+// 链表 归并排序
+const sortList = function (head) {
+
+
+    return mergeSort(head, null);
+
+
+    function mergeSort(head, tail = null) {
+
+        if (!head) return head;
+        if (head.next === tail) {
+            head.next = null;
+            return head;
+        }
+        let slow = head;
+        let fast = head;
+
+        while (fast !== tail) {
+            slow = slow.next;
+            fast = fast.next;
+            if (fast !== tail) fast = fast.next;
+        }
+
+        const middle = slow;
+
+        return merge(mergeSort(head, middle), mergeSort(middle, tail));
+
+
+        function merge(headOne, headTwo) {
+
+            const dummyHead = new ListNode();
+            let dummyP = dummyHead;
+
+            let pOne = headOne;
+            let pTwo = headTwo;
+            while (pOne && pTwo) {
+
+                if (pOne.val <= pTwo.val) {
+                    dummyP.next = pOne
+                    pOne = pOne.next;
+                } else {
+                    dummyP.next = pTwo
+                    pTwo = pTwo.next;
+                }
+
+
+                dummyP = dummyP.next;
+
+            }
+
+            if (pOne) dummyP.next = pOne;
+
+            if (pTwo) dummyP.next = pTwo;
+
+            return dummyHead.next;
+
+        }
+
+
+    }
+
+
+};
+
+// const list = createLinkedList([4, 2, 1, 3]);
+//
+// console.log(sortList(list))
+
+//215. 数组中的第K个最大元素
+//https://leetcode-cn.com/problems/kth-largest-element-in-an-array/
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+//借助 快排
+const findKthLargest = function (nums, k) {
+
+
+    return quickSelect(nums, 0, nums.length - 1, k);
+
+
+    function quickSelect(nums, left, right, k) {
+
+        if (k >= 0 && left <= right && right >= k - 1) {
+
+            const partitionIndex = getPartitionIndex(nums, left, right);
+
+            if (partitionIndex === k - 1) return nums[partitionIndex];
+            if (partitionIndex > k - 1) return quickSelect(nums, left, partitionIndex - 1, k);
+            if (partitionIndex < k - 1) return quickSelect(nums, partitionIndex + 1, right, k);
+
+        }
+
+
+        function getPartitionIndex(nums, left, right) {
+
+            const flag = nums[right];
+
+            while (left < right) {
+
+                while (left < right && nums[left] > flag) left++;
+
+                if (left < right) nums[right--] = nums[left];
+
+                while (left < right && nums[right] <= flag) right--;
+
+                if (left < right) nums[left++] = nums[right];
+
+
+            }
+
+            nums[left] = flag;
+
+            return left;
 
 
         }
 
-        const next = q.next;
-        q.next = new ListNode(p.val, next);
 
     }
 
+
 };
+
+
+// console.log(findKthLargest([3, 2, 1, 5, 6, 4], 2));
+// console.log(findKthLargest([3, 2, 3, 1, 2, 4, 5, 5, 6], 4));
+
+
+//面试题 17.14. 最小K个数
+//https://leetcode-cn.com/problems/smallest-k-lcci/
+
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @return {number[]}
+ */
+const smallestK = function (arr, k) {
+
+    if (k <= 0) return [];
+    if (arr.length <= k) return arr;
+
+    return quickSelect(arr, 0, arr.length - 1, k);
+
+    function quickSelect(nums, left, right, k) {
+
+        if (left <= right && right >= k - 1) {
+
+            const partitionIndex = getPartitionIndex(nums, left, right);
+
+            if (partitionIndex === k - 1) return nums.slice(0, partitionIndex + 1);
+            if (partitionIndex > k - 1) return quickSelect(nums, left, partitionIndex - 1, k);
+            if (partitionIndex < k - 1) return quickSelect(nums, partitionIndex + 1, right, k);
+
+        }
+
+
+        function getPartitionIndex(nums, left, right) {
+
+            const flag = nums[right];
+
+            while (left < right) {
+
+                while (left < right && nums[left] <= flag) left++;
+
+                if (left < right) nums[right--] = nums[left];
+
+                while (left < right && nums[right] > flag) right--;
+
+                if (left < right) nums[left++] = nums[right];
+
+
+            }
+
+            nums[left] = flag;
+
+            return left;
+
+
+        }
+    }
+
+
+};
+
+// console.log(smallestK([1, 3, 5, 7, 2, 4, 6, 8], 4))
+
+//剑指 Offer 51. 数组中的逆序对
+//https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+
+//借助 归并排序
+const reversePairs = function (nums) {
+
+    if (nums <= 1) return 0;
+    let globalResult = 0;
+
+    mergeResolve(nums, 0, nums.length - 1);
+
+
+    return globalResult;
+
+    function mergeResolve(nums, left, right) {
+
+        if (left < right) {
+
+            const middle = Math.floor((left + right) / 2);
+
+            mergeResolve(nums, left, middle);
+            mergeResolve(nums, middle + 1, right);
+
+            merge(nums, left, middle, right);
+
+        }
+
+
+    }
+
+    function merge(nums, left, middle, right) {
+
+        let lp = left;
+        let rp = middle + 1;
+        const temp = [];
+
+        while (lp <= middle && rp <= right) {
+
+            const leftV = nums[lp];
+            const rightV = nums[rp];
+
+            if (leftV <= rightV) {
+
+                temp.push(leftV);
+
+                globalResult += (rp - middle - 1);
+
+                lp++;
+
+            } else {
+                temp.push(rightV);
+                rp++;
+
+            }
+
+
+        }
+
+        while (lp <= middle) {
+
+            temp.push(nums[lp]);
+
+            globalResult += (rp - middle - 1);
+            lp++;
+
+        }
+
+        while (rp <= right) {
+
+            temp.push(nums[rp++]);
+        }
+
+
+        for (let i = 0; i < temp.length; i++) {
+
+            nums[left + i] = temp[i];
+        }
+
+
+    }
+
+
+};
+
+
+// console.log(reversePairs([7, 5, 6, 4]))
