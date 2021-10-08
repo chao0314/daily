@@ -438,10 +438,65 @@ const sortColors = function (nums) {
 };
 
 
-// console.log(sortColors([2, 0, 2, 1, 1, 0]))
+//交换 两次
+/*
+* @param {number[]} nums
+* */
+const sortColors2 = function (nums) {
 
-//147. 对链表进行插入排序
-//https://leetcode-cn.com/problems/insertion-sort-list/
+    let left = 0;
+    let right = nums.length - 1;
+
+    while (left < right) {
+
+        while (left < right && nums[left] !== 2) left++
+        while (left < right && nums[right] === 2) right--
+        if (left < right) swap(nums, left++, right--);
+
+
+    }
+
+    left = 0;
+
+    if (nums[right] === 2) right--;
+
+    while (left < right) {
+
+        if (nums[left] === 0) {
+            left++;
+            continue;
+
+        }
+        if (nums[right] === 1) {
+
+            right--;
+            continue;
+        }
+
+        if (left < right) swap(nums, left++, right--);
+
+    }
+
+
+    return nums;
+
+    function swap(nums, left, right) {
+
+        const temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+    }
+
+
+}
+
+
+// console.log(sortColors([2, 0, 2, 1, 1, 0]))
+// console.log(sortColors2([2, 0, 2, 1, 1, 0]))
+// console.log(sortColors2([1, 0]))
+// console.log(sortColors2([1, 2]))
+
+
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -472,12 +527,13 @@ function createLinkedList(nodes = []) {
 
 }
 
+//147. 对链表进行插入排序
+//https://leetcode-cn.com/problems/insertion-sort-list/
+
 /**
  * @param {ListNode} head
  * @return {ListNode}
  */
-
-
 
 const insertionSortList = function (head) {
 
@@ -502,8 +558,18 @@ const insertionSortList = function (head) {
         }
 
         const next = sortedP.next;
+        sortedP.next = p;
+        // sortedP.next = new ListNode(p.val, next);
+        const pTemp = p;
+        p = p.next;
+        pTemp.next = next;
+
+        /*
+         const next = sortedP.next;
+        sortedP.next = p;
         sortedP.next = new ListNode(p.val, next);
         p = p.next;
+        * */
 
     }
 
@@ -582,9 +648,133 @@ const sortList = function (head) {
 
 };
 
-// const list = createLinkedList([4, 2, 1, 3]);
+// 非递归 归并 自底向上
+const sortList2 = function (head) {
+
+    const len = getLen(head);
+    let step = 1;
+    while (step < len) {
+
+        const newHead = new ListNode();
+        let newTail = newHead;
+        let p = head;
+
+        // 以 step 为步长的 多轮合并
+        while (p) {
+
+            let count = 0;
+            const left = p;
+
+            while (count < step && p) {
+                p = p.next;
+                count++;
+            }
+
+            // 本轮 结束
+            // 已经没有右侧 需要合并了，直接添加到尾部即可
+
+            if (!p) {
+                newTail.next = left;
+                break;
+            }
+
+            count = 0;
+            const middle = p;
+
+            while (count < step && p) {
+                p = p.next;
+                count++;
+            }
+
+            const right = p;
+
+            // console.log("+++++", left.val, "--", middle.val, "--", right)
+            const {head, tail} = merge(left, middle, right);
+
+            // console.log("----", head.val, tail.val)
+
+            newTail.next = head;
+            newTail = tail;
+            p = right;
+
+
+        }
+
+
+        head = newHead.next;
+        step *= 2;
+
+
+    }
+
+
+    return head;
+
+
+    function merge(left, middle, right) {
+
+        const newHead = new ListNode();
+        let newP = newHead;
+
+        let leftP = left;
+        let rightP = middle;
+
+        // 断开联系
+
+
+        while (leftP !== middle && rightP !== right) {
+
+            if (leftP.val <= rightP.val) {
+
+                newP.next = leftP;
+                leftP = leftP.next;
+
+            } else {
+
+                newP.next = rightP;
+                rightP = rightP.next;
+            }
+
+            newP = newP.next;
+
+        }
+
+        while (leftP !== middle) {
+            newP.next = leftP;
+            leftP = leftP.next;
+            newP = newP.next;
+
+        }
+
+        while (rightP !== right) {
+            newP.next = rightP;
+            rightP = rightP.next;
+            newP = newP.next
+        }
+        newP.next = null;
+        return {head: newHead.next, tail: newP};
+
+    }
+
+
+    function getLen(head) {
+        let count = 0;
+        while (head) {
+            count++;
+            head = head.next;
+        }
+
+        return count;
+    }
+
+
+}
+
+
+const list = createLinkedList([4, 2, 1, 3]);
 //
 // console.log(sortList(list))
+console.log(sortList2(list))
 
 //215. 数组中的第K个最大元素
 //https://leetcode-cn.com/problems/kth-largest-element-in-an-array/
@@ -756,7 +946,7 @@ const reversePairs = function (nums) {
             if (leftV <= rightV) {
 
                 temp.push(leftV);
-
+                // 在这之前有几个 右侧的，那就是这个左侧数值的逆序对
                 globalResult += (rp - middle - 1);
 
                 lp++;

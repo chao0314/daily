@@ -212,6 +212,23 @@ const myPow = function (x, n) {
 
 };
 
+const myPow2 = function (x, n) {
+
+    if (n === 0) return 1;
+    if (n === 1) return x;
+    if (n === 2) return x * x;
+
+    if (n > 0) {
+
+        const half = myPow(x, Math.floor(n / 2));
+        if (n % 2 === 0) return half * half;
+        else return half * half * x;
+
+    } else if (n < 0) return 1 / (x * myPow(x, -n - 1));
+
+
+}
+
 //面试题 08.05. 递归乘法 https://leetcode-cn.com/problems/recursive-mulitply-lcci/
 
 /**
@@ -226,5 +243,23 @@ const multiply = function (A, B) {
     if (B === 2) return A + A;
     if (B === 3) return A + A + A;
     return A + multiply(A, B - 1);
+
+};
+
+
+const multiply2 = function (A, B) {
+
+    if (A === 0 || B === 0) return 0;
+    if (A === 1) return B;
+    if (B === 1) return A;
+
+
+    const min = Math.min(A, B);
+    const max = Math.max(A, B);
+
+    const half = multiply(Math.floor(min / 2), max);
+
+    if (min % 2 === 0) return half + half;
+    else return half + half + max;
 
 };
