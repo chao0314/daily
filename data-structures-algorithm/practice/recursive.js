@@ -257,7 +257,7 @@ const multiply2 = function (A, B) {
     const min = Math.min(A, B);
     const max = Math.max(A, B);
 
-    const half = multiply(Math.floor(min / 2), max);
+    const half = multiply2(Math.floor(min / 2), max);
 
     if (min % 2 === 0) return half + half;
     else return half + half + max;
