@@ -213,47 +213,96 @@ const findString = function (words, s) {
 
         const midVal = words[mid];
 
-        let tempLeft = mid;
-        let tempRight = mid;
+        if (midVal) {
+
+            if (midVal === s) return mid;
+            if (midVal < s) left = mid + 1;
+            else right = mid - 1;
 
 
-        if (!midVal) {
+        } else {
 
-
-
-            while (tempLeft > 0) {
-
-                if (!words[tempLeft - 1]) tempLeft--;
-                else break;
-            }
-
-
-            while (tempRight < words.length - 1) {
-
-                if (!words[tempRight + 1]) tempRight++;
-                else break;
-            }
-
-
-
-        }
-
-
-        if (words[tempLeft] === s) return tempLeft;
-        if (words[tempRight] === s) return tempRight;
-        if (words[tempLeft] > s) {
-            if (tempLeft > 0) left = tempLeft - 1;
-            else return -1;
-        }
-
-        if (words[tempRight] < s) {
-            if (tempRight < words.length - 1) right = tempRight + 1;
-            else return -1;
+            if (words[left] === s) return left;
+            else left++;
         }
 
 
     }
 
     return -1;
+
+};
+
+
+// console.log(findString()
+
+//33. 搜索旋转排序数组
+//https://leetcode-cn.com/problems/search-in-rotated-sorted-array/
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+const search2 = function (nums, target) {
+
+    let left = 0;
+    let right = nums.length - 1;
+
+    while (left <= right) {
+
+        const mid = Math.floor((left + right) / 2);
+
+        const value = nums[mid];
+
+        if (value === target) return mid;
+
+        // 左侧有序
+        if (value >= nums[left]) {
+
+            if (value > target && nums[left] <= target) right = mid - 1;
+            // 左侧肯定没有  右侧找
+            else left = mid + 1;
+
+            // 右侧有序
+        } else {
+            if (value < target && nums[right] >= target) left = mid + 1;
+
+            else right = mid - 1;
+        }
+
+
+    }
+
+
+    return -1;
+
+};
+
+// console.log(search2([4, 5, 6, 7, 0, 1, 2], 0))
+
+//153. 寻找旋转排序数组中的最小值
+//https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+const findMin = function (nums) {
+
+    let left = 0;
+    let right = nums.length;
+
+    let
+
+    while (left<=right){
+
+        const mid =  Math.floor((left+right)/2);
+        const midVal =  nums[mid];
+
+
+
+    }
+
 
 };
