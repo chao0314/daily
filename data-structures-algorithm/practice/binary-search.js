@@ -290,19 +290,206 @@ const search2 = function (nums, target) {
  */
 const findMin = function (nums) {
 
+    const len = nums.length;
     let left = 0;
-    let right = nums.length;
+    let right = len - 1;
 
-    let
+    if (len === 1) return nums[0];
+    while (left <= right) {
 
-    while (left<=right){
+        const mid = Math.floor((left + right) / 2);
+        const midVal = nums[mid];
+        // 1 2 3递增有序  3 2 1 递减有序
+        if ((mid === 0 && midVal < nums[mid + 1]) || (mid === len - 1 && midVal < nums[mid - 1])) return midVal;
+        // 命中
+        if (nums[mid - 1] > midVal && midVal < nums[mid + 1]) return midVal;
+        //  右侧 找  1 2 3 4 ×     3 4 1 2 √    4 3 2 1 √
+        if (midVal > nums[right]) left = mid + 1;
 
-        const mid =  Math.floor((left+right)/2);
-        const midVal =  nums[mid];
-
+        else right = mid - 1;
 
 
     }
 
+    return -1;
 
 };
+
+//852. 山脉数组的峰顶索引  https://leetcode-cn.com/problems/peak-index-in-a-mountain-array/
+
+/**
+ * @param {number[]} arr
+ * @return {number}
+ */
+const peakIndexInMountainArray = function (arr) {
+
+    const len = arr.length;
+    let left = 0;
+    let right = len - 1;
+
+    while (left <= right) {
+
+        const mid = Math.floor((left + right) / 2);
+        // 0  右侧找
+        if (mid === 0) left = mid + 1;
+        // len-1  左侧找
+        else if (mid === len - 1) right = mid - 1;
+        // 命中
+        else if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1]) return mid;
+        // 上坡 右侧找
+        else if (arr[mid] > arr[mid - 1]) left = mid + 1;
+        else right = mid - 1;
+
+    }
+
+    return -1
+
+
+};
+
+// console.log(peakIndexInMountainArray([3, 5, 3, 2, 0]))
+
+//162. 寻找峰值 https://leetcode-cn.com/problems/find-peak-element/
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+const findPeakElement = function (nums) {
+
+    const len = nums.length;
+    let left = 0;
+    let right = len - 1;
+
+    if (len === 1) return 0;
+
+    while (left <= right) {
+
+        const mid = Math.floor((left + right) / 2);
+        const midVal = nums[mid];
+
+        if (mid === 0) {
+
+            // 倒序 上坡 最前
+            if (midVal > nums[mid + 1]) return mid;
+            else left = mid + 1;
+
+        } else if (mid === len - 1) {
+
+            // 正序 上坡 最后
+            if (midVal > nums[mid - 1]) return mid;
+            else right = mid - 1;
+        } else if (midVal > nums[mid - 1] && midVal > nums[mid + 1]) return mid;
+        // 上坡
+        else if (midVal < nums[mid + 1]) left = mid + 1;
+        else right = mid - 1;
+
+    }
+
+    return -1;
+
+
+};
+
+//367. 有效的完全平方数  https://leetcode-cn.com/problems/valid-perfect-square/
+
+/**
+ * @param {number} num
+ * @return {boolean}
+ */
+const isPerfectSquare = function (num) {
+
+    if (num <= 1) return true;
+
+    let left = 1;
+    let right = Math.floor(num / 2);
+
+    while (left <= right) {
+
+        const mid = Math.floor((left + right) / 2);
+        const value = mid * mid;
+        if (value === num) return true;
+        if (value > num) right = mid - 1;
+        else left = mid + 1;
+
+    }
+
+    return false;
+
+};
+
+//69. Sqrt(x)  https://leetcode-cn.com/problems/sqrtx/
+
+/**
+ * @param {number} x
+ * @return {number}
+ */
+const mySqrt = function (x) {
+
+    if (x <= 1) return x;
+
+    let left = 1;
+    let right = Math.floor(x / 2);
+
+    while (left <= right) {
+
+        const mid = Math.floor((left + right) / 2);
+
+        const value = mid * mid;
+        if (value === x) return mid;
+        if (value < x) {
+
+            if ((mid + 1) * (mid + 1) > x) return mid;
+            else left = mid + 1;
+
+        } else if (value > x) {
+
+            if ((mid - 1) * (mid - 1) < x) return mid - 1;
+            else right = mid - 1;
+
+        }
+
+    }
+
+};
+
+
+// console.log(mySqrt(4));
+
+//74. 搜索二维矩阵
+//https://leetcode-cn.com/problems/search-a-2d-matrix/
+
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+// 核心是 二维数组 看成是 一维数组 进行查找
+const searchMatrix = function (matrix, target) {
+
+    const row = matrix.length;
+    const col = matrix[0].length;
+
+    let left = 0;
+
+    let right = row * col - 1;
+
+    while (left <= right) {
+        // mid 是下标
+        const mid = Math.floor((left + right) / 2);
+        const curR = Math.ceil((mid + 1) / col);
+        const curC = (mid + 1) - (curR - 1) * col;
+        const value = matrix[curR - 1][curC - 1];
+
+        if (value === target) return true;
+        if (value < target) left = mid + 1;
+        else right = mid - 1;
+
+    }
+
+    return false;
+
+};
+
+
+// console.log(searchMatrix([[1]], 1));
