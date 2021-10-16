@@ -307,3 +307,142 @@ const groupAnagrams = function (strs) {
 
 
 // console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+
+//136. 只出现一次的数字 https://leetcode-cn.com/problems/single-number/
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+const singleNumber = function (nums) {
+
+    const hash = new Map();
+
+
+    for (let i = 0; i < nums.length; i++) {
+
+        const key = nums[i];
+        const count = hash.get(key) || 0;
+        hash.set(key, count + 1);
+
+    }
+
+    for (let [key, value] of hash) {
+
+        if (value === 1) return key
+
+    }
+
+};
+
+
+//349. 两个数组的交集  https://leetcode-cn.com/problems/intersection-of-two-arrays/
+
+/**
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number[]}
+ */
+const intersection = function (nums1, nums2) {
+
+    const hash = new Map();
+
+    for (let i = 0; i < nums1.length; i++) hash.set(nums1[i], 1);
+
+    for (let j = 0; j < nums2.length; j++) {
+
+        const key = nums2[j]
+        const count = hash.get(key) || 0;
+
+        if (count) hash.set(key, count + 1);
+
+    }
+
+    for (let [key, count] of hash) if (count === 1) hash.delete(key);
+
+    return Array.from(hash.keys());
+
+
+};
+
+//1122. 数组的相对排序  https://leetcode-cn.com/problems/relative-sort-array/
+
+/**
+ * @param {number[]} arr1
+ * @param {number[]} arr2
+ * @return {number[]}
+ */
+const relativeSortArray = function (arr1, arr2) {
+
+    const hash = new Map();
+    const result = [];
+
+    for (let i = 0; i < arr1.length; i++) {
+
+        const key = arr1[i];
+        const count = hash.get(key) || 0;
+        hash.set(key, count + 1);
+    }
+
+
+    for (let j = 0; j < arr2.length; j++) {
+
+        const key = arr2[j];
+
+        const count = hash.get(key);
+        hash.delete(key)
+        for (let k = 0; k < count; k++) result.push(key);
+
+    }
+
+    const entry = Array.from(hash.entries()).sort(([key1,], [key2,]) => key1 - key2);
+
+    for (let [key, value] of entry) {
+
+        for (let l = 0; l < value; l++) result.push(key);
+
+    }
+
+    return result;
+
+
+};
+
+//706. 设计哈希映射  https://leetcode-cn.com/problems/design-hashmap/
+
+var MyHashMap = function() {
+
+};
+
+/**
+ * @param {number} key
+ * @param {number} value
+ * @return {void}
+ */
+MyHashMap.prototype.put = function(key, value) {
+
+};
+
+/**
+ * @param {number} key
+ * @return {number}
+ */
+MyHashMap.prototype.get = function(key) {
+
+};
+
+/**
+ * @param {number} key
+ * @return {void}
+ */
+MyHashMap.prototype.remove = function(key) {
+
+};
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * var obj = new MyHashMap()
+ * obj.put(key,value)
+ * var param_2 = obj.get(key)
+ * obj.remove(key)
+ */
