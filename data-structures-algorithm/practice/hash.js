@@ -410,7 +410,11 @@ const relativeSortArray = function (arr1, arr2) {
 
 //706. 设计哈希映射  https://leetcode-cn.com/problems/design-hashmap/
 
-var MyHashMap = function() {
+const MyHashMap = function () {
+
+    this.SLOTS_COUNT = 1024;
+    this.slots = [];
+
 
 };
 
@@ -419,7 +423,47 @@ var MyHashMap = function() {
  * @param {number} value
  * @return {void}
  */
-MyHashMap.prototype.put = function(key, value) {
+MyHashMap.prototype.put = function (key, value) {
+
+    const hashKey = this.hash(key);
+    const slot = this.slots[hashKey];
+
+    if (slot) {
+
+        let p = slot;
+        let prev = slot;
+
+        while (p) {
+
+            const entry = p.val;
+
+            // 删除
+            if (entry.key === key) {
+
+                prev.next = p.next;
+
+            } else {
+
+                prev = p;
+
+            }
+
+            p = p.next;
+
+
+        }
+
+
+        prev.next = new ListNode({key, value});
+
+
+    } else {
+
+        const head = new ListNode();
+        head.next = new ListNode({key, value});
+        this.slots[hashKey] = head;
+    }
+
 
 };
 
@@ -427,7 +471,27 @@ MyHashMap.prototype.put = function(key, value) {
  * @param {number} key
  * @return {number}
  */
-MyHashMap.prototype.get = function(key) {
+MyHashMap.prototype.get = function (key) {
+
+    const hashKey = this.hash(key);
+
+    const slot = this.slots[hashKey];
+
+    if (slot) {
+
+        let p = slot;
+
+        while (p) {
+
+            const entry = p.val;
+            if (entry.key === key) return entry.value;
+            p = p.next;
+        }
+
+    }
+
+    return -1;
+
 
 };
 
@@ -435,14 +499,103 @@ MyHashMap.prototype.get = function(key) {
  * @param {number} key
  * @return {void}
  */
-MyHashMap.prototype.remove = function(key) {
+MyHashMap.prototype.remove = function (key) {
+
+    const hashKey = this.hash(key);
+    const slot = this.slots[hashKey];
+    if (slot) {
+
+        let p = slot;
+        let prev = slot;
+        while (p) {
+            const entry = p.val;
+            if (entry.key === key) {
+                prev.next = p.next;
+                return;
+            } else {
+
+                prev = p;
+                p = p.next;
+            }
+
+        }
+
+    }
+
+};
+
+
+MyHashMap.prototype.hash = function (key) {
+
+    return key % this.SLOTS_COUNT;
+
+};
+
+
+//146. LRU 缓存机制  https://leetcode-cn.com/problems/lru-cache/
+
+function DoubleLinkedNode(key, value, prev, next) {
+
+    this.key = key;
+    this.value = value;
+    this.prev = prev;
+    this.next = next;
+}
+
+
+/**
+ * @param {number} capacity
+ */
+var LRUCache = function (capacity = 100) {
+
+    this.size = 0;
+    this.capacity = capacity;
+    this.map = new Map();
+    this.head = new DoubleLinkedNode();
+    this.tail = new DoubleLinkedNode();
+    this.head.next = this.tail;
+    this.tail.prev = this.head;
+
 
 };
 
 /**
- * Your MyHashMap object will be instantiated and called as such:
- * var obj = new MyHashMap()
- * obj.put(key,value)
- * var param_2 = obj.get(key)
- * obj.remove(key)
+ * @param {number} key
+ * @return {number}
  */
+LRUCache.prototype.get = function (key) {
+
+
+
+
+
+};
+
+/**
+ * @param {number} key
+ * @param {number} value
+ * @return {void}
+ */
+LRUCache.prototype.put = function (key, value) {
+
+
+
+
+
+};
+
+LRUCache.prototype.removeNode =  function (node){
+
+
+
+
+}
+
+
+LRUCache.prototype.addNodeToTail =  function (node){
+
+
+
+}
+
+
