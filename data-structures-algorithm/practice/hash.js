@@ -565,8 +565,18 @@ var LRUCache = function (capacity = 100) {
  */
 LRUCache.prototype.get = function (key) {
 
+    const node = this.map.get(key);
+
+    if (node) {
+
+        // 更新 缓存
+        this.removeNode(node);
+        this.addNodeToTail(node);
+        return node.value;
 
 
+    }
+    return -1;
 
 
 };
@@ -578,24 +588,109 @@ LRUCache.prototype.get = function (key) {
  */
 LRUCache.prototype.put = function (key, value) {
 
+    const node = this.map.get(key);
+    // 更新
+    if (node) {
+
+        this.removeNode(node);
+
+        node.value = value;
+
+        this.addNodeToTail(node);
 
 
+    } else {
+
+
+        if (this.size >= this.capacity) {
+            // 清空 一部分缓存
+            const node = this.head.next;
+            this.removeNode(node);
+            this.map.delete(node.key);
+
+        }
+
+        const node = new DoubleLinkedNode(key, value);
+        this.map.set(key, node);
+        this.addNodeToTail(node);
+
+
+    }
 
 
 };
 
-LRUCache.prototype.removeNode =  function (node){
+LRUCache.prototype.removeNode = function (node) {
 
-
-
-
-}
-
-
-LRUCache.prototype.addNodeToTail =  function (node){
-
-
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+    node.prev = null;
+    node.next = null;
+    this.size--;
 
 }
 
 
+LRUCache.prototype.addNodeToTail = function (node) {
+
+    this.tail.prev.next = node;
+    node.prev = this.tail.prev;
+    node.next = this.tail;
+    this.tail.prev = node;
+    this.size++;
+
+}
+
+
+//面试题 16.21. 交换和 https://leetcode-cn.com/problems/sum-swap-lcci/
+
+/**
+ * @param {number[]} array1
+ * @param {number[]} array2
+ * @return {number[]}
+ */
+const findSwapValues = function (array1, array2) {
+
+    const set1 = new Set();
+    const set2 = new Set();
+    let sum1 = 0;
+    let sum2 = 0;
+
+    for (let i = 0; i < array1.length; i++) {
+
+        const value = array1[i];
+        sum1 += value;
+        set1.add(value);
+
+    }
+
+    for (let j = 0; j < array2.length; j++) {
+
+        const value = array2[j];
+        sum2 += value;
+        set2.add(value);
+
+    }
+
+
+    // sum1-a+b === sum2-b+a => a-b = (sum1-sum2)/2
+    // a =  b+diff
+    // b = a-diff
+    const diff = (sum1 - sum2) / 2
+
+
+    for (let [a] of set1.entries()) {
+
+        const b = a - diff;
+
+        if (set2.has(b)) return [a, b];
+
+    }
+
+
+    return [];
+
+
+};
+
+console.log(findSwapValues([4, 1, 2, 1, 1, 2], [3, 6, 3, 3]))
