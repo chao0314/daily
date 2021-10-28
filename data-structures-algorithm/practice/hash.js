@@ -693,4 +693,4 @@ const findSwapValues = function (array1, array2) {
 
 };
 
-console.log(findSwapValues([4, 1, 2, 1, 1, 2], [3, 6, 3, 3]))
+// console.log(findSwapValues([4, 1, 2, 1, 1, 2], [3, 6, 3, 3]))

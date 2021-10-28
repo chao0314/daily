@@ -330,14 +330,15 @@ const peakIndexInMountainArray = function (arr) {
     while (left <= right) {
 
         const mid = Math.floor((left + right) / 2);
-        // 0  右侧找
+        // 0  右侧找 越界处理
         if (mid === 0) left = mid + 1;
-        // len-1  左侧找
+        // len-1  左侧找 （不会出现） 越界处理
         else if (mid === len - 1) right = mid - 1;
         // 命中
         else if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1]) return mid;
         // 上坡 右侧找
         else if (arr[mid] > arr[mid - 1]) left = mid + 1;
+        // 下坡 左侧找
         else right = mid - 1;
 
     }
@@ -456,6 +457,63 @@ const mySqrt = function (x) {
 
 // console.log(mySqrt(4));
 
+
+// plus 保留两位小数
+
+
+/**
+ * @param {number} x
+ * @param {number} n
+ * @return {number}
+ */
+const mySqrt2 = function (x, n = 0) {
+
+    if (x <= 1) return x;
+
+    let diff = 1;
+    for (let i = 0; i < 2 * n; i++) {
+
+        x *= 10;
+        if (i % 2 === 0) diff *= 10;
+
+    }
+
+    let int;
+    let left = 1;
+    let right = Math.floor(x / 2);
+
+    while (left <= right) {
+
+        const mid = Math.floor((left + right) / 2);
+
+        const value = mid * mid;
+        if (value === x) int = mid;
+        if (value < x) {
+
+            if ((mid + 1) * (mid + 1) > x) {
+                int = mid;
+                break;
+            } else left = mid + 1;
+
+        } else if (value > x) {
+
+            if ((mid - 1) * (mid - 1) < x) {
+                int = mid - 1;
+                break;
+            } else right = mid - 1;
+
+        }
+
+    }
+
+
+    return int / diff;
+
+};
+
+console.log(mySqrt2(8, 2))
+
+
 //74. 搜索二维矩阵
 //https://leetcode-cn.com/problems/search-a-2d-matrix/
 
@@ -477,9 +535,9 @@ const searchMatrix = function (matrix, target) {
     while (left <= right) {
         // mid 是下标
         const mid = Math.floor((left + right) / 2);
-        const curR = Math.ceil((mid + 1) / col);
-        const curC = (mid + 1) - (curR - 1) * col;
-        const value = matrix[curR - 1][curC - 1];
+        const curR = Math.floor(mid / col);
+        const curC = mid % col;
+        const value = matrix[curR][curC];
 
         if (value === target) return true;
         if (value < target) left = mid + 1;
