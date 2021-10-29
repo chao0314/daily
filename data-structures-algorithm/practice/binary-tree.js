@@ -181,17 +181,230 @@ const levelOrder = function (root) {
  */
 const levelOrder2 = function (root) {
 
-    const result = new map();
+    const result = [];
+    const cache = new Map();
+
 
     if (root) {
 
-        const queue = [];
+        const queue = [root];
+        cache.set(root, 0);
+
+        while (queue.length > 0) {
+
+            const node = queue.shift();
+
+            const curLevel = cache.get(node);
+
+            const levelNodes = result[curLevel] || [];
+
+            levelNodes.push(node.val);
+
+            result[curLevel] = levelNodes;
+
+            cache.delete(node);
+
+
+            if (node.left) {
+
+                queue.push(node.left);
+                cache.set(node.left, curLevel + 1);
+            }
+            if (node.right) {
+                queue.push(node.right);
+                cache.set(node.right, curLevel + 1);
+            }
+
+
+        }
+
+
+    }
+
+    return result;
+};
+
+//剑指 Offer 32 - III. 从上到下打印二叉树 III
+// https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-iii-lcof/
+
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+const levelOrder3 = function (root) {
+
+    const result = [];
+
+    if (root) {
+
+        const cache = new Map();
+        const queue = [root];
+        cache.set(root, 0);
+
+        while (queue.length > 0) {
+
+            const node = queue.shift();
+            const level = cache.get(node);
+            const levelNodes = result[level] || [];
+            levelNodes.push(node.val);
+            result[level] = levelNodes;
+            cache.delete(node);
+
+            if (node.left) {
+
+                queue.push(node.left);
+                cache.set(node.left, level + 1);
+
+            }
+            if (node.right) {
+
+                queue.push(node.right);
+                cache.set(node.right, level + 1);
+            }
+
+
+        }
+
+        for (let i = 0; i < result.length; i++) {
+
+            if (i % 2 === 1) result[i] = result[i].reverse();
+
+
+        }
 
 
     }
 
 
-
+    return result;
 
 
 };
+
+// 429. N 叉树的层序遍历  https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/
+
+/**
+ * @param {Node|null} root
+ * @return {number[][]}
+ */
+const levelOrder4 = function (root) {
+
+    const result = [];
+
+    if (root) {
+
+        const queue = [root];
+        const cache = new Map();
+        cache.set(root, 0);
+
+        while (queue.length > 0) {
+
+            const node = queue.shift();
+            const level = cache.get(node);
+            const levelNodes = result[level] || [];
+            levelNodes.push(node.val);
+            result[level] = levelNodes;
+            cache.delete(node);
+
+            if (node.children && node.children.length > 0) {
+
+                for (let i = 0; i < node.children.length; i++) {
+                    const child = node.children[i];
+                    queue.push(child);
+                    cache.set(child, level + 1);
+                }
+
+            }
+
+        }
+
+
+    }
+
+    return result;
+
+};
+
+// 513. 找树左下角的值 https://leetcode-cn.com/problems/find-bottom-left-tree-value/
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+const findBottomLeftValue = function (root) {
+
+    let result = -1;
+    let maxHeight = 0;
+    if (root) {
+
+        const queue = [root];
+        const cache = new Map([[root, 0]]);
+
+        while (queue.length > 0) {
+
+            const node = queue.shift();
+
+            const level = cache.get(node);
+            cache.delete(node);
+
+            if (node.left) {
+
+                queue.push(node.left);
+                cache.set(node.left, level + 1);
+                if (level + 1 > maxHeight) {
+                    maxHeight = level + 1;
+                    result = node.left.val;
+                }
+
+            }
+            if (node.right) {
+                queue.push(node.right);
+                cache.set(node.right, level + 1);
+                // 同层 left 已经处理了 不会再处理，除非 同层 没有严格的左节点，只有这一个右节点 作为最左的节点
+                if (level + 1 > maxHeight) {
+                    maxHeight = level + 1;
+                    result = node.right.val;
+                }
+
+            }
+            if (!node.left && !node.right && level === 0) {
+                // 只有一个根节点
+                result = root.val;
+
+            }
+
+
+        }
+
+
+    }
+
+    return result;
+
+};
+
+//104. 二叉树的最大深度
+
+//https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/
+
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+const maxDepth = function (root) {
+
+    let depth = 0;
+    if (root) {
+
+        const leftDepth = maxDepth(root.left);
+        const rightDepth = maxDepth(root.right);
+
+        depth += Math.max(leftDepth, rightDepth);
+
+    }
+
+    return depth;
+
+
+};
+
+
