@@ -55,24 +55,135 @@ const isBalanced = function (root) {
  * @return {TreeNode}
  */
 
-//先广度遍历 得到结果再 合并 构造新树
+//近似两个链表合并
 const mergeTrees = function (root1, root2) {
 
+    if (!root1) return root2;
+    if (!root2) return root1;
+
+    const treeNode = new TreeNode(root1.val + root2.val);
+
+    treeNode.left = mergeTrees(root1.left, root2.left);
+    treeNode.right = mergeTrees(root1.right, root2.right);
+
+    return treeNode;
+
+};
+
+//226. 翻转二叉树
+//https://leetcode-cn.com/problems/invert-binary-tree/
+
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+const invertTree = function (root) {
+
+    if (root) {
+
+        const temp = root.left;
+
+        root.left = invertTree(root.right);
+
+        root.right = invertTree(temp);
 
 
+    }
 
 
-
-function iterator(root){
-
-    const  result = [];
-    const queue = [];
+    return root;
 
 
+};
 
 
+//101. 对称二叉树
+//https://leetcode-cn.com/problems/symmetric-tree/
 
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+const isSymmetric = function (root) {
+
+
+    if (root) {
+
+        return checkSymmetric(root.left, root.right);
+
+    }
+
+
+    return false;
+
+    function checkSymmetric(left, right) {
+
+        // null     null
+        if (!left && !right) return true;
+
+        if (left && right && left.val === right.val) {
+
+            return checkSymmetric(left.left, right.right) && checkSymmetric(left.right, right.left);
+        }
+
+        return false;
+
+
+    }
 
 }
 
-};
+//98. 验证二叉搜索树
+//https://leetcode-cn.com/problems/validate-binary-search-tree/
+
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+const isValidBST = function (root) {
+
+    let isValid = true;
+
+    if (root) {
+
+        if (root.left && root.left.val >= root.val) return false;
+        if (root.right && root.right.val <= root.val) return false;
+
+        checkValid(root.left, "left") && checkValid(root.right, "right");
+    }
+
+
+    return isValid;
+
+    function checkValid(node, branch) {
+
+        //已经是无效的 直接退出 不需要继续 递归 ，剪枝 优化
+        if (!node || !isValid) return isValid;
+
+        const midVal = node.val;
+        const left = node.left;
+        const right = node.right;
+
+        if (left && right) {
+
+            const lVal = left.val;
+            const rVal = right.val;
+            const roVal = root.val;
+
+
+            if ((branch === "left" && lVal >= roVal) || (branch === "right" && rVal <= roVal) || lVal >= midVal || rVal <= midVal) {
+
+                isValid = false;
+                return isValid;
+            }
+
+
+        } else {
+
+            return checkValid(node.left, branch) && checkValid(node.right, branch);
+        }
+
+    }
+}
+
+
