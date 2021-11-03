@@ -395,6 +395,8 @@ const maxDepth = function (root) {
     let depth = 0;
     if (root) {
 
+        depth++;
+
         const leftDepth = maxDepth(root.left);
         const rightDepth = maxDepth(root.right);
 
@@ -407,4 +409,36 @@ const maxDepth = function (root) {
 
 };
 
+//559. N 叉树的最大深度
+//https://leetcode-cn.com/problems/maximum-depth-of-n-ary-tree/
+
+/**
+ * @param {Node|null} root
+ * @return {number}
+ */
+const maxDepth2 = function (root) {
+
+    let depth = 0;
+
+    if (root) {
+
+        depth++
+
+        const childDepth = [];
+
+        for (let i = 0; i < root.children.length; i++) {
+
+            const child = root.children[i];
+            childDepth[i] = maxDepth2(child);
+        }
+
+        if (childDepth.length > 0) depth += Math.max(...childDepth);
+
+
+    }
+
+    return depth;
+
+
+};
 
