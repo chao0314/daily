@@ -133,6 +133,8 @@ const isSymmetric = function (root) {
 
 }
 
+// 错误 订正
+
 //98. 验证二叉搜索树
 //https://leetcode-cn.com/problems/validate-binary-search-tree/
 
@@ -142,46 +144,51 @@ const isSymmetric = function (root) {
  */
 const isValidBST = function (root) {
 
+    if (!root) return false;
     let isValid = true;
 
-    if (root) {
-
-        if (root.left && root.left.val >= root.val) return false;
-        if (root.right && root.right.val <= root.val) return false;
-
-        checkValid(root.left, "left") && checkValid(root.right, "right");
-    }
+    checkTreeValid(root);
 
 
     return isValid;
 
-    function checkValid(node, branch) {
+    function checkTreeValid(root) {
 
         //已经是无效的 直接退出 不需要继续 递归 ，剪枝 优化
-        if (!node || !isValid) return isValid;
+        if (!root || !isValid) return isValid;
 
-        const midVal = node.val;
-        const left = node.left;
-        const right = node.right;
+        let min = root.val;
+        let max = root.val;
+        const midVal = root.val;
+        // 递归收集每个子树的最小值 最大值
 
-        if (left && right) {
+        if (root.left) {
 
-            const lVal = left.val;
-            const rVal = right.val;
-            const roVal = root.val;
-
-
-            if ((branch === "left" && lVal >= roVal) || (branch === "right" && rVal <= roVal) || lVal >= midVal || rVal <= midVal) {
-
-                isValid = false;
-                return isValid;
-            }
+            // 根据二叉树的特性  越往底层 数值越小(left)、大(right)
+            const result = checkTreeValid(root.left);
+            if (isValid) {
+                const [subMin, subMax] = result
+                if (subMax >= midVal) return isValid = false;
+                else min = subMin;
+            } else return isValid
 
 
-        } else {
-
-            return checkValid(node.left, branch) && checkValid(node.right, branch);
         }
+
+        if (root.right) {
+            const result = checkTreeValid(root.right);
+            if (isValid) {
+                const [subMin, subMax] = result;
+                if (subMin <= midVal) return isValid = false;
+                else max = subMax;
+            } else return isValid;
+
+
+        }
+
+
+        return [min, max];
+
 
     }
 }
