@@ -1,3 +1,5 @@
+import {counterSlice} from "../../react practice/redux-toolkit/my-app/src/features/counter/counterSlice";
+
 function TreeNode(val, left, right) {
     this.val = (val === undefined ? 0 : val)
     this.left = (left === undefined ? null : left)
@@ -203,7 +205,48 @@ const isValidBST = function (root) {
  */
 const kthLargest = function (root, k) {
 
+    let count = 0;
+    let result;
+    if (root) {
+
+        deep(root);
+
+    }
+
+    return result;
+
+    function deep(root) {
+
+        if (root.right) {
+
+            deep(root.right);
+
+        }
+
+        if (count === k) return result;
+        count++;
+        if (count === k) result = root.val
+
+        if (root.left) {
+
+            deep(root.left);
+        }
+
+
+    }
+
 
 };
 
+//538. 把二叉搜索树转换为累加树
+//https://leetcode-cn.com/problems/convert-bst-to-greater-tree/
+
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+const convertBST = function(root) {
+
+
+};
 
