@@ -31,6 +31,57 @@ const preorderTraversal = function (root) {
 };
 
 
+// 二叉树 前序遍历 非递归
+
+const preorderTraversal1 = function (root) {
+
+    const result = [];
+    const stack = [];
+
+    if (root) {
+
+        while (root) {
+
+            result.push(root.val);
+
+            stack.push(root);
+            root = root.left
+
+        }
+
+
+        while (stack.length > 0) {
+
+            const top = stack.pop();
+            const right = top.right;
+
+            if (right) {
+
+                stack.push(right);
+
+                result.push(right.val);
+
+                let left = right.left
+                while (left) {
+
+                    result.push(left.val);
+                    stack.push(left);
+                    left = left.left;
+
+                }
+
+            }
+
+        }
+
+
+    }
+    return result;
+
+
+}
+
+
 //94. 二叉树的中序遍历  https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
 
 /**
