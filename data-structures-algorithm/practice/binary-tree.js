@@ -433,6 +433,33 @@ const findBottomLeftValue = function (root) {
 
 };
 
+// 每层自右向左层序遍历  完整遍历完 最后一个 必然是 左下角的节点
+
+const findBottomLeftValue2 = function (root) {
+
+    if (root) {
+        const queue = [root];
+        let result;
+        while (queue.length > 0) {
+
+            const node = queue.shift();
+
+            result = node.val;
+
+            if (node.right) queue.push(node.right);
+            if (node.left) queue.push(node.left);
+
+        }
+
+
+        return result;
+
+    }
+
+
+};
+
+
 //104. 二叉树的最大深度
 
 //https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/
