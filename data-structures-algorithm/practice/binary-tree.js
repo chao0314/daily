@@ -606,11 +606,11 @@ const invertTree = function (root) {
 
     if (root) {
 
-        const temp = root.left;
+        const left = root.left;
 
         root.left = invertTree(root.right);
 
-        root.right = invertTree(temp);
+        root.right = invertTree(left);
 
 
     }
@@ -621,7 +621,7 @@ const invertTree = function (root) {
 
 };
 
-
+// 错误 订正
 //101. 对称二叉树
 //https://leetcode-cn.com/problems/symmetric-tree/
 
@@ -659,7 +659,6 @@ const isSymmetric = function (root) {
 }
 
 // 错误 订正
-
 //98. 验证二叉搜索树
 //https://leetcode-cn.com/problems/validate-binary-search-tree/
 
@@ -726,6 +725,8 @@ const isValidBST = function (root) {
  * @param {number} k
  * @return {number}
  */
+
+// 左 中 右  中序遍历 =》从小到大有序的  右 中 左 =》从大到小有序的
 const kthLargest = function (root, k) {
 
     let count = 0;
@@ -740,16 +741,25 @@ const kthLargest = function (root, k) {
 
     function deep(root) {
 
+        if (result) return result;
+
+        // 右
+
         if (root.right) {
 
             deep(root.right);
 
         }
 
-        if (count === k) return result;
+        // 中
         count++;
-        if (count === k) result = root.val
+        if (count === k) {
 
+            result = root.val;
+            return result;
+        }
+
+        // 左
         if (root.left) {
 
             deep(root.left);
@@ -805,6 +815,7 @@ const convertBST = function (root) {
 
 // 看作是 二叉树 的中序遍历
 // 而不是二叉查找树 更贴切 一些
+// 可以在查找的时候 借助二叉搜索树 优化
 
 /**
  * @param {TreeNode} root
