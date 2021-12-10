@@ -1,3 +1,5 @@
+import {patchStyle} from "../../vue-simple-3/packages/runtime-dom/src/patch/patchStyle";
+
 function TreeNode(val, left, right) {
     this.val = (val === undefined ? 0 : val)
     this.left = (left === undefined ? null : left)
@@ -238,30 +240,187 @@ const listOfDepth = function (tree) {
 
     }
 
-    // const temp = [];
-    //
-    // for (let i = 0; i < result.length; i++) {
-    //
-    //     const levelRes = result[i];
-    //
-    //     for (let j = 1; j < levelRes.length; j++) {
-    //
-    //         levelRes[j - 1].right = levelRes[j];
-    //         levelRes[j - 1].left = null;
-    //     }
-    //
-    //     const last = levelRes[levelRes.length - 1];
-    //
-    //     last.left = null;
-    //     last.right = null;
-    //
-    //     temp[i] = levelRes[0];
-    //
-    //
-    // }
-    //
-    // console.log(temp);
+    const temp = [];
+
+    for (let i = 0; i < result.length; i++) {
+
+        const levelRes = result[i];
+        const head = new ListNode(levelRes[0].val);
+        let tail = head;
+
+        for (let j = 1; j < levelRes.length; j++) {
+
+            tail.next = new ListNode(levelRes[j].val);
+            tail = tail.next;
+        }
+
+        temp[i] = head;
+
+
+    }
+
     return temp;
 
 
 };
+
+//105. 从前序与中序遍历序列构造二叉树
+// https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+
+
+/*
+*            4
+           /   \
+*         2     5
+*        / \     \
+*       1   3     6
+*      /
+*     0
+*
+*
+* pre : 4 2 1 0 3 5 6
+*
+*  in : 0 1 2 3 4 5 6
+*
+* post: 0 1 3 2 6 5 4
+*
+* */
+const buildTree = function (preorder, inorder) {
+
+    if (preorder.length <= 1) return new TreeNode(preorder[0]);
+
+
+    return create(0, preorder.length - 1, 0, inorder.length - 1);
+
+
+    function create(preS, preE, inS, inE) {
+
+        if (preS > preE) return null;
+
+        const curRoot = new TreeNode(preorder[preS]);
+
+        const inorderIndex = inorder.indexOf(curRoot.val);
+
+        const leftCount = inorderIndex - inS;
+
+        const leftTree = create(preS + 1, preS + leftCount, inS, inS + leftCount - 1);
+
+        const rightTree = create(preS + 1 + leftCount, preE, inS + leftCount + 1, inE);
+
+        curRoot.left = leftTree;
+
+        curRoot.right = rightTree;
+
+        return curRoot;
+
+
+    }
+
+
+};
+
+//889. 根据前序和后序遍历构造二叉树
+//https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/
+
+
+/**
+ * @param {number[]} preorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+const constructFromPrePost = function (preorder, postorder) {
+
+    if (preorder.length <= 1) return new TreeNode(preorder[0]);
+
+
+    return create(0, preorder.length - 1, 0, postorder.length - 1);
+
+
+    function create(preS, preE, postS, postE) {
+
+
+        if (preS > preE) return null;
+
+        const curRoot = new TreeNode(preorder[preS]);
+
+        // 后面还有
+        if (preS + 1 <= preE) {
+            const leftSubRootVal = preorder[preS + 1];
+            const postIndex = postorder.indexOf(leftSubRootVal);
+            const leftSubCount = postIndex - postS + 1;
+            const leftTree = create(preS + 1, preS + leftSubCount, postS, postS + leftSubCount - 1);
+            const rightTree = create(preS + 1 + leftSubCount, preE, postS + leftSubCount, postE - 1);
+            curRoot.left = leftTree;
+            curRoot.right = rightTree;
+
+        }
+
+
+        return curRoot;
+
+    }
+
+};
+
+
+//106. 从中序与后序遍历序列构造二叉树
+
+//https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+
+/**
+ * @param {number[]} inorder
+ * @param {number[]} postorder
+ * @return {TreeNode}
+ */
+const buildTree2 = function (inorder, postorder) {
+
+
+    if (inorder.length <= 1) return new TreeNode(inorder[0]);
+
+
+    return create(0, inorder.length - 1, 0, postorder.length - 1);
+
+    function create(inS, inE, postS, postE) {
+
+        if (inS > inE) return null;
+
+        const curRoot = new TreeNode(postorder[postE]);
+
+        const inIndex = inorder.indexOf(postorder[postE]);
+
+        const leftSubCount = inIndex - inS;
+
+        const leftTree = create(inS, inS + leftSubCount - 1, postS, postS + leftSubCount - 1);
+        const rightTree = create(inIndex + 1, inE, postS + leftSubCount, postE - 1);
+
+        curRoot.left = leftTree;
+        curRoot.right = rightTree;
+        return curRoot;
+
+    }
+
+
+};
+
+//剑指 Offer 33. 二叉搜索树的后序遍历序列
+
+//https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/
+
+/**
+ * @param {number[]} postorder
+ * @return {boolean}
+ */
+const verifyPostorder = function (postorder) {
+
+
+
+
+
+};
+
