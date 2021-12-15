@@ -1,4 +1,5 @@
 import {patchStyle} from "../../vue-simple-3/packages/runtime-dom/src/patch/patchStyle";
+import componentInstanceProxyHandler from "../../vue-simple-3/packages/runtime-core/src/componentInstanceProxyHandler";
 
 function TreeNode(val, left, right) {
     this.val = (val === undefined ? 0 : val)
@@ -23,7 +24,6 @@ const lowestCommonAncestor = function (root, p, q) {
 
     let ancestor;
 
-
     if (root) traversal(root)
 
     function traversal(root) {
@@ -31,8 +31,6 @@ const lowestCommonAncestor = function (root, p, q) {
         if (ancestor) return;
         // 注意递归 函数调用栈的变量
         let count = 0;
-
-
         //先递 拆分
         if (root.left) count += traversal(root.left)
         if (root.right) count += traversal(root.right);
@@ -42,12 +40,9 @@ const lowestCommonAncestor = function (root, p, q) {
 
         return count;
 
-
     }
 
-
     return ancestor;
-
 
 };
 
@@ -82,6 +77,13 @@ const lowestCommonAncestor2 = function (root, p, q) {
 
 
 };
+
+//
+
+
+
+
+
 
 //114. 二叉树展开为链表 https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/
 /**
@@ -419,8 +421,299 @@ const buildTree2 = function (inorder, postorder) {
 const verifyPostorder = function (postorder) {
 
 
+    if (postorder.length <= 1) return true;
+    return verify(postorder, 0, postorder.length - 1);
 
+
+    function verify(postorder, left, right) {
+
+
+        if (left >= right) return true;
+        const root = postorder[right];
+
+        //找到左右子树分割点 也就是第一个比 root 大的节点
+
+        let i = left;
+
+        while (i < right && postorder[i] < root) i++;
+
+        let j = i;
+
+        while (j < right) {
+
+            if (postorder[j] < root) return false;
+
+            j++;
+
+        }
+
+
+        // 检验 左树
+        const leftVerify = verify(postorder, left, i - 1);
+
+        if (!leftVerify) return false;
+
+        //检验 右树
+        const rightVerify = verify(postorder, i, right - 1);
+
+
+        return rightVerify
+
+
+    }
 
 
 };
+
+
+//543. 二叉树的直径
+//https://leetcode-cn.com/problems/diameter-of-binary-tree/
+
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+
+// 转化为递归求 左 右 子树的最大深度，那么，左子树的最大深度  +  右子树的最大深度  = 树的最大直径
+const diameterOfBinaryTree = function (root) {
+
+    let diameter = 0;
+
+    if (root) deep(root);
+
+    return diameter;
+
+
+    function deep(root) {
+
+        if (root) {
+
+            const leftMaxDepth = deep(root.left);
+            const rightMaxDepth = deep(root.right);
+
+            const curDiameter = leftMaxDepth + rightMaxDepth;
+
+            if (curDiameter > diameter) diameter = curDiameter;
+
+            return 1 + Math.max(leftMaxDepth, rightMaxDepth);
+
+        }
+
+
+        return 0;
+
+
+    }
+
+
+};
+
+
+//剑指 Offer 34. 二叉树中和为某一值的路径
+// https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/
+
+/**
+ * @param {TreeNode} root
+ * @param {number} target
+ * @return {number[][]}
+ */
+
+// 递归 判断每个叶子节点 判断是否满足条件
+const pathSum = function (root, target) {
+
+    const result = [];
+    const path = [];
+
+    if (root) traversal(root, 0);
+    return result;
+
+
+    function traversal(root, pathSum) {
+
+        if (root) {
+
+            pathSum += root.val;
+            path.push(root.val);
+
+            if (!root.left && !root.right) {
+
+                if (pathSum === target) result.push(path.slice(0));
+
+                path.pop();
+
+                return;
+            }
+
+            if (root.left) traversal(root.left, pathSum);
+
+            if (root.right) traversal(root.right, pathSum);
+
+            // 这个节点都遍历过了 弹出路径中的该节点
+
+            path.pop();
+
+        }
+
+    }
+
+};
+
+// 订正
+
+//124. 二叉树中的最大路径和
+// https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/
+
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+
+// 因为不需要一定过根节点 那么 实际上是求 以任意节点为 转折点（局部根节点） 的情况下 路径和的最大值
+// 递归 计算每个转折点的 路径和，与当前最大值进行比较
+// 路径和 是指 左 (可选)+ 中间  + 右（可选）  可选 是因为负数就不要了
+const maxPathSum = function (root) {
+
+    // 来源于题目的设定的边界值
+    let result = -10001;
+
+    deep(root);
+
+    return result;
+
+    function deep(root) {
+
+        let sum = 0;
+
+        if (root) {
+
+            const val = root.val;
+            sum += val;
+
+            const leftSum = deep(root.left);
+            const rightSum = deep(root.right);
+            //左侧非负，有价值
+            if (leftSum > 0) sum += leftSum;
+            //右侧非负，有价值
+            if (rightSum > 0) sum += rightSum;
+
+            if (sum > result) result = sum;
+
+            // 当前节点退出，那么其作为 左/右 某侧分支的存在只需要返回某个路径和的最大值
+            // 同时要考虑 左右子树 路径和为负值的情况
+            if (leftSum > 0 && rightSum > 0) return val + Math.max(leftSum, rightSum);
+
+            if (leftSum > 0) return val + leftSum;
+
+            if (rightSum > 0) return val + rightSum;
+
+
+        }
+
+        return sum;
+
+
+    }
+
+
+};
+
+
+//437. 路径总和 III
+//https://leetcode-cn.com/problems/path-sum-iii/
+
+/**
+ * @param {TreeNode} root
+ * @param {number} targetSum
+ * @return {number}
+ */
+const pathSum3 = function (root, targetSum) {
+
+    let result = 0;
+    const cache = new Set();
+    const rootCache = new Set();
+    deep(root);
+
+    return result;
+
+
+    function deep(root, parentSum) {
+
+        if (root) {
+
+            const val = root.val;
+
+            //单个节点 既符合条件，但是要排除重复计算的情况
+
+            if (val === targetSum && !cache.has(root)) {
+
+                result++;
+                // console.log('---cur---', val);
+                cache.add(root);
+
+            }
+
+            // 判断条件排除 初始根节点 否则 会向下执行两遍
+            // console.log("parentSum", parentSum, "val", val)
+            if (parentSum !== void 0) {
+
+                if (parentSum + val === targetSum) {
+
+                    // console.log('+++cur+++', parentSum, val);
+                    result++
+                }
+
+                deep(root.left, parentSum + val);
+                deep(root.right, parentSum + val);
+            }
+
+
+            // 排除以 该节点为 局部根节点 即起点的重复遍历
+            if (!rootCache.has(root)) {
+
+                rootCache.add(root);
+                deep(root.left, val);
+
+                deep(root.right, val);
+
+
+            }
+
+
+        }
+
+
+    }
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
