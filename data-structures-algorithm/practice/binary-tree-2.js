@@ -1,6 +1,3 @@
-import {patchStyle} from "../../vue-simple-3/packages/runtime-dom/src/patch/patchStyle";
-import componentInstanceProxyHandler from "../../vue-simple-3/packages/runtime-core/src/componentInstanceProxyHandler";
-
 function TreeNode(val, left, right) {
     this.val = (val === undefined ? 0 : val)
     this.left = (left === undefined ? null : left)
@@ -20,6 +17,9 @@ function ListNode(val) {
  * @param {TreeNode} q
  * @return {TreeNode}
  */
+
+// 1 当前节点不是 分别位于左右子树
+// 2 当前节点是   左右子树任意有一个
 const lowestCommonAncestor = function (root, p, q) {
 
     let ancestor;
@@ -78,11 +78,35 @@ const lowestCommonAncestor2 = function (root, p, q) {
 
 };
 
-//
+// 非递归
+// 1 当前节点不是 分别位于左右子树
+// 2 当前节点是   左右子树任意有一个
+
+/**
+ * @param {TreeNode} root
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {TreeNode}
+ */
+const lowestCommonAncestor3 = function (root, p, q) {
+
+    while (root) {
+
+        const val = root.val;
+        if (val < q.val && val < p.val) {
+
+            root = root.right;
+
+        } else if (val > q.val && val > p.val) {
+
+            root = root.left;
+            //1、 一个大 一个小   或者 2、当前等于 左右任意有一个
+        } else return root;
 
 
+    }
 
-
+};
 
 
 //114. 二叉树展开为链表 https://leetcode-cn.com/problems/flatten-binary-tree-to-linked-list/
@@ -266,6 +290,48 @@ const listOfDepth = function (tree) {
 
 };
 
+// 解法2
+
+/**
+ * @param {TreeNode} tree
+ * @return {ListNode[]}
+ */
+const listOfDepth2 = function (tree) {
+
+    const result = [];
+
+    const queue = [tree];
+
+    while (queue.length > 0) {
+
+        // 当前层节点的个数 后续在改变不影响
+        const size = queue.length;
+        const head = new ListNode();
+        let tail = head;
+        for (let i = 0; i < size; i++) {
+
+            const cur = queue.shift();
+
+            tail.next = new ListNode(cur.val);
+
+            tail = tail.next;
+
+            // 下一层的节点  下次遍历
+            if (cur.left) queue.push(cur.left);
+
+            if (cur.right) queue.push(cur.right);
+
+        }
+
+        result.push(head.next);
+
+    }
+
+    return result;
+
+};
+
+
 //105. 从前序与中序遍历序列构造二叉树
 // https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
 
@@ -351,6 +417,10 @@ const constructFromPrePost = function (preorder, postorder) {
 
         const curRoot = new TreeNode(preorder[preS]);
 
+
+        //其实 前序和后续 遍历 不能唯一确认一棵树
+        //  因为在构建左子树的时候，可能原树没有左子树，只有右子树，将右子树构建到了左边
+
         // 后面还有
         if (preS + 1 <= preE) {
             const leftSubRootVal = preorder[preS + 1];
@@ -380,6 +450,7 @@ const constructFromPrePost = function (preorder, postorder) {
  * @param {number[]} postorder
  * @return {TreeNode}
  */
+
 const buildTree2 = function (inorder, postorder) {
 
 
@@ -492,7 +563,7 @@ const diameterOfBinaryTree = function (root) {
             const rightMaxDepth = deep(root.right);
 
             const curDiameter = leftMaxDepth + rightMaxDepth;
-
+            // 边的个数 = 节点个数 - 1
             if (curDiameter > diameter) diameter = curDiameter;
 
             return 1 + Math.max(leftMaxDepth, rightMaxDepth);
@@ -598,7 +669,7 @@ const maxPathSum = function (root) {
 
             if (sum > result) result = sum;
 
-            // 当前节点退出，那么其作为 左/右 某侧分支的存在只需要返回某个路径和的最大值
+            // 当前节点退出，那么其作为 左/右 某侧分支的存在只需要返回其作为某个路径分支的和的最大值
             // 同时要考虑 左右子树 路径和为负值的情况
             if (leftSum > 0 && rightSum > 0) return val + Math.max(leftSum, rightSum);
 
