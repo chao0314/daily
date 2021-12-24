@@ -59,7 +59,7 @@ class Heap {
     }
 
 
-    //自底向上 堆化
+    //自底向上 堆化 O(nlogn)
     downToTopHeapify() {
 
         let lastIndex = this.index - 1;
@@ -76,7 +76,7 @@ class Heap {
     }
 
 
-    //自顶向下 堆化
+    //自顶向下 堆化  优化  O(n)
     topToDownHeapify(parentIndex = 1) {
 
         // console.log("----index---", this.index)
@@ -236,12 +236,109 @@ const mergeKLists = function (lists) {
 
 // console.log(mergeKLists([[-1,1],[-3,1,4],[-2,-1,0,2]]))
 
-const hp = new Heap((a, b) => a - b);
+// const hp = new Heap((a, b) => a - b);
+//
+// // hp.buildHeap([-1, 1, -3, 1]);
+// hp.buildHeap([-1,1]);
+// hp.buildHeap([-3,1,4]);
+// hp.buildHeap([-2,-1,0,2]);
+// console.log(hp.store);
+// hp.sort();
+// console.log(hp.store)
 
-// hp.buildHeap([-1, 1, -3, 1]);
-hp.buildHeap([-1,1]);
-hp.buildHeap([-3,1,4]);
-hp.buildHeap([-2,-1,0,2]);
-console.log(hp.store);
-hp.sort();
-console.log(hp.store)
+//347. 前 K 个高频元素
+//https://leetcode-cn.com/problems/top-k-frequent-elements/
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+
+//借助 大 顶堆  和 hash表
+const topKFrequent = function (nums, k) {
+
+    const result = [];
+    if (!nums.length > 0) return result;
+    const map = new Map();
+    for (let i = 0; i < nums.length; i++) {
+
+        const key = nums[i];
+        const value = map.get(key) || 0;
+        map.set(key, value + 1);
+    }
+
+    const maxHeap = new Heap(([, valueA], [, valueB]) => valueB - valueA);
+
+
+    maxHeap.buildHeap(Array.from(map.entries()));
+
+
+    for (let i = 0; i < k; i++) {
+
+        result.push(maxHeap.remove()[0]);
+    }
+
+    return result;
+
+};
+
+
+// console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2));
+
+//295. 数据流的中位数
+//https://leetcode-cn.com/problems/find-median-from-data-stream/
+
+// 维护两个堆  大顶堆 存放  n/2  或者 n/2 + 1 个数据 根据总数是奇数还是偶数不同
+// 小顶堆  存放 n/2 个数据
+// 总数是奇数的情况 中位数是 大顶堆 堆顶  n/2 + 1
+//总数是偶数的情况 中位数是  （大顶堆堆顶 + 小顶堆堆顶）/2
+const MedianFinder = function () {
+
+    this.count = 0;
+    this.maxHeap = new Heap((a, b) => a - b);
+    this.minHeap = new Heap((a, b) => b - a);
+};
+
+/**
+ * @param {number} num
+ * @return {void}
+ */
+MedianFinder.prototype.addNum = function (num) {
+
+    const maxTop = this.maxHeap.peek();
+
+    if (this.maxHeap.size() === 0 || num < maxTop) this.maxHeap.insert(num);
+    else this.minHeap.insert(num);
+    this.count++;
+
+    const half = Math.floor(this.count / 2);
+
+    if (this.count % 2 === 0) {
+
+        while (this.maxHeap.size() > half) {
+
+
+        }
+
+
+    } else {
+
+        while (this.maxHeap.size() > half + 1) {
+            this.minHeap.insert(this.maxHeap.remove());
+        }
+
+    }
+
+};
+
+/**
+ * @return {number}
+ */
+MedianFinder.prototype.findMedian = function () {
+
+    if (this.count % 2 === 0) return (this.maxHeap.peek() + this.minHeap.peek()) / 2;
+    return this.maxHeap.peek();
+
+};
+
