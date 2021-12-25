@@ -174,6 +174,20 @@ class Heap {
 // console.log(hp1.store)
 
 
+// const min = new Heap((a, b) => a - b);
+// const max = new Heap((a, b) => b - a);
+//
+// max.insert(1);
+// min.insert(2);
+// console.log(max.store, min.store);
+// min.insert(3);
+// console.log(min.store);
+// const val = min.remove();
+// console.log("val---", val);
+// max.insert(val);
+// console.log("------",max.store, min.store);
+// console.log(max.peek(),"--size----",max.size(), min.size());
+
 //23. 合并K个升序链表
 //https://leetcode-cn.com/problems/merge-k-sorted-lists/
 
@@ -296,8 +310,8 @@ const topKFrequent = function (nums, k) {
 const MedianFinder = function () {
 
     this.count = 0;
-    this.maxHeap = new Heap((a, b) => a - b);
-    this.minHeap = new Heap((a, b) => b - a);
+    this.minHeap = new Heap((a, b) => a - b);
+    this.maxHeap = new Heap((a, b) => b - a);
 };
 
 /**
@@ -318,7 +332,7 @@ MedianFinder.prototype.addNum = function (num) {
 
         while (this.maxHeap.size() > half) {
 
-
+            this.minHeap.insert(this.maxHeap.remove());
         }
 
 
@@ -330,6 +344,13 @@ MedianFinder.prototype.addNum = function (num) {
 
     }
 
+    while (this.minHeap.size() > half) {
+
+        this.maxHeap.insert(this.minHeap.remove());
+
+
+    }
+
 };
 
 /**
@@ -338,7 +359,17 @@ MedianFinder.prototype.addNum = function (num) {
 MedianFinder.prototype.findMedian = function () {
 
     if (this.count % 2 === 0) return (this.maxHeap.peek() + this.minHeap.peek()) / 2;
+
     return this.maxHeap.peek();
 
 };
+
+
+// const mf = new MedianFinder();
+//
+// mf.addNum(1);
+// mf.addNum(2);
+// console.log("XXXXXX", mf.maxHeap.store, mf.minHeap.store)
+// mf.addNum(3);
+// console.log("=====", mf.maxHeap.store, mf.minHeap.store)
 
