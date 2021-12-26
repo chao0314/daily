@@ -362,7 +362,7 @@ MedianFinder.prototype.findMedian = function () {
 
     return this.maxHeap.peek();
 
-};
+}
 
 
 // const mf = new MedianFinder();
