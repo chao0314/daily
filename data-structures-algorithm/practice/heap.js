@@ -373,3 +373,77 @@ MedianFinder.prototype.findMedian = function () {
 // mf.addNum(3);
 // console.log("=====", mf.maxHeap.store, mf.minHeap.store)
 
+//973. 最接近原点的 K 个点
+//https://leetcode-cn.com/problems/k-closest-points-to-origin/
+
+
+/**
+ * @param {number[][]} points
+ * @param {number} k
+ * @return {number[][]}
+ */
+//借助小顶堆
+const kClosest = function (points, k) {
+
+    const result = [];
+    if (points.length > 0) {
+
+        const minHeap = new Heap(([x, y], [x2, y2]) => Math.sqrt(x * x + y * y) - Math.sqrt(x2 * x2 + y2 * y2));
+
+        minHeap.buildHeap(points);
+
+        for (let i = 0; i < k; i++) {
+
+            result.push(minHeap.remove());
+
+        }
+    }
+
+
+    return result;
+};
+
+
+//313. 超级丑数
+//https://leetcode-cn.com/problems/super-ugly-number/
+
+/**
+ * @param {number} n
+ * @param {number[]} primes
+ * @return {number}
+ */
+
+// 借助 小顶堆 和 set
+/*
+* 1 是最小的丑数。
+* 对于任意一个丑数 x，其与任意给定的质因数 primes[i] 相乘，结果仍为丑数。
+*
+* */
+const nthSuperUglyNumber = function (n, primes) {
+
+
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
