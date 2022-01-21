@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        canvas {
+            border: 1px solid silver;
+
+        }
+    </style>
+</head>
+<body>
+
+<canvas width="800" height="800"></canvas>
+
+</body>
+<script>
+    const canvas = document.querySelector('canvas');
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const ctx = canvas.getContext('2d');
+
+    function drawPie(data = [{value: 0, color: "red"}]) {
+
+        let total = 0;
+        let startAng = 0;
+        let endAng = 0;
+        data.forEach(item => total += item.value);
+
+        data.forEach(item => {
+
+            item.percentage = item.value / total;
+
+        })
+
+        data.forEach(({color = 'red', percentage = 0}) => {
+
+            endAng = startAng + 2 * Math.PI * percentage
+
+            ctx.beginPath()
+
+            ctx.moveTo(width / 2, height / 2);
+            ctx.arc(width / 2, height / 2, 100, startAng, endAng);
+
+            ctx.fillStyle = color;
+
+            ctx.fill();
+
+            startAng = endAng;
+
+        })
+
+    }
+
+    const data = [{value: 100, color: "red"}, {value: 100, color: "green"}, {value: 200, color: "yellow"}]
+
+    drawPie(data);
+
+</script>
+</html>

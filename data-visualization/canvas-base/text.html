@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        canvas {
+            border: 1px solid silver;
+
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="600"></canvas>
+</body>
+<script>
+
+    const str = '现在很多毕业生都想在自己毕业后考公务员，因为现在的公务员不仅仅工作稳定，薪资水平还很高，吸引了现在大批的毕业生。一些居住在经济比较发达的大众更是对公务员的岗位有着巨大的向往，都希望能够考上公务员的岗位，每年公务员的报考人数也是居于全国前三的。'
+
+    const canvas = document.querySelector('canvas');
+
+    const ctx = canvas.getContext("2d");
+    const size = 16;
+    const width = canvas.width;
+    const height = canvas.height;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.font = `bold ${size}px 宋体`;
+    const space = 6;
+
+    const lines = [];
+    let line = '';
+    for (let i = 0; i < str.length; i++) {
+
+        const word = str[i];
+        if (ctx.measureText(line + word).width + space * 2 <= width) {
+            line += word;
+
+        } else {
+            lines.push(line);
+            line = word;
+        }
+    }
+
+    if (line.length > 0) lines.push(line);
+
+
+    // 1.5倍行距
+    let startY = size * 0.5;
+    lines.forEach(line => {
+
+
+        ctx.fillText(line, space, startY);
+
+        startY = startY + size + size * 0.5;
+
+
+    })
+
+
+</script>
+</html>
