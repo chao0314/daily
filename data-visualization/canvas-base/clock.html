@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <style>
+        canvas {
+
+            border: 1px solid silver;
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="600"></canvas>
+</body>
+<script>
+
+    const canvas = document.querySelector('canvas');
+
+    const ctx = canvas.getContext('2d');
+
+    const W = canvas.width;
+    const H = canvas.height;
+    //要中线平分
+    const lineWidth = 40;
+
+    ctx.beginPath();
+
+    // 添加渐变
+    const gradient = ctx.createRadialGradient(W / 2, H / 2, 200, W / 2, H / 2, 200 + lineWidth);
+    gradient.addColorStop(0, '#EEE');
+    gradient.addColorStop(0.5, '#FFF');
+    gradient.addColorStop(1, '#999');
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = lineWidth
+
+    ctx.arc(W / 2, H / 2, 200 + lineWidth / 2, 0, Math.PI * 2, false);
+    ctx.stroke()
+
+
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    gd.strokeStyle = '#666';
+    ctx.arc(W / 2, H / 2, 200 + lineWidth, 0, Math.PI * 2, false);
+    ctx.stroke()
+
+
+</script>
+</html>

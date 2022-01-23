@@ -70,6 +70,12 @@ bezierCurveTo(cx,cy,cx1,cx2,x,y)
 简单近似的可以将贝塞尔曲线看成是，起始点 到终点的连线，被控制点吸引成弧度的效果
 
 
+10  canvas lineWidth 是以中间线分别向两边延展，也就是说，会有一半的宽度向内侵占原有的图形位置
+
+11 canvas 的定位点为左上角，不可变改变，transform的操作是逆序生效的
+
+1 translate 2 rotate/scale 3 fill/stroke 生效的次序为 3 2 1，与书写顺序相反
+
 
 
 

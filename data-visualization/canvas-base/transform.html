@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Title</title>
+    <style>
+        canvas {
+
+            border: 1px solid silver;
+        }
+    </style>
+</head>
+<body>
+<canvas width="800" height="600"></canvas>
+</body>
+<script>
+
+    const canvas = document.querySelector('canvas');
+
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.fillStyle = "pink";
+    ctx.fillRect(0, 0, 800, 600)
+    ctx.fillStyle = "red";
+    ctx.fillRect(0, 0, 100, 100);
+
+    ctx.fillStyle = "green";
+
+    // ctx.translate(200 + 120 / 2, 0 + 100 / 2);
+    // ctx.rotate(30 * Math.PI / 180);
+    ctx.fillRect(100, 100, 100, 100)
+
+    setTimeout(() => {
+
+        // 移动画布坐标系 使画布左上角原点位于将要绘制的图形中心
+        ctx.translate(100 + 100 / 2, 100 + 100 / 2);
+        //以画布原点旋转坐标系
+        ctx.rotate(45 * Math.PI / 180);
+        //绘图，注意绘图是从图形定位点作为左上角开始的，所以图形定位点需要减去长宽各一半,这样图形的中心点与画布的坐标原点重合
+        ctx.fillRect(-100 / 2, -100 / 2, 100, 100)
+
+    }, 2000)
+
+
+</script>
+</html>
