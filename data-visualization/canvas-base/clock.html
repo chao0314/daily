@@ -24,6 +24,7 @@
 
     const W = canvas.width;
     const H = canvas.height;
+    const r = 100;
     //要中线平分
     const lineWidth = 40;
 
@@ -43,10 +44,25 @@
 
     ctx.beginPath();
     ctx.lineWidth = 1;
-    gd.strokeStyle = '#666';
+    ctx.strokeStyle = '#666';
     ctx.arc(W / 2, H / 2, 200 + lineWidth, 0, Math.PI * 2, false);
     ctx.stroke()
 
+    //刻度
+
+    // ctx.translate(W / 2, H / 2);
+    //
+    // ctx.rotate(degToArc(0));
+    //
+    // ctx.fillRect(200, 0, 2, 6);
+    ctx.fillRect(W / 2, H / 2 - 200, 2, 6);
+
+
+    function degToArc(deg) {
+
+        return deg * Math.PI / 180;
+
+    }
 
 </script>
 </html>
