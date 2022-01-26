@@ -10,6 +10,7 @@
         canvas {
 
             border: 1px solid silver;
+
         }
     </style>
 </head>
@@ -22,46 +23,130 @@
 
     const ctx = canvas.getContext('2d');
 
-    const W = canvas.width;
-    const H = canvas.height;
-    const r = 100;
-    //要中线平分
-    const lineWidth = 40;
+    drawClock();
+    setInterval(drawClock, 1000);
 
-    ctx.beginPath();
+    function drawClock() {
 
-    // 添加渐变
-    const gradient = ctx.createRadialGradient(W / 2, H / 2, 200, W / 2, H / 2, 200 + lineWidth);
-    gradient.addColorStop(0, '#EEE');
-    gradient.addColorStop(0.5, '#FFF');
-    gradient.addColorStop(1, '#999');
-    ctx.strokeStyle = gradient;
-    ctx.lineWidth = lineWidth
+        const W = canvas.width;
+        const H = canvas.height;
+        const r = 200;
+        //要中线平分
+        const lineWidth = 40;
 
-    ctx.arc(W / 2, H / 2, 200 + lineWidth / 2, 0, Math.PI * 2, false);
-    ctx.stroke()
+        ctx.clearRect(0, 0, W, H);
+        ctx.beginPath();
 
+        // 添加渐变
+        const gradient = ctx.createRadialGradient(W / 2, H / 2, 200, W / 2, H / 2, 200 + lineWidth);
+        gradient.addColorStop(0, '#EEE');
+        gradient.addColorStop(0.5, '#FFF');
+        gradient.addColorStop(1, '#999');
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = lineWidth
 
-    ctx.beginPath();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#666';
-    ctx.arc(W / 2, H / 2, 200 + lineWidth, 0, Math.PI * 2, false);
-    ctx.stroke()
-
-    //刻度
-
-    // ctx.translate(W / 2, H / 2);
-    //
-    // ctx.rotate(degToArc(0));
-    //
-    // ctx.fillRect(200, 0, 2, 6);
-    ctx.fillRect(W / 2, H / 2 - 200, 2, 6);
+        ctx.arc(W / 2, H / 2, 200 + lineWidth / 2, 0, Math.PI * 2, false);
+        ctx.stroke()
 
 
-    function degToArc(deg) {
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#666';
+        ctx.arc(W / 2, H / 2, 200 + lineWidth, 0, Math.PI * 2, false);
+        ctx.stroke()
 
-        return deg * Math.PI / 180;
+        //刻度
+        for (let i = 0; i < 60; i++) {
 
+            let w, h;
+
+            if (i % 5 === 0) {
+
+                w = 20;
+                h = 6;
+
+            } else {
+
+                w = 6;
+                h = 2;
+
+            }
+
+            ctx.save();
+            //坐标系原点移动到圆心
+            ctx.translate(W / 2, H / 2);
+            //旋转角度
+            ctx.rotate(degToArc(i * (360 / 60)));
+            //矩形
+            ctx.fillRect(r - w, -h / 2, w, h);
+
+            //数字 借助 离屏 canvas 摆正数字
+            if (i % 5 === 0) {
+                const tempCanvas = document.createElement("canvas");
+                // document.body.appendChild(tempCanvas);
+                const tW = 40;
+                const tH = 40;
+                tempCanvas.width = 40;
+                tempCanvas.height = 40;
+                const tempCtx = tempCanvas.getContext('2d');
+                tempCtx.textAlign = "center";
+                tempCtx.textBaseline = "middle";
+                tempCtx.font = "bold 20px 宋体"
+                // tempCtx.save();
+                //坐标系原点 移动到字体中心
+                tempCtx.translate(tW / 2, tH / 2);
+                //坐标系原点作为参照 旋转
+                //抵消整体画布的旋转 字体摆正
+                tempCtx.rotate(-degToArc(i * (360 / 60)));
+                //坐标系原点作为参照
+                tempCtx.fillText(`${i / 5 === 0 ? 12 : i / 5}`, 0, 0);
+                //此时坐标系原点在(W/2,H/2) 等价于（0，0）
+                ctx.drawImage(tempCanvas, -tW / 2, -r + w);
+
+            }
+
+            ctx.restore();
+
+
+        }
+
+        // 时针分针秒针
+
+        const date = new Date();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        const second = date.getSeconds();
+
+        // 时针 快到一小时 考虑 分钟 ，精准定位时针的位置
+        drawPointer(20, 140, (hour + minute / 60) / 12 * 360);
+        drawPointer(10, 160, (minute + second / 60) / 60 * 360);
+        drawPointer(6, 180, second / 60 * 360, "red");
+
+        function drawPointer(w, h, deg = 0, color = "black") {
+
+            ctx.save();
+
+            ctx.translate(W / 2, H / 2);
+
+            ctx.rotate(degToArc(deg));
+            ctx.beginPath();
+            ctx.moveTo(0, -h);
+            ctx.lineTo(-w / 2, 0);
+            ctx.lineTo(0, h / 4);
+            ctx.lineTo(w / 2, 0);
+            ctx.closePath();
+            ctx.fillStyle = color;
+            ctx.fill();
+
+            ctx.restore();
+
+        }
+
+        function degToArc(deg) {
+
+            return deg * Math.PI / 180;
+
+        }
     }
 
 </script>
