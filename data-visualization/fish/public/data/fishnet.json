@@ -1,0 +1,144 @@
+{
+  "frames": {
+    "fishnet1": {
+      "frame": {
+        "x": 319,
+        "y": 355,
+        "w": 116,
+        "h": 118
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 116,
+        "h": 118
+      },
+      "sourceSize": {
+        "w": 116,
+        "h": 118
+      }
+    },
+    "fishnet2": {
+      "frame": {
+        "x": 0,
+        "y": 399,
+        "w": 137,
+        "h": 142
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 137,
+        "h": 142
+      },
+      "sourceSize": {
+        "w": 137,
+        "h": 142
+      }
+    },
+    "fishnet3": {
+      "frame": {
+        "x": 163,
+        "y": 355,
+        "w": 156,
+        "h": 162
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 156,
+        "h": 162
+      },
+      "sourceSize": {
+        "w": 156,
+        "h": 162
+      }
+    },
+    "fishnet4": {
+      "frame": {
+        "x": 242,
+        "y": 181,
+        "w": 180,
+        "h": 174
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 180,
+        "h": 174
+      },
+      "sourceSize": {
+        "w": 180,
+        "h": 174
+      }
+    },
+    "fishnet5": {
+      "frame": {
+        "x": 0,
+        "y": 244,
+        "w": 163,
+        "h": 155
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 163,
+        "h": 155
+      },
+      "sourceSize": {
+        "w": 163,
+        "h": 155
+      }
+    },
+    "fishnet6": {
+      "frame": {
+        "x": 242,
+        "y": 0,
+        "w": 191,
+        "h": 181
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 191,
+        "h": 181
+      },
+      "sourceSize": {
+        "w": 191,
+        "h": 181
+      }
+    },
+    "fishnet7": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 242,
+        "h": 244
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 242,
+        "h": 244
+      },
+      "sourceSize": {
+        "w": 242,
+        "h": 244
+      }
+    }
+  }
+}

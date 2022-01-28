@@ -1,0 +1,46 @@
+{
+  "frames": {
+    "cannon1": {
+      "sourceSize": {
+        "w": 74,
+        "h": 370
+      }
+    },
+    "cannon2": {
+      "sourceSize": {
+        "w": 74,
+        "h": 380
+      }
+    },
+    "cannon3": {
+      "sourceSize": {
+        "w": 74,
+        "h": 380
+      }
+    },
+    "cannon4": {
+      "sourceSize": {
+        "w": 74,
+        "h": 415
+      }
+    },
+    "cannon5": {
+      "sourceSize": {
+        "w": 74,
+        "h": 425
+      }
+    },
+    "cannon6": {
+      "sourceSize": {
+        "w": 74,
+        "h": 450
+      }
+    },
+    "cannon7": {
+      "sourceSize": {
+        "w": 74,
+        "h": 470
+      }
+    }
+  }
+}
