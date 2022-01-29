@@ -98,11 +98,12 @@ function drawImage(ctx, img, options = {}) {
 }
 
 
-function calcAng(x1, y1, x2, y2) {
+function calcArc(x1, y1, x2, y2) {
 
-    // 屏幕画布坐标系 y向下递增，与数学课本相反
-    // 0度角 朝右，向上减掉 90
-    return Math.atan2(-(y2 - y1), x2 - x1) - Math.PI / 2;
+    // 屏幕画布坐标系 y向下递增，与数学课本相反,因此第一象限为负值
+    //X 轴正方向角度为 0
+    //此时原点相当于 （x1,y1）
+    return Math.atan2(y2 - y1, x2 - x1) + Math.PI / 2;
 
 
 }
