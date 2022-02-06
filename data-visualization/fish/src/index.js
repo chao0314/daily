@@ -1,7 +1,11 @@
-const filenames = ['bottom.json', 'cannon.json', 'bullet.json', 'fishnet.json'];
+const filenames = ['bottom.json', 'cannon.json', 'bullet.json', 'fish.json', 'fishnet.json'];
 
-getData(filenames).then(data => {
-    // console.log(data);
+
+Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) => {
+
+    console.log("--data--", data);
+    console.log("--fish frame--", fishFrameData);
+
     const canvas = document.querySelector("#app");
     const ctx = canvas.getContext('2d');
     const W = canvas.width;
@@ -15,7 +19,33 @@ getData(filenames).then(data => {
     let cannonY = 0;
     let isFiring = false;
     let bullets = [];
-    let bulletSpeed = 4;
+    let bulletSpeed = 8;
+    let fishes = [];
+    const fishFrameSwitchSpeed = 5;
+
+    const buttonMinus = new ImgButton(canvas, {
+        normal: data['cannon_minus'].img,
+        down: data['cannon_minus_down'].img,
+        x: W / 2 - 50,
+        y: H - 50
+    })
+
+    const buttonPlus = new ImgButton(canvas, {
+        normal: data['cannon_plus'].img,
+        down: data['cannon_plus_down'].img,
+        x: W / 2 + 100,
+        y: H - 50
+    })
+
+    buttonMinus.click(() => {
+
+        if (cannonType > 1) cannonType--;
+
+    })
+
+    buttonPlus.click(() => {
+        if (cannonType < 7) cannonType++;
+    })
 
 
     document.addEventListener('mousemove', (ev) => {
@@ -28,7 +58,12 @@ getData(filenames).then(data => {
     })
 
 
-    document.addEventListener("click", () => {
+    document.addEventListener("click", (ev) => {
+
+        const x = ev.offsetX;
+        const y = ev.offsetY;
+        if (buttonMinus.isPointIn(x, y) || buttonPlus.isPointIn(x, y)) return false;
+
         isFiring = true;
         bullets.push({
             type: cannonType,
@@ -58,7 +93,6 @@ getData(filenames).then(data => {
 
 
         //bullet
-
         if (bullets.length > 0) {
 
 
@@ -66,7 +100,6 @@ getData(filenames).then(data => {
 
             bullets.forEach(v => {
                 const {type, arc, x, y} = v;
-                console.log("bullet", type, arc, x, y)
                 const bullet = data[`bullet${type}`];
                 drawImage(ctx, bullet.img, {
                     translateX: x,
@@ -121,6 +154,103 @@ getData(filenames).then(data => {
         }
 
         // isFiring = false;
+        // button
+        buttonMinus.drawButton();
+        buttonPlus.drawButton();
+
+        // fish
+        // 1% 的生成概率
+        if (Math.random() < 0.01) {
+
+            // 来鱼方向
+            const from = Math.random() < 0.5 ? 'left' : 'right';
+
+            const type = Math.floor(Math.random() * 10 + 1);
+
+            const x = from === 'left' ? -100 : W + 100;
+
+            const y = 200 + Math.random() * (H - 200 * 2);
+
+            // -15 ~ +15
+            let arc = Math.floor(Math.random() * angToArc(30) - angToArc(15));
+            let scale = [1, 1];
+            if (from === 'right') {
+
+                arc += angToArc(-180);
+                scale = [1, -1];
+            }
+
+            const fishFrame = fishFrameData[`fish${type}`];
+            fishes.push({
+                from,
+                type,
+                x, y,
+                arc,
+                scale,
+                frame: 1,
+                switchFrameCounter: 0,
+                speed: fishFrame.speed + Math.random() * 3 - 1.5,
+                moveFrame: fishFrame.moveFrame,
+                captureFrame: fishFrame.captureFrame,
+                r: fishFrame.r
+
+            })
+
+        }
+
+        // draw fish
+
+        if (fishes.length > 0) {
+
+            //clear out of screen  fish
+
+            fishes = fishes.filter(({x, y}) => {
+
+                return (x > -100 || x < W + 100) && (y > -100 || y < H + 100);
+            })
+
+            console.log("---fish----",fishes.length)
+            fishes.forEach(fish => {
+
+                console.log("fish", fish)
+
+                if (++fish.switchFrameCounter === fishFrameSwitchSpeed) {
+
+                    fish.switchFrameCounter = 0;
+
+                    if (fish.frame < fish.moveFrame) {
+                        fish.frame++
+                    } else fish.frame = 1;
+                }
+
+
+                const {type, x, y, arc, scale, frame, moveFrame, captureFrame, speed} = fish;
+
+                const {img} = data[`fish${type}`];
+                const frames = moveFrame + captureFrame;
+                const fh = img.height / frames;
+
+                drawImage(ctx, img, {
+
+                    translateX: x,
+                    translateY: y,
+                    arc,
+                    scale,
+                    sx: 0,
+                    sy: (frame - 1) * fh,
+                    sh: fh,
+                    dx: -img.with / 2,
+                    dy: -fh / 2
+                })
+
+                fish.x += speed * Math.cos(arc);
+
+                fish.y += speed * Math.sin(arc);
+
+            })
+
+
+        }
 
 
         requestAnimationFrame(draw);

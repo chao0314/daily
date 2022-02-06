@@ -80,7 +80,8 @@ function drawImage(ctx, img, options = {}) {
         dy = 0,
         dw = w,
         dh = h,
-        arc = 0
+        arc = 0,
+        scale = [1, 1]
     } = options;
 
 
@@ -89,6 +90,8 @@ function drawImage(ctx, img, options = {}) {
     ctx.translate(translateX, translateY);
 
     ctx.rotate(arc);
+
+    ctx.scale(...scale);
 
     ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
 
@@ -108,8 +111,9 @@ function calcArc(x1, y1, x2, y2) {
 
 }
 
+const base_url = "http://localhost:3000/public";
 
-function getData(filenames, base_url = "http://localhost:3000/public") {
+function getData(filenames) {
 
     return new Promise(((resolve, reject) => {
         const data = {};
@@ -147,5 +151,34 @@ function getData(filenames, base_url = "http://localhost:3000/public") {
 
 }
 
+
+async function getFishFrame() {
+
+    const {data: {frames}} = await (await axios.get(`${base_url}/data/fish.json`));
+
+
+    return Object.keys(frames).reduce((prev, cur) => {
+
+        const frame = frames[cur];
+        prev[cur] = {
+            moveFrame: frame.moveFrame,
+            captureFrame: frame.captureFrame,
+            r: frame.r,
+            speed: frame.speed
+        }
+
+        return prev;
+
+    }, {})
+
+}
+
+
+function angToArc(ang = 0) {
+
+    return Math.PI * ang / 180;
+
+
+}
 
 

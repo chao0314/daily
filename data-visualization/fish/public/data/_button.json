@@ -1,0 +1,28 @@
+{
+  "frames": {
+    "cannon_minus": {
+      "sourceSize": {
+        "w": 44,
+        "h": 31
+      }
+    },
+    "cannon_minus_down": {
+      "sourceSize": {
+        "w": 44,
+        "h": 31
+      }
+    },
+    "cannon_plus": {
+      "sourceSize": {
+        "w": 44,
+        "h": 31
+      }
+    },
+    "cannon_plus_down": {
+      "sourceSize": {
+        "w": 44,
+        "h": 31
+      }
+    }
+  }
+}

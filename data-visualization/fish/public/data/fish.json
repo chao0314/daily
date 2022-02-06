@@ -1,0 +1,104 @@
+{
+  "frames": {
+    "fish1": {
+      "sourceSize": {
+        "w": 55,
+        "h": 296
+      },
+      "moveFrame": 4,
+      "captureFrame": 4,
+      "r": 25,
+      "speed": 2
+    },
+    "fish2": {
+      "sourceSize": {
+        "w": 78,
+        "h": 512
+      },
+      "moveFrame": 4,
+      "captureFrame": 4,
+      "r": 39,
+      "speed": 2.5
+    },
+    "fish3": {
+      "sourceSize": {
+        "w": 72,
+        "h": 448
+      },
+      "moveFrame": 4,
+      "captureFrame": 4,
+      "r": 36,
+      "speed": 3
+    },
+    "fish4": {
+      "sourceSize": {
+        "w": 77,
+        "h": 472
+      },
+      "moveFrame": 4,
+      "captureFrame": 4,
+      "r": 38,
+      "speed": 3.5
+    },
+    "fish5": {
+      "sourceSize": {
+        "w": 107,
+        "h": 976
+      },
+      "moveFrame": 4,
+      "captureFrame": 4,
+      "r": 50,
+      "speed": 3.5
+    },
+    "fish6": {
+      "sourceSize": {
+        "w": 105,
+        "h": 948
+      },
+      "moveFrame": 8,
+      "captureFrame": 4,
+      "r": 45,
+      "speed": 4
+    },
+    "fish7": {
+      "sourceSize": {
+        "w": 92,
+        "h": 1510
+      },
+      "moveFrame": 6,
+      "captureFrame": 4,
+      "r": 40,
+      "speed": 4
+    },
+    "fish8": {
+      "sourceSize": {
+        "w": 174,
+        "h": 1512
+      },
+      "moveFrame": 8,
+      "captureFrame": 4,
+      "r": 60,
+      "speed": 4
+    },
+    "fish9": {
+      "sourceSize": {
+        "w": 166,
+        "h": 2196
+      },
+      "moveFrame": 8,
+      "captureFrame": 4,
+      "r": 60,
+      "speed": 4
+    },
+    "fish10": {
+      "sourceSize": {
+        "w": 178,
+        "h": 1870
+      },
+      "moveFrame": 6,
+      "captureFrame": 4,
+      "r": 70,
+      "speed": 4
+    }
+  }
+}
