@@ -19,9 +19,13 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
     let cannonY = 0;
     let isFiring = false;
     let bullets = [];
-    let bulletSpeed = 8;
+    let bulletSpeed = 6;
     let fishes = [];
-    const fishFrameSwitchSpeed = 5;
+    let capturedFishes = [];
+    let fishnets = [];
+    const fishFrameSwitchSpeed = 8;
+    const bulletValidFactor = 2;
+    const fishnetScaleSpeed = 0.02;
 
     const buttonMinus = new ImgButton(canvas, {
         normal: data['cannon_minus'].img,
@@ -92,6 +96,110 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
         })
 
 
+        // isFiring = false;
+        // button
+        buttonMinus.drawButton();
+        buttonPlus.drawButton();
+
+        // fish
+        // 2% 的生成概率
+        if (Math.random() < 0.02) {
+
+            // 来鱼方向
+            const from = Math.random() < 0.5 ? 'left' : 'right';
+
+            const type = Math.floor(Math.random() * 10 + 1);
+
+            const x = from === 'left' ? -50 : W + 50;
+
+            const y = 200 + Math.random() * (H - 200 * 2);
+
+            // -15 ~ +15
+            let arc = angToArc(Math.random() * 30 - 15);
+            let scale = [1, 1];
+            if (from === 'right') {
+
+                arc += angToArc(-180);
+                scale = [1, -1];
+            }
+
+
+            const fishFrame = fishFrameData[`fish${type}`];
+            fishes.push({
+                from,
+                type,
+                x, y,
+                arc,
+                scale,
+                frame: 1,
+                switchFrameCounter: 0,
+                speed: fishFrame.speed + Math.random() * 2 - 1,
+                moveFrame: fishFrame.moveFrame,
+                captureFrame: fishFrame.captureFrame,
+                r: fishFrame.r
+
+            })
+
+        }
+
+        // draw fish
+
+        if (fishes.length > 0) {
+
+            //clear out of screen  fish
+
+            fishes = fishes.filter(({x, y}) => {
+
+
+                return x >= -50 && x <= W + 50 && y >= -50 && y <= H + 50;
+            })
+
+            // console.log("---fish----", fishes.length);
+
+            fishes.forEach(fish => {
+
+
+                if (++fish.switchFrameCounter === fishFrameSwitchSpeed) {
+
+                    fish.switchFrameCounter = 0;
+
+                    if (fish.frame < fish.moveFrame) {
+                        fish.frame++
+                    } else fish.frame = 1;
+                }
+
+
+                const {type, x, y, arc, scale, frame, moveFrame, captureFrame, speed} = fish;
+
+                const {img} = data[`fish${type}`];
+                const frames = moveFrame + captureFrame;
+                const fh = img.height / frames;
+
+                drawImage(ctx, img, {
+
+                    translateX: x,
+                    translateY: y,
+                    arc,
+                    scale,
+                    sx: 0,
+                    sy: (frame - 1) * fh,
+                    sh: fh,
+                    dx: -img.width / 2,
+                    dy: -fh / 2,
+                    dh: fh
+
+                })
+
+                fish.x += speed * Math.cos(arc);
+
+                fish.y += speed * Math.sin(arc);
+
+            })
+
+
+        }
+
+
         //bullet
         if (bullets.length > 0) {
 
@@ -118,7 +226,6 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
 
 
         }
-
 
         //cannon
         const cannon = data[`cannon${cannonType}`];
@@ -153,78 +260,67 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
 
         }
 
-        // isFiring = false;
-        // button
-        buttonMinus.drawButton();
-        buttonPlus.drawButton();
+        // draw fishnet
 
-        // fish
-        // 1% 的生成概率
-        if (Math.random() < 0.01) {
+        if (fishnets.length > 0) {
 
-            // 来鱼方向
-            const from = Math.random() < 0.5 ? 'left' : 'right';
+            fishnets = fishnets.filter(fishnet => {
 
-            const type = Math.floor(Math.random() * 10 + 1);
+                fishnet.scale += fishnetScaleSpeed;
 
-            const x = from === 'left' ? -100 : W + 100;
-
-            const y = 200 + Math.random() * (H - 200 * 2);
-
-            // -15 ~ +15
-            let arc = Math.floor(Math.random() * angToArc(30) - angToArc(15));
-            let scale = [1, 1];
-            if (from === 'right') {
-
-                arc += angToArc(-180);
-                scale = [1, -1];
-            }
-
-            const fishFrame = fishFrameData[`fish${type}`];
-            fishes.push({
-                from,
-                type,
-                x, y,
-                arc,
-                scale,
-                frame: 1,
-                switchFrameCounter: 0,
-                speed: fishFrame.speed + Math.random() * 3 - 1.5,
-                moveFrame: fishFrame.moveFrame,
-                captureFrame: fishFrame.captureFrame,
-                r: fishFrame.r
+                return fishnet.scale <= 1;
 
             })
+
+            console.log("fishnet length---", fishnets.length);
+            fishnets.forEach(fishnet => {
+
+                const {type, x, y, scale} = fishnet;
+                const {img} = data[`fishnet${type}`];
+
+                drawImage(ctx, img, {
+
+                    translateX: x,
+                    translateY: y,
+                    scale: [scale, scale],
+                    dx: -img.width / 2,
+                    dy: -img.height / 2
+
+                })
+
+            })
+
 
         }
 
-        // draw fish
+        // draw captured fish
 
-        if (fishes.length > 0) {
+        if (capturedFishes.length > 0) {
 
-            //clear out of screen  fish
 
-            fishes = fishes.filter(({x, y}) => {
+            capturedFishes = capturedFishes.filter(({
+                                                        frame,
+                                                        moveFrame,
+                                                        captureFrame
+                                                    }) => frame < moveFrame + captureFrame)
 
-                return (x > -100 || x < W + 100) && (y > -100 || y < H + 100);
-            })
 
-            console.log("---fish----",fishes.length)
-            fishes.forEach(fish => {
+            console.log("capture fish length ---", capturedFishes.length);
 
-                console.log("fish", fish)
 
-                if (++fish.switchFrameCounter === fishFrameSwitchSpeed) {
+            capturedFishes.forEach(fish => {
+
+                if (++fish.switchFrameCounter === fishFrameSwitchSpeed * 3) {
 
                     fish.switchFrameCounter = 0;
 
-                    if (fish.frame < fish.moveFrame) {
+                    if (fish.frame < fish.moveFrame + fish.captureFrame) {
                         fish.frame++
-                    } else fish.frame = 1;
+                    }
                 }
 
 
-                const {type, x, y, arc, scale, frame, moveFrame, captureFrame, speed} = fish;
+                const {type, x, y, arc, scale, frame, moveFrame, captureFrame} = fish;
 
                 const {img} = data[`fish${type}`];
                 const frames = moveFrame + captureFrame;
@@ -239,18 +335,53 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
                     sx: 0,
                     sy: (frame - 1) * fh,
                     sh: fh,
-                    dx: -img.with / 2,
-                    dy: -fh / 2
+                    dx: -img.width / 2,
+                    dy: -fh / 2,
+                    dh: fh
+
                 })
+            })
+        }
 
-                fish.x += speed * Math.cos(arc);
+        //check bullet and fish,crash
 
-                fish.y += speed * Math.sin(arc);
+        fishes = fishes.filter(fish => {
 
+            let isCaptured = false;
+
+            bullets = bullets.filter(bullet => {
+
+                if (isInCrashCircle(fish.x, fish.y, bullet.x, bullet.y, fish.r)) {
+
+                    // fishnet
+                    fishnets.push({
+
+                        type: bullet.type,
+                        x: bullet.x,
+                        y: bullet.y,
+                        scale: 0
+
+                    })
+
+                    // bullet is valid ,capture success
+                    if (Math.random() < bullet.type / (fish.type * bulletValidFactor)) {
+
+                        isCaptured = true;
+                        // switch to capture frame
+                        fish.frame = fish.moveFrame + 1;
+                        capturedFishes.push(fish);
+
+                    }
+
+                    return false;
+                }
+
+                return true;
             })
 
+            return !isCaptured;
 
-        }
+        })
 
 
         requestAnimationFrame(draw);

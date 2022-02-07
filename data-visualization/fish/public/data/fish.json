@@ -28,7 +28,7 @@
       "moveFrame": 4,
       "captureFrame": 4,
       "r": 36,
-      "speed": 3
+      "speed": 2.5
     },
     "fish4": {
       "sourceSize": {
@@ -38,7 +38,7 @@
       "moveFrame": 4,
       "captureFrame": 4,
       "r": 38,
-      "speed": 3.5
+      "speed": 2.5
     },
     "fish5": {
       "sourceSize": {
@@ -48,7 +48,7 @@
       "moveFrame": 4,
       "captureFrame": 4,
       "r": 50,
-      "speed": 3.5
+      "speed": 3
     },
     "fish6": {
       "sourceSize": {
@@ -58,7 +58,7 @@
       "moveFrame": 8,
       "captureFrame": 4,
       "r": 45,
-      "speed": 4
+      "speed": 3
     },
     "fish7": {
       "sourceSize": {
@@ -68,7 +68,7 @@
       "moveFrame": 6,
       "captureFrame": 4,
       "r": 40,
-      "speed": 4
+      "speed": 3
     },
     "fish8": {
       "sourceSize": {
@@ -78,7 +78,7 @@
       "moveFrame": 8,
       "captureFrame": 4,
       "r": 60,
-      "speed": 4
+      "speed": 3
     },
     "fish9": {
       "sourceSize": {
@@ -88,7 +88,7 @@
       "moveFrame": 8,
       "captureFrame": 4,
       "r": 60,
-      "speed": 4
+      "speed": 3
     },
     "fish10": {
       "sourceSize": {
@@ -98,7 +98,7 @@
       "moveFrame": 6,
       "captureFrame": 4,
       "r": 70,
-      "speed": 4
+      "speed": 3
     }
   }
 }

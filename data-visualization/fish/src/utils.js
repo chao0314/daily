@@ -181,4 +181,19 @@ function angToArc(ang = 0) {
 
 }
 
+function arcToAng(arc) {
+
+    return arc * 180 / Math.PI;
+
+}
+
+function isInCrashCircle(x1, y1, x2, y2, r) {
+
+    const disX = x2 - x1;
+    const disY = y2 - y1;
+
+    return Math.sqrt(disX * disX + disY * disY) <= r;
+
+}
+
 
