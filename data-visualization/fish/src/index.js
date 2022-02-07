@@ -1,4 +1,4 @@
-const filenames = ['bottom.json', 'cannon.json', 'bullet.json', 'fish.json', 'fishnet.json'];
+const filenames = ['bottom.json', 'cannon.json', 'bullet.json', 'fish.json', 'fishnet.json', 'coin.json', 'number.json'];
 
 
 Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) => {
@@ -19,13 +19,16 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
     let cannonY = 0;
     let isFiring = false;
     let bullets = [];
-    let bulletSpeed = 6;
+    let bulletSpeed = 10;
     let fishes = [];
     let capturedFishes = [];
     let fishnets = [];
+    let coins = [];
+    let score = 666;
     const fishFrameSwitchSpeed = 8;
     const bulletValidFactor = 2;
-    const fishnetScaleSpeed = 0.02;
+    const fishnetScaleSpeed = 0.03;
+    const coinFrameSwitchSpeed = 6;
 
     const buttonMinus = new ImgButton(canvas, {
         normal: data['cannon_minus'].img,
@@ -298,11 +301,19 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
         if (capturedFishes.length > 0) {
 
 
-            capturedFishes = capturedFishes.filter(({
-                                                        frame,
-                                                        moveFrame,
-                                                        captureFrame
-                                                    }) => frame < moveFrame + captureFrame)
+            capturedFishes = capturedFishes.filter(fish => {
+
+                // produce coin
+                const {type, frame, moveFrame, captureFrame, x, y} = fish;
+                if (frame < moveFrame + captureFrame) return true;
+                const curScore = type * type;
+                const coin = {x, y, frame: 1, switchFrameCounter: 0};
+                coin.type = curScore < 10 ? 1 : 2;
+                coins.push(type)
+
+                return false;
+
+            })
 
 
             console.log("capture fish length ---", capturedFishes.length);
@@ -310,7 +321,7 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
 
             capturedFishes.forEach(fish => {
 
-                if (++fish.switchFrameCounter === fishFrameSwitchSpeed * 3) {
+                if (++fish.switchFrameCounter === fishFrameSwitchSpeed * 2) {
 
                     fish.switchFrameCounter = 0;
 
@@ -343,7 +354,7 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
             })
         }
 
-        //check bullet and fish,crash
+        //check bullet and fish, crash
 
         fishes = fishes.filter(fish => {
 
@@ -382,6 +393,41 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
             return !isCaptured;
 
         })
+
+        // draw coin
+
+        if (coins.length > 0) {
+            //all coin animation frame is 10
+            coins = coins.filter(coin => coin.frame < 10);
+
+
+        }
+
+        // draw coin score
+
+        let scoreStr = score.toString().padStart(6, '0');
+
+        const scoreX = 160;
+        const scoreY = H - 15;
+        const scoreSize = 23;
+        const {img: scoreImg} = data['number'];
+        const nh = scoreImg.height / 10;
+
+        for (let i = 0; i < scoreStr.length; i++) {
+
+            drawImage(ctx, scoreImg, {
+                translateX: scoreX + scoreSize * i,
+                translateY: scoreY,
+                sx: 0,
+                sy: (9 - scoreStr[i]) * nh,
+                sh: nh,
+                dx: -scoreImg.width / 2,
+                dy: -nh / 2,
+                dh: nh
+
+            })
+
+        }
 
 
         requestAnimationFrame(draw);
