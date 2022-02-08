@@ -79,8 +79,10 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
             y: cannonY
         })
 
+        //sub  score
 
-        console.log("length", bullets.length)
+        score -= cannonType;
+        // console.log("length", bullets.length)
     });
 
 
@@ -275,7 +277,7 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
 
             })
 
-            console.log("fishnet length---", fishnets.length);
+            // console.log("fishnet length---", fishnets.length);
             fishnets.forEach(fishnet => {
 
                 const {type, x, y, scale} = fishnet;
@@ -307,16 +309,16 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
                 const {type, frame, moveFrame, captureFrame, x, y} = fish;
                 if (frame < moveFrame + captureFrame) return true;
                 const curScore = type * type;
-                const coin = {x, y, frame: 1, switchFrameCounter: 0};
+                const coin = {x, y, frame: 1, switchFrameCounter: 0, curScore};
                 coin.type = curScore < 10 ? 1 : 2;
-                coins.push(type)
+                coins.push(coin);
 
                 return false;
 
             })
 
 
-            console.log("capture fish length ---", capturedFishes.length);
+            // console.log("capture fish length ---", capturedFishes.length);
 
 
             capturedFishes.forEach(fish => {
@@ -394,11 +396,58 @@ Promise.all([getData(filenames), getFishFrame()]).then(([data, fishFrameData]) =
 
         })
 
-        // draw coin
+        // coin
+
+        const coinTargetX = 200;
+        const coinTargetY = H - 30;
+        const coinFrameTotal = 10;
+        const coinSpeedFactor = 40;
 
         if (coins.length > 0) {
             //all coin animation frame is 10
-            coins = coins.filter(coin => coin.frame < 10);
+            coins = coins.filter(coin => {
+
+                if (++coin.switchFrameCounter === coinFrameSwitchSpeed) {
+
+                    coin.switchFrameCounter = 0;
+                    if (coin.frame < coinFrameTotal) coin.frame++
+                    else coin.frame = 1;
+
+                }
+
+                const {x, y, curScore} = coin;
+
+
+                if (Math.abs(x - coinTargetX) <= 4 && Math.abs(y - coinTargetY) <= 4) {
+
+                    score += curScore;
+
+                    return false;
+                }
+                return true;
+
+
+            });
+
+            // console.log("---coin length---", coins.length);
+            // draw coin
+
+            coins.forEach(coin => {
+
+                const {type, x, y, frame} = coin;
+                const {img} = data[`coin${type}`];
+                const ch = img.height / coinFrameTotal;
+                drawImage(ctx, img, {
+
+                    translateX: x,
+                    translateY: y,
+                    sx: 0, sy: (frame - 1) * ch, sh: ch,
+                    dx: -img.width / 2, dy: -ch / 2, dh: ch
+                })
+
+                coin.x += (coinTargetX - x) / coinSpeedFactor;
+                coin.y += (coinTargetY - y) / coinSpeedFactor;
+            })
 
 
         }

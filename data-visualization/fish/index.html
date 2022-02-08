@@ -9,10 +9,17 @@
     <title>fish</title>
 </head>
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
     body {
         background-color: black;
         margin: 0;
         padding: 0;
+        position: relative;
+        overflow: hidden;
     }
 
     #app {
@@ -20,12 +27,32 @@
         margin: 0 auto;
         background: url(/public/images/game_bg_2_hd.jpg);
     }
+
+    .start-mask {
+        display: block;
+        position: absolute;
+        width: 1024px;
+        height: 768px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 3s ease 0.5s;
+    }
+
+
 </style>
 <body>
 <canvas id="app" width="1024" height="768"></canvas>
+<img src="public/images/start.jpg" class="start-mask">
 </body>
 <script src="src/axios.min.js"></script>
 <script src="src/utils.js"></script>
 <script src="src/img-button.js"></script>
 <script src="src/index.js"></script>
+<script>
+
+    const startMask = document.querySelector('.start-mask');
+    startMask.style.left = "-100%";
+
+</script>
 </html>
