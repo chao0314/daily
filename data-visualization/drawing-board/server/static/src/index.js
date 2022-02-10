@@ -67,11 +67,12 @@ function initTools(toolsData) {
         tool.innerHTML = label;
         tool.addEventListener("click", ev => {
             console.log(label);
-            tool.setAttribute("class", "active");
+            Array.from(toolbar.children).forEach(tool => tool.classList.remove("active"));
+            tool.classList.add("active");
 
         })
 
-        toolbar.appendChild(tool);
+        toolbar.append(tool);
     })
 
 
