@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        button {
+            background: #EEE;
+        }
+
+        button.active {
+            background: #666;
+            color: #FFF;
+        }
+
+        #c1 {
+            border: 1px solid black;
+        }
+
+        .bar {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="toolbar" class="bar"></div>
+<div id="colors" class="bar"></div>
+<div id="operations" class="bar">
+    <button type="button" id="undo">撤销</button>
+    <button type="button" id="save">保存</button>
+</div>
+
+<canvas id="c1" width="573" height="436"></canvas>
+</body>
+<script src="src/index.js"></script>
+</html>

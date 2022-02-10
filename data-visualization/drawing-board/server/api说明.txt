@@ -1,0 +1,5 @@
+server => init {uid string, paths path[]}
+server => pathupdate paths path[]
+
+client => addPath path
+client => removePath key
