@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #c1 {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <button type="button" id="btn_play">播放</button>
+    <button type="button" id="btn_next_10">+10s</button>
+    <button type="button" id="btn_next_60">+1m</button>
+</div>
+<video id="v1" src="video.mp4" controls muted style="display:none;"></video>
+<canvas id="c1" width="1280" height="720"></canvas>
+</body>
+<script>
+    const $ = document.querySelector.bind(document);
+    const oPlay = $('#btn_play');
+    const oNext_10 = $('#btn_next_10');
+    const oNext_60 = $('#btn_next_60');
+    const oVideo = $('#v1');
+    const oCanvas = $('#c1');
+    const W = oCanvas.width;
+    const H = oCanvas.height;
+    const c1 = oCanvas.getContext('2d');
+    const c2 = document.createElement('canvas');
+    c2.width = W;
+    c2.height = H;
+    const ctx2 = c2.getContext('2d');
+
+
+    oPlay.addEventListener('click', () => {
+
+        oVideo.play();
+
+
+    })
+
+    oNext_10.addEventListener('click', () => {
+
+        oVideo.currentTime += 10;
+
+    })
+
+    oNext_60.addEventListener('click', () => {
+
+        oVideo.currentTime += 60;
+    })
+
+    requestAnimationFrame(animation)
+
+    function animation() {
+
+        ctx2.drawImage(oVideo, 0, 0);
+
+        const imageData = ctx2.getImageData(0, 0, W, H);
+
+        const data = imageData.data;
+
+        for (let i = 0; i < W; i++) {
+
+            for (let j = 0; j < H; j++) {
+
+                const index = (W * j + i) * 4;
+                const r = data[index];
+                const g = data[index + 1];
+                const b = data[index + 2];
+                const a = data[index + 3];
+
+                const color = (r + g + b) / 3;
+
+                // console.log(r, g, b, color)
+                data[index] = data[index + 1] = data[index + 2] = color;
+
+            }
+
+
+        }
+
+
+        c1.putImageData(imageData, 0, 0);
+
+        requestAnimationFrame(animation);
+    }
+
+
+</script>
+</html>
