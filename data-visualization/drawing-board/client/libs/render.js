@@ -60,6 +60,7 @@ function startDraw(type, builder) {
 
 
             if (Date.now() - lastTime >= 10) {
+
                 socket.emit('removePath', key);
                 socket.emit('addPath', createPath(data));
 

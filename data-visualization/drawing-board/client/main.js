@@ -33,7 +33,7 @@ socket.on('init', ({uid, paths})=>{
 
   //更新
   socket.on('pathupdate', paths=>{
-    globalPaths=paths.filter(path=>path.key!=drawingKey);
+    globalPaths=paths.filter(path=>path.key!==drawingKey);
     render();
   });
 
