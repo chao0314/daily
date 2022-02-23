@@ -1,0 +1,278 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: 'microsoft yahei';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 12px;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+
+/*  */
+
+#container {
+  width: 100%;
+  height: 100%;
+  background: #161e33;
+  display: flex;
+  flex-direction: column;
+}
+
+#container header {
+  width: 100%;
+  min-height: 91px;
+  background: url(imgs/header.png) no-repeat center;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+#container header .time {
+  position: absolute;
+  right: 100px;
+  top: 40px;
+  color: #FFF;
+}
+
+
+/* title */
+
+#container h2 {
+  color: #99a5cb;
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+#container h3 {
+  color: #99a5cb;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 16px 0;
+}
+
+#container span.sub {
+  color: #99a5cb;
+  font-size: 12px;
+  margin-left: 10px;
+  opacity: .4;
+}
+
+
+/* column */
+
+#container main {
+  flex: 1;
+  display: flex;
+}
+
+#container main .column {
+  margin: 0 10px;
+}
+
+#container main .left {
+  flex: 1;
+}
+
+#container main .right {
+  flex: 1;
+}
+
+#container main .main {
+  flex: 1.5;
+}
+
+
+/* sales */
+
+#container .sales {
+  display: flex;
+}
+
+#container .sales span {
+  flex: 1;
+  text-align: center;
+  font-size: 50px;
+  color: #FFF;
+  margin: 4px;
+  background: #123b69;
+  padding: 10px 4px;
+}
+
+#container .sales span.no-bg {
+  background: none;
+}
+
+
+/* percent */
+
+#container .percent-container {
+  height: 60px;
+  padding: 30px 20px 6px;
+}
+
+#container .percent {
+  position: relative;
+  height: 10px;
+  width: 100%;
+  background: #242f43;
+  border-radius: 5px;
+}
+
+#container .percent .bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right, #35cbfd, #8336c4);
+}
+
+#container .percent .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #FFF;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+#container .percent .text {
+  position: absolute;
+  top: -20px;
+  right: -100px;
+  width: 200px;
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+/* kwcloud */
+
+#container .kwcloud-container {
+  background: #17233b;
+  margin: 20px;
+  position: relative;
+}
+
+#container .kwcloud-container:after {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+#container .kwcloud-list {
+  position: absolute;
+}
+
+#container .kwcloud-list li {
+  color: #FFF;
+}
+
+
+/*  */
+
+#container main .main {
+  display: flex;
+  flex-direction: column;
+}
+
+#order-curve,
+#order-area,
+#order-device,
+.order-container {
+  flex: 1;
+}
+
+.order-container {
+  display: flex;
+}
+
+.order-container .order-container-left,
+.order-container .order-container-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-split {
+  width: 20px;
+}
+
+#order-curve,
+#order-area,
+#order-device {
+  background: #99a5cb;
+}
+
+
+/* statistics */
+
+#container .statistics-container .row {
+  display: flex;
+  margin: 20px;
+}
+
+#container .statistics-container .row .item {
+  flex: 1;
+  display: flex;
+}
+
+#container .statistics-container .icon {
+  width: 32px;
+  height: 32px;
+  padding: 14px;
+  background: #152850;
+  border-radius: 50%;
+}
+
+#container .statistics-container .icon img {
+  height: 100%;
+  width: 100%;
+}
+
+#container .statistics-container .info {
+  flex: 1;
+  margin-left: 14px;
+}
+
+#container .statistics-container .num {
+  color: #FFF;
+  font-size: 24px;
+  margin-top: 6px;
+}
+
+#container .statistics-container .title {
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, .4);
+}
+
+
+/* super-orders */
+
+#container .super-orders-container table {
+  width: 100%;
+  color: #99a5cb;
+  text-align: center;
+  line-height: 32px;
+  font-size: 12px;
+  border: 1px solid #99a5cb;
+}
+
+#container .super-orders-container table thead {
+  font-size: 14px;
+  border-bottom: 1px solid #99a5cb;
+}
