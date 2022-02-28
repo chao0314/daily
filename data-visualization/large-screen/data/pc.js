@@ -7,8 +7,9 @@ import {ref} from 'vue';
 const summary = {
 
     totalOrder: 1999999,
-    totalSales: 66666666,
-    last10MinOrderCount: 111
+    totalSales: 6666666666,
+    last10MinOrderCount: 11111,
+    targetSales: 10000000000
 }
 
 
@@ -62,3 +63,4 @@ export const cityList = ref(new Array(10).fill(cityItem));
 
 // order.devices
 export const deviceList = ref(new Array(10).fill(deviceItem));
+

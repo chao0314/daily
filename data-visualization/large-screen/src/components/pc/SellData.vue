@@ -3,32 +3,44 @@
     电商数据
     <span class="sub">Sell Data</span>
   </h2>
-  <h3>销售量</h3>
+  <h3>销售量(万)</h3>
   <div class="sales">
-    <span>1</span>
-    <span>2</span>
-    <span>0</span>
-    <span>1</span>
-    <span>0</span>
-    <span>5</span>
-    <span>0</span>
+    <span v-for="(n,i ) in integer" :key=i>{{ n }}</span>
     <span class="no-bg">.</span>
-    <span>2</span>
+    <span>{{ float }}</span>
   </div>
   <h3>完成百分比</h3>
   <div class="percent-container">
     <div class="percent">
-      <div class="bar" style="width:37%">
+      <div class="bar" :style="{width:percent}">
         <div class="dot"></div>
-        <div class="text">37%</div>
+        <div class="text">{{ percent }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {summaryInfo} from "../../../data/pc";
+import {computed} from "vue";
+
 export default {
-  name: "SellData"
+  name: "SellData",
+  setup(props, ctx) {
+
+    const {totalSales, targetSales} = summaryInfo.value;
+
+    const percent = computed(() => Math.floor((totalSales / targetSales) * 100) + '%');
+
+    const integer = computed(() => `${Math.floor(totalSales / 10000)}`);
+    const float = computed(() => Math.floor(totalSales / 1000) - Math.floor(totalSales / 10000) * 10);
+
+    return {
+      percent,
+      integer,
+      float
+    }
+  }
 }
 </script>
 

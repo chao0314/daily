@@ -10,7 +10,7 @@
           <img src="pc/images/shop.png"/>
         </div>
         <div class="info">
-          <div class="num">98.6</div>
+          <div class="num">{{ totalOrd }}</div>
           <div class="title">订单总数(万)</div>
         </div>
       </div>
@@ -19,7 +19,7 @@
           <img src="pc/images/coin.png"/>
         </div>
         <div class="info">
-          <div class="num">32.02</div>
+          <div class="num">{{ totalSal }}</div>
           <div class="title">销售总量(万元)</div>
         </div>
       </div>
@@ -30,7 +30,7 @@
           <img src="pc/images/bell.png"/>
         </div>
         <div class="info">
-          <div class="num">81.7</div>
+          <div class="num">{{ perSales }}</div>
           <div class="title">人均消费</div>
         </div>
       </div>
@@ -39,7 +39,7 @@
           <img src="pc/images/task.png"/>
         </div>
         <div class="info">
-          <div class="num">36</div>
+          <div class="num">{{ last10MinOrderCount }}</div>
           <div class="title">近10分钟新增订单数</div>
         </div>
       </div>
@@ -48,8 +48,26 @@
 </template>
 
 <script>
+import {summaryInfo} from "../../../data/pc";
+import {computed} from "vue";
+
 export default {
-  name: "StatisticsData"
+  name: "StatisticsData",
+  setup(props, ctx) {
+
+    const {totalOrder, totalSales, last10MinOrderCount} = summaryInfo.value;
+
+    const totalOrd = computed(() => (totalOrder / 10000).toFixed(1));
+    const totalSal = computed(() => (totalSales / 10000).toFixed(1));
+    const perSales = computed(() => (totalSales / totalOrder).toFixed(1));
+    return {
+      totalOrd,
+      totalSal,
+      perSales,
+      last10MinOrderCount
+    }
+
+  }
 }
 </script>
 
