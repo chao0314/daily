@@ -46,6 +46,32 @@ const deviceItem = {
 }
 
 
+const createTrendList = (n) => {
+
+    const list = [];
+    for (let i = 0; i < n; i++) {
+
+        list.push({
+            orders: Math.round(1000 * Math.random()),
+            sales: Math.round(10000 * Math.random()),
+            time: Date.now() - 60 * 1000 * (n - i)
+        })
+
+    }
+    return list;
+
+
+}
+
+
+const cityData = [
+    {province: '浙江省', value: 99},
+    {province: '江苏省', value: 88},
+    {province: '上海市', value: 66},
+    {province: '北京市', value: 77},
+
+];
+
 // summary.info
 export const summaryInfo = ref(summary);
 
@@ -56,10 +82,11 @@ export const keywordList = ref(new Array(10).fill(keywordItem));
 export const superOrder = ref(new Array(10).fill(orderItem));
 
 // order.trend
-export const trendList = ref(new Array(120).fill(trendItem));
+
+export const trendList = ref(createTrendList(120));
 
 // order.citys
-export const cityList = ref(new Array(10).fill(cityItem));
+export const cityList = ref(cityData);
 
 // order.devices
 export const deviceList = ref(new Array(10).fill(deviceItem));

@@ -2,7 +2,7 @@
   <div id="container">
     <header>
       <div class="time">
-        2021-6-18 03:15:26
+        {{(new Date()).toLocaleString()}}
       </div>
     </header>
     <main>
