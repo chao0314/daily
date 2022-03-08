@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>compress image</title>
+    <script src="http://localhost:8088/js/axios.min.js"></script>
+</head>
+<body>
+
+<input type="file" name="image" id="upload">
+</body>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+
+        //200k
+        const http = axios.create({baseURL: 'http://localhost:8088'});
+        const MaxSize = 1024 * 200;
+        const MaxWidth = 1080;
+        const MaxHeight = 720;
+        const AcceptTypes = ['image/jpeg', 'image/png'];
+        const oUpload = document.querySelector('#upload');
+        oUpload.addEventListener('change', ev => {
+
+            console.log(ev.target.files)
+            const [file] = ev.target.files;
+            const {size, type} = file;
+            if (!AcceptTypes.includes(type)) {
+                alert('格式不支持');
+                oUpload.value = '';
+            } else {
+
+                if (size > MaxSize) {
+
+                    const reader = new FileReader();
+
+                    reader.addEventListener('load', ev => {
+
+                            // console.log(ev.target.result);
+
+                            const image = new Image();
+                            image.addEventListener('load', ev => {
+                                const canvas = document.createElement('canvas');
+                                document.body.append(canvas);
+                                const gd = canvas.getContext('2d');
+                                let radio = 1;
+                                let width = image.naturalWidth;
+                                let height = image.naturalHeight;
+
+                                if (width > MaxWidth) {
+
+                                    radio = MaxWidth / width;
+                                }
+
+                                if (height * radio > MaxHeight) {
+
+                                    radio = height / MaxHeight;
+
+                                }
+
+                                width = width * radio;
+                                height = height * radio;
+
+                                console.log(width, height)
+                                gd.drawImage(image, 0, 0, width, height);
+                                //直接用 blob没有后缀类型
+                                canvas.toBlob(blob => {
+                                    const formData = new FormData();
+                                    const file = new File([blob], 'compress_image.jpeg', {type: 'image/jpeg'});
+                                    formData.append('compress_image', file);
+                                    http.post('/upload', formData);
+
+                                }, 'image/jpeg', 0.9)
+
+
+                            })
+
+                            image.src = ev.target.result;
+
+
+                        }
+                    )
+
+                    reader.readAsDataURL(file);
+
+                } else {
+
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    http.post('/upload', formData);
+                }
+
+            }
+
+
+        })
+    })
+    ;
+
+
+</script>
+</html>
