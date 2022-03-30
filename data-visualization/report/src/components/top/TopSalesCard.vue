@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import ComCard from "@/components/ComCard";
+import ComCard from "@/components/top/ComCard";
 
 export default {
   name: "TopSalesCard",

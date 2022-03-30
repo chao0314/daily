@@ -38,7 +38,7 @@ export default {
 }
 
 .charts {
-  background: pink;
+  /*background: pink;*/
   height: 50px;
 }
 

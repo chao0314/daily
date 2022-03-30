@@ -1,16 +1,29 @@
 <template>
-  <report></report>
+  <el-config-provider :locale="locale">
+    <report></report>
+  </el-config-provider>
+
 </template>
 
 <script>
-
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import Report from "@/views/Report";
 
 export default {
   name: 'App',
   components: {
     Report
+  },
+  setup(props, ctx) {
+
+    return {
+      locale: zhCn,
+    }
+
+
   }
+
+
 }
 </script>
 
@@ -43,6 +56,21 @@ export default {
   color: black;
   font-weight: bold;
   margin-left: 5px;
+}
+
+ul {
+  list-style: none;
+}
+
+.clear-float::after {
+
+  content: '';
+  display: block;
+  clear: both;
+  font-size: 0;
+  width: 0;
+  height: 0;
+  visibility: hidden;
 }
 
 

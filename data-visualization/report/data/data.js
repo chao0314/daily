@@ -1152,7 +1152,7 @@ export const reportData = {
 
 //https://book.youbaobao.xyz:18082/screen/wordcloud?icode=C2CE489D152F6DD7
 
-export const worldCloudData = [
+export const wordCloudData = [
     {
         "word": "北京",
         "count": 5979,
