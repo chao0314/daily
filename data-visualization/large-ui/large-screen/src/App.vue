@@ -1,5 +1,5 @@
 <template>
- 11
+ <l-Loading></l-Loading>
 </template>
 
 <script>

@@ -2,12 +2,12 @@ import Test from './src/Test';
 
 export {Test} from './src/Test';
 
-import Test1 from './src/Test1';
+import Loading from './src/Loading';
 
-export {Test1} from './src/Test1';
+export {Loading} from './src/Loading';
 
 
-const components = [Test, Test1];
+const components = [Test, Loading];
 
 
 export default {
@@ -16,7 +16,7 @@ export default {
 
         components.forEach(comp => {
 
-            app.component(comp.name, comp);
+            app.component(`L${comp.name}`, comp);
 
         })
 
