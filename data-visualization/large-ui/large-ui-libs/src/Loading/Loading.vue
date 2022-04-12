@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {computed, toRef} from 'vue';
+import {computed} from 'vue';
 
 export default {
   name: "Loading",

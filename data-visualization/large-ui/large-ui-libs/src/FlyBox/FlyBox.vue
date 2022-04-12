@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {ref, onMounted, computed, watch} from 'vue';
+import {ref, onMounted} from 'vue';
 import {v4} from 'uuid';
 
 export default {

@@ -1,14 +1,17 @@
 const path = require('path');
-const resolve = require('rollup-plugin-node-resolve');
-const commonjs = require('rollup-plugin-commonjs');
+// const resolve = require('rollup-plugin-node-resolve');
+const resolve = require('@rollup/plugin-node-resolve').nodeResolve;
+// const commonjs = require('rollup-plugin-commonjs');
+const commonjs = require('@rollup/plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 const json = require('rollup-plugin-json');
 const postcss = require('rollup-plugin-postcss');
 const vue = require('rollup-plugin-vue');
+// const nodePolyfills = require('rollup-plugin-polyfill-node');
 
 
 module.exports = {
-    input: path.resolve(__dirname, './index.js'),
+    input: path.resolve(__dirname, './main.js'),
     output: [
         {
             file: path.resolve(__dirname, './dist/large-ui.js'),
@@ -38,8 +41,7 @@ module.exports = {
         babel({
             exclude: 'node_modules/**'
         }),
-        json(),
-
+        json()
 
     ],
     external: ['vue', 'echarts']
