@@ -6,8 +6,12 @@ import Loading from './src/Loading';
 
 export {Loading} from './src/Loading';
 
+import FlyBox from './src/FlyBox';
 
-const components = [Test, Loading];
+export {FlyBox} from './src/FlyBox';
+
+
+const components = [Test, Loading, FlyBox];
 
 
 export default {
