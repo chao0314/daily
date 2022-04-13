@@ -10,8 +10,11 @@ import FlyBox from './src/FlyBox';
 
 export {FlyBox} from './src/FlyBox';
 
+import Container from './src/Container';
 
-const components = [Test, Loading, FlyBox];
+export {Container} from './src/Container';
+
+const components = [Test, Loading, FlyBox, Container];
 
 
 export default {
