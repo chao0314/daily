@@ -11,7 +11,7 @@ const {terser} = require('rollup-plugin-terser');
 
 
 module.exports = {
-    input: path.resolve(__dirname, './index.js'),
+    input: path.resolve(__dirname, './wordCloud.js'),
     output: [
         {
             file: path.resolve(__dirname, './dist/large-ui.min.js'),

@@ -14,7 +14,11 @@ import Container from './src/Container';
 
 export {Container} from './src/Container';
 
-const components = [Test, Loading, FlyBox, Container];
+import Logo from './src/Logo';
+
+export {Logo} from './src/Logo';
+
+const components = [Test, Loading, FlyBox, Container,Logo];
 
 
 export default {
