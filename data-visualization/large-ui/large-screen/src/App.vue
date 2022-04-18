@@ -6,18 +6,20 @@
       </p>
     </l-loading>
 
+    <!--    <l-logo v-if="isLoading" stroke="red" strokeWidth="3"></l-logo>-->
+
     <l-container v-else width="3840" height="2160" class="container">
       <div class="header">
-        top
+        <top-header></top-header>
       </div>
       <div class="separator"/>
       <div class="center">
         <div class="left">
           <div class="left1">
-            l1
+            <left-total-user></left-total-user>
           </div>
           <div class="left2">
-            l2
+            <left-average-age></left-average-age>
           </div>
           <div class="left3">
             l3
@@ -72,10 +74,17 @@
 
 <script>
 import {ref} from "vue";
+import TopHeader from "@/components/TopHeader";
+import LeftTotalUser from "@/components/LeftTotalUser";
+import LeftAverageAge from "@/components/LeftAverageAge";
 
 export default {
   name: 'App',
-  components: {},
+  components: {
+    TopHeader,
+    LeftTotalUser,
+    LeftAverageAge
+  },
   setup() {
 
     const isLoading = ref(false);

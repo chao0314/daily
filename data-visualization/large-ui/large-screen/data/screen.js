@@ -1,3 +1,4 @@
+export const colors = ["rgb(116,166,49)", "rgb(190,245,99)", "rgb(202,252,137)", "rgb(251,253,142)"];
 export default {
     "userToday": 2034888,
     "userLastDay": 1000000,
