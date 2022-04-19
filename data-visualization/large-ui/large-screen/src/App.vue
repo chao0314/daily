@@ -22,7 +22,7 @@
             <left-average-age></left-average-age>
           </div>
           <div class="left3">
-            l3
+            <left-total-device></left-total-device>
           </div>
           <div class="left4">
             l4
@@ -77,13 +77,15 @@ import {ref} from "vue";
 import TopHeader from "@/components/TopHeader";
 import LeftTotalUser from "@/components/LeftTotalUser";
 import LeftAverageAge from "@/components/LeftAverageAge";
+import LeftTotalDevice from "@/components/LeftTotalDevice";
 
 export default {
   name: 'App',
   components: {
     TopHeader,
     LeftTotalUser,
-    LeftAverageAge
+    LeftAverageAge,
+    LeftTotalDevice
   },
   setup() {
 

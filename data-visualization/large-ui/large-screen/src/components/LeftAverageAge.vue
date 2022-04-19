@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import screenData, {colors} from '../../data/screen';
+import screenData from '../../data/screen';
+
+const colors = ["rgb(116,166,49)", "rgb(190,245,99)", "rgb(202,252,137)", "rgb(251,253,142)"];
 
 export default {
   name: "LeftAverageAge",
@@ -49,28 +51,101 @@ export default {
 
     const option = {
 
-      yAxis:{
-        type:'category',
-        data: ageData.map(item=>item.category)
+      tooltip: {
+        textStyle: {
+          fontSize: 28
+        },
+        padding: 10
       },
-      xAxis:{
+      yAxis: {
+        type: 'category',
+        data: ageData.map(item => item.category),
+        show: false
+      },
+      xAxis: {
         type: 'value',
-        max:maxValue
+        max: maxValue,
+        splitLine: {
+          show: false
+        },
+        axisLabel: {
+          color: 'rgb(100,105,115)',
+          fontSize: 18
+        },
+        axisLine: {
+          show: true,
+          lineStyle: {
+            color: 'rgb(50,60,60)',
+            width: 3
+          }
+
+        }
+
+
       },
-      series:[
+      series: [
 
         {
-          type:'bar',
-          stack:"ageCategory",
+          type: 'bar',
+          stack: 'ageCategory',
+          barWidth: 15,
           data: [{
-            name:"123",
+            name: ageData[0].category,
+            value: ageData[0].value,
+            itemStyle: {
+              color: ageData[0].color
+            }
+
+          }]
+
+        },
+        {
+          type: 'bar',
+          stack: 'ageCategory',
+          barWidth: 15,
+          data: [{
+            name: ageData[1].category,
+            value: ageData[1].value,
+            itemStyle: {
+              color: ageData[1].color
+            }
+
+
+          }]
+
+        },
+        {
+          type: 'bar',
+          stack: 'ageCategory',
+          barWidth: 15,
+          data: [{
+            name: ageData[2].category,
+            value: ageData[2].value,
+            itemStyle: {
+              color: ageData[2].color
+            }
+
+
+          }]
+
+        },
+        {
+          type: 'bar',
+          stack: 'ageCategory',
+          barWidth: 15,
+          data: [{
+            name: ageData[3].category,
+            value: ageData[3].value,
+            itemStyle: {
+              color: ageData[3].color
+            }
+
 
           }]
 
         }
 
       ]
-
 
 
     }
@@ -88,6 +163,10 @@ export default {
 .average-age {
   padding: 20px 40px;
   background: rgb(45, 45, 45);
+  /*transform: scale(3);*/
+  /*position: absolute;*/
+  /*left: 1000px;*/
+  /*top: 500px;*/
 }
 
 .average-age__title {
