@@ -1,4 +1,4 @@
-import comp from "./Loading.vue";
+import comp from "./Logo.vue";
 
 comp.install = app => {
 

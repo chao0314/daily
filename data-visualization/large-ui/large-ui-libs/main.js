@@ -1,7 +1,3 @@
-import Test from './src/Test';
-
-export {Test} from './src/Test';
-
 import Loading from './src/Loading';
 
 export {Loading} from './src/Loading';
@@ -18,7 +14,12 @@ import Logo from './src/Logo';
 
 export {Logo} from './src/Logo';
 
-const components = [Test, Loading, FlyBox, Container,Logo];
+import CountTo from './src/CountTo';
+
+export {CountTo} from './src/CountTo';
+
+
+const components = [Loading, FlyBox, Container, Logo,CountTo];
 
 
 export default {
