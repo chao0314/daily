@@ -15,19 +15,10 @@
         </p>
       </div>
       <div class="total-device__category">
-        <div class="total-device__item">
-          <p>1234,567</p>
-          <p><span></span><span>Android</span></p>
+        <div class="total-device__item" v-for="item in data">
+          <p>{{ item.value }}</p>
+          <p><span :style="{background:item.itemStyle.color}"></span><span>{{ item.name }}</span></p>
         </div>
-        <div class="total-device__item">
-          <p>1234,567</p>
-          <p><span></span><span>Android</span></p>
-        </div>
-        <div class="total-device__item">
-          <p>1234,567</p>
-          <p><span></span><span>Android</span></p>
-        </div>
-
       </div>
     </div>
   </div>
@@ -43,7 +34,7 @@ export default {
   setup(pros, ctx) {
 
     const {totalDevices, devices} = screenData;
-    console.log(totalDevices, devices);
+    // console.log(totalDevices, devices);
     const data = devices.map((device, index) => ({
       name: device.key,
       value: device.value,
@@ -77,7 +68,8 @@ export default {
     ;
     return {
       option,
-      totalDevices
+      totalDevices,
+      data
     }
   }
 }
@@ -86,16 +78,16 @@ export default {
 <style scoped>
 .total-device {
   display: flex;
-  /*height: 100%;*/
+  height: 100%;
+  /*background: rgb(45, 45, 45);*/
+  /*transform: scale(3);*/
+  /*transform-origin: left;*/
   background: rgb(45, 45, 45);
-  transform: scale(4);
-  transform-origin: left;
 
 }
 
 .total-device__chart {
   flex-basis: 30%;
-  background: silver;
 }
 
 .total-device__info {
@@ -128,8 +120,7 @@ export default {
 }
 
 .total-device__summary > p:last-child > span:last-child {
-  font-size: 20px;
-  margin-left: 10px;
+  font-size: 16px;
 }
 
 

@@ -2,6 +2,7 @@ import {createApp} from 'vue'
 import App from './App.vue'
 import {startMock} from "@/utils";
 import largeUI from '../../large-ui-libs/dist/large-ui.es';
+import '../public/font/icon-svg';
 //按需加载
 // import {Test} from  '../../large-ui-libs/dist/large-ui.es';
 import ECharts from 'vue-echarts'

@@ -25,18 +25,18 @@
             <left-total-device></left-total-device>
           </div>
           <div class="left4">
-            l4
+            <left-total-gender></left-total-gender>
           </div>
           <div class="left5">
-            l5
+            <left-total-rider></left-total-rider>
           </div>
           <div class="left6">
-            l6
+            <left-hot-category></left-hot-category>
           </div>
         </div>
         <div class="right">
           <div class="right-top1">
-            r t 1
+            <right-top-header></right-top-header>
           </div>
           <div class="right-top2">
             r t 2
@@ -78,6 +78,10 @@ import TopHeader from "@/components/TopHeader";
 import LeftTotalUser from "@/components/LeftTotalUser";
 import LeftAverageAge from "@/components/LeftAverageAge";
 import LeftTotalDevice from "@/components/LeftTotalDevice";
+import LeftTotalGender from "@/components/LeftTotalGender";
+import LeftTotalRider from "@/components/LeftTotalRider";
+import LeftHotCategory from "@/components/LeftHotCategory";
+import RightTopHeader from "@/components/RightTopHeader";
 
 export default {
   name: 'App',
@@ -85,7 +89,11 @@ export default {
     TopHeader,
     LeftTotalUser,
     LeftAverageAge,
-    LeftTotalDevice
+    LeftTotalDevice,
+    LeftTotalGender,
+    LeftTotalRider,
+    LeftHotCategory,
+    RightTopHeader
   },
   setup() {
 
