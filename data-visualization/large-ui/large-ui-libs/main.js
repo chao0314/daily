@@ -18,8 +18,12 @@ import CountTo from './src/CountTo';
 
 export {CountTo} from './src/CountTo';
 
+import Icon from './src/Icon';
 
-const components = [Loading, FlyBox, Container, Logo,CountTo];
+export {Icon} from './src/Icon';
+
+
+const components = [Loading, FlyBox, Container, Logo,CountTo,Icon];
 
 
 export default {
