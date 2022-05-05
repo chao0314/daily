@@ -22,8 +22,16 @@ import Icon from './src/Icon';
 
 export {Icon} from './src/Icon';
 
+import Tab from './src/Tab';
 
-const components = [Loading, FlyBox, Container, Logo,CountTo,Icon];
+export {Tab} from './src/Tab';
+
+import ScrollList from './src/ScrollList';
+
+export {ScrollList} from './src/ScrollList';
+
+
+const components = [Loading, FlyBox, Container, Logo, CountTo, Icon, Tab, ScrollList];
 
 
 export default {
