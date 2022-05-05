@@ -39,7 +39,7 @@
             <right-top-header></right-top-header>
           </div>
           <div class="right-top2">
-            r t 2
+            <l-tab :titles="['北京','上海','深圳','广州','杭州','南京','武汉']"></l-tab>
           </div>
           <div class="right-bottom">
             <div class="right-left">
@@ -47,7 +47,7 @@
                 r l 1
               </div>
               <div class="right-left2">
-                r l 2
+                <l-tab :titles="['订单量','销售额','用户数','退单量']"></l-tab>
               </div>
               <div class="right-left3">
                 r l 3
@@ -58,7 +58,7 @@
             </div>
             <div class="right-right">
               <div class="right-right1">
-                r r 1
+                <right-scroll-list></right-scroll-list>
               </div>
               <div class="right-right2">
                 r r 2
@@ -82,6 +82,7 @@ import LeftTotalGender from "@/components/LeftTotalGender";
 import LeftTotalRider from "@/components/LeftTotalRider";
 import LeftHotCategory from "@/components/LeftHotCategory";
 import RightTopHeader from "@/components/RightTopHeader";
+import RightScrollList from "@/components/RightScrollList";
 
 export default {
   name: 'App',
@@ -93,7 +94,8 @@ export default {
     LeftTotalGender,
     LeftTotalRider,
     LeftHotCategory,
-    RightTopHeader
+    RightTopHeader,
+    RightScrollList
   },
   setup() {
 
@@ -228,6 +230,7 @@ html, body {
   height: 48px;
   background: grey;
   margin: 10px 0;
+  font-size: 24px;
 }
 
 .center .right .right-bottom {
@@ -252,6 +255,7 @@ html, body {
 .center .right .right-bottom .right-left .right-left2 {
   height: 80px;
   background: grey;
+  font-size: 24px;
 }
 
 .center .right .right-bottom .right-left .right-left3 {
