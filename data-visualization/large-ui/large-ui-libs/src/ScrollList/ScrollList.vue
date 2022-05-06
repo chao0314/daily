@@ -5,20 +5,25 @@
         {{ item }}
       </p>
     </div>
-    <ul class="scroll-list__body" ref="listDomRef">
-      <li v-for="(row,index) of listData"
-          :class="['scroll-list__item',index%2===0?'list__item--even':'list__item--odd']">
-        <p v-for="value of row" :style="{width: itemWidthRef,height:itemHeightRef}">
-          {{ value }}
-        </p>
-      </li>
-    </ul>
+    <div class="scroll-list__container">
+      <ul class="scroll-list__body" ref="listDomRef">
+        <template v-for="list of listData">
+          <li v-for="(row,index) of list.value"
+              :class="['scroll-list__item',index%2===0?'list__item--even':'list__item--odd']">
+            <p v-for="value of row" :style="{width: itemWidthRef,height:itemHeightRef,lineHeight:itemHeightRef}">
+              {{ value }}
+            </p>
+          </li>
+        </template>
+
+      </ul>
+    </div>
 
   </div>
 </template>
 
 <script>
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, watch, computed, onUpdated} from 'vue';
 
 
 export default {
@@ -37,7 +42,7 @@ export default {
       default: () => ([['d11', 'd1266666', 'd13', 'd14', 'd15'], ['d21', 'd22', 'd23', 'd24', 'd25']])
     },
     size: {
-      type: [Number, String],
+      type: [Number],
       default: 10
     },
     step: {
@@ -46,15 +51,20 @@ export default {
     },
     duration: {
       type: [Number, String],
-      default: 4
+      default: 1
     },
     delay: {
       type: [Number, String],
       default: 2
+    },
+    loop: {
+      type: Boolean,
+      default: false
     }
 
 
   },
+  emits: ['pageEnd'],
   setup(props, ctx) {
 
     const itemWidthRef = ref(0);
@@ -66,22 +76,111 @@ export default {
       accumulator[1].push(val);
       return accumulator;
     }, [[], []]);
-    const listData = props.data.map(row => headerKeys.map(key => row[key]));
+    const data = computed(() => props.data.map(row => headerKeys.map(key => row[key])));
+    const preListRef = ref(data.value.slice(0, props.size));
+    const nextListRef = ref(data.value.slice(props.size, props.size * 2));
+    let surplusIndex = data.value.length > props.size * 2 ? props.size * 2 : -1;
+
+    const listData = [preListRef, nextListRef];
+    let translateIndex = 0;
+
+    let itemHeight = 0;
+    let itemWidth = 0;
+
+    watch(data, (newData) => {
+
+      preListRef.value = newData.slice(0, props.size);
+      nextListRef.value = newData.slice(props.size, props.size * 2);
+      surplusIndex = newData.length > props.size * 2 ? props.size * 2 : -1;
+
+    })
+
+
+    onUpdated(() => {
+
+      if (listDomRef.value) {
+        setTimeout(() => {
+          listDomRef.value.style.transition = `transform ${props.duration}s linear`;
+          listDomRef.value.style.transform = `translateY(-${itemHeight * ++translateIndex}px)`;
+        }, 0);
+
+      }
+
+
+    })
 
     onMounted(() => {
-      let translateIndex = 1;
+
       const listDom = listDomRef.value;
-      const itemHeight = listDom.offsetHeight / props.size;
-      itemWidthRef.value = `${listDom.offsetWidth / props.header.length}px`;
+      itemHeight = listDom.offsetHeight / props.size;
+      itemWidth = listDom.offsetWidth / props.header.length;
+
       itemHeightRef.value = `${itemHeight}px`;
+      itemWidthRef.value = `${itemWidth}px`;
+      listDomRef.value.style.transition = `transform ${props.duration}s linear`;
 
       listDom.addEventListener('transitionend', () => {
 
         console.log('end');
-        listDom.style.transform = `translateY(-${itemHeight * translateIndex++}px)`;
+
+        if (nextListRef.value.length + (preListRef.value.length - translateIndex) === props.size) {
+          translateIndex = 0;
+          console.log('pageEnd');
+          ctx.emit('pageEnd');
+
+          preListRef.value = nextListRef.value;
+          if (surplusIndex !== -1) {
+            listDom.style.transition = 'none';
+            listDom.style.transform = 'translateY(0px)';
+            const surplusData = data.value.slice(surplusIndex);
+            if (surplusData.length > props.size) {
+
+              surplusIndex += props.size;
+
+              nextListRef.value = surplusData.slice(0, props.size);
+
+            } else {
+
+              if (props.loop) {
+                // console.log('loop2')
+                const fillDataLength = props.size - surplusData.length;
+                nextListRef.value = surplusData.concat(data.value.slice(0, fillDataLength));
+                surplusIndex = fillDataLength;
+
+              } else {
+
+                surplusIndex = -1;
+                nextListRef.value = surplusData.slice(0);
+              }
+
+            }
+
+
+          } else {
+
+            if (props.loop) {
+
+              console.log('loop');
+              listDom.style.transition = 'none';
+              listDom.style.transform = 'translateY(0px)';
+              preListRef.value = nextListRef.value;
+              nextListRef.value = data.value.slice(0, props.size);
+
+              surplusIndex = data.value.length > props.size ? props.size : -1;
+
+
+            }
+
+
+          }
+
+
+        } else listDom.style.transform = `translateY(-${itemHeight * ++translateIndex}px)`;
+
+
       })
 
-      setTimeout(() => {
+      if (data.length > props.size) setTimeout(() => {
         listDom.style.transform = `translateY(-${itemHeight * translateIndex++}px)`;
 
       }, props.delay * 1000)
@@ -106,8 +205,9 @@ export default {
 
 .scroll-list {
   height: 100%;
-  overflow: hidden;
-  position: relative;
+  width: 100%;
+  background: rgb(80, 80, 80);
+
 }
 
 .scroll-list__header {
@@ -115,29 +215,30 @@ export default {
   display: flex;
   font-size: 32px;
   height: 60px;
+  width: 100%;
   line-height: 60px;
-  position: absolute;
-  z-index: 99;
-  left: 0;
-  top: 0;
+
 }
 
 .scroll-list__header > p {
 
   flex: auto;
   text-align: center;
+  height: 100%;
 }
 
-.scroll-list__item {
-  display: flex;
+.scroll-list__container {
+  height: calc(100% - 60px);
+  width: 100%;
+  overflow: hidden;
 }
 
 .scroll-list__body {
-  background: pink;
-  height: calc(100% - 60px);
-  padding-top: 60px;
-  transition: transform 4s ease;
+  /*padding-top: 60px;*/
+  height: 100%;
+  width: 100%;
 
+  background: rgb(80, 80, 80)
 }
 
 .scroll-list__item {
@@ -147,12 +248,7 @@ export default {
 
 .scroll-list__item > p {
   flex: auto;
-  /*background: #6C6C6C;*/
-  /*border-right: 1px solid silver;*/
-  /*border-bottom: 1px solid silver;*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
 
@@ -162,6 +258,7 @@ export default {
 
 .list__item--even {
   background: rgb(55, 55, 55);
+
 }
 
 
