@@ -9,7 +9,7 @@ import ECharts from 'vue-echarts'
 import {use} from "echarts/core";
 import {CanvasRenderer} from 'echarts/renderers';
 import {LineChart, BarChart, PieChart} from 'echarts/charts';
-import {GridComponent, TooltipComponent, LegendComponent, TitleComponent} from 'echarts/components';
+import {GridComponent, TooltipComponent, LegendComponent, TitleComponent,TimelineComponent} from 'echarts/components';
 
 use([
     CanvasRenderer,
@@ -17,7 +17,8 @@ use([
     GridComponent,
     TitleComponent,
     TooltipComponent,
-    LegendComponent
+    LegendComponent,
+    TimelineComponent
 ]);
 const app = createApp(App);
 app.component('v-chart', ECharts);
