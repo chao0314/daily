@@ -121,11 +121,11 @@ export default {
 
       listDom.addEventListener('transitionend', () => {
 
-        console.log('end');
+        // console.log('end');
 
         if (nextListRef.value.length + (preListRef.value.length - translateIndex) === props.size) {
           translateIndex = 0;
-          console.log('pageEnd');
+          // console.log('pageEnd');
           ctx.emit('pageEnd');
 
           preListRef.value = nextListRef.value;

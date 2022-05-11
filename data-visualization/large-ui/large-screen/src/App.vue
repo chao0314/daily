@@ -44,7 +44,7 @@
           <div class="right-bottom">
             <div class="right-left">
               <div class="right-left1">
-                r l 1
+                <right-order-map></right-order-map>
               </div>
               <div class="right-left2">
                 <l-tab :titles="['订单量','销售额','用户数','退单量']"></l-tab>
@@ -83,6 +83,7 @@ import LeftTotalRider from "@/components/LeftTotalRider";
 import LeftHotCategory from "@/components/LeftHotCategory";
 import RightTopHeader from "@/components/RightTopHeader";
 import RightScrollList from "@/components/RightScrollList";
+import RightOrderMap from "@/components/RightOrderMap";
 
 export default {
   name: 'App',
@@ -95,7 +96,8 @@ export default {
     LeftTotalRider,
     LeftHotCategory,
     RightTopHeader,
-    RightScrollList
+    RightScrollList,
+    RightOrderMap
   },
   setup() {
 
