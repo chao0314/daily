@@ -318,9 +318,7 @@ export default {
           },
           axisLabel: {
             margin: 2,
-            textStyle: {
-              color: '#aaa'
-            }
+            color: '#aaa'
           }
         },
         yAxis: {
@@ -336,9 +334,7 @@ export default {
           },
           axisLabel: {
             interval: 0,
-            textStyle: {
-              color: '#ddd'
-            }
+            color: '#ddd'
           }
         },
         series: [{
@@ -351,23 +347,22 @@ export default {
           rippleEffect: {
             brushType: 'stroke'
           },
-          hoverAnimation: true,
+          // hoverAnimation: true,
+          emphasis: {scale: true},
           label: {
-            normal: {
-              show: true,
-              position: 'right',
-              formatter: function (params) {
-                return params.data.name
-              }
+            show: true,
+            position: 'right',
+            formatter: function (params) {
+              return params.data.name
+
             }
           },
           itemStyle: {
-            normal: {
-              color: colors[index],
-              shadowColor: colors[index],
-              shadowBlur: 10
-            }
+            color: colors[index],
+            shadowColor: colors[index],
+            shadowBlur: 10
           },
+
           zlevel: 1
         }, {
           type: 'lines',
@@ -391,9 +386,8 @@ export default {
           type: 'bar',
           data: barData,
           itemStyle: {
-            normal: {
-              color: colors[index]
-            }
+            color: colors[index]
+
           }
         }]
       })

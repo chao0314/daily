@@ -38,6 +38,8 @@
   import { ref, watch, nextTick, onMounted } from 'vue'
   import TransformCategory from '../TransformCategory/index'
 
+  //http://www.youbaobao.xyz/datav-docs/guide/screen/components.html#%E9%94%80%E5%94%AE%E6%97%A5%E5%8E%86%E7%BB%84%E4%BB%B6
+
   export default {
     name: 'SalesRank',
     components: { TransformCategory },

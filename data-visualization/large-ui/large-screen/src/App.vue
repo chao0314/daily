@@ -50,10 +50,12 @@
                 <l-tab :titles="['订单量','销售额','用户数','退单量']"></l-tab>
               </div>
               <div class="right-left3">
-                r l 3
+                <l-fly-box class="right-fly-box">
+                  <right-real-time-order></right-real-time-order>
+                </l-fly-box>
               </div>
               <div class="right-left4">
-                r l 4
+                <right-schedule-calendar></right-schedule-calendar>
               </div>
             </div>
             <div class="right-right">
@@ -84,6 +86,8 @@ import LeftHotCategory from "@/components/LeftHotCategory";
 import RightTopHeader from "@/components/RightTopHeader";
 import RightScrollList from "@/components/RightScrollList";
 import RightOrderMap from "@/components/RightOrderMap";
+import RightRealTimeOrder from "@/components/RightRealTimeOrder";
+import RightScheduleCalendar from "@/components/RightScheduleCalendar";
 
 export default {
   name: 'App',
@@ -97,7 +101,9 @@ export default {
     LeftHotCategory,
     RightTopHeader,
     RightScrollList,
-    RightOrderMap
+    RightOrderMap,
+    RightRealTimeOrder,
+    RightScheduleCalendar
   },
   setup() {
 
@@ -290,6 +296,10 @@ html, body {
   width: 100%;
   margin-top: 20px;
   background: grey;
+}
+
+.right-fly-box{
+  background: #1c1c1c;;
 }
 
 </style>
