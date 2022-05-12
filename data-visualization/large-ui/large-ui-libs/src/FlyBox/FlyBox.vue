@@ -99,13 +99,16 @@ export default {
 
 .fly-box {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .fly-box__content {
   position: absolute;
-  left: 0;
-  top: 0;
-  padding: 2px 8px;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+  bottom: 10px;
 }
 
 </style>

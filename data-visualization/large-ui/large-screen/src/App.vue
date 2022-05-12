@@ -63,7 +63,7 @@
                 <right-scroll-list></right-scroll-list>
               </div>
               <div class="right-right2">
-                r r 2
+                <right-sales-rank></right-sales-rank>
               </div>
             </div>
           </div>
@@ -88,6 +88,7 @@ import RightScrollList from "@/components/RightScrollList";
 import RightOrderMap from "@/components/RightOrderMap";
 import RightRealTimeOrder from "@/components/RightRealTimeOrder";
 import RightScheduleCalendar from "@/components/RightScheduleCalendar";
+import RightSalesRank from "@/components/RightSalesRank";
 
 export default {
   name: 'App',
@@ -103,7 +104,8 @@ export default {
     RightScrollList,
     RightOrderMap,
     RightRealTimeOrder,
-    RightScheduleCalendar
+    RightScheduleCalendar,
+    RightSalesRank
   },
   setup() {
 

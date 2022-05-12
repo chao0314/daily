@@ -70,7 +70,8 @@ export default {
           rippleEffect: {
             brushType: 'stroke'
           },
-          hoverAnimation: true,
+          // hoverAnimation: true,
+          emphasis:{scale:true},
           itemStyle: {
             color: 'rgb(208,248,138)',
             shadowBlur: 10,
