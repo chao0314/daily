@@ -14,6 +14,11 @@ import {GridComponent, TooltipComponent, LegendComponent, TitleComponent} from '
 //注册 百度地图
 import 'echarts/extension/bmap/bmap';
 
+//注册 水球图
+import 'echarts-liquidfill';
+//注册 词云
+import 'echarts-wordcloud';
+
 use([
     CanvasRenderer,
     LineChart,

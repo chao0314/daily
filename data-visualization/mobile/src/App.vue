@@ -5,6 +5,8 @@
       <SalesBar></SalesBar>
       <SalesLine></SalesLine>
       <sales-pie></sales-pie>
+      <sales-sunburst></sales-sunburst>
+      <sales-radar></sales-radar>
     </div>
   </div>
 </template>
@@ -14,6 +16,8 @@ import TopHeader from "@/components/TopHeader";
 import SalesBar from "@/components/SalesBar";
 import SalesLine from "@/components/SalesLine";
 import SalesPie from "@/components/SalesPie";
+import SalesSunburst from "@/components/SalesSunburst";
+import SalesRadar from "@/components/SalesRadar";
 
 export default {
   name: 'App',
@@ -21,7 +25,9 @@ export default {
     TopHeader,
     SalesBar,
     SalesLine,
-    SalesPie
+    SalesPie,
+    SalesSunburst,
+    SalesRadar
   }
 }
 </script>

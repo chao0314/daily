@@ -52,7 +52,7 @@ export default {
         }]
     }],
     "salesRadar": {
-        "indicator": [{"text": "订单量", "max": 6500}, {"name": "骑手量", "max": 16000}, {
+        "indicator": [{"name": "订单量", "max": 6500}, {"name": "骑手量", "max": 16000}, {
             "name": "访问量",
             "max": 30000
         }, {"name": "客服", "max": 38000}, {"name": "配送", "max": 52000}, {"name": "热度", "max": 25000}],

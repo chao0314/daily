@@ -31,14 +31,14 @@ export default {
 
 .bottom-map {
   flex-basis: 80%;
-  height: 600px;
+  height: 640px;
   margin-right: 20px;
 
 }
 
 .bottom__side {
   flex-basis: 20%;
-  height: 600px;
+  height: 640px;
   display: flex;
   flex-direction: column;
 }

@@ -1367,7 +1367,7 @@ export const wordCloudData = [
 
 //https://book.youbaobao.xyz:18082/screen/map/scatter?icode=C2CE489D152F6DD7
 
-export const scatterData = {
+export const mapData = {
     "data": [
         {
             "name": "海门",
