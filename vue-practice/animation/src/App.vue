@@ -26,10 +26,21 @@
   <transition-group name="list">
     <p v-for="(value,index) of nums" :key="value" class="list-p">{{ value }}</p>
   </transition-group>
+  <br><br>
+  <input type="text" v-model="searchTextRef">
+  <transition-group tag="ul"
+                    :class="false"
+                    @before-enter="beforeEnter"
+                    @enter="enter"
+                    @leave="leave"
+  >
+    <li v-for="(item,index) of listRef" :key="item.msg" :data-index="index">{{ item.msg }}</li>
+  </transition-group>
+
 </template>
 
 <script>
-import {ref, computed} from "vue";
+import {ref, computed, watch} from "vue";
 import Animation from "@/components/Animation";
 import {gsap} from "gsap";
 import {shuffle} from 'lodash';
@@ -71,14 +82,66 @@ export default {
 
       nums.value = shuffle(nums.value)
     }
-    const nums = ref([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    const nums = ref([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    const list = [
+      {msg: 'Bruce Lee'},
+      {msg: 'Jackie Chan'},
+      {msg: 'Chuck Norris'},
+      {msg: 'Jet Li'},
+      {msg: 'Kung Fury'}
+    ];
+
+    const listRef = ref(list);
+
+
+    const searchTextRef = ref('')
+
+    watch(searchTextRef, (newVal, oldVal) => {
+
+      if (!newVal) listRef.value = list;
+      else if (newVal !== oldVal) {
+        newVal = newVal.toLocaleLowerCase();
+        listRef.value = listRef.value.filter(item => item.msg.toLowerCase().includes(newVal));
+      }
+
+    })
+
+    const beforeEnter = (el, done) => {
+
+      console.log('before')
+
+      el.style.opacity = 0;
+      el.style.height = 0;
+    }
+    const enter = (el, done) => {
+      console.log('enter')
+      gsap.to(el, {
+
+        opacity: 1,
+        height: '1.5em',
+        delay: 0.15 * el.dataset.index,
+        onComplete: done
+      })
+    }
+    const leave = (el, done) => {
+      console.log('leave')
+      gsap.to(el, {
+        opacity: 0,
+        height: 0,
+        delay: 0.15 * el.dataset.index,
+        onComplete: done
+      })
+    }
     return {
       shouldShow,
       handleClick,
       numRef,
       addNum,
       nums,
-      addHandler, removeHandler, shuffleHandler
+      addHandler, removeHandler, shuffleHandler,
+      listRef, searchTextRef,
+      beforeEnter, enter, leave
     }
   }
 }
@@ -177,10 +240,10 @@ export default {
 .list-move {
   transition: all 1s ease;
 }
-.list-leave-active{
+
+.list-leave-active {
   position: absolute;
 }
-
 
 
 </style>
