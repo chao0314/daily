@@ -105,6 +105,7 @@ class IPromise {
 
                 this.rejectedCbs.push(() => {
 
+                    console.log(123)
 
                 });
 
