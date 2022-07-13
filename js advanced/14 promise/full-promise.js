@@ -82,7 +82,9 @@ class IPromise {
             } else if (this.status === REJECTED) {
 
                 try {
-                    reject(onRejected(this.reason));
+                    // catch 捕获以后 后续 promise 处理时 变为 then，所以此处时 resolve
+                    // 如果 onRejected 抛出异常 会在 下面 catch捕获
+                    resolve(onRejected(this.reason));
                 } catch (e) {
                     reject(e);
                 }
