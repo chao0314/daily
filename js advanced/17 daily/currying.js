@@ -77,4 +77,27 @@ console.log(toString('hello'));
 console.log(Object.prototype.toString.apply('hello'))
 
 
+const _currying = (fn) => {
+
+    const cfn = function (...args) {
+
+        if (args.length >= fn.length) {
+
+            return fn.apply(this, args);
+
+        } else {
+
+            return function (others) {
+
+                return cfn(...args,...others);
+
+            }
+        }
+
+
+    }
+
+    return cfn;
+
+}
 
