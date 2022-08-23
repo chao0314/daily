@@ -11,7 +11,7 @@ const {checkToken, setToken,} = require('../../../models/AdminUserToken');
 Schema.plugin([
     require('async-validate/plugin/object'),
     require('async-validate/plugin/string'),
-    require('async-validate/plugin/util')
+    require('async-validate/plugin/utils')
 ]);
 
 router.post('/register', async ctx => {

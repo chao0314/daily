@@ -1,0 +1,104 @@
+<!--
+1.视图基本概念
+- 视图本质就是将结果集缓存起来
+- 由于结果集是一张虚拟的表, 所以视图也是一张虚拟的表
+- 由于结果集是建立在表的基础上的, 所以视图也是建立在表的基础上的
+
+2.视图的作用:
+- 视图可以用来简化SQL语句
+- 视图可以用来隐藏表的结构
+- 视图可以用来提升数据安全性
+
+3.创建视图语法
+create view 视图名称 as select 语句;
+-->
+<!--
+1.视图数据操作
+-- SELECT name, city FROM person;
+-- CREATE VIEW person_view as SELECT name, city FROM person;
+-- SELECT * FROM person_view;
+-- INSERT INTO person_view values ('it666', '武汉');
+-- UPDATE person_view set city='香港' WHERE name='it666';
+DELETE FROM person_view WHERE name='it666';
+注意点:
+由于视图保存的是结果集, 由于结果集是基于原始表的
+所以操作视图中的数据, 本质上操作的是原始表中的数据
+
+2.修改视图内容
+alter view 视图名称 as select 语句;
+alter view person_view as select name, score from person;
+
+3.删除视图
+drop view [if exists] 视图名;
+-->
+<!--
+1.视图完整语句
+create [algorithm={merge||temptable||undefined}]
+view 视图名称
+as select 语句
+[with check option];
+
+2.视图算法
+merge: 合并式(替代式)算法
+- 将视图的语句和外层的语句合并之后再执行
+- 改算法允许更新数据
+-- SELECT name, city FROM person;
+-- CREATE algorithm=merge VIEW person_view1 AS SELECT name, city FROM person;
+-- SELECT * FROM person_view1;
+-- SELECT * FROM (SELECT name, city FROM person) as t;
+
+temptable: 临时表(具代式)算法
+- 将视图生成一个临时表, 再执行外层的语句
+- 该算法不允许更新数据
+-- CREATE algorithm=temptable VIEW person_view2 AS SELECT name, city FROM person;
+-- SELECT * FROM person_view2;
+-- (SELECT name, city FROM person) as t;
+-- SELECT * FROM t;
+
+undefined: 未定义算法
+由MySQL自己决定使用如上的哪一种算法, 默认就是undefined
+一般情况下会自动选择merge算法
+CREATE VIEW person_view3 AS SELECT name, city FROM person;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `person_view3` AS select `person`.`name` AS `name`,`person`.`city` AS `city` from `person`
+
+3.视图限制(with check option)
+在with check option的选项下
+1.要保证数据update之后也要符合where的条件
+2.要保证insert之后的数据能被视图查询出来
+3.对于delete,有无 with check option都一样
+4.对于没有where字句的视图，使用with check option是多余的
+
+- 默认情况下哪怕插入的数据和更新的数据不符合创建视图条件, 我们也是可以通过视图来插入和更新的
+-- SELECT name, city, score FROM person WHERE score >= 60;
+-- CREATE VIEW person_view AS SELECT name, city, score FROM person WHERE score >= 60;
+-- INSERT INTO person_view values('it666', '台湾', 33);
+-- UPDATE person_view set score=55 WHERE name='ww';
+
+- 如果想让插入和更新的数据必须符合创建视图的条件, 那么就可以在创建视图的时候添加限制条件
+-- SELECT name, city, score FROM person WHERE score >= 60;
+-- CREATE VIEW person_view AS SELECT name, city, score FROM person WHERE score >= 60 with check option;
+-- INSERT INTO person_view values('it666', '台湾', 33); #报错, 由于不符合条件
+-- UPDATE person_view set score=55 WHERE name='ww';     #报错, 由于不符合条件
+-->
+<!--
+1.视图更新限制
+1.1如果视图的算法是merge算法, 那么可以更新视图
+1.2如果没有指with check option, 那么无论数据符不符合创建视图条件都可以更新
+1.3如果指定了with check option, 那么只有符合创建视图条件才可以更新
+1.4除此之外由于视图是一张虚拟表, 视图是基于原始表的, 更新视图的本质就是更新原始表
+   所以只有原始表中存在的原始数据才可以更新, 通过其它方式生成的数据都不可以更新
+
+-- SELECT city, avg(score) as avgScore FROM person GROUP BY city;
+-- CREATE VIEW person_view AS SELECT city, avg(score) as avgScore FROM person GROUP BY city;
+-- SELECT * FROM person_view;
+-- UPDATE person_view set avgScore=11 WHERE city='北京';
+
+2.更新限制
+聚合函数
+DISTINCT关键字
+GROUP BY子句
+HAVING子句
+UNION运算符
+FROM子句包含多张表
+SELECT语句中应用了不可更新的形势图
+-->

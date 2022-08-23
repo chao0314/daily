@@ -88,7 +88,7 @@
 
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
-  !*** ./node_modules/axios/index.js ***!
+  !*** ./node_modules/axios/wordCloud.js ***!
   \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1831,7 +1831,7 @@ module.exports = {
 
 /***/ "./node_modules/axios/node_modules/is-buffer/index.js":
 /*!************************************************************!*\
-  !*** ./node_modules/axios/node_modules/is-buffer/index.js ***!
+  !*** ./node_modules/axios/node_modules/is-buffer/wordCloud.js ***!
   \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -1853,7 +1853,7 @@ module.exports = function isBuffer (obj) {
 
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
-  !*** ./node_modules/object-assign/index.js ***!
+  !*** ./node_modules/object-assign/wordCloud.js ***!
   \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -2629,7 +2629,7 @@ var describeComponentFrame = function (name, source, ownerName) {
 
     {
       // In DEV, include code for a common special case:
-      // prefer "folder/index.js" instead of just "index.js".
+      // prefer "folder/wordCloud.js" instead of just "wordCloud.js".
       if (/^index\./.test(fileName)) {
         var match = path.match(BEFORE_SLASH_RE);
 
@@ -7081,7 +7081,7 @@ var describeComponentFrame = function (name, source, ownerName) {
 
     {
       // In DEV, include code for a common special case:
-      // prefer "folder/index.js" instead of just "index.js".
+      // prefer "folder/wordCloud.js" instead of just "wordCloud.js".
       if (/^index\./.test(fileName)) {
         var match = path.match(BEFORE_SLASH_RE);
 
@@ -8955,7 +8955,7 @@ module.exports = react;
 
 /***/ "./node_modules/react/index.js":
 /*!*************************************!*\
-  !*** ./node_modules/react/index.js ***!
+  !*** ./node_modules/react/wordCloud.js ***!
   \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -9485,7 +9485,7 @@ class IndexSlider extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
 
 /***/ "./web/index.js":
 /*!**********************!*\
-  !*** ./web/index.js ***!
+  !*** ./web/wordCloud.js ***!
   \**********************/
 /*! exports provided: render */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -9518,7 +9518,7 @@ function render(appData) {
 
 /***/ "./web/network/index.js":
 /*!******************************!*\
-  !*** ./web/network/index.js ***!
+  !*** ./web/network/wordCloud.js ***!
   \******************************/
 /*! exports provided: main */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -9537,4 +9537,4 @@ const main = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
 /***/ })
 
 /******/ });
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=wordCloud.js.map

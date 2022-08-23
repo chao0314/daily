@@ -1,0 +1,66 @@
+<!--
+1.Redis-List类型-增删改查
+Redis的Value除了可以存储字符串和Hash类型以外, 还可以存储List类型
+List类型就相当于JavaScript中的数组, 可以把整个数组当做一个Value存储起来
+注意点: List是有序的
+
+- 增加
++ 从第二个Value开始添加到前一个的左边
+    + lpush key value1 value2 value3
+    + lpush arr1 aa bb cc -> cc bb aa
++ 从第二个Value开始添加到前一个的右边
+    + rpush key value1 value2 value3
+    + rpush arr2 aa bb cc -> aa bb cc
+
+- 查询
++ 查询指定范围数据
+    * lrange key startIndex endIndex
+    * 索引从0开始, endIndex等于-1表示取到最后
++ 查询指定索引数据
+    * lindex key index
+    * 从前往后索引从0开始, 从后往前索引从-1开始
+
+- 修改
+lset key index value
+注意 index从0开始
+
+- 删除
+- lpop删除左边元素
+lpop key
+- rpop删除右边元素
+rpop key
+
+- lrem删除指定个数的指定元素
+lrem key count value
++ count > 0 : 从表头开始向表尾搜索，移除与 value 相等的元素，数量为 count
++ count < 0 : 从表尾开始向表头搜索，移除与 value 相等的元素，数量为 count 的绝对值
++ count = 0 : 移除表中所有与 value 相等的值
+
+- ltrim按照索引剪切列表
+ltrim key start end
+-->
+<!--
+1.Redis-List类型-其它操作
+- 追加数据
+lpush key value1,value2,...
++ 22 11 aa bb
+rpush key value1,value2,...
++ 22 11 aa bb 11 22
+
+- 插入数据
+linsert key before|after oldValue newValue
+
+- 获取列表长度
+llen key
+-->
+<!--
+1.列表实现简单数据结构
+- 栈结构(水桶) - 先进后出
+lpush + lpop
+
+- 队列结构(水管) - 先进先出
+lpush + rpop
+
+- 所以在企业开发中, 如果需要需要'先进后出'或者'先进先出'的数据
+  我们就可以将这些数据存储到Redis的列表中
+-->

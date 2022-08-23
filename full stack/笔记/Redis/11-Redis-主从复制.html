@@ -1,0 +1,174 @@
+<!--
+1.Redis高可用性
+- 如果所有用户都从同一台Redis服务器上读写数据
+  那么如果这台Redis服务器宕机了, 用户就不能进行读写了
+- 如果我们有多台Redis服务器, 并且每台服务器中存储的内容都相同
+  那么即使有一台服务器宕机了, 用户还可以继续使用其它的服务器
+- 以上这种特点, 我们就称之为'高可用性'
+
+2.Redis数据安全性
+- 如果所有数据都保存在同一台Redis服务器上
+  那么如果这台Redis服务器坏了, 那么很有可能会导致数据丢失
+- 如果我们有多台Redis服务器, 并且每台服务器中存储的内容都相同
+  那么即使有一台服务器坏了, 也不会导致数据丢失
+  因为我们还有其它保存了相同内容的服务器
+- 以上这种特点, 我们就称之为'数据的安全性'
+
+3.Redis数据分流
+- 如果所有用户都从同一台Redis服务器上读写数据
+  那么由于服务器的性能限制和网络传输速度的限制
+  如果同一时刻用户量较多时, 服务器负荷增大, 数据处理速度变慢的问题
+- 如果我们有多台Redis服务器, 如果我们把请求分流到不同的服务器
+  那么就可以降低了服务器压力, 加快数据处理速度
+  并且如果我们将多台服务器安装到不同的区域, 还可以采用就近原则访问
+  还可以进一步提升用户的访问速度
+- 以上这种特点, 我们就称之为'数据分流'
+
+4.Redis主从复制
+- 主从复制就是使用多台保存了相同内容的Redis服务器来组成一个数据库集群
+  这个数据库集群中的每一台Redis服务我们称之为一个节点
+
+5.Redis主从复制特点
+- 主从复制中必须有一个主节点
+    + 主节点主要负责写入数据和读取
+- 主从复制中除了主节点以外的节点我们称之为'从节点'
+    + 副节点默认情况下只能读取数据, 不能写入数据
+    + 副节点主要负责从主节点不断复制数据
+- 和MongoDB不同的是,Redis中的主从复制, 主节点挂掉后不会自动选举
+  如果需要自动选举需要借助Redis Sentinel来实现
+-->
+<!--
+1.搭建Redis主从复制
+1.1拷贝多份Redis安装包
+1.2修改主节点配置
+bind 127.0.0.1                  #绑定ip地址
+port 6380                       #绑定端口号
+dir ./                          #RDB文件存储路径
+dbfilename dump-${prot}.rdb     #RDB文件名称
+stop-writes-on-bgsave-error yes #bgsave遇到错误是否停止
+rdbcompression yes              #是否压缩RDB文件
+rdbchecksum yes                 #是否校验RDB文件
+#save 900 1
+#save 300 10
+#save 60 10000
+appendonly yes                           #是否使用AOF
+appendfilename "appendonly-${prot}.aof"  #AOF文件名称
+appendfsync everysec                     #写入命令的同步机制
+dir /rdbdiskpath                         #保存AOF文件路径
+auto-aof-rewrite-min-size 64mb           #AOF文件重写体积
+auto-aof-rewrite-percentage 100          #AOF文件增长率
+no-appendfsync-on-rewrite yes            #AOF重写时是否正常写入当前操作的命令
+logfile "${prot}_log.txt"                #系统日志文件名称
+
+1.3修改从节点配置
+port 6381                       #绑定端口号
+slaveof 127.0.0.1 6380                   #主节点地址和端口
+
+port 6382                       #绑定端口号
+slaveof 127.0.0.1 6380                   #主节点地址和端口
+1.4注册启动Redis服务
+命令行进入安装包路径下, 执行如下指令
+redis-server.exe --service-install redis.windows-service.conf  --service-name Redis6380
+redis-server.exe --service-install redis.windows-service.conf  --service-name Redis6381
+redis-server.exe --service-install redis.windows-service.conf  --service-name Redis6382
+
+1.5查看主从状态
+redis-cli -h 1270.0.01 -p 6380
+info replication
+redis-cli -h 1270.0.01 -p 6381
+info replication
+
+1.6测试主从复制
+-->
+<!--
+1.主从复制原理
+1.初始化同步(全量复制)
+- 给一个从节点添加主节点之后, 从节点会给主节点发送全量复制请求
+- 主节点收到全量复制请求, 会执行bgsave生成RDB文件
+- 主节点生成完RDB文件, 会将RDB文件发送给从节点
+
+2.同步写库记录(部分复制)
+2.1初始化同步
+- 主节点在生成和发送RDB过程中, 如果还收到了其它的命令
+  Redis会存储到缓冲区中
+- 当RDB文件发送完毕之后, 会将缓冲区中的缓存的命令发送给从节点
+- 从节点收到RDB文件,收到缓冲区命令后, 会先清空自身保存的数据
+  然后加载RDB文件中的内容, 然后执行收到的其它命令
+
+2.2后续同步
+- 主节点每执行一个写命令就会向从节点发送相同的写命令
+  从节点接收到主节点发送过来的命令, 就执行对应的命令
+  以实现和主节点同步
+-->
+<!--
+1.主从复制存在的问题
+- 主从复制有效的解决了Redis'数据安全性'和'数据分流的问题'
+  但是Redis主从复制并没有解决'高可用性'的问题
+- 在标准的主从复制中只有主节点可以读写数据, 从节点只能读取数据
+  所以一旦主节点宕机了, 那么用户就不能继续写入数据了
+- 也就是说在Redis的主从复制中, 主节点宕机了, 系统是不会自动重新选举一个主节点出来的
+
+2.Redis-Sentinel
+- Redis-Sentinel是一个用来监控主从结构中每个节点的状态
+- 我们可以给Redis-Sentinel添加多个Sentinel节点, 让这些节点来监控主从结构的状态
+- 一旦发现主节点挂掉了, 再让这些Sentinel节点帮我们重新从从节点中选举出一个主节点
+
+3.Redis-Sentinel是如何做到高可用的?
+- Redis-Sentinel有三个定时任务
+    + 一个用于获取主从关系,发现新节点
+    + 一个用于交换信息,投票选出新主服务器
+    + 一个用于监听节点是否可用
+
+- 每10秒每个sentinel节点对master节点和slave节点执行info操作
+    + 确定主从关系
+    + 发现子节点
+- 每2秒每个sentinel节点通过master节点的channel（sentinel:hello）交换信息
+    + 目的就是为故障判断,信息交互提供通道
+- 每1秒每个sentintel节点对master节点和slave节点以及其余的sentinel节点执行ping操作
+    + 心跳检测节点是否发生故障
+-->
+<!--
+1.Redis-Sentinel选举规则
+- 第一个发现主节点挂掉的Sentinel会发起选举, 这个Sentinel我们称之为候选Sentinel
+- 候选Sentinel会给其它Sentinel发送消息, 其它Sentinel默认都会投出同意票
+- 只有其它Sentinel已经投过票才会投出反对票
+- 当同意的票数过半时, 候选Sentinel就变成了领导者
+
+- 领导Sentinel会依次给所有子节点发送slaveof no one指令, 让所有子节点脱离原来的主节点
+- 所有节点脱离关系后
+    - 领导Sentinel会优先选择优先级高的节点作为主节点(slave-priority配置)
+    - 如果没有节点设置优先级, 那么会自动选择数据最完整的节点作为主节点
+    - 如果节点保存的数据都一样, 那么会自动选择进程ID最小的节点作为主节点
+- 重新设置完主节点后， 再让剩余节点与这个节点建立关系
+-->
+<!--
+0.主观下线和客观下线
+主观下线： 一个Sentinel节点认为主节点下线
+客观下线： 多个Sentinel节点认为主节点下线
+
+1.Redis-Sentinel搭建
+1.1首先搭建一个主从结构
+1.2然后搭建一个奇数个Sentinel节点的Sentinel
+1.3修改Sentinel配置文件(sentinel.conf)
+port 26380                                  # 当前Sentinel服务运行的端口
+sentinel monitor mymaster 127.0.0.1 6380 2  # 主服务器名称 主服务器地址 主服务器端口，客观下线票数
+sentinel down-after-milliseconds mymaster 10000 # 主观下线时间
+sentinel parallel-syncs mymaster 1          # 故障转移之后,从节点是串行还是并行同步数据
+sentinel failover-timeout mymaster 20000    # 故障转移超时时间
+daemonize yes                               #以守护进程方式运行
+
+1.4注册sentinel服务
+redis-server.exe --service-install sentinel.conf --sentinel --service-name Sentinel26380
+redis-server.exe --service-install sentinel.conf --sentinel --service-name Sentinel26381
+redis-server.exe --service-install sentinel.conf --sentinel --service-name Sentinel26382
+
+1.5测试Redis-Sentinel
+info replication
+-->
+<!--
+1.NodeJS访问Redis-Sentinel
+- 使用Redis-Sentinel之后， 由于主节点可能发生变化， 所以我们不能直接操作主节点
+  只有Redis-Sentinel最清楚当前的主节点是谁, 所以我们应该通过Redis-Sentinel来操作主节点
+
+https://www.npmjs.com/package/redis-sentinel
+-->
