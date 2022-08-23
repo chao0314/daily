@@ -82,7 +82,7 @@ minimual 版
 
 一、调整网卡
 1.配置网卡
-vi /etc/sysconfig/network-scripts/ifcfg-ens33(具体名字依据vm)
+vi /etc/sysconfig/network-scripts/ifcfg-ens33(具体名字依据vmware)
 > ONBOOT=yes
 
 > ping 地址 检查网络连通情况
@@ -666,7 +666,10 @@ scp redis.conf root@192.168.183.132:/root/
 
 create		创建
 
---cluster-replicas 1	集群冗余 1 每个master 一个slaver服务
+--cluster-replicas 1	集群冗余 1, 每个master 一个slaver服务
+#一个集群至少要有三个主节点。
+#选项 --cluster-replicas 1 表示我们希望为集群中的每个主节点创建一个从节点。
+#分配原则尽量保证每个主数据库运行在不同的IP地址，每个从库和主库不在一个IP地址上
 
 >redis-cli -c -h xxx -p 7000 # xxx 为集群节点ip -c 表示集群方式登录
 
