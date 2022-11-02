@@ -59,7 +59,7 @@ Nginx配置upstream实现负载均衡
 Nginx能够配置代理多台服务器。当一台服务器宕机之后。仍能保持系统可用。详细配置步骤例如以下：
 
 1. 在http节点下，加入upstream节点。
-
+ // 可以配置 flag 参数，用于 负载均衡时 限定行为，默认时轮训
 upstream linuxidc {
       server 10.0.6.108:7080;
       server 10.0.0.85:8980;

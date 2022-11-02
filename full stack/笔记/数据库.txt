@@ -25,6 +25,8 @@ DROP USER '用户名'@'主机'
 
 	GRANT  select , insert, update, create, drop  on  vtdc.employee  to  joe@'10.163.255.87'  identified  by '123';
 
+   GRANT  All privileges  on  template_db.*  to  'template'@'%';
+
 	> flush privileges; 更新权限
 	
 	权限：ALL、SELECT、SELECT,UPDATE

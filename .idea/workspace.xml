@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/daily.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/daily.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/full stack/笔记/linux笔记.txt" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/笔记/linux笔记.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/full stack/笔记/node-db.js" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/笔记/node-db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/canva-demo/canvas/俄罗斯方块/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/12 图形动画/canvas/canva-demo/canvas/俄罗斯方块/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js advanced/17 daily/currying.js" beforeDir="false" afterPath="$PROJECT_DIR$/js advanced/17 daily/currying.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-practice/node-error/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-process-error/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-practice/node-error/cluster.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-process-error/cluster.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-practice/node-geek/demo/server/profile.txt" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/node-geek/demo/server/profile.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-practice/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node-practice/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node-practice/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/full stack/笔记/数据库.txt" beforeDir="false" afterPath="$PROJECT_DIR$/full stack/笔记/数据库.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +37,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="1OPhA3mEpSn7qCECGHxH7HrTzOi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -56,27 +48,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="ignore.virus.scanning.warn.message" value="true" />
-    <property name="javascript.nodejs.core.library.configured.version" value="12.18.4" />
-    <property name="javascript.nodejs.core.library.typings.version" value="12.19.12" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/car-web-hook/src/store/user" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="D:/dev/nodejs/node" />
-    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="E:\workspace\daily\vue practice\ts-project\node_modules\typescript\lib" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-    <property name="vuejs.nuxt.types-notification-shown" value="true" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/workspace/daily&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\workspace\daily\example\car-web-hook\src\store\user" />
@@ -381,6 +362,12 @@
       <workItem from="1611105825038" duration="7966000" />
       <workItem from="1611189962408" duration="8694000" />
       <workItem from="1611301735764" duration="370000" />
+      <workItem from="1662027989027" duration="2933000" />
+      <workItem from="1662127679649" duration="18000" />
+      <workItem from="1663309569714" duration="764000" />
+      <workItem from="1667311002423" duration="741000" />
+      <workItem from="1667367748083" duration="3000" />
+      <workItem from="1667370237753" duration="2338000" />
     </task>
     <servers />
   </component>
@@ -415,7 +402,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
