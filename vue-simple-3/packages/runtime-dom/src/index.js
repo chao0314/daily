@@ -13,4 +13,4 @@ export const createApp = (rootComponent, rootProps = {}) => {
     };
     return app;
 };
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=wordCloud.js.map

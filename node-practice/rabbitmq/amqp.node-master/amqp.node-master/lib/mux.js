@@ -8,7 +8,7 @@
 // it then writes 'packets' from the upstreams to the given
 // downstream.
 
-var inherits = require('util').inherits;
+var inherits = require('utils').inherits;
 var assert = require('assert');
 
 var schedule = (typeof setImmediate === 'function') ?

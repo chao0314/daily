@@ -1,2 +1,2 @@
 export { createRenderer } from './renderer';
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=wordCloud.js.map

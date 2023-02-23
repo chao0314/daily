@@ -1,4 +1,4 @@
-var inherits = require('util').inherits;
+var inherits = require('utils').inherits;
 
 function trimStack(stack, num) {
   return stack && stack.split('\n').slice(num).join('\n');

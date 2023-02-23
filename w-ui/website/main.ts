@@ -1,4 +1,6 @@
+// @ts-ignore
 import {createApp} from "vue";
+// @ts-ignore
 import WUI from 'w-ui';
 import App from './App.vue';
 import "theme-chalk/src/index.scss";

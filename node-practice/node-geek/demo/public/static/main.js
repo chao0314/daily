@@ -88,7 +88,7 @@
 
 /***/ "../../node_modules/object-assign/index.js":
 /*!************************************************************************************!*\
-  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/object-assign/index.js ***!
+  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/object-assign/wordCloud.js ***!
   \************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1302,7 +1302,7 @@ var describeComponentFrame = function (name, source, ownerName) {
 
     {
       // In DEV, include code for a common special case:
-      // prefer "folder/index.js" instead of just "index.js".
+      // prefer "folder/wordCloud.js" instead of just "wordCloud.js".
       if (/^index\./.test(fileName)) {
         var match = path.match(BEFORE_SLASH_RE);
 
@@ -28266,7 +28266,7 @@ module.exports = reactDom;
 
 /***/ "../../node_modules/react-dom/index.js":
 /*!********************************************************************************!*\
-  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/react-dom/index.js ***!
+  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/react-dom/wordCloud.js ***!
   \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -28779,7 +28779,7 @@ var describeComponentFrame = function (name, source, ownerName) {
 
     {
       // In DEV, include code for a common special case:
-      // prefer "folder/index.js" instead of just "index.js".
+      // prefer "folder/wordCloud.js" instead of just "wordCloud.js".
       if (/^index\./.test(fileName)) {
         var match = path.match(BEFORE_SLASH_RE);
 
@@ -30655,7 +30655,7 @@ module.exports = react;
 
 /***/ "../../node_modules/react/index.js":
 /*!****************************************************************************!*\
-  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/react/index.js ***!
+  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/react/wordCloud.js ***!
   \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -32147,7 +32147,7 @@ exports.unstable_Profiling = unstable_Profiling;
 
 /***/ "../../node_modules/scheduler/index.js":
 /*!********************************************************************************!*\
-  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/scheduler/index.js ***!
+  !*** /Users/yanghao/Code/geek-nodejs/chapter3/node_modules/scheduler/wordCloud.js ***!
   \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {

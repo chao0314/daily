@@ -8,4 +8,4 @@ export const isFn = target => typeof target === 'function';
 export const isOn = target => /^on[^a-z]/.test(target);
 export const isNo = target => target === null || target === void 0;
 export const isVNode = target => target._is_VNode;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=wordCloud.js.map

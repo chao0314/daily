@@ -1,5 +1,5 @@
 var FS = require('fs');
-var format = require('util').format;
+var format = require('utils').format;
 
 var defs = require('./amqp-rabbitmq-0.9.1.json');
 

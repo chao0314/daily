@@ -6,7 +6,7 @@ module.exports=function (env={}){
 
   return {
     mode: dev?'development':'production',
-    entry: dev?['@babel/polyfill', './src/index.js']:'./src/index.js',
+    entry: dev?['@babel/polyfill', './src/wordCloud.js']:'./src/wordCloud.js',
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: dev?'bundle.js':'bundle.min.js',

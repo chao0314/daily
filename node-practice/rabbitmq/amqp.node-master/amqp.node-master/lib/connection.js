@@ -22,8 +22,8 @@ var closeMsg = require('./format').closeMessage;
 var inspect = require('./format').inspect;
 
 var BitSet = require('./bitset').BitSet;
-var inherits = require('util').inherits;
-var fmt = require('util').format;
+var inherits = require('utils').inherits;
+var fmt = require('utils').format;
 var PassThrough = require('stream').PassThrough ||
   require('readable-stream/passthrough');
 var IllegalOperationError = require('./error').IllegalOperationError;

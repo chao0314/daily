@@ -9,7 +9,7 @@
 var URL = require('url-parse');
 var QS = require('querystring');
 var Connection = require('./connection').Connection;
-var fmt = require('util').format;
+var fmt = require('utils').format;
 var credentials = require('./credentials');
 
 function copyInto(obj, target) {
@@ -22,7 +22,7 @@ function copyInto(obj, target) {
   return target;
 }
 
-// Adapted from util._extend, which is too fringe to use.
+// Adapted from utils._extend, which is too fringe to use.
 function clone(obj) {
   return copyInto(obj, {});
 }
@@ -87,7 +87,7 @@ function credentialsFromUrl(parts) {
 }
 
 function connect(url, socketOptions, openCallback) {
-  // tls.connect uses `util._extend()` on the options given it, which
+  // tls.connect uses `utils._extend()` on the options given it, which
   // copies only properties mentioned in `Object.keys()`, when
   // processing the options. So I have to make copies too, rather
   // than using `Object.create()`.

@@ -2,7 +2,7 @@
 //
 //
 
-// A bitset implementation, after that in java.util.  Yes there
+// A bitset implementation, after that in java.utils.  Yes there
 // already exist such things, but none implement next{Clear|Set}Bit or
 // equivalent, and none involved me tooling about for an evening.
 

@@ -6,7 +6,7 @@
 
 var defs = require('./defs');
 var Promise = require('bluebird');
-var inherits = require('util').inherits;
+var inherits = require('utils').inherits;
 var EventEmitter = require('events').EventEmitter;
 var BaseChannel = require('./channel').BaseChannel;
 var acceptMessage = require('./channel').acceptMessage;

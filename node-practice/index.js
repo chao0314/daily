@@ -28,5 +28,18 @@ console.log(Object.getPrototypeOf(one) === p);
 
 
 
+class Person{
+    constructor(name) {
+        this.name=name;
+    }
+}
+
+
+class Student extends Person {
+
+    say(){}
+}
+
+
 
 

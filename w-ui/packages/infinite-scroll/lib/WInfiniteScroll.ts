@@ -1,3 +1,4 @@
+// @ts-ignore
 import {ComponentPublicInstance, nextTick, ObjectDirective} from 'vue';
 import {getOffsetTop, getScrollContainer, throttle} from "../../utils";
 

@@ -59,7 +59,7 @@ exports = module.exports = function (options = {}) {
             if (chunk && chunk.length > 0) buffer.push(chunk);
             let temp = Buffer.concat(buffer);
 
-            // 与post中实际数据比 header 中的 boundary=---- 少两个 -
+            // ??post?????????? header ??? boundary=---- ?????? -
             let boundary = '--' + ctx.req.headers['content-type'].split('=')[1];
 
             let contents = temp.split(boundary).slice(1, -1);
@@ -69,7 +69,7 @@ exports = module.exports = function (options = {}) {
             let files = {};
             contents.forEach(entry => {
 
-                //http 协议规定 两个 \r\n 来切分 Content-Disposition 和 value
+                //http ???? ???? \r\n ????? Content-Disposition ?? value
                 let [header, ...body] = entry.split('\r\n\r\n');
                 console.log("-h--", header.toString())
 
@@ -77,8 +77,8 @@ exports = module.exports = function (options = {}) {
 
                 console.log("key filename", key, filename);
                 if (filename) {
-                    //防止 图片等 二进制数据内有 \r\n\r\n 所以上面切过body不能用，普通 fields 数据不会出现这种情况。
-                    let body = entry.slice(header.length + '\r\n\r\n'.length, -2);//末尾有  \r\n 所以 -2
+                    //??? ???? ?????????????? \r\n\r\n ???????????body?????????? fields ???????????????????
+                    let body = entry.slice(header.length + '\r\n\r\n'.length, -2);//????  \r\n ???? -2
                     let filepath = path.resolve( dir, uuid.v4().replace(/-/g, ''));
                     fs.writeFileSync(filepath, body, {flag: 'w'});
 

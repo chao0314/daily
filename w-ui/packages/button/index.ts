@@ -1,3 +1,4 @@
+// @ts-ignore
 import {App} from "vue";
 import Button from "./lib/WButton.vue";
 

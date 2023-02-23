@@ -5,7 +5,7 @@ const url = require('url');
 const ejs = require('ejs');
 const mime = require('mime');
 const path = require('path');
-const util = require('util');
+const util = require('utils');
 const zlib = require('zlib');
 const tpl = fs.readFileSync(path.resolve(__dirname, '../tpl/tpl.html'), {encoding: 'utf8'});
 

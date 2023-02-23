@@ -47,7 +47,7 @@
 
 'use strict';
 
-var inherits = require('util').inherits;
+var inherits = require('utils').inherits;
 var EventEmitter = require('events').EventEmitter;
 
 // Exported so that we can mess with it in tests

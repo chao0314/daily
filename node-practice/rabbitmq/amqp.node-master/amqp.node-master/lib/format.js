@@ -7,8 +7,8 @@
 'use strict';
 
 var defs = require('./defs');
-var format = require('util').format;
-var inherits = require('util').inherits;
+var format = require('utils').format;
+var inherits = require('utils').inherits;
 var HEARTBEAT = require('./frame').HEARTBEAT;
 
 module.exports.closeMessage = function(close) {

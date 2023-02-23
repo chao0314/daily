@@ -7,9 +7,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
     <title>Title</title>
-  <script src="full-promise.js"></script>
+<!--  <script src="full-promise.js"></script>-->
 </head>
 <body>
 
 </body>
+<script>
+
+    const p1 =  new Promise((resolve, reject) => {
+        console.log('p1-1')
+        resolve();
+    })
+
+    //p11 结合源码 queueMicrotask 理解，只有 resolve/reject 后，（无返回值相当于 resolve(undefined)）才会将then的回调函数实际推入 微任务队列,
+    //等待执行，而非then调用时就进入队列，then调用可以看成是存储回调函数
+    const p11= p1.then(res=>{
+
+        console.log('p1-2');
+    })
+    p11.then(res=>console.log('p1-3'));
+
+    const p2 =  new Promise((resolve, reject) => {
+        console.log('p2-1')
+        resolve();
+    })
+
+    p2.then(res=>console.log('p2-2')).then(res=>console.log('p2-3'));
+
+</script>
 </html>

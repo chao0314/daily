@@ -4,7 +4,7 @@ module.exports = function (env = {}) {
     const {dev} = env;
     return {
         mode: dev ? "development" : "production",
-        entry: dev ? ["@babel/polyfill", "./test"] : ["@babel/polyfill", "src/index.js"],
+        entry: dev ? ["@babel/polyfill", "./test"] : ["@babel/polyfill", "src/wordCloud.js"],
         output: {
             path: path.resolve(__dirname, "dist"),
             filename: dev ? "test.js" : "axios.min.js",

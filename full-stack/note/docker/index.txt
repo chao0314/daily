@@ -1,0 +1,6 @@
+
+
+开启squid 正向代理 注意要设置账户密码 以及修改默认 3128的映射端口
+
+
+docker run -d --name squid -p xxxx:3128 -v /root/app/squid/squid.conf:/etc/squid/squid.conf -v /root/app/passwd/squid_passwd:/etc/squid/squid_passwd  ubuntu/squid

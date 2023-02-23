@@ -1,3 +1,4 @@
+// @ts-ignore
 import {App, render, h, ref} from "vue";
 import Message from "./lib/WMessage.vue";
 

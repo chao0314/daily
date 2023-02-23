@@ -1,5 +1,6 @@
 import {WithInstall} from "../../types/types";
 import WInfiniteScroll from "./lib/WInfiniteScroll";
+// @ts-ignore
 import {App} from "vue";
 
 

@@ -26,6 +26,7 @@ exports = module.exports = {
     handleMultipart(option = {}) {
         let def = {
             uploadDir,
+            keepExtensions: true,
             maxFileSize: 10 * 1024 * 1024,
             onerror: (error, ctx) => {
                 console.log('handleMultipart',error)

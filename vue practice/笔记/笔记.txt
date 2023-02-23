@@ -1,6 +1,0 @@
-阅读组件库源码 https://github.com/vueComponent/ant-design-vue
-
-vue源码可以推荐两个：
-
-https://ustbhuangyi.github.io/vue-analysis/
-https://github.com/answershuto/learnVu

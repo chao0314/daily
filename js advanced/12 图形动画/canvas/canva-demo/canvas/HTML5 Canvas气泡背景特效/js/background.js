@@ -100,7 +100,7 @@ window.addEventListener("load", function() {
 	var scale = 0;
 	//constants for faster calcs
 	var pi2 = Math.PI * 2;
-	//util functions
+	//utils functions
 	function lerp(a, b, step) {
 		return step * (b - a) + a;
 	}
