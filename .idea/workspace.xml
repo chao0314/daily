@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="" />
+    <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +37,8 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/data-visualization/large-base/node_modules/vue-echarts/dist/index.d.ts" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/w-ui/node_modules/@vue/runtime-dom/dist/runtime-dom.d.ts" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/w-ui/node_modules/vue/dist/vue.d.ts" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -48,16 +51,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/wzc/workspace/daily/full stack/笔记",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/wzc/workspace/daily/full stack/笔记&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/full stack/笔记" />
@@ -74,7 +77,7 @@
       <recent name="E:\workspace\daily\example\car-web-hook\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.test.js">
+  <component name="RunManager" selected="Node.js.test.js (1)">
     <configuration name="budgetInfo.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/budgetInfo.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -84,6 +87,9 @@
     <configuration name="sina.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/sina-m/sina.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
+    <configuration name="test.js (1)" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/vue3-again/test.js" working-dir="$PROJECT_DIR$/vue3-again">
+      <method v="2" />
+    </configuration>
     <configuration name="test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/example/car-web-hook/src/test.js" working-dir="$PROJECT_DIR$/example/car-web-hook/src">
       <method v="2" />
     </configuration>
@@ -91,10 +97,12 @@
       <item itemvalue="JavaScript Debug.budgetInfo.html" />
       <item itemvalue="JavaScript Debug.mi.html" />
       <item itemvalue="JavaScript Debug.sina.html" />
+      <item itemvalue="Node.js.test.js (1)" />
       <item itemvalue="Node.js.test.js" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.test.js (1)" />
         <item itemvalue="Node.js.test.js" />
         <item itemvalue="JavaScript Debug.sina.html" />
         <item itemvalue="JavaScript Debug.mi.html" />
@@ -368,6 +376,7 @@
       <workItem from="1667311002423" duration="741000" />
       <workItem from="1667367748083" duration="3000" />
       <workItem from="1667370237753" duration="4253000" />
+      <workItem from="1677378433962" duration="1020000" />
     </task>
     <servers />
   </component>

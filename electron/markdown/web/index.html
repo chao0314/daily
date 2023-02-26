@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="" type="image/x-icon" sizes="16x16"/>
+    <title>Title</title>
+    <style>
+        html, body, textarea, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+
+            display: flex;
+        }
+
+        .editor, .panel {
+
+            flex: 1 1 50%;
+            height: 100vh;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .editor {
+            background: #0b9788;
+            color: white;
+        }
+
+        .panel {
+
+            background: moccasin;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <textarea class="editor"></textarea>
+    <div class="panel"></div>
+</div>
+
+</body>
+<script>
+
+    function throttle(fn, interval = 500) {
+        let timer;
+        return function (...args) {
+            if (!timer) {
+                timer = setTimeout(() => {
+                    timer = null;
+                    fn(...args);
+
+                }, interval)
+            }
+
+        }
+
+
+    }
+
+
+    const oTextarea = document.querySelector('.editor');
+    const oPanel = document.querySelector('.panel');
+
+    function handleText(e) {
+
+        window.postMessage({
+            channel: "raw-text",
+            value: e.target.value
+        }, "*");
+
+        window.addEventListener('message', (e) => {
+
+            const data = e.data;
+            if (data.channel === 'to-html') oPanel.innerHTML = data.value;
+
+        })
+
+
+    }
+
+
+    const handleInput = throttle(handleText);
+    oTextarea.addEventListener('input', handleInput);
+
+
+</script>
+</html>

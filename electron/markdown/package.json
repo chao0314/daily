@@ -1,0 +1,17 @@
+{
+  "name": "markdown",
+  "version": "1.0.0",
+  "description": "",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^13.1.9"
+  },
+  "dependencies": {
+    "marked": "^2.1.3"
+  }
+}
