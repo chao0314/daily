@@ -128,6 +128,8 @@ export function effect(fn, options = {lazy: false}) {
 }
 
 
+// TODO  对象 for in 处理
+
 export function reactive(obj, isShallow = false, isReadonly = false) {
 
     return new Proxy(obj, {
@@ -147,7 +149,7 @@ export function reactive(obj, isShallow = false, isReadonly = false) {
         set(target, p, value, receiver) {
 
 
-            console.log('set',p,value,receiver._raw !== target)
+            // console.log('set', p, value, receiver._raw !== target)
             const oldValue = target[p];
 
             const res = Reflect.set(target, p, value, receiver);
@@ -155,12 +157,10 @@ export function reactive(obj, isShallow = false, isReadonly = false) {
             //@2
             if (receiver._raw !== target) return res;
 
-            // value 未变， 不需要触发 副作用函数
+            // value 未变， 不需要触发 副作用函数, NaN 不等于 NaN
 
+            if (oldValue !== value && (oldValue === oldValue || value === value)) {
 
-            if ((!isNaN(oldValue) || !isNaN(value)) && oldValue !== value) {
-
-                console.log('trigger')
                 trigger(target, p);
 
             }
