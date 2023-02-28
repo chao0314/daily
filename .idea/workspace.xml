@@ -19,8 +19,8 @@
         <option value="CSS File" />
         <option value="React Class Component" />
         <option value="React File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -36,10 +36,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/w-ui/node_modules/@vue/runtime-dom/dist/runtime-dom.d.ts" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/w-ui/node_modules/vue/dist/vue.d.ts" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -53,6 +49,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -77,10 +74,7 @@
       <recent name="E:\workspace\daily\example\car-web-hook\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.test.js (1)">
-    <configuration name="budgetInfo.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/budgetInfo.html" useBuiltInWebServerPort="true">
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Node.js.test.js (2)">
     <configuration name="mi.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/mi/mi.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -90,23 +84,26 @@
     <configuration name="test.js (1)" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/vue3-again/test.js" working-dir="$PROJECT_DIR$/vue3-again">
       <method v="2" />
     </configuration>
+    <configuration name="test.js (2)" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/vue3-again/reactivity/test.js" working-dir="$PROJECT_DIR$/vue3-again/reactivity">
+      <method v="2" />
+    </configuration>
     <configuration name="test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/example/car-web-hook/src/test.js" working-dir="$PROJECT_DIR$/example/car-web-hook/src">
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JavaScript Debug.budgetInfo.html" />
       <item itemvalue="JavaScript Debug.mi.html" />
       <item itemvalue="JavaScript Debug.sina.html" />
+      <item itemvalue="Node.js.test.js (2)" />
       <item itemvalue="Node.js.test.js (1)" />
       <item itemvalue="Node.js.test.js" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.test.js (2)" />
         <item itemvalue="Node.js.test.js (1)" />
         <item itemvalue="Node.js.test.js" />
         <item itemvalue="JavaScript Debug.sina.html" />
         <item itemvalue="JavaScript Debug.mi.html" />
-        <item itemvalue="JavaScript Debug.budgetInfo.html" />
       </list>
     </recent_temporary>
   </component>
@@ -377,6 +374,8 @@
       <workItem from="1667367748083" duration="3000" />
       <workItem from="1667370237753" duration="4253000" />
       <workItem from="1677378433962" duration="1020000" />
+      <workItem from="1677460990815" duration="14250000" />
+      <workItem from="1677545549723" duration="13843000" />
     </task>
     <servers />
   </component>
