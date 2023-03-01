@@ -2,9 +2,17 @@ const depsMapBucket = new WeakMap();
 const effectStack = [];
 let activeEffect = null;
 
-
 const jobQueue = [];
 let isFlushing = false;
+
+// 对象 for in 处理
+
+const iterate_key = Symbol('iterate_key');
+
+const TriggerType = {ADD: 'ADD', SET: 'SET', DEl: 'DEl'};
+
+//避免重复代理 死循环
+const hadProxy = new WeakSet();
 
 export function addJob(jobFn) {
 
@@ -29,7 +37,6 @@ export function flushJob() {
 
 }
 
-
 function cleanup(effectFn) {
 
     const propDeps = effectFn.propDeps;
@@ -39,6 +46,28 @@ function cleanup(effectFn) {
         propDeps.length = 0;
     }
 
+
+}
+
+function traverse(obj, seen = new Set()) {
+
+    //暂时 只考虑了 Object 对象类型，没有考虑 Array 等
+
+    if (obj === null || typeof obj !== 'object') return;
+
+    for (const p in obj) {
+
+        const value = obj[p];
+
+        if (value !== null && typeof obj === 'object' && !seen.has(value)) {
+            // seen 避免循环引用，导致死循环
+            traverse(value, seen);
+            seen.add(value)
+        }
+
+    }
+
+    return obj;
 
 }
 
@@ -58,9 +87,7 @@ export function track(target, p) {
 
 }
 
-
-export function trigger(target, p) {
-
+export function trigger(target, p, type, value) {
 
     const targetDepMap = depsMapBucket.get(target);
 
@@ -68,10 +95,52 @@ export function trigger(target, p) {
 
     const propDepSet = targetDepMap.get(p);
 
-    if (!propDepSet) return;
+    let iterateKeyDepSet;
+
+    if (type === TriggerType.ADD || type === TriggerType.DEl) {
+        // 添加 删除 属性，需要触发 遍历的副作用函数
+        iterateKeyDepSet = targetDepMap.get(iterate_key);
+
+    }
+
+    // 如果是数组 ADD 还会影响到 收集了 length的副作用函数
+
+    let lengthDepSet;
+
+    if (Array.isArray(target) && type === TriggerType.ADD) {
+
+        lengthDepSet = targetDepMap.get('length');
+
+
+    }
+
+    // 如果是数组，直接修改了 length ，例如 arr.length = 10 那么，index 10以后的数组数据都受影响，需要响应变化
+
+    let indexDepSet;
+
+    if (Array.isArray(target) && p === 'length') {
+
+        const nowLength = Number(value);
+        const oldLength = target.length;
+
+        for (let i = nowLength; i < oldLength; i++) {
+
+            if (!indexDepSet) indexDepSet = new Set();
+
+            const depSet = targetDepMap.get(i);
+
+            if (depSet) indexDepSet.add(...depSet);
+
+        }
+
+    }
 
     //解决一边遍历一边修改的导致的无限循环问题
-    const effectsToRun = new Set(propDepSet);
+    const effectsToRun = new Set();
+    if (propDepSet) effectsToRun.add(...propDepSet);
+    if (iterateKeyDepSet) effectsToRun.add(...iterateKeyDepSet);
+    if (lengthDepSet) effectsToRun.add(...lengthDepSet);
+    if (indexDepSet) effectsToRun.add(...indexDepSet);
 
     effectsToRun.forEach(effectFn => {
 
@@ -84,7 +153,6 @@ export function trigger(target, p) {
         }
 
     })
-
 
 }
 
@@ -128,49 +196,125 @@ export function effect(fn, options = {lazy: false}) {
 }
 
 
-// TODO  对象 for in 处理
+function createReactive(obj, isShallow = false, isReadonly = false) {
 
-export function reactive(obj, isShallow = false, isReadonly = false) {
+    if (typeof obj === 'object' && obj !== null) {
 
-    return new Proxy(obj, {
+        if (hadProxy.has(obj)) return obj;
 
-        get(target, p, receiver) {
+        const proxy = new Proxy(obj, {
 
-            // 为 receiver 设置 _raw 属性，用于区分 receiver是哪个 target的代理，从而避免
-            // 原型链继承时的，子对象修改了属性，但是父子都被触发副作用 @2
+            get(target, p, receiver) {
 
-            if (p === '_raw') return target;
+                // 为 receiver 设置 _raw 属性，用于区分 receiver是哪个 target的代理，从而避免
+                // 原型链继承时的，子对象修改了属性，但是父子都被触发副作用 @2
 
-            track(target, p);
+                if (p === '_raw') return target;
 
-            return Reflect.get(target, p, receiver);
+                //只读的属性，不需要收集，因为不会改变，无需响应式
+                //todo...
+                // 内部 symbol 不收集 [Symbol.iterator]等
+                // bug? 如果自定义的symbol?
+                // todo...
 
-        },
-        set(target, p, value, receiver) {
+                if (!isReadonly && typeof p !== 'symbol') track(target, p);
+
+                const res = Reflect.get(target, p, receiver);
+
+                if (typeof res === 'object' && res !== null && !isShallow)
+                    return isReadonly ? readonly(res) : reactive(res);
+
+                return res;
+
+            },
+            set(target, p, value, receiver) {
+
+                // console.log('set', p, value)
+                const oldValue = target[p];
+                const hasProp = Object.hasOwn(target, p);
+
+                const triggerType = hasProp ? TriggerType.SET : TriggerType.ADD;
+
+                if (isReadonly) {
+
+                    console.warn(`${p} is readonly property`);
+                    return true;
+                }
 
 
-            // console.log('set', p, value, receiver._raw !== target)
-            const oldValue = target[p];
+                const res = Reflect.set(target, p, value, receiver);
 
-            const res = Reflect.set(target, p, value, receiver);
+                //@2
+                if (receiver._raw !== target) return res;
 
-            //@2
-            if (receiver._raw !== target) return res;
 
-            // value 未变， 不需要触发 副作用函数, NaN 不等于 NaN
+                // value 未变， 不需要触发 副作用函数, NaN 不等于 NaN
 
-            if (oldValue !== value && (oldValue === oldValue || value === value)) {
+                if (oldValue !== value && (oldValue === oldValue || value === value)) {
 
-                trigger(target, p);
+                    // console.log('---', triggerType)
+                    trigger(target, p, triggerType, value);
+
+                }
+
+                return res;
+
+            },
+            ownKeys(target) {
+
+                // console.log('ownKeys--')
+
+                // 数组遍历 依赖于length,不需要和普通对象一样手动新增一个 iterate_key 属性
+
+                Array.isArray(target) ? track(target, 'length') : track(target, iterate_key);
+
+                return Reflect.ownKeys(target);
+
+            },
+            deleteProperty(target, p) {
+
+                if (isReadonly) {
+
+                    console.warn(`${p} is readonly property`);
+                    return true;
+                }
+
+                const res = Reflect.deleteProperty(target, p);
+
+                // 删除没有的属性，不用管，不触发遍历 副作用函数
+                if (Object.hasOwn(target, p)) trigger(target, p, TriggerType.DEl);
+
+                return res;
 
             }
 
-            return res;
+        })
+        hadProxy.add(proxy);
 
-        }
+        return proxy;
+    }
 
-    })
+}
 
+export function reactive(obj) {
+
+    return createReactive(obj, false, false);
+
+}
+
+export function shallowReactive(obj) {
+
+    return createReactive(obj, true, false);
+}
+
+export function readonly(obj) {
+
+    return createReactive(obj, false, true);
+}
+
+export function shallowReadonly(obj) {
+
+    return createReactive(obj, true, true);
 }
 
 export function computed(getter) {
@@ -259,27 +403,8 @@ export function watch(source, cb, options = {immediate: false, flush: 'post'}) {
 
 }
 
-function traverse(obj, seen = new Set()) {
 
-    //暂时 只考虑了 Object 对象类型，没有考虑 Array 等
 
-    if (obj === null || typeof obj !== 'object') return;
-
-    for (const p in obj) {
-
-        const value = obj[p];
-
-        if (value !== null && typeof obj === 'object' && !seen.has(value)) {
-            // seen 避免循环引用，导致死循环
-            traverse(value, seen);
-            seen.add(value)
-        }
-
-    }
-
-    return obj;
-
-}
 
 
 
