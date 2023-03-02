@@ -1,3 +1,5 @@
+import {arrayMethodMutations} from "./array.js";
+
 const depsMapBucket = new WeakMap();
 const effectStack = [];
 let activeEffect = null;
@@ -12,7 +14,13 @@ const iterate_key = Symbol('iterate_key');
 const TriggerType = {ADD: 'ADD', SET: 'SET', DEl: 'DEl'};
 
 //避免重复代理 死循环
-const hadProxy = new WeakSet();
+const hadProxy = new WeakMap();
+
+//是否收集 副作用函数依赖，在数组方法 如push等有用，push会改变length，但默认也会读取length
+//会导致 无限循环，堆满调用栈
+export const trackOptions = {
+    shouldTrack: true
+};
 
 export function addJob(jobFn) {
 
@@ -72,6 +80,9 @@ function traverse(obj, seen = new Set()) {
 }
 
 export function track(target, p) {
+
+    //不收集  退出
+    if (!trackOptions.shouldTrack) return;
 
     let targetDepMap = depsMapBucket.get(target);
     if (!targetDepMap) depsMapBucket.set(target, targetDepMap = new Map());
@@ -200,7 +211,7 @@ function createReactive(obj, isShallow = false, isReadonly = false) {
 
     if (typeof obj === 'object' && obj !== null) {
 
-        if (hadProxy.has(obj)) return obj;
+        if (hadProxy.has(obj)) return hadProxy.get(obj);
 
         const proxy = new Proxy(obj, {
 
@@ -210,6 +221,15 @@ function createReactive(obj, isShallow = false, isReadonly = false) {
                 // 原型链继承时的，子对象修改了属性，但是父子都被触发副作用 @2
 
                 if (p === '_raw') return target;
+
+                //如果是数组，并且是需要拦截的数组方法
+
+                if (Array.isArray(target) && arrayMethodMutations.hasOwnProperty(p)) {
+
+                    return Reflect.get(arrayMethodMutations, p, receiver);
+
+                }
+
 
                 //只读的属性，不需要收集，因为不会改变，无需响应式
                 //todo...
@@ -289,7 +309,7 @@ function createReactive(obj, isShallow = false, isReadonly = false) {
             }
 
         })
-        hadProxy.add(proxy);
+        hadProxy.set(obj, proxy);
 
         return proxy;
     }

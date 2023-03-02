@@ -13,6 +13,8 @@ import {
 } from "./index.js";
 
 
+
+
 const obj = {name: 'hello', age: 18, data: {money: "many"}};
 const pObj = reactive(obj)
 
@@ -229,6 +231,40 @@ const pObj = reactive(obj)
 //
 // }, 3000)
 
+
+//Array
+
+
+// const obj1 = {}
+// const arr = reactive([obj1])
+// const arr1 = reactive([0])
+
+// console.log(arr.includes(arr[0]));
+// console.log(arr.includes({}));
+// console.log(arr.includes(obj1));
+//
+//
+// effect(()=>{
+//     arr1.push(1)
+//
+// })
+//
+//
+// effect(()=>{
+//     console.log(arr1.length)
+//
+//     for (const v of arr1) {
+//
+//         console.log('--',v);
+//     }
+// })
+//
+//
+// setTimeout(()=>{
+//
+//     arr1.push(2)
+//
+// },2000)
 
 
 
