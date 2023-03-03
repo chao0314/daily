@@ -9,10 +9,11 @@ import {
     watch,
     shallowReactive,
     readonly,
-    shallowReadonly
+    shallowReadonly,
+    ref,
+    toRef,
+    toRefs, deRefProxy
 } from "./index.js";
-
-
 
 
 const obj = {name: 'hello', age: 18, data: {money: "many"}};
@@ -265,6 +266,72 @@ const pObj = reactive(obj)
 //     arr1.push(2)
 //
 // },2000)
+
+// const valueRef = ref(1);
+//
+// effect(()=>{
+//
+//     console.log(valueRef.value);
+//
+// })
+//
+//
+//
+// setTimeout(()=>{
+//     valueRef.value = 2;
+// },2000)
+
+
+// const nameRef =  toRef(pObj,'name');
+//
+//
+// effect(()=>{
+//
+//     console.log(nameRef.value);
+//
+// })
+//
+//
+//
+// setTimeout(()=>{
+//     nameRef.value = 'hi ref';
+// },2000)
+
+// const valueObj = {age:ref(18)};
+// console.log(valueObj.age.value);
+// console.log(deRefProxy(valueObj).age)
+
+
+const o = {
+    toString() {
+
+        return 'to string'
+    },
+
+    valueOf() {
+
+        return 'value of'
+    },
+    [Symbol.toPrimitive](hint) {
+        // number/string /default
+        console.log('---hint---', hint)
+        return true;
+    }
+}
+
+//数值运算 优先 valueOf
+//字符串优先 toString
+
+//[Symbol.toPrimitive] 优先级最高
+
+//拼接 +  特殊 default
+// console.log('1' + o);
+// console.log(1 + o);
+// console.log(+o);
+// console.log(1 * o);
+// console.log(String(o))
+
+
 
 
 

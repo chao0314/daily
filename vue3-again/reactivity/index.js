@@ -424,6 +424,94 @@ export function watch(source, cb, options = {immediate: false, flush: 'post'}) {
 }
 
 
+export function ref(value) {
+
+    const wrapper = {
+        value
+    }
+
+    Object.defineProperty(wrapper, '_is_ref', {value: true});
+
+    return reactive(wrapper);
+
+}
+
+// xxxRef  = toRef(obj,'key');
+//xxxRef.value
+export function toRef(proxyTarget, key) {
+
+    const wrapper = {
+
+        get value() {
+
+            return proxyTarget[key];
+        },
+
+        set value(value) {
+
+            return proxyTarget[key] = value;
+
+        }
+
+    };
+
+
+    Object.defineProperty(wrapper, '_is_ref', {value: true});
+
+    return wrapper;
+
+}
+
+export function toRefs(proxyTarget) {
+
+
+    const refs = {};
+
+    for (const key in proxyTarget) {
+
+        refs[key] = toRef(proxyTarget, key);
+
+    }
+
+    return refs;
+
+}
+
+//  ref 模板 解构
+export function deRefProxy(target) {
+
+    return new Proxy(target, {
+
+        get(target, p, receiver) {
+
+            const res = Reflect.get(target, p, receiver);
+
+            if (res._is_ref) return res.value;
+
+            return res
+
+        },
+
+        set(target, p, value, receiver) {
+
+            const res = target[p];
+
+            if (res._is_ref) {
+
+                res.value = value;
+
+                return true;
+            }
+
+            return Reflect.set(target, p, value, receiver);
+
+        }
+
+    })
+
+}
+
+
 
 
 
