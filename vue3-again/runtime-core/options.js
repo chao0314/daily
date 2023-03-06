@@ -14,7 +14,7 @@ export const observerOption = {
         el.textContent = text;
 
     },
-    setTextNodeValue(textNode, value) {
+    setText(textNode, value) {
 
         textNode.nodeValue = value;
 

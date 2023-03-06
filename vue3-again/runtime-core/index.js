@@ -2,7 +2,7 @@ import {Text, Fragment} from "./vnode-type.js";
 
 export function createRenderer(options) {
 
-    const {createElement, createText, setElementText, setTextNodeValue, insert, remove, patchProp} = options;
+    const {createElement, createText, setElementText, setText, insert, remove, patchProp} = options;
 
     //vnode = {
     //   type:'div',function(){},Text,Fragment
@@ -35,28 +35,62 @@ export function createRenderer(options) {
             n1 = null;
         }
 
-        if (!n1) {
+        const {type} = n2;
 
-            mountElement(n2, container);
+        if (type === Text) {
 
-            // if (typeof n2.type === 'string') mountElement(n2, container);
-            // else {
-            //     //todo  mount component
-            //
-            // }
+            if (!n1) {
+
+                const textNode = createText(n2.children);
+                n2.el = textNode;
+                insert(textNode, container);
+
+            } else {
+
+                const el = n2.el = n1.el;
+
+                setText(el, n2.children);
+            }
+
+        //vue3 支持 组件
+            // 多根
+        } else if (type === Fragment) {
+
+            if(!n1){
+
+
+            }else {
+
+
+
+            }
+
 
         } else {
+            //普通 element
 
-            patchElement(n1, n2, container);
+            if (!n1) {
 
-            // if (typeof n2.type === 'string') patchElement(n1, n2, container);
-            // else {
-            //     //todo  patch component
-            // }
+                mountElement(n2, container);
+
+                // if (typeof n2.type === 'string') mountElement(n2, container);
+                // else {
+                //     //todo  mount component
+                //
+                // }
+
+            } else {
+
+                patchElement(n1, n2);
+
+                // if (typeof n2.type === 'string') patchElement(n1, n2, container);
+                // else {
+                //     //todo  patch component
+                // }
+
+            }
 
         }
-
-        container._vnode = n2;
 
 
     }
@@ -67,8 +101,7 @@ export function createRenderer(options) {
 
         const {children} = vnode;
 
-        if (typeof children === 'string') setElementText(el, children);
-        else if (Array.isArray(children)) children.forEach(vnode => {
+        if (typeof children === 'string') setElementText(el, children); else if (Array.isArray(children)) children.forEach(vnode => {
 
             patch(null, vnode, el);
 
@@ -91,7 +124,7 @@ export function createRenderer(options) {
     }
 
 
-    function patchElement(n1, n2, container) {
+    function patchElement(n1, n2) {
 
         const el = n2.el = n1.el;
         const oldProps = n1.props;
@@ -114,27 +147,54 @@ export function createRenderer(options) {
 
         }
 
-        if (n2.type === Text) {
 
-            //todo
-
-        } else if (n2.type === Fragment) {
-
-            //todo
-
-        } else {
-            // 普通 element
-
-            patchChildren(n1, n2, container);
-        }
+        // 普通 element
+        patchChildren(n1, n2);
 
 
     }
 
-    function patchChildren(n1, n2, container) {
+    function patchChildren(n1, n2) {
 
         const newChildren = n1.children;
         const oldChildren = n2.children;
+        const el = n2.el = n1.el;
+
+        if (Array.isArray(newChildren)) {
+
+            if (Array.isArray(oldChildren)) {
+                //todo dom diff
+
+            } else {
+
+                // old children 要么是文本子节点 要么没有子节点
+                //清理
+                setElementText(el, '');
+
+                newChildren.forEach(child => {
+
+                    //不直接用 mountElement ，因为还有可能是 component
+                    patch(null, child, el);
+
+                })
+
+            }
+
+        } else {
+
+            // new children  是文本 或者没有
+
+            if (Array.isArray(oldChildren)) {
+
+                oldChildren.forEach(oldChild => unmount(oldChild));
+
+            }
+
+            // new child 有值就用，没有就清理
+            setElementText(el, newChildren || '');
+
+
+        }
 
 
     }
