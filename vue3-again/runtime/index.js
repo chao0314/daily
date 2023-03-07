@@ -50,7 +50,7 @@ export function createRenderer(options) {
 
                 const el = n2.el = n1.el;
 
-                setText(el, n2.children);
+                if (n1.children !== n2.children) setText(el, n2.children);
             }
 
             //vue3 支持 组件
@@ -200,7 +200,7 @@ export function createRenderer(options) {
             // new child 有值就用，没有就清理
             console.log('setElementText', el, newChildren);
 
-            setElementText(el, newChildren || '');
+            if (oldChildren !== newChildren) setElementText(el, newChildren || '');
 
         }
 
@@ -332,12 +332,9 @@ export function createRenderer(options) {
             const nextChild = newChildren[newEndIndex + 1];
             let anchor = nextChild ? nextChild.el : null;
 
+            for (let i = 0; i <= newEndIndex; i++) {
 
-            for (let i = newEndIndex; i >= newStartIndex; i--) {
-
-                const node = newChildren[i];
-                patch(null, node, container, anchor);
-                anchor = node.el;
+                patch(null, newChildren[i], container, anchor);
             }
 
         }
