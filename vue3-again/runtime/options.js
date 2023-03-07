@@ -9,7 +9,7 @@ export const observerOption = {
 
         return document.createTextNode(text);
     },
-    setElementText(el, text) {
+    setElementText(el, text = '') {
 
         el.textContent = text;
 
