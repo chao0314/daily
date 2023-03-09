@@ -1,4 +1,5 @@
 import {Text, Fragment} from "./vnode-type.js";
+import {lis} from "./lis/lis.js";
 
 //vnode = {
 //   key:1,
@@ -170,7 +171,9 @@ export function createRenderer(options) {
 
             if (Array.isArray(oldChildren)) {
                 //todo dom diff
-                patchKeyedChildren(n1, n2, el);
+                // patchKeyedChildren(n1, n2, el);
+
+                patchKeyedChildrenV3(n1, n2, el);
 
             } else {
 
@@ -253,6 +256,7 @@ export function createRenderer(options) {
                 continue;
             }
 
+            //patch后 new old 就共用 el 了
             //头-头
             if (newStartNode.key === oldStartNode.key) {
 
@@ -289,6 +293,7 @@ export function createRenderer(options) {
 
                     const oldNode = oldChildren[i];
 
+                    //也可以用 newEndNode  后尾插入 todo
                     if (newStartNode.key === oldNode.key) {
                         matched = oldNode;
 
@@ -336,6 +341,165 @@ export function createRenderer(options) {
 
                 patch(null, newChildren[i], container, anchor);
             }
+
+        }
+
+
+    }
+
+
+    // 最长递增子序列 vue3
+    function patchKeyedChildrenV3(n1, n2, container) {
+
+
+        const oldChildren = n1.children;
+        const newChildren = n2.children;
+        let oldStart = 0;
+        let newStart = 0;
+        let oldEnd = oldChildren.length - 1;
+        let newEnd = newChildren.length - 1;
+
+        //预处理 理想情况，头尾 相同的节点
+        while (oldStart <= oldEnd && newStart <= newEnd) {
+
+            const oldStartNode = oldChildren[oldStart];
+            const newStartNode = newChildren[newStart];
+            const oldEndNode = oldChildren[oldEnd];
+            const newEndNode = newChildren[newEnd];
+
+            if (oldStartNode.key !== newStartNode.key && oldEndNode.key !== newEndNode.key)
+                break;
+
+            if (oldStartNode.key === newStartNode.key) {
+
+                patch(oldStartNode, newStartNode, container);
+                oldStart++;
+                newStart++
+            }
+
+
+            if (oldEndNode.key === newEndNode.key) {
+
+                patch(oldEndNode, newEndNode, container);
+                oldEnd--;
+                newEnd--;
+
+            }
+
+        }
+
+        // 最理想情况  都遍历完 不需要移动 结束
+        if (oldStart > oldEnd && newStart > newEnd) return;
+        //旧的遍历完 新的还有 挂载新的
+        if (oldStart > oldEnd && newStart <= newEnd) {
+
+            const anchor = newChildren[newEnd + 1] ? newChildren[newEnd + 1].el : null;
+
+            for (let i = newStart; i <= newEnd; i++) {
+
+                patch(null, newChildren[i], container, anchor);
+
+            }
+
+            //旧的还有 新的遍历完 卸载旧的
+        } else if (oldStart <= oldEnd && newStart > newEnd) {
+
+            for (let i = oldStart; i <= oldEnd; i++) {
+
+                unmount(oldChildren[i]);
+
+            }
+
+            // 旧的 新的 都没有遍历完
+        } else {
+
+            //从旧的里 找能复用的节点，不能复用的节点 直接卸载
+            let needMoved = false;
+            let newPos = newStart;
+            const newKeyIndexRecord = {};
+            //记录新节点 与 能复用的 旧节点之间的 下标对应关系，便于后面 lis的查找
+            //没有找到复用的节点是 -1
+            const sequence = new Array(newEnd - newStart + 1).fill(-1);
+
+            for (let i = newStart; i <= newEnd; i++) {
+                const node = newChildren[i];
+                newKeyIndexRecord[node.key] = i;
+
+            }
+
+            for (let j = oldStart; j <= oldEnd; j++) {
+
+                const oldNode = oldChildren[j];
+
+                const newIndex = newKeyIndexRecord[oldNode.key];
+
+                //这个旧节点 不能复用 卸载
+                if (newIndex === void 0) {
+                    unmount(oldNode);
+
+                } else {
+
+                    patch(oldNode, newChildren[newIndex], container);
+                    sequence[newIndex - newStart] = j;
+
+                    //能复用节点对应的新节点的索引 比前面的新节点索引值小，说明索引值不是递增的，
+                    // 复用节点的原顺序需要移动
+                    if (!needMoved && newPos > newIndex) needMoved = true;
+                    newPos = newIndex;
+
+                }
+
+
+            }
+
+
+            if (needMoved) {
+
+                // 返回的是sequence的下标值数组
+                console.log(sequence)
+                const indexLis = lis(sequence);
+                console.log(indexLis)
+                let lisEnd = indexLis.length - 1;
+
+                // 此处 倒序插入 更简便 故采用倒序，因为倒序 anchor 好找
+
+                for (let i = sequence.length - 1; i >= 0; i--) {
+
+                    const sequenceValue = sequence[i];
+
+                    // 没有找到可复用的旧节点 需要挂载
+                    if (sequenceValue === -1) {
+                        // sequence的下标 是 newStart的相对下标
+                        // sequence 里存的是 可复用节点的在 oldChildren中的下标值
+                        const realIndex = i + newStart;
+
+                        const anchor = newChildren[realIndex + 1] ? newChildren[realIndex + 1].el : null;
+
+                        patch(null, newChildren[realIndex], container, anchor);
+
+                        //刚好对应上了可复用的最长递增子序列 不需要移动
+                        // 已经 patch过了 ，在查找可复用节点的时候
+                    } else if (sequenceValue === sequence[indexLis[lisEnd]]) {
+
+                        lisEnd--;
+
+                        //需要移动的复用节点
+                    } else {
+
+                        const realIndex = i + newStart;
+
+                        const anchor = newChildren[realIndex + 1] ? newChildren[realIndex + 1].el : null;
+
+                        insert(oldChildren[sequenceValue].el, container, anchor);
+
+                    }
+
+
+                }
+
+
+            }
+
 
         }
 

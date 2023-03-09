@@ -50,6 +50,9 @@ const app = document.querySelector('#app')
 // }, 2000);
 
 
+
+
+//
 // const VNode1 = {
 //     type: 'div',
 //     children: [
@@ -77,6 +80,8 @@ const app = document.querySelector('#app')
 // }, 2000);
 
 
+
+
 // const VNode1 = {
 //     type: 'div',
 //     children: [
@@ -101,6 +106,8 @@ const app = document.querySelector('#app')
 //     console.log('update')
 //     render(VNode2, app)
 // }, 2000);
+
+
 
 
 // const VNode1 = {
