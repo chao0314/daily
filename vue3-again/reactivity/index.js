@@ -100,7 +100,8 @@ export function track(target, p) {
     if (!targetDepMap) depsMapBucket.set(target, targetDepMap = new Map());
     let propDepsSet = targetDepMap.get(p);
     if (!propDepsSet) targetDepMap.set(p, propDepsSet = new Set());
-    // console.log('track---', p, activeEffect.id)
+    console.log('track---', p)
+    console.log('track---', activeEffect)
     if (activeEffect) {
         propDepsSet.add(activeEffect);
         //便于 cleanup
@@ -193,9 +194,10 @@ export function effect(fn, options = {lazy: false}) {
         //解决嵌套effect
         effectStack.push(effectFn);
 
+        console.log('active effect start',activeEffect)
         //res 用于 computed等
         const res = fn();
-
+        console.log('active effect end')
         effectStack.pop();
         activeEffect = effectStack[effectStack.length - 1];
 
@@ -248,7 +250,7 @@ function createReactive(obj, isShallow = false, isReadonly = false) {
                 // 内部 symbol 不收集 [Symbol.iterator]等
                 // bug? 如果自定义的symbol?
                 // todo...
-
+                console.log('active',activeEffect)
                 if (!isReadonly && typeof p !== 'symbol') track(target, p);
 
                 const res = Reflect.get(target, p, receiver);

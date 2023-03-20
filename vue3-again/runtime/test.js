@@ -1,4 +1,4 @@
-import {reactive} from "../reactivity/index.js";
+import {reactive, ref} from "../reactivity/index.js";
 import {observerOption} from "./options.js";
 import {createRenderer} from "./index.js";
 
@@ -104,28 +104,28 @@ const app = document.querySelector('#app')
 // }, 2000);
 
 
-const VNode1 = {
-    type: 'div',
-    children: [
-        { type: 'p', children: '1', key: 1 },
-        { type: 'p', children: '2', key: 2 },
-        { type: 'p', children: '3', key: 3 }
-    ]
-}
-render(VNode1, document.querySelector('#app'))
-
-const VNode2 = {
-    type: 'div',
-    children: [
-        { type: 'p', children: '1', key: 1 },
-        { type: 'p', children: '3', key: 3 }
-    ]
-}
-
-setTimeout(() => {
-    console.log('update')
-    render(VNode2, app)
-}, 2000);
+// const VNode1 = {
+//     type: 'div',
+//     children: [
+//         { type: 'p', children: '1', key: 1 },
+//         { type: 'p', children: '2', key: 2 },
+//         { type: 'p', children: '3', key: 3 }
+//     ]
+// }
+// render(VNode1, document.querySelector('#app'))
+//
+// const VNode2 = {
+//     type: 'div',
+//     children: [
+//         { type: 'p', children: '1', key: 1 },
+//         { type: 'p', children: '3', key: 3 }
+//     ]
+// }
+//
+// setTimeout(() => {
+//     console.log('update')
+//     render(VNode2, app)
+// }, 2000);
 
 //
 // function f() {
@@ -140,44 +140,63 @@ setTimeout(() => {
 // console.log(b)
 
 
-// const MyComp = {
-//
-//     props: {
-//
-//         title: String
-//     },
-//
-//     data() {
-//         return {name: 'this is name'}
-//     },
-//     render() {
-//
-//         return {
-//
-//             type: 'div',
-//             children: this.name + this.title
-//
-//         }
-//
-//     }
-//
-// }
-//
-// const CompVNode = {
-//     type: MyComp,
-//     props: {
-//         title: 'A Big Title'
-//     }
-// }
-// render(CompVNode, app);
-//
-//
+const MyComp = {
+
+    props: {
+
+        title: String
+    },
+
+    data() {
+        return {name: 'this is name'}
+    },
+
+    setup() {
+
+        const msgRef = ref(' this is ref msg');
+
+        // setTimeout(() => {
+        //
+        //     msgRef.value = ' hello change ref';
+        // }, 4000)
+
+        return {
+
+            msg: msgRef
+        }
+
+    },
+    render() {
+
+        return {
+
+            type: 'div',
+
+             children: this.name+ this.msg.value + this.title
+            // children: this.name + this.title + this.msg.value
+            // children: this.msg.value
+
+        }
+
+    }
+
+}
+
+const CompVNode = {
+    type: MyComp,
+    props: {
+        title: ' Big Title'
+    }
+}
+render(CompVNode, app);
+
+
 // setTimeout(() => {
 //
 //     const CompVNode = {
 //         type: MyComp,
 //         props: {
-//             title: 'A Small Title'
+//             title: ' Small Title'
 //         }
 //     }
 //

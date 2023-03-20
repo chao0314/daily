@@ -1,6 +1,6 @@
 import {Text, Fragment} from "./vnode-type.js";
 import {lis} from "./lis/lis.js";
-import {reactive, effect, queueJob, shallowReactive} from "../reactivity";
+import {reactive, effect, queueJob, shallowReactive, shallowReadonly} from "../reactivity";
 
 //vnode = {
 //   key:1,
@@ -8,6 +8,27 @@ import {reactive, effect, queueJob, shallowReactive} from "../reactivity";
 //   props:{}
 //   children:'text'/[vnode1,vnode2]
 // }
+
+let currentInstance = null;
+
+export function getCurrentInstance() {
+    return currentInstance;
+}
+
+export function setCurrentInstance() {
+    currentInstance = null;
+}
+
+export function onMounted(fn) {
+
+    const instance = getCurrentInstance();
+    if (instance) {
+        instance.mountedHooks.push(fn);
+    } else {
+        console.error('life hook only be invoked in setup function of component')
+    }
+}
+
 
 export function createRenderer(options) {
 
@@ -30,7 +51,7 @@ export function createRenderer(options) {
 
     function patch(n1, n2, container, anchor = null) {
 
-        console.log('patch', n1, n2)
+        // console.log('patch', n1, n2)
 
 
         if (n1 && n1.type !== n2.type) {
@@ -104,30 +125,70 @@ export function createRenderer(options) {
 
     function mountComponent(vnode, container, anchor) {
 
-        const {type: componentOptions, props: propsData} = vnode;
-
-        const {props: propsAlias, data, render} = componentOptions;
-
+        const {type: componentOptions, props: propsData, children} = vnode;
+        const {props: propsAlias, data, setup} = componentOptions;
+        let {render} = componentOptions;
 
         //todo beforeCreated
         const [props, attrs] = resolveProps(propsAlias, propsData);
-
+        //对于组件而言，所有的子元素均是插槽函数，区别在与是否具名，还是default
+        const slots = children ?? {};
         //响应式数据
         const state = typeof data === "function" ? reactive(data()) : null;
 
+
         // 需要组件实例来记录组件的状态 数据等等
-
         const instance = {
-
             state,
             attrs,
+            slots,
+            setupState: null,
             //props 响应式，收集子组件依赖，当props改变时 触发子组件渲染
             props: shallowReactive(props),
             subtree: null,
             //是否已经渲染
-            isMounted: false
+            isMounted: false,
+            mountedHooks: []
+            //其他的life hook 略
 
         }
+
+        const emit = (name, ...payload) => {
+
+            const eventName = `on${name[0].toUpperCase()}${name.slice(1)}`;
+
+            const handler = instance.props[eventName];
+
+            if (handler) handler(...payload);
+            else console.error(`no ${eventName} handler`);
+
+        }
+
+        if (typeof setup === 'function') {
+
+            const setupContext = {attrs, emit, slots};
+
+            //确保setup内的钩子函数 只能在组件内 setup 中使用
+            setCurrentInstance(instance);
+
+            const setupResult = setup(shallowReadonly(props), setupContext);
+
+            setCurrentInstance(null);
+
+            if (typeof setupContext === 'function' && render) {
+
+                console.error('setup will override render function');
+
+                render = setupResult;
+
+            } else {
+
+                instance.setupState = setupResult
+            }
+
+
+        }
+
 
         vnode.component = instance;
 
@@ -135,8 +196,9 @@ export function createRenderer(options) {
 
             get(target, p, receiver) {
 
-                const {state, props} = target;
+                const {state, props, setupState, slots} = target;
 
+                if (p === '$slots') return slots;
                 if (state && p in state) {
 
                     return Reflect.get(state, p, receiver);
@@ -144,6 +206,10 @@ export function createRenderer(options) {
                 } else if (props && p in props) {
 
                     return Reflect.get(props, p, receiver);
+
+                } else if (setupState && p in setupState) {
+
+                    return Reflect.get(setupState, p, receiver);
 
                 } else {
 
@@ -154,7 +220,7 @@ export function createRenderer(options) {
             },
             set(target, p, value, receiver) {
 
-                const {state, props} = target;
+                const {state, props, setupState} = target;
                 if (state && p in state) {
 
                     return Reflect.set(state, p, value, receiver);
@@ -163,6 +229,10 @@ export function createRenderer(options) {
 
                     console.error(`${p} of props is readonly`);
                     return true;
+
+                } else if (setupState && p in setupState) {
+
+                    return Reflect.set(setupState, p, value, receiver);
 
                 } else {
 
@@ -182,12 +252,13 @@ export function createRenderer(options) {
         effect(() => {
 
             // 通过 renderContext 子树/组件就可以使用 this 访问 响应式数据，包括 props等，建立依赖关系
+            //vnode tree
             const subtree = render.call(renderContext, renderContext);
 
 
             if (instance.isMounted) {
                 //todo beforeUpdate
-                console.log('update');
+                // console.log('update');
                 //更新
                 patch(instance.subtree, subtree, container, anchor);
                 //todo updated
@@ -199,7 +270,9 @@ export function createRenderer(options) {
 
                 //初次渲染
                 patch(null, subtree, container, anchor);
+
                 //todo mounted
+                instance.mountedHooks.forEach(fn => fn());
 
             }
 
@@ -218,7 +291,8 @@ export function createRenderer(options) {
         const attrs = {};
         Object.entries(propsData).forEach(([key, value]) => {
 
-            if (key in props) {
+            // on 用于传递事件处理函数
+            if (key in props || key.startsWith('on')) {
 
                 propsAlias[key] = value;
             } else {
@@ -319,7 +393,7 @@ export function createRenderer(options) {
 
     function patchElement(n1, n2) {
         const el = n2.el = n1.el;
-        console.log('patchElement', el);
+        // console.log('patchElement', el);
         const oldProps = n1.props;
         const newProps = n2.props;
 
@@ -349,11 +423,11 @@ export function createRenderer(options) {
 
     function patchChildren(n1, n2) {
 
-        const newChildren = n1.children;
-        const oldChildren = n2.children;
+        const oldChildren = n1.children;
+        const newChildren = n2.children;
         const el = n2.el = n1.el;
 
-        console.log('patchChildren', el)
+        // console.log('patchChildren', el)
 
         if (Array.isArray(newChildren)) {
 
@@ -389,9 +463,8 @@ export function createRenderer(options) {
             }
 
             // new child 有值就用，没有就清理
-            console.log('new children',newChildren)
-            console.log('setElementText', el, newChildren);
-
+            // console.log('new children', newChildren)
+            // console.log('setElementText', el, newChildren);
             if (oldChildren !== newChildren) setElementText(el, newChildren || '');
 
         }
@@ -413,7 +486,7 @@ export function createRenderer(options) {
 
 
         } else {
-
+            // 卸载 组件
 
         }
 
@@ -646,9 +719,9 @@ export function createRenderer(options) {
             if (needMoved) {
 
                 // 返回的是sequence的下标值数组
-                console.log(sequence)
+                // console.log(sequence)
                 const indexLis = lis(sequence);
-                console.log(indexLis)
+                // console.log(indexLis)
                 let lisEnd = indexLis.length - 1;
 
                 // 此处 倒序插入 更简便 故采用倒序，因为倒序 anchor 好找
