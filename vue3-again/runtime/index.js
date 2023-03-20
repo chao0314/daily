@@ -1,5 +1,6 @@
 import {Text, Fragment} from "./vnode-type.js";
 import {lis} from "./lis/lis.js";
+import {reactive, effect, queueJob, shallowReactive} from "../reactivity";
 
 //vnode = {
 //   key:1,
@@ -31,7 +32,7 @@ export function createRenderer(options) {
 
         console.log('patch', n1, n2)
 
-        // todo ... ? component ?
+
         if (n1 && n1.type !== n2.type) {
             unmount(n1);
             n1 = null;
@@ -69,29 +70,30 @@ export function createRenderer(options) {
             }
 
 
-        } else {
+        } else if (typeof type === 'string') {
             //普通 element
 
             if (!n1) {
 
                 mountElement(n2, container, anchor);
 
-                // if (typeof n2.type === 'string') mountElement(n2, container);
-                // else {
-                //     //todo  mount component
-                //
-                // }
-
             } else {
 
                 patchElement(n1, n2);
 
-                // if (typeof n2.type === 'string') patchElement(n1, n2, container);
-                // else {
-                //     //todo  patch component
-                // }
-
             }
+
+        } else if (typeof type === 'object') {
+            // 组件 component
+
+            if (!n1) {
+                mountComponent(n2, container, anchor);
+
+            } else {
+
+                patchComponent(n1, n2, container, anchor);
+            }
+
 
         }
 
@@ -99,6 +101,192 @@ export function createRenderer(options) {
 
 
     }
+
+    function mountComponent(vnode, container, anchor) {
+
+        const {type: componentOptions, props: propsData} = vnode;
+
+        const {props: propsAlias, data, render} = componentOptions;
+
+
+        //todo beforeCreated
+        const [props, attrs] = resolveProps(propsAlias, propsData);
+
+        //响应式数据
+        const state = typeof data === "function" ? reactive(data()) : null;
+
+        // 需要组件实例来记录组件的状态 数据等等
+
+        const instance = {
+
+            state,
+            attrs,
+            //props 响应式，收集子组件依赖，当props改变时 触发子组件渲染
+            props: shallowReactive(props),
+            subtree: null,
+            //是否已经渲染
+            isMounted: false
+
+        }
+
+        vnode.component = instance;
+
+        const renderContext = new Proxy(instance, {
+
+            get(target, p, receiver) {
+
+                const {state, props} = target;
+
+                if (state && p in state) {
+
+                    return Reflect.get(state, p, receiver);
+
+                } else if (props && p in props) {
+
+                    return Reflect.get(props, p, receiver);
+
+                } else {
+
+                    console.error(`${p} no exist`);
+
+                }
+
+            },
+            set(target, p, value, receiver) {
+
+                const {state, props} = target;
+                if (state && p in state) {
+
+                    return Reflect.set(state, p, value, receiver);
+
+                } else if (props && p in props) {
+
+                    console.error(`${p} of props is readonly`);
+                    return true;
+
+                } else {
+
+                    console.error(`${p} no exist`);
+                    return true;
+
+                }
+            }
+
+
+        })
+
+
+        //todo created
+
+        //当 component 依赖的响应式数据改变时 就会触发副作用再执行，判断是初次挂载还是更新
+        effect(() => {
+
+            // 通过 renderContext 子树/组件就可以使用 this 访问 响应式数据，包括 props等，建立依赖关系
+            const subtree = render.call(renderContext, renderContext);
+
+
+            if (instance.isMounted) {
+                //todo beforeUpdate
+                console.log('update');
+                //更新
+                patch(instance.subtree, subtree, container, anchor);
+                //todo updated
+
+            } else {
+                //todo beforeMounted
+
+                instance.isMounted = true;
+
+                //初次渲染
+                patch(null, subtree, container, anchor);
+                //todo mounted
+
+            }
+
+
+            instance.subtree = subtree;
+
+        }, {scheduler: queueJob});
+
+
+    }
+
+
+    function resolveProps(props, propsData) {
+
+        const propsAlias = {};
+        const attrs = {};
+        Object.entries(propsData).forEach(([key, value]) => {
+
+            if (key in props) {
+
+                propsAlias[key] = value;
+            } else {
+
+                attrs[key] = value;
+
+            }
+
+
+        })
+
+        return [propsAlias, attrs];
+
+    }
+
+    function propsHasChanged(prevProps, curProps) {
+
+        const prevKeys = Object.keys(prevProps);
+        const curKeys = Object.keys(curProps);
+
+        if (prevKeys.length !== curKeys.length) return true;
+
+        for (const key of prevKeys) {
+
+            if (prevProps[key] !== curProps[key]) return true;
+
+        }
+
+
+        return false;
+    }
+
+    function patchComponent(n1, n2, container, anchor) {
+
+        // 组件更新最重要的是准备更新 props
+
+        const instance = n2.component = n1.component;
+        const {props: prevProps} = n1;
+        const {props: curProps} = n2;
+
+        if (propsHasChanged(prevProps, curProps)) {
+
+
+            const [props, attrs] = resolveProps(n2.type.props, curProps);
+
+            instance.attrs = attrs;
+
+            // instance 上的 props 是 shallowReactive 响应式数据
+
+
+            Object.entries(props).forEach(([key, value]) => {
+
+                instance.props[key] = value;
+
+            })
+
+            //删除无用的 prevProps遗留
+
+            Object.keys(instance.props).forEach(key => {
+                if (!(key in props)) delete instance.props[key];
+            })
+
+
+        }
+
+
+    }
+
 
     function mountElement(vnode, container, anchor) {
 
@@ -201,6 +389,7 @@ export function createRenderer(options) {
             }
 
             // new child 有值就用，没有就清理
+            console.log('new children',newChildren)
             console.log('setElementText', el, newChildren);
 
             if (oldChildren !== newChildren) setElementText(el, newChildren || '');
@@ -208,6 +397,7 @@ export function createRenderer(options) {
         }
 
     }
+
 
     function unmount(vnode) {
 

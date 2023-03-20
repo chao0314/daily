@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="949f4bb9-571e-4bc6-b3d5-1b54c446c628" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue3-again/reactivity/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue3-again/reactivity/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue3-again/reactivity/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue3-again/reactivity/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue3-again/runtime/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue3-again/runtime/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue3-again/runtime/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue3-again/runtime/test.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +23,8 @@
         <option value="CSS File" />
         <option value="React Class Component" />
         <option value="React File" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -53,32 +57,32 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/wzc/workspace/daily/full stack/笔记&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/workspace/daily/vue3-again/runtime/lis&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\workspace\daily\vue3-again\runtime\lis" />
+      <recent name="E:\workspace\daily\vue3-again\runtime-core" />
       <recent name="$PROJECT_DIR$/full stack/笔记" />
       <recent name="E:\workspace\daily\example\car-web-hook\src\store\user" />
       <recent name="E:\workspace\daily\example\car-web-hook\src\store\test" />
-      <recent name="E:\workspace\daily\example\car-web-hook\src\assert" />
-      <recent name="E:\workspace\daily\example\car-web-hook\src\assert\css" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\workspace\daily\vue3-again\runtime\lis" />
       <recent name="E:\workspace\daily\vue-simple\public" />
       <recent name="E:\workspace\daily\vue-simple\src" />
       <recent name="E:\workspace\daily\example\car-web-hook\src\store\test" />
       <recent name="E:\workspace\daily\example\car-web-hook\src\store\user" />
-      <recent name="E:\workspace\daily\example\car-web-hook\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Node.js.test.js (2)">
-    <configuration name="mi.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/mi/mi.html" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="Node.js.lis.js">
+    <configuration name="sina.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/sina-m/sina.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="sina.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/daily/css/sina-m/sina.html" useBuiltInWebServerPort="true">
+    <configuration name="lis.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/vue3-again/runtime/lis/lis.js" working-dir="$PROJECT_DIR$/vue3-again/runtime/lis">
       <method v="2" />
     </configuration>
     <configuration name="test.js (1)" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/vue3-again/test.js" working-dir="$PROJECT_DIR$/vue3-again">
@@ -91,19 +95,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="JavaScript Debug.mi.html" />
       <item itemvalue="JavaScript Debug.sina.html" />
+      <item itemvalue="Node.js.lis.js" />
       <item itemvalue="Node.js.test.js (2)" />
       <item itemvalue="Node.js.test.js (1)" />
       <item itemvalue="Node.js.test.js" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.lis.js" />
         <item itemvalue="Node.js.test.js (2)" />
         <item itemvalue="Node.js.test.js (1)" />
         <item itemvalue="Node.js.test.js" />
         <item itemvalue="JavaScript Debug.sina.html" />
-        <item itemvalue="JavaScript Debug.mi.html" />
       </list>
     </recent_temporary>
   </component>
@@ -375,7 +379,15 @@
       <workItem from="1667370237753" duration="4253000" />
       <workItem from="1677378433962" duration="1020000" />
       <workItem from="1677460990815" duration="14250000" />
-      <workItem from="1677545549723" duration="13843000" />
+      <workItem from="1677545549723" duration="14105000" />
+      <workItem from="1677632771701" duration="15434000" />
+      <workItem from="1677721318616" duration="4898000" />
+      <workItem from="1677739887056" duration="152000" />
+      <workItem from="1677824617925" duration="6714000" />
+      <workItem from="1678070559909" duration="7940000" />
+      <workItem from="1678151983507" duration="15559000" />
+      <workItem from="1678323616896" duration="17771000" />
+      <workItem from="1679283699498" duration="11699000" />
     </task>
     <servers />
   </component>

@@ -22,6 +22,7 @@ export const trackOptions = {
     shouldTrack: true
 };
 
+
 export function addJob(jobFn) {
 
     if (jobQueue.includes(jobFn)) return;
@@ -41,8 +42,19 @@ export function flushJob() {
 
         jobQueue.forEach(job => job());
 
-    }).finally(() => isFlushing = false);
+    }).finally(() => {
 
+        jobQueue.length = 0;
+        isFlushing = false;
+    });
+
+}
+
+
+export function queueJob(jobFn) {
+
+    addJob(jobFn);
+    flushJob();
 }
 
 function cleanup(effectFn) {

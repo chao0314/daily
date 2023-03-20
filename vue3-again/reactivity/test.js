@@ -302,22 +302,22 @@ const pObj = reactive(obj)
 // console.log(deRefProxy(valueObj).age)
 
 
-const o = {
-    toString() {
-
-        return 'to string'
-    },
-
-    valueOf() {
-
-        return 'value of'
-    },
-    [Symbol.toPrimitive](hint) {
-        // number/string /default
-        console.log('---hint---', hint)
-        return true;
-    }
-}
+// const o = {
+//     toString() {
+//
+//         return 'to string'
+//     },
+//
+//     valueOf() {
+//
+//         return 'value of'
+//     },
+//     [Symbol.toPrimitive](hint) {
+//         // number/string /default
+//         console.log('---hint---', hint)
+//         return true;
+//     }
+// }
 
 //数值运算 优先 valueOf
 //字符串优先 toString

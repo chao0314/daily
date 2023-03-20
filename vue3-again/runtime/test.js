@@ -50,8 +50,6 @@ const app = document.querySelector('#app')
 // }, 2000);
 
 
-
-
 //
 // const VNode1 = {
 //     type: 'div',
@@ -80,8 +78,6 @@ const app = document.querySelector('#app')
 // }, 2000);
 
 
-
-
 // const VNode1 = {
 //     type: 'div',
 //     children: [
@@ -108,30 +104,28 @@ const app = document.querySelector('#app')
 // }, 2000);
 
 
+const VNode1 = {
+    type: 'div',
+    children: [
+        { type: 'p', children: '1', key: 1 },
+        { type: 'p', children: '2', key: 2 },
+        { type: 'p', children: '3', key: 3 }
+    ]
+}
+render(VNode1, document.querySelector('#app'))
 
+const VNode2 = {
+    type: 'div',
+    children: [
+        { type: 'p', children: '1', key: 1 },
+        { type: 'p', children: '3', key: 3 }
+    ]
+}
 
-// const VNode1 = {
-//     type: 'div',
-//     children: [
-//         { type: 'p', children: '1', key: 1 },
-//         { type: 'p', children: '2', key: 2 },
-//         { type: 'p', children: '3', key: 3 }
-//     ]
-// }
-// render(VNode1, document.querySelector('#app'))
-//
-// const VNode2 = {
-//     type: 'div',
-//     children: [
-//         { type: 'p', children: '1', key: 1 },
-//         { type: 'p', children: '3', key: 3 }
-//     ]
-// }
-//
-// setTimeout(() => {
-//     console.log('update')
-//     render(VNode2, app)
-// }, 2000);
+setTimeout(() => {
+    console.log('update')
+    render(VNode2, app)
+}, 2000);
 
 //
 // function f() {
@@ -144,3 +138,54 @@ const app = document.querySelector('#app')
 //
 // f()
 // console.log(b)
+
+
+// const MyComp = {
+//
+//     props: {
+//
+//         title: String
+//     },
+//
+//     data() {
+//         return {name: 'this is name'}
+//     },
+//     render() {
+//
+//         return {
+//
+//             type: 'div',
+//             children: this.name + this.title
+//
+//         }
+//
+//     }
+//
+// }
+//
+// const CompVNode = {
+//     type: MyComp,
+//     props: {
+//         title: 'A Big Title'
+//     }
+// }
+// render(CompVNode, app);
+//
+//
+// setTimeout(() => {
+//
+//     const CompVNode = {
+//         type: MyComp,
+//         props: {
+//             title: 'A Small Title'
+//         }
+//     }
+//
+//     render(CompVNode, app);
+//
+// }, 2000)
+
+
+
+
+
