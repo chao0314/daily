@@ -224,33 +224,33 @@ const app = document.querySelector('#app')
  * */
 
 //定义组件
-const MyComp = {
-
-    props: {},
-    data() {
-        return {}
-    },
-    setup() {
-        return {}
-    },
-    render() {
-
-        return {
-            type: 'div',
-            children: [{
-                type: 'p',
-                children: [this.$slots.header()]
-            }, {
-                type: 'p',
-                children: [this.$slots.body()]
-            }, {
-                type: 'p',
-                children: [this.$slots.footer()]
-            }]
-        }
-
-    }
-}
+// const MyComp = {
+//
+//     props: {},
+//     data() {
+//         return {}
+//     },
+//     setup() {
+//         return {}
+//     },
+//     render() {
+//
+//         return {
+//             type: 'div',
+//             children: [{
+//                 type: 'p',
+//                 children: [this.$slots.header()]
+//             }, {
+//                 type: 'p',
+//                 children: [this.$slots.body()]
+//             }, {
+//                 type: 'p',
+//                 children: [this.$slots.footer()]
+//             }]
+//         }
+//
+//     }
+// }
 
 /**
  <my-comp>
@@ -260,35 +260,38 @@ const MyComp = {
  </my-comp>
  **/
 //模板编译后的 虚拟 vnode
-const CompVNode = {
-    type: MyComp,
-    props: {},
-    children: {
-        header() {
-            return {
-                type: 'span',
-                children: 'this is header'
-            }
-        },
-        body() {
-            return {
-                type: 'span',
-                children: 'this is body'
-            }
-        },
-        footer() {
+// const CompVNode = {
+//     type: MyComp,
+//     props: {},
+//     children: {
+//         header() {
+//             return {
+//                 type: 'span',
+//                 children: 'this is header'
+//             }
+//         },
+//         body() {
+//             return {
+//                 type: 'span',
+//                 children: 'this is body'
+//             }
+//         },
+//         footer() {
+//
+//             return {
+//                 type: 'span',
+//                 children: 'this is footer'
+//
+//             }
+//
+//         }
+//     }
+//
+// }
+// render(CompVNode, app);
 
-            return {
-                type: 'span',
-                children: 'this is footer'
+//-----------------------------defineAsyncComponent-----------------------------------------------------
 
-            }
-
-        }
-    }
-
-}
-render(CompVNode, app);
 
 
 

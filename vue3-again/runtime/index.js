@@ -25,8 +25,20 @@ export function onMounted(fn) {
     if (instance) {
         instance.mountedHooks.push(fn);
     } else {
-        console.error('life hook only be invoked in setup function of component')
+        console.error('life hook only be invoked in setup function of component');
     }
+}
+
+
+export function onUnmounted() {
+
+    const instance = getCurrentInstance();
+    if (instance) {
+        instance.unmountedHooks.push(fn);
+    } else {
+        console.error('life hook only be invoked in setup function of component');
+    }
+
 }
 
 
@@ -148,7 +160,8 @@ export function createRenderer(options) {
             subtree: null,
             //是否已经渲染
             isMounted: false,
-            mountedHooks: []
+            mountedHooks: [],
+            unmountedHooks: []
             //其他的life hook 略
 
         }
@@ -347,7 +360,6 @@ export function createRenderer(options) {
 
             // instance 上的 props 是 shallowReactive 响应式数据
 
-
             Object.entries(props).forEach(([key, value]) => {
 
                 instance.props[key] = value;
@@ -489,9 +501,13 @@ export function createRenderer(options) {
             // fragment  需要卸载子节点
             children.forEach(chid => unmount(chid));
 
-
-        } else {
+        } else if (typeof type === 'object') {
             // 卸载 组件
+            const instance = vnode.component;
+            const {subtree, unmountedHooks} = instance;
+            subtree && unmount(subtree);
+            //卸载组件 life hook
+            unmountedHooks && unmountedHooks.forEach(hook => hook());
 
         }
 
