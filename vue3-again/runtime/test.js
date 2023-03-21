@@ -139,70 +139,157 @@ const app = document.querySelector('#app')
 // f()
 // console.log(b)
 
+//-----------------------component----------------------------------
 
-const MyComp = {
-
-    props: {
-
-        title: String
-    },
-
-    data() {
-        return {name: 'this is name'}
-    },
-
-    setup() {
-
-        const msgRef = ref(' this is ref msg');
-
-        // setTimeout(() => {
-        //
-        //     msgRef.value = ' hello change ref';
-        // }, 4000)
-
-        return {
-
-            msg: msgRef
-        }
-
-    },
-    render() {
-
-        return {
-
-            type: 'div',
-
-             children: this.name+ this.msg.value + this.title
-            // children: this.name + this.title + this.msg.value
-            // children: this.msg.value
-
-        }
-
-    }
-
-}
-
-const CompVNode = {
-    type: MyComp,
-    props: {
-        title: ' Big Title'
-    }
-}
-render(CompVNode, app);
-
-
+// const MyComp = {
+//
+//     props: {
+//
+//         title: String
+//     },
+//
+//     data() {
+//         return {name: 'this is name'}
+//     },
+//
+//     setup(props, {emit}) {
+//
+//         const msgRef = ref(' this is ref msg');
+//
+//         setTimeout(() => {
+//
+//             msgRef.value = ' hello change ref';
+//
+//             emit('change');
+//         }, 4000)
+//
+//         return {
+//
+//             msgRef
+//         }
+//
+//     },
+//     render() {
+//
+//         return {
+//
+//             type: 'div',
+//
+//             children: this.name + this.title + this.msgRef.value
+//
+//         }
+//
+//     }
+//
+// }
+//
+// const CompVNode = {
+//     type: MyComp,
+//     props: {
+//         title: ' Big Title',
+//         onChange() {
+//             console.log('this is a  change handler');
+//         }
+//     }
+// }
+// render(CompVNode, app);
+//
+//
 // setTimeout(() => {
 //
 //     const CompVNode = {
 //         type: MyComp,
 //         props: {
-//             title: ' Small Title'
+//             title: ' Small Title',
+//             onChange() {
+//                 console.log('this is a  change handler');
+//             }
 //         }
 //     }
 //
 //     render(CompVNode, app);
 //
 // }, 2000)
+
+
+//-------------------component slot------------------------
+
+
+/**
+ <div>
+ <p><slot mame="header"></slot></p>
+ <p><slot mame="body"></slot></p>
+ <p><slot mame="footer"></slot></p>
+ </div>
+ * */
+
+//定义组件
+const MyComp = {
+
+    props: {},
+    data() {
+        return {}
+    },
+    setup() {
+        return {}
+    },
+    render() {
+
+        return {
+            type: 'div',
+            children: [{
+                type: 'p',
+                children: [this.$slots.header()]
+            }, {
+                type: 'p',
+                children: [this.$slots.body()]
+            }, {
+                type: 'p',
+                children: [this.$slots.footer()]
+            }]
+        }
+
+    }
+}
+
+/**
+ <my-comp>
+ <template #header><span>this is header</span></template>
+ <template #body><span>this is body</span></template>
+ <template #footer><span>this is footer</span></template>
+ </my-comp>
+ **/
+//模板编译后的 虚拟 vnode
+const CompVNode = {
+    type: MyComp,
+    props: {},
+    children: {
+        header() {
+            return {
+                type: 'span',
+                children: 'this is header'
+            }
+        },
+        body() {
+            return {
+                type: 'span',
+                children: 'this is body'
+            }
+        },
+        footer() {
+
+            return {
+                type: 'span',
+                children: 'this is footer'
+
+            }
+
+        }
+    }
+
+}
+render(CompVNode, app);
+
 
 
 

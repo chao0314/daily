@@ -1,6 +1,6 @@
 import {Text, Fragment} from "./vnode-type.js";
 import {lis} from "./lis/lis.js";
-import {reactive, effect, queueJob, shallowReactive, shallowReadonly} from "../reactivity";
+import {reactive, effect, queueJob, shallowReactive, shallowReadonly, ref} from "../reactivity/index.js";
 
 //vnode = {
 //   key:1,
@@ -126,16 +126,16 @@ export function createRenderer(options) {
     function mountComponent(vnode, container, anchor) {
 
         const {type: componentOptions, props: propsData, children} = vnode;
-        const {props: propsAlias, data, setup} = componentOptions;
+        let {props: propsAlias, data, setup} = componentOptions;
         let {render} = componentOptions;
 
         //todo beforeCreated
         const [props, attrs] = resolveProps(propsAlias, propsData);
         //对于组件而言，所有的子元素均是插槽函数，区别在与是否具名，还是default
         const slots = children ?? {};
+        console.log(slots, children)
         //响应式数据
         const state = typeof data === "function" ? reactive(data()) : null;
-
 
         // 需要组件实例来记录组件的状态 数据等等
         const instance = {
@@ -153,6 +153,7 @@ export function createRenderer(options) {
 
         }
 
+
         const emit = (name, ...payload) => {
 
             const eventName = `on${name[0].toUpperCase()}${name.slice(1)}`;
@@ -163,6 +164,7 @@ export function createRenderer(options) {
             else console.error(`no ${eventName} handler`);
 
         }
+
 
         if (typeof setup === 'function') {
 
@@ -183,7 +185,8 @@ export function createRenderer(options) {
 
             } else {
 
-                instance.setupState = setupResult
+                instance.setupState = setupResult;
+
             }
 
 
@@ -249,6 +252,7 @@ export function createRenderer(options) {
         //todo created
 
         //当 component 依赖的响应式数据改变时 就会触发副作用再执行，判断是初次挂载还是更新
+        // debugger
         effect(() => {
 
             // 通过 renderContext 子树/组件就可以使用 this 访问 响应式数据，包括 props等，建立依赖关系
@@ -285,7 +289,7 @@ export function createRenderer(options) {
     }
 
 
-    function resolveProps(props, propsData) {
+    function resolveProps(props = {}, propsData = {}) {
 
         const propsAlias = {};
         const attrs = {};
@@ -294,6 +298,7 @@ export function createRenderer(options) {
             // on 用于传递事件处理函数
             if (key in props || key.startsWith('on')) {
 
+                console.log(key, value)
                 propsAlias[key] = value;
             } else {
 
