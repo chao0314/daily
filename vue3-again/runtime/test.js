@@ -1,6 +1,7 @@
 import {reactive, ref} from "../reactivity/index.js";
 import {observerOption} from "./options.js";
 import {createRenderer} from "./index.js";
+import {defineAsyncComponent} from "./component/defineAsyncComponent.js";
 
 // const vnode1 = {
 //
@@ -293,8 +294,71 @@ const app = document.querySelector('#app')
 //-----------------------------defineAsyncComponent-----------------------------------------------------
 
 
+let counter = 0
+const AsyncComponent = {
+    name: 'AsyncComponent',
+    props: {
+        title: String
+    },
+    setup(props, {emit, slots}) {
+
+        return () => {
+            return {
+                type: 'div',
+                children: [
+                    {
+                        type: defineAsyncComponent({
+                            loader: () => new Promise((r, j) => {
+                                setTimeout(() => {
+                                    counter > 2 ? r(InnerComp) : j('error...')
+                                }, 2000)
+                            }),
+                            timeout: 0,
+                            errorComponent: {
+                                setup() {
+                                    return () => {
+                                        return {type: 'h2', children: 'Error - timeout'}
+                                    }
+                                }
+                            },
+                            delay: 500,
+                            loadingComponent: {
+                                setup() {
+                                    return () => {
+                                        return {type: 'h2', children: 'Loading...'}
+                                    }
+                                }
+                            },
+                            onError(retry, fail, count) {
+                                console.log(count);
+                                counter = count;
+                                if (count < 3) retry();
+                                else fail();
+                            }
+                        })
+                    }
+                ]
+            }
+        }
+    }
+}
+
+const InnerComp = {
+    name: 'InnerComp',
+    setup() {
+        return () => ({
+            type: 'span',
+            children: 'inner'
+        })
+    }
+}
 
 
+//模板编译后的 虚拟 vnode
+const CompVNode = {
+    type: AsyncComponent,
+    props: {}
 
-
+}
+render(CompVNode, app);
 

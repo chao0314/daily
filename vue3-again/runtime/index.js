@@ -190,9 +190,10 @@ export function createRenderer(options) {
 
             setCurrentInstance(null);
 
-            if (typeof setupContext === 'function' && render) {
+            if (typeof setupResult === 'function') {
 
-                console.error('setup will override render function');
+
+                if (render) console.error('setup will override render function');
 
                 render = setupResult;
 
