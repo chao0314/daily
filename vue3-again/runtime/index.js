@@ -166,10 +166,25 @@ export function createRenderer(options) {
             subtree: null,
             //是否已经渲染
             isMounted: false,
-            mountedHooks: [],
-            unmountedHooks: []
             //其他的life hook 略
+            mountedHooks: [],
+            unmountedHooks: [],
+            keepAliveContext: null
 
+        }
+
+        //支持 keepAlive
+
+        if (vnode._isKeepAlive) {
+
+            instance.keepAliveContext = {
+
+                move(vnode, container, anchor) {
+
+                    insert(vnode.component.subtree.el, container, anchor);
+                },
+                createElement
+            }
         }
 
 
@@ -274,7 +289,7 @@ export function createRenderer(options) {
         effect(() => {
 
             // 通过 renderContext 子树/组件就可以使用 this 访问 响应式数据，包括 props等，建立依赖关系
-            //vnode tree
+            //vnode tree/ 虚拟节点树
             const subtree = render.call(renderContext, renderContext);
 
 
