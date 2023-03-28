@@ -1,6 +1,6 @@
 import {Text, Fragment} from "./vnode-type.js";
 import {lis} from "./lis/lis.js";
-import {reactive, effect, queueJob, shallowReactive, shallowReadonly, ref} from "../reactivity/index.js";
+import {reactive, effect, queueJob, shallowReactive, shallowReadonly} from "../reactivity/index.js";
 
 //vnode = {
 //   key:1,
@@ -15,8 +15,8 @@ export function getCurrentInstance() {
     return currentInstance;
 }
 
-export function setCurrentInstance() {
-    currentInstance = null;
+export function setCurrentInstance(instance) {
+    currentInstance = instance;
 }
 
 export function onMounted(fn) {
@@ -30,7 +30,7 @@ export function onMounted(fn) {
 }
 
 
-export function onUnmounted() {
+export function onUnmounted(fn) {
 
     const instance = getCurrentInstance();
     if (instance) {
@@ -116,8 +116,8 @@ export function createRenderer(options) {
 
             }
 
-        } else if (typeof type === 'object') {
-            // 组件 component
+        } else if (typeof type === 'object' || typeof type === 'function') {
+            // 组件 component  或者 函数式组件
 
             if (!n1) {
                 mountComponent(n2, container, anchor);
@@ -137,15 +137,21 @@ export function createRenderer(options) {
 
     function mountComponent(vnode, container, anchor) {
 
-        const {type: componentOptions, props: propsData, children} = vnode;
+        let {type: componentOptions, props: propsData, children} = vnode;
+        //函数式组件
+        if (typeof componentOptions === 'function') componentOptions = {
+            render: componentOptions,
+            props: componentOptions.props
+        };
         let {props: propsAlias, data, setup} = componentOptions;
         let {render} = componentOptions;
+
 
         //todo beforeCreated
         const [props, attrs] = resolveProps(propsAlias, propsData);
         //对于组件而言，所有的子元素均是插槽函数，区别在与是否具名，还是default
         const slots = children ?? {};
-        console.log(slots, children)
+        // console.log(slots, children)
         //响应式数据
         const state = typeof data === "function" ? reactive(data()) : null;
 
@@ -185,9 +191,7 @@ export function createRenderer(options) {
 
             //确保setup内的钩子函数 只能在组件内 setup 中使用
             setCurrentInstance(instance);
-
             const setupResult = setup(shallowReadonly(props), setupContext);
-
             setCurrentInstance(null);
 
             if (typeof setupResult === 'function') {
@@ -312,7 +316,7 @@ export function createRenderer(options) {
             // on 用于传递事件处理函数
             if (key in props || key.startsWith('on')) {
 
-                console.log(key, value)
+                // console.log(key, value)
                 propsAlias[key] = value;
             } else {
 

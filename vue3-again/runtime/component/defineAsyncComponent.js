@@ -1,4 +1,4 @@
-import {ref,} from "../../reactivity/index.js";
+import {ref} from "../../reactivity/index.js";
 import {onUnmounted} from "../index.js";
 
 //functional component
@@ -129,7 +129,7 @@ export function defineAsyncComponent(options = {}) {
                     return {type: loadingComponent};
                 } else {
 
-                    return {type: PlaceHolder}
+                    return {type: PlaceHolder, props: {content: 'this is a placeholder component'}}
                 }
 
 

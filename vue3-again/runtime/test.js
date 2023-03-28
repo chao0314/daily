@@ -332,7 +332,7 @@ const AsyncComponent = {
                             onError(retry, fail, count) {
                                 console.log(count);
                                 counter = count;
-                                if (count < 3) retry();
+                                if (count <= 3) retry();
                                 else fail();
                             }
                         })
