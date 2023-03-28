@@ -39,7 +39,7 @@ export const observerOption = {
 
         if (key.startsWith('on')) {
 
-            const eventName = key.slice(2);
+            const eventName = key.slice(2).toLowerCase();
 
             const invokers = el._invokers || (el._invokers = {});
 

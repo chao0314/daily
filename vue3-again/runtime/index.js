@@ -54,7 +54,9 @@ export function createRenderer(options) {
 
         } else {
             //没有 new vnode ,卸载
+            console.log('null---', container._vnode);
             unmount(container._vnode);
+            container._vnode = null;
 
         }
 
@@ -120,7 +122,17 @@ export function createRenderer(options) {
             // 组件 component  或者 函数式组件
 
             if (!n1) {
-                mountComponent(n2, container, anchor);
+
+                //是被 keepalive 包裹的组件，已经被缓存了,不需要重新挂在，只需要从缓存中将 dom 树重新添加到页面即可
+                if (n2.keptAlive) {
+
+                    const keepAliveInstance = n2.keepAliveInstance;
+
+                    keepAliveInstance.active(n2, container, anchor);
+                } else {
+
+                    mountComponent(n2, container, anchor);
+                }
 
             } else {
 
@@ -138,7 +150,7 @@ export function createRenderer(options) {
     function mountComponent(vnode, container, anchor) {
 
         let {type: componentOptions, props: propsData, children} = vnode;
-        //函数式组件
+        //函数式组件 props挂在 function 上，在vue3中  函数式组件并没有特别额外优秀的性能
         if (typeof componentOptions === 'function') componentOptions = {
             render: componentOptions,
             props: componentOptions.props
@@ -175,9 +187,11 @@ export function createRenderer(options) {
 
         //支持 keepAlive
 
-        if (vnode._isKeepAlive) {
+        if (componentOptions._isKeepAlive) {
 
             instance.keepAliveContext = {
+
+                //用于缓存组价dom的移动
 
                 move(vnode, container, anchor) {
 
@@ -290,12 +304,13 @@ export function createRenderer(options) {
 
             // 通过 renderContext 子树/组件就可以使用 this 访问 响应式数据，包括 props等，建立依赖关系
             //vnode tree/ 虚拟节点树
+            //每次渲染都会生成新的 虚拟节点树
             const subtree = render.call(renderContext, renderContext);
 
 
             if (instance.isMounted) {
                 //todo beforeUpdate
-                // console.log('update');
+                console.log('update', instance.subtree, subtree);
                 //更新
                 patch(instance.subtree, subtree, container, anchor);
                 //todo updated
@@ -368,6 +383,7 @@ export function createRenderer(options) {
         // 组件更新最重要的是准备更新 props
 
         const instance = n2.component = n1.component;
+        console.log('patch component', instance);
         const {props: prevProps} = n1;
         const {props: curProps} = n2;
 
@@ -510,8 +526,8 @@ export function createRenderer(options) {
 
 
     function unmount(vnode) {
-
-        const {type, children} = vnode;
+        console.log('unmount', vnode)
+        const {type, children, shouldKeepAlive} = vnode;
         //element
         if (typeof type === 'string') {
 
@@ -522,12 +538,27 @@ export function createRenderer(options) {
             children.forEach(chid => unmount(chid));
 
         } else if (typeof type === 'object') {
-            // 卸载 组件
-            const instance = vnode.component;
-            const {subtree, unmountedHooks} = instance;
-            subtree && unmount(subtree);
-            //卸载组件 life hook
-            unmountedHooks && unmountedHooks.forEach(hook => hook());
+
+
+            if (shouldKeepAlive) {
+
+                console.log('shouldKeepAlive')
+                // 需要缓存的组件不要卸载，而是调用 keepalive组件的 deActive 将dom树缓存
+                const keepAliveInstance = vnode.keepAliveInstance;
+
+                keepAliveInstance.deActive(vnode);
+
+            } else {
+                // 卸载 组件
+                const instance = vnode.component;
+                const {subtree, unmountedHooks} = instance;
+
+                subtree && unmount(subtree);
+                //卸载组件 life hook
+                unmountedHooks && unmountedHooks.forEach(hook => hook());
+
+            }
+
 
         }
 

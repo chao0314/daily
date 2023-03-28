@@ -2,6 +2,7 @@ import {reactive, ref} from "../reactivity/index.js";
 import {observerOption} from "./options.js";
 import {createRenderer} from "./index.js";
 import {defineAsyncComponent} from "./component/defineAsyncComponent.js";
+import {KeepAlive} from "./component/keepAlive.js";
 
 // const vnode1 = {
 //
@@ -364,5 +365,46 @@ const app = document.querySelector('#app')
 //-------------------keepAlive-----------------------------
 
 
+const MyComponent = {
+    name: 'MyComponent',
+    props: {
+        title: String
+    },
+    setup(props, {emit, slots}) {
 
+        const counter = ref(0)
+
+        return () => {
+            return {
+                type: 'button',
+                props: {
+                    onClick() {
+                        counter.value++
+                    }
+                },
+                children: `count is ${counter.value}`
+            }
+        }
+    }
+}
+
+const CompVNode = {
+    type: KeepAlive,
+    props: {},
+    children: {
+        default() {
+            return {type: MyComponent, props: {}}
+        }
+    }
+}
+render(CompVNode, app)
+
+
+setTimeout(() => {
+    render(null, app)
+}, 2000);
+//
+// setTimeout(() => {
+//     render(CompVNode, app)
+// }, 4000);
 
