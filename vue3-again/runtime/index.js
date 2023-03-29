@@ -54,7 +54,6 @@ export function createRenderer(options) {
 
         } else {
             //没有 new vnode ,卸载
-            console.log('null---', container._vnode);
             unmount(container._vnode);
             container._vnode = null;
 
@@ -65,8 +64,7 @@ export function createRenderer(options) {
 
     function patch(n1, n2, container, anchor = null) {
 
-        // console.log('patch', n1, n2)
-
+        //console.log('patch', n1, n2)
 
         if (n1 && n1.type !== n2.type) {
             unmount(n1);
@@ -143,6 +141,7 @@ export function createRenderer(options) {
         }
 
         container._vnode = n2;
+        //console.log('container._vnode', container._vnode);
 
 
     }
@@ -158,7 +157,6 @@ export function createRenderer(options) {
         let {props: propsAlias, data, setup} = componentOptions;
         let {render} = componentOptions;
 
-
         //todo beforeCreated
         const [props, attrs] = resolveProps(propsAlias, propsData);
         //对于组件而言，所有的子元素均是插槽函数，区别在与是否具名，还是default
@@ -169,6 +167,7 @@ export function createRenderer(options) {
 
         // 需要组件实例来记录组件的状态 数据等等
         const instance = {
+            vnode,
             state,
             attrs,
             slots,
@@ -181,7 +180,9 @@ export function createRenderer(options) {
             //其他的life hook 略
             mountedHooks: [],
             unmountedHooks: [],
-            keepAliveContext: null
+            keepAliveContext: null,
+            //组件更新函数 用于组件patchComponent/updateComponent 时调用
+            update: null
 
         }
 
@@ -192,7 +193,6 @@ export function createRenderer(options) {
             instance.keepAliveContext = {
 
                 //用于缓存组价dom的移动
-
                 move(vnode, container, anchor) {
 
                     insert(vnode.component.subtree.el, container, anchor);
@@ -212,7 +212,6 @@ export function createRenderer(options) {
             else console.error(`no ${eventName} handler`);
 
         }
-
 
         if (typeof setup === 'function') {
 
@@ -238,7 +237,6 @@ export function createRenderer(options) {
 
 
         }
-
 
         vnode.component = instance;
 
@@ -300,15 +298,15 @@ export function createRenderer(options) {
 
         //当 component 依赖的响应式数据改变时 就会触发副作用再执行，判断是初次挂载还是更新
         // debugger
-        effect(() => {
+        instance.update = effect(() => {
 
             // 通过 renderContext 子树/组件就可以使用 this 访问 响应式数据，包括 props等，建立依赖关系
             //vnode tree/ 虚拟节点树
             //每次渲染都会生成新的 虚拟节点树
             const subtree = render.call(renderContext, renderContext);
 
-
             if (instance.isMounted) {
+
                 //todo beforeUpdate
                 console.log('update', instance.subtree, subtree);
                 //更新
@@ -382,13 +380,12 @@ export function createRenderer(options) {
 
         // 组件更新最重要的是准备更新 props
 
+        console.log('patch component', n1, n2);
         const instance = n2.component = n1.component;
-        console.log('patch component', instance);
         const {props: prevProps} = n1;
         const {props: curProps} = n2;
 
         if (propsHasChanged(prevProps, curProps)) {
-
 
             const [props, attrs] = resolveProps(n2.type.props, curProps);
 
@@ -408,9 +405,14 @@ export function createRenderer(options) {
                 if (!(key in props)) delete instance.props[key];
             })
 
-
         }
 
+        //slots todo...
+        instance.slots = n2.children ?? {};
+        //instance 的props等都已经更新了，有可能props等没有变化，但是子组件变了，所以仍然需要
+        //进行 subtree等的patch
+
+        queueJob(instance.update);
 
     }
 
@@ -526,7 +528,7 @@ export function createRenderer(options) {
 
 
     function unmount(vnode) {
-        console.log('unmount', vnode)
+
         const {type, children, shouldKeepAlive} = vnode;
         //element
         if (typeof type === 'string') {

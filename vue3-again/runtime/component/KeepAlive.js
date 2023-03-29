@@ -1,11 +1,10 @@
 import {getCurrentInstance} from "../index.js";
 
 const cache = new Map();
-
 export const KeepAlive = {
     name: 'KeepAlive',
     _isKeepAlive: true,
-    setup(props, {slots}) {
+    setup(props) {
 
         const keepAliveInstance = getCurrentInstance();
         const {move, createElement} = keepAliveInstance.keepAliveContext;
@@ -26,18 +25,20 @@ export const KeepAlive = {
         }
 
 
-        return () => {
+        return (ctx) => {
 
-            const childrenVNode = slots.default();
+            const childrenVNode = ctx.$slots.default();
+
+            console.log('keepalive render', childrenVNode);
             const {type} = childrenVNode;
             //普通 html元素，直接返回 ，不缓存
             if (typeof type === 'string') return childrenVNode;
 
             const cacheVNode = cache.get(type);
-
             //组件实例 已经缓存了
             if (cacheVNode) {
-                //已经缓存了，mountComponent 时不用从新挂载，应该从缓存容器内 激活
+
+                //已经缓存了，mountComponent 时不用新挂载，应该从缓存容器内 激活
                 childrenVNode.keptAlive = true;
 
                 childrenVNode.component = cacheVNode.component;

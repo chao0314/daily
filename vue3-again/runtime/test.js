@@ -362,6 +362,7 @@ const app = document.querySelector('#app')
 //
 // }
 // render(CompVNode, app);
+
 //-------------------keepAlive-----------------------------
 
 
@@ -388,6 +389,23 @@ const MyComponent = {
     }
 }
 
+const MyComponent1 = {
+    name: 'MyComponent1',
+    props: {
+        title: String
+    },
+    setup(props, {emit, slots}) {
+
+        return () => {
+            return {
+                type: 'button',
+                props: {},
+                children: `other button`
+            }
+        }
+    }
+}
+
 const CompVNode = {
     type: KeepAlive,
     props: {},
@@ -397,14 +415,29 @@ const CompVNode = {
         }
     }
 }
+
+
+const CompVNode1 = {
+    type: KeepAlive,
+    props: {},
+    children: {
+        default() {
+            return {type: MyComponent1, props: {}}
+        }
+    }
+}
+
 render(CompVNode, app)
 
+// setTimeout(() => {
+//     render(null, app)
+// }, 2000);
 
 setTimeout(() => {
-    render(null, app)
+    render(CompVNode1, app)
 }, 2000);
-//
-// setTimeout(() => {
-//     render(CompVNode, app)
-// }, 4000);
+
+setTimeout(() => {
+    render(CompVNode, app)
+}, 4000);
 
