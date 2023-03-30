@@ -1,5 +1,9 @@
 export const observerOption = {
 
+    queryElement(selector) {
+
+        return document.querySelector(selector);
+    },
     createElement(tag) {
 
         return document.createElement(tag);

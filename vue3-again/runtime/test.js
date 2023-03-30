@@ -3,6 +3,8 @@ import {observerOption} from "./options.js";
 import {createRenderer} from "./index.js";
 import {defineAsyncComponent} from "./component/defineAsyncComponent.js";
 import {KeepAlive} from "./component/keepAlive.js";
+import {Teleport} from "./component/Teleport.js";
+import {Transition} from "./component/Transition.js";
 
 // const vnode1 = {
 //
@@ -366,78 +368,138 @@ const app = document.querySelector('#app')
 //-------------------keepAlive-----------------------------
 
 
-const MyComponent = {
-    name: 'MyComponent',
-    props: {
-        title: String
-    },
-    setup(props, {emit, slots}) {
-
-        const counter = ref(0)
-
-        return () => {
-            return {
-                type: 'button',
-                props: {
-                    onClick() {
-                        counter.value++
-                    }
-                },
-                children: `count is ${counter.value}`
-            }
-        }
-    }
-}
-
-const MyComponent1 = {
-    name: 'MyComponent1',
-    props: {
-        title: String
-    },
-    setup(props, {emit, slots}) {
-
-        return () => {
-            return {
-                type: 'button',
-                props: {},
-                children: `other button`
-            }
-        }
-    }
-}
-
-const CompVNode = {
-    type: KeepAlive,
-    props: {},
-    children: {
-        default() {
-            return {type: MyComponent, props: {}}
-        }
-    }
-}
-
-
-const CompVNode1 = {
-    type: KeepAlive,
-    props: {},
-    children: {
-        default() {
-            return {type: MyComponent1, props: {}}
-        }
-    }
-}
-
-render(CompVNode, app)
-
+// const MyComponent = {
+//     name: 'MyComponent',
+//     props: {
+//         title: String
+//     },
+//     setup(props, {emit, slots}) {
+//
+//         const counter = ref(0)
+//
+//         return () => {
+//             return {
+//                 type: 'button',
+//                 props: {
+//                     onClick() {
+//                         counter.value++
+//                     }
+//                 },
+//                 children: `count is ${counter.value}`
+//             }
+//         }
+//     }
+// }
+//
+// const MyComponent1 = {
+//     name: 'MyComponent1',
+//     props: {
+//         title: String
+//     },
+//     setup(props, {emit, slots}) {
+//
+//         return () => {
+//             return {
+//                 type: 'button',
+//                 props: {},
+//                 children: `other button`
+//             }
+//         }
+//     }
+// }
+//
+// const CompVNode = {
+//     type: KeepAlive,
+//     props: {},
+//     children: {
+//         default() {
+//             return {type: MyComponent, props: {}}
+//         }
+//     }
+// }
+//
+//
+// const CompVNode1 = {
+//     type: KeepAlive,
+//     props: {},
+//     children: {
+//         default() {
+//             return {type: MyComponent1, props: {}}
+//         }
+//     }
+// }
+//
+// render(CompVNode, app)
+//
+// // setTimeout(() => {
+// //     render(null, app)
+// // }, 2000);
+//
 // setTimeout(() => {
-//     render(null, app)
+//     render(CompVNode1, app)
 // }, 2000);
+//
+// setTimeout(() => {
+//     render(CompVNode, app)
+// }, 4000);
 
-setTimeout(() => {
-    render(CompVNode1, app)
-}, 2000);
 
-setTimeout(() => {
-    render(CompVNode, app)
-}, 4000);
+//-----------------------------------Teleport-------------------------------
+//
+// const compVNode = {
+//
+//     type: Teleport,
+//     props: {to: "body"},
+//     children: {
+//         default() {
+//             return {type: 'div', children: 'this is a teleport that appended to body element'};
+//         }
+//     }
+//
+// }
+//
+// render(compVNode, app);
+//
+// const compVNode1 = {
+//
+//     type: Teleport,
+//     props: {to: "#app"},
+//     children: {
+//         default() {
+//             return {type: 'div', children: 'other'};
+//         }
+//     }
+//
+// }
+//
+// setTimeout(() => {
+//     render(compVNode1, app);
+// }, 2000)
 
+//----------------------------------transition---------------------------------------
+
+const App = {
+    name: 'App',
+    setup() {
+        const toggle = ref(true)
+
+        setTimeout(() => {
+            toggle.value = false
+        }, 2000);
+
+        return () => {
+            return {
+                type: Transition,
+                children: {
+                    default() {
+                        return toggle.value ? {type: 'div', props: {class: 'box'}, children: ''} : {
+                            type: 'p',
+                            children: ''
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+render({type: App}, app);

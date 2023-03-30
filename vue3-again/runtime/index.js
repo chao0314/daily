@@ -44,7 +44,7 @@ export function onUnmounted(fn) {
 
 export function createRenderer(options) {
 
-    const {createElement, createText, setElementText, setText, insert, remove, patchProp} = options;
+    const {queryElement, createElement, createText, setElementText, setText, insert, remove, patchProp} = options;
 
     const render = function (vnode, container) {
 
@@ -117,10 +117,15 @@ export function createRenderer(options) {
             }
 
         } else if (typeof type === 'object' || typeof type === 'function') {
-            // 组件 component  或者 函数式组件
 
-            if (!n1) {
+            //渲染器处理 Teleport
 
+            if (type._isTeleport) {
+
+                type.process(n1, n2, {queryElement, insert, mountElement, patchElement});
+
+            } else if (!n1) {
+                // 组件 component  或者 函数式组件
                 //是被 keepalive 包裹的组件，已经被缓存了,不需要重新挂在，只需要从缓存中将 dom 树重新添加到页面即可
                 if (n2.keptAlive) {
 
@@ -421,7 +426,7 @@ export function createRenderer(options) {
 
         const el = vnode.el = createElement(vnode.type);
 
-        const {children} = vnode;
+        const {children, transition} = vnode;
 
         if (typeof children === 'string') setElementText(el, children);
         else if (Array.isArray(children)) children.forEach(vnode => {
@@ -441,7 +446,12 @@ export function createRenderer(options) {
 
         }
 
+        //处理 Transition 添加 classList
+        if (transition) transition.beforeEnter(el);
+
         insert(el, container, anchor);
+
+        if (transition) transition.enter(el);
 
 
     }
@@ -529,11 +539,13 @@ export function createRenderer(options) {
 
     function unmount(vnode) {
 
-        const {type, children, shouldKeepAlive} = vnode;
+        const {type, children, shouldKeepAlive, transition, el} = vnode;
         //element
         if (typeof type === 'string') {
+            // 有动画的 先让过渡动画结束，再移除
+            if (transition) transition.leave(el, () => remove(el));
+            else remove(el);
 
-            remove(vnode.el);
 
         } else if (type === Fragment) {
             // fragment  需要卸载子节点
@@ -544,7 +556,6 @@ export function createRenderer(options) {
 
             if (shouldKeepAlive) {
 
-                console.log('shouldKeepAlive')
                 // 需要缓存的组件不要卸载，而是调用 keepalive组件的 deActive 将dom树缓存
                 const keepAliveInstance = vnode.keepAliveInstance;
 
