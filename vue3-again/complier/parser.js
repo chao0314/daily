@@ -1,17 +1,10 @@
-import {Error} from "mongoose/lib/browser";
-
-const template = `<div id="123" v-show="display" :name="name">
-    <p>p1</p>
-    <p>p2</p>
-</div>`
-
-
 const Type = {
     ROOT: 'root',
     TEXT: 'text',
     ELEMENT: 'element',
     COMMENT: 'comment',
-    ATTRIBUTE: 'attribute'
+    ATTRIBUTE: 'attribute',
+    INTERPOLATION: 'interpolation'
 }
 
 // parse template to  AST (template AST)
@@ -38,7 +31,7 @@ export function parse(tplStr) {
         }
 
 
-    }
+    };
 
     const nodes = parseChildren(context, []);
 
@@ -136,6 +129,8 @@ function parseTag(context) {
     const isSelfClosed = context.source.startsWith('/>');
     //消耗闭合的 > 或者 />
     advanceBy(isSelfClosed ? 2 : 1);
+
+    advanceSpaces();
     return {
         type: Type.ELEMENT,
         tag: match[1],
@@ -155,14 +150,18 @@ function parseEndTag(context) {
     if (!match) throw new Error('invalid end tag');
     advanceBy(match[0].length);
     advanceSpaces();
+    //消耗 >
     advanceBy(1);
+    //消耗空格
+    advanceSpaces();
 }
 
 
 function parseElement(context, ancestors = []) {
-
     const element = parseTag(context);
     ancestors.push(element);
+    // throw element
+    // debugger
     element.children = parseChildren(context, ancestors);
     ancestors.pop();
 
@@ -171,8 +170,9 @@ function parseElement(context, ancestors = []) {
         parseEndTag(context);
 
     } else {
+        //虽然结束了 但是以当前元素的闭合标签结束 例如：<div><p></div></p> -> <div><p></div>
         // 闭合标签不匹配
-        console.error('闭合标签不匹配');
+        throw new Error('闭合标签不匹配');
     }
 
     return element;
@@ -181,48 +181,145 @@ function parseElement(context, ancestors = []) {
 
 function parseComment(context, ancestors) {
 
+    const {advanceBy, advanceSpaces} = context;
+    //消费 <!--;
+    advanceBy('<!--'.length);
+    const closedIndex = context.source.indexOf('-->');
+
+    if (closedIndex === -1) throw  new Error('mismatch <!--');
+
+    const content = context.source.slice(0, closedIndex);
+
+    advanceBy(content.length);
+
+    advanceBy('-->'.length);
+
+    advanceSpaces();
+
+    return {
+        type: Type.COMMENT,
+        content
+
+    }
 
 }
 
 function parseText(context, ancestors) {
+
+    // 1 文本遇到 < 结束
+    // 2 文本遇到 {{ 结束
+    // 3 文本直到最后 结束
+    const {advanceBy, advanceSpaces} = context;
+    let endIndex = context.source.length;
+    const ltIndex = context.source.indexOf('<');
+    const delimiterIndex = context.source.indexOf('{{');
+
+    if (ltIndex > -1 && ltIndex < endIndex) endIndex = ltIndex;
+
+    if (delimiterIndex > -1 && delimiterIndex < endIndex) endIndex = delimiterIndex;
+
+    const content = context.source.slice(0, endIndex);
+
+    advanceBy(content.length);
+
+    advanceSpaces();
+
+    return {
+
+        type: Type.TEXT,
+        content
+
+    }
 
 
 }
 
 function parseInterpolation(context, ancestors) {
 
+    // 插值符号 {{ xxx }}
+    const {advanceBy, advanceSpaces} = context;
+    //消费 {{
+    advanceBy(2);
+    const closedIndex = context.source.indexOf('}}');
+
+    if (closedIndex === -1) throw  new Error('mismatch }}');
+
+    const content = context.source.slice(0, closedIndex);
+
+    advanceBy(content.length);
+    //消耗 }}
+    advanceBy(2);
+    advanceSpaces();
+
+    return {
+
+        type: Type.INTERPOLATION,
+        content
+    }
 
 }
 
 function isEnd(context, ancestors) {
     // 判断标签是否结束
+    //模板字符串耗尽
+    const {source} = context;
+    if (!source) return true;
+    //找到了对应的开始标签
+    //此处考虑兼容处理特殊请款  <div><p></div></p>
+    //是截取处理 <div><p></div>
+    //当然另一种处理方法是直接报错
+
+    const ancestor = ancestors[ancestors.length - 1];
+
+    if (ancestor && source.startsWith(`</${ancestor.tag}`)) return true;
+
+    // 兼容 处理 不匹配的 标签
+    for (let i = ancestors.length - 2; i > 0; i--) {
+
+        const tag = ancestors[i].tag;
+
+        if (source.startsWith(`</${tag}`)) {
+
+            console.error(`${tag} mismatch`);
+
+            return true;
+
+        }
+
+    }
+
+
+    return false;
+
 
 }
 
 function parseChildren(context, ancestors = []) {
 
-    const {source} = context;
+    const {advanceSpaces} = context;
     const nodes = [];
-    let node = null;
+    //清理空白
 
-    while (isEnd(context, ancestors)) {
+    while (!isEnd(context, ancestors)) {
 
+        advanceSpaces();
+        let node = null;
         //标签开始
-        if (source.startsWith('<')) {
+        if (context.source.startsWith('<')) {
 
-            if (/^[a-z]+/i.test(source)) {
+            if (/^<[a-z]+/i.test(context.source)) {
                 //element tag
                 node = parseElement(context, ancestors);
 
-            } else if (source.startsWith('<!--')) {
+            } else if (context.source.startsWith('<!--')) {
                 // comment
                 node = parseComment(context, ancestors);
 
             } else {
-                console.error('invalid  < ');
+                throw new Error(`invalid  ${context.source}`);
             }
 
-        } else if (source.startsWith('{{')) {
+        } else if (context.source.startsWith('{{')) {
             // 花括号 表达式
             node = parseInterpolation(context, ancestors);
 
@@ -232,10 +329,12 @@ function parseChildren(context, ancestors = []) {
             node = parseText(context, ancestors);
         }
 
+
+        nodes.push(node);
     }
 
-    nodes.push(node);
 
     return nodes;
 
 }
+
