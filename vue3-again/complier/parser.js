@@ -1,4 +1,4 @@
-const Type = {
+export const Type = {
     ROOT: 'root',
     TEXT: 'text',
     ELEMENT: 'element',
