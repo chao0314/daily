@@ -1,6 +1,7 @@
 <script setup>
 // import {RouterLink, RouterView} from 'vue-router'
 import {useRouter} from '../../router';
+// import {useRouter} from "vue-router";
 
 const router = useRouter();
 const handleClick = (path) => router.push(path);
