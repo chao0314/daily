@@ -17,12 +17,12 @@ const handleClick = (path) => router.push(path);
         <!--        <RouterLink to="/">Home</RouterLink>-->
         <!--        <RouterLink to="/about">About</RouterLink>-->
         <button @click="handleClick('/')">home</button>
-        <button @click="handleClick('/about')">about</button>
+        <button @click="handleClick('/about/one')">about</button>
       </nav>
     </div>
   </header>
 
-  <!--  <RouterView/>-->
+  <RouterView/>
 </template>
 
 <style scoped>

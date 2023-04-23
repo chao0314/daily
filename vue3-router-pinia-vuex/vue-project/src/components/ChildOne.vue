@@ -1,11 +1,8 @@
 <script setup>
-
 </script>
 
 <template>
-  <div>
-    <p> this is home </p>
-
-  </div>
-
+  <p>
+    this is child one
+  </p>
 </template>
