@@ -3,8 +3,24 @@
 import {useRouter} from '../../router';
 // import {useRouter} from "vue-router";
 
+import {useCounterStore} from "@/stores/counter";
+import {useCounterOptionsStore} from "@/stores/counterOptions";
+
 const router = useRouter();
 const handleClick = (path) => router.push(path);
+
+const counterStore = useCounterStore();
+
+console.log('store', counterStore)
+
+const counterOptionsStore = useCounterOptionsStore();
+
+
+const handleClickOptionsCount = () => {
+
+  counterOptionsStore.count++;
+}
+
 </script>
 
 <template>
@@ -19,6 +35,26 @@ const handleClick = (path) => router.push(path);
         <button @click="handleClick('/')">home</button>
         <button @click="handleClick('/about/one')">about</button>
       </nav>
+    </div>
+
+    <div>
+      <h2>pinia</h2>
+      <h3>compositions api</h3>
+      <p>{{ counterStore.count }}</p>
+      <p>
+        <button @click="counterStore.count++">button</button>
+      </p>
+      <p>{{ counterStore.doubleCount }}</p>
+      <button @click="()=>counterStore.increment()">action</button>
+      <h3>options api</h3>
+      <p>{{ counterOptionsStore.count }}</p>
+      <p>
+        <button @click="handleClickOptionsCount">button</button>
+      </p>
+      <p>{{ counterOptionsStore.doubleCount }}</p>
+
+      <button @click="()=>counterOptionsStore.increment()">action</button>
+
     </div>
   </header>
 
