@@ -1,23 +1,27 @@
 export function createHistoryNavigation(base = '') {
 
-    const push = (to) => {
+    const push = (to, optionsState = {}) => {
 
-        const replaceState = {...historyState.value, ...{forward: to}};
+        const replaceState = {...historyState.value, ...{forward: to}, ...optionsState};
 
+        console.log('replaceState', replaceState)
         // 为了 刷新当下浏览器中 location 应的 state，便于前进 后退使用
-        navigateTo(to, replaceState, true);
+        navigateTo(historyState.value.current, replaceState, true);
 
         const {current,} = historyState.value;
-        const state = createState(current, to, null);
 
+        const state = createState(current, to, null);
+        console.log('push', state);
         navigateTo(to, state, false);
 
 
     }
 
-    const replace = (to) => {
+    const replace = (to, optionsState = {}) => {
 
-        const state = {...historyState.value, current: to};
+        const state = {...historyState.value, current: to, ...optionsState};
+
+        console.log('replace', state)
 
         navigateTo(to, state, true);
 
@@ -57,8 +61,7 @@ export function createHistoryNavigation(base = '') {
         return {
             from,
             current,
-            forward,
-            matched: [] //匹配的组件
+            forward
         }
 
 
@@ -81,7 +84,7 @@ export function createHistoryNavigation(base = '') {
     window.addEventListener('popstate', ev => {
 
         const {state} = ev;
-        console.log(state);
+        console.log('popstate', state);
 
         popStateHandlerSet.forEach(handler => handler(state));
 
