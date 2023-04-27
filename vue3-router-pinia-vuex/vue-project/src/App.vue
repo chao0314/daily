@@ -1,7 +1,10 @@
 <script setup>
+import {computed} from "vue";
 // import {RouterLink, RouterView} from 'vue-router'
 import {useRouter} from '../../router';
 // import {useRouter} from "vue-router";
+
+import {useStore} from "../../vuex";
 
 import {useCounterStore} from "@/stores/counter";
 import {useCounterOptionsStore} from "@/stores/counterOptions";
@@ -11,7 +14,6 @@ const handleClick = (path) => router.push(path);
 
 const counterStore = useCounterStore();
 
-console.log('store', counterStore)
 
 const counterOptionsStore = useCounterOptionsStore();
 
@@ -20,6 +22,26 @@ const handleClickOptionsCount = () => {
 
   counterOptionsStore.count++;
 }
+
+
+const store = useStore();
+
+function add() {
+  store.commit('add', 1)
+}
+
+function asyncAdd() {
+  store.dispatch('asyncAdd', 1).then(() => {
+    alert('ok')
+  })
+}
+
+const count = computed(() => store.state.count);
+const double = computed(() => store.getters.double);
+const aCount = computed(() => store.state.aCount.count);
+const bCount = computed(() => store.state.bCount.count);
+const cCount = computed(() => store.state.aCount.cCount.count);
+
 
 </script>
 
@@ -57,6 +79,25 @@ const handleClickOptionsCount = () => {
 
     </div>
   </header>
+  <div>
+    <h2>vuex</h2>
+    计数器:{{ count }} {{ $store.state.count }}
+    <button @click="$store.state.count++">错误修改</button>
+
+    <hr/>
+    double:{{ double }} {{ $store.getters.double }}
+
+    <!-- 同步修改 -->
+    <button @click="add">同步修改</button>
+    <button @click="asyncAdd">异步修改</button>
+
+    <hr/>
+    a模块: {{ aCount }} {{ bCount }} {{ cCount }}
+
+    <button @click="$store.commit('aCount/add', 1)">改a</button>
+    <button @click="$store.commit('bCount/add', 1)">改b</button>
+    <button @click="$store.commit('aCount/cCount/add', 1)">改c</button>
+  </div>
 
   <RouterView/>
 </template>
