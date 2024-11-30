@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "socket.io": "^3.0.4",
+    "socket.io": "^4.5.3",
     "uuid": "^8.3.2"
   }
 }
